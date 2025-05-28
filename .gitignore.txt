@@ -1,0 +1,45 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+bin/
+obj/
+Debug/
+Release/
+
+# Rider
+.idea/
+
+# ASP.NET / Blazor specific
+wwwroot/dist/
+node_modules/
+
+# Logs
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# NuGet Packages
+*.nupkg
+*.snupkg
+.nuget/
+
+# Resharper
+_ReSharper*/
+*.DotSettings.user
+
+# Backup files
+*.bak
+*.tmp
+
+# GitHub Actions workflow cache
+.github/workflows/.cache/
+
+# Others
+*.vsidx

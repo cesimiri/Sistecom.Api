@@ -1,0 +1,717 @@
+[
+  {
+    "ContainingType": "Identity.Api.Controllers.AccountsController",
+    "Method": "CreateUser",
+    "RelativePath": "api/Accounts/Create",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Identity.Api.Model.UserInfo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Identity.Api.Model.UserToken",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.AccountsController",
+    "Method": "Login",
+    "RelativePath": "api/Accounts/Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userInfo",
+        "Type": "Identity.Api.Model.UserInfo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Identity.Api.Model.UserToken",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.AccountsController",
+    "Method": "Renew",
+    "RelativePath": "api/Accounts/RenewToken",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Identity.Api.Model.UserToken",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ContratoController",
+    "Method": "Delete",
+    "RelativePath": "api/Contrato/DeleteContrato",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contratoToDelete",
+        "Type": "Modelo.Sistecom.Modelo.Database.Contrato",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ContratoController",
+    "Method": "DeleteById",
+    "RelativePath": "api/Contrato/DeleteContratoById/{idContrato}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idContrato",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ContratoController",
+    "Method": "GetAll",
+    "RelativePath": "api/Contrato/GetAllContratos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ContratoController",
+    "Method": "GetContratoById",
+    "RelativePath": "api/Contrato/GetContratoById/{idContrato}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idContrato",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ContratoController",
+    "Method": "Insert",
+    "RelativePath": "api/Contrato/InsertContrato",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newContrato",
+        "Type": "Modelo.Sistecom.Modelo.Database.Contrato",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ContratoController",
+    "Method": "Update",
+    "RelativePath": "api/Contrato/UpdateContrato",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updatedContrato",
+        "Type": "Modelo.Sistecom.Modelo.Database.Contrato",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.EmpresaClienteController",
+    "Method": "Delete",
+    "RelativePath": "api/EmpresaCliente/DeleteEmpresaCliente",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "DelItem",
+        "Type": "Modelo.Sistecom.Modelo.Database.EmpresasCliente",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.EmpresaClienteController",
+    "Method": "DeleteById",
+    "RelativePath": "api/EmpresaCliente/DeleteEmpresaCliente/{IdRegistrado}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "IdRegistrado",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.EmpresaClienteController",
+    "Method": "GetAll",
+    "RelativePath": "api/EmpresaCliente/EmpresasClientesInfoAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.EmpresaClienteController",
+    "Method": "GetProveedorById",
+    "RelativePath": "api/EmpresaCliente/GetEmpresaClienteById/{idEmpresaCliente}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idEmpresaCliente",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.EmpresaClienteController",
+    "Method": "Create",
+    "RelativePath": "api/EmpresaCliente/InsertEmpresaCliente",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "NewItem",
+        "Type": "Modelo.Sistecom.Modelo.Database.EmpresasCliente",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.EmpresaClienteController",
+    "Method": "Update",
+    "RelativePath": "api/EmpresaCliente/UpdateEmpresaCliente",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UpdItem",
+        "Type": "Modelo.Sistecom.Modelo.Database.EmpresasCliente",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ProveedorController",
+    "Method": "Delete",
+    "RelativePath": "api/Proveedor/DeleteProveedor",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "proveedorToDelete",
+        "Type": "Modelo.Sistecom.Modelo.Database.Proveedore",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ProveedorController",
+    "Method": "DeleteById",
+    "RelativePath": "api/Proveedor/DeleteProveedor/{idProveedor}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idProveedor",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ProveedorController",
+    "Method": "GetAll",
+    "RelativePath": "api/Proveedor/GetAllProveedores",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ProveedorController",
+    "Method": "GetProveedorById",
+    "RelativePath": "api/Proveedor/GetProveedorById/{idProveedor}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idProveedor",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ProveedorController",
+    "Method": "Insert",
+    "RelativePath": "api/Proveedor/InsertProveedor",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newProveedor",
+        "Type": "Modelo.Sistecom.Modelo.Database.Proveedore",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ProveedorController",
+    "Method": "Update",
+    "RelativePath": "api/Proveedor/UpdateProveedor",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updatedProveedor",
+        "Type": "Modelo.Sistecom.Modelo.Database.Proveedore",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
+    "Method": "Delete",
+    "RelativePath": "api/SolicitudesCompra/DeleteSolicitud",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "solicitudToDelete",
+        "Type": "Modelo.Sistecom.Modelo.Database.SolicitudesCompra",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
+    "Method": "DeleteById",
+    "RelativePath": "api/SolicitudesCompra/DeleteSolicitud/{idSolicitud}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idSolicitud",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
+    "Method": "GetById",
+    "RelativePath": "api/SolicitudesCompra/GetSolicitudById/{idSolicitud}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idSolicitud",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
+    "Method": "Insert",
+    "RelativePath": "api/SolicitudesCompra/InsertSolicitud",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newSolicitud",
+        "Type": "Modelo.Sistecom.Modelo.Database.SolicitudesCompra",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
+    "Method": "GetAll",
+    "RelativePath": "api/SolicitudesCompra/SolicitudesCompraAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
+    "Method": "Update",
+    "RelativePath": "api/SolicitudesCompra/UpdateSolicitud",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updatedSolicitud",
+        "Type": "Modelo.Sistecom.Modelo.Database.SolicitudesCompra",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SuscripcioneController",
+    "Method": "Delete",
+    "RelativePath": "api/Suscripcione/DeleteSuscripcion",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "suscripcionToDelete",
+        "Type": "Modelo.Sistecom.Modelo.Database.Suscripcione",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SuscripcioneController",
+    "Method": "DeleteById",
+    "RelativePath": "api/Suscripcione/DeleteSuscripcion/{idSuscripcion}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idSuscripcion",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SuscripcioneController",
+    "Method": "GetById",
+    "RelativePath": "api/Suscripcione/GetSuscripcionById/{idSuscripcion}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idSuscripcion",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SuscripcioneController",
+    "Method": "Insert",
+    "RelativePath": "api/Suscripcione/InsertSuscripcion",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newSuscripcion",
+        "Type": "Modelo.Sistecom.Modelo.Database.Suscripcione",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SuscripcioneController",
+    "Method": "GetAll",
+    "RelativePath": "api/Suscripcione/SuscripcionesAll",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SuscripcioneController",
+    "Method": "Update",
+    "RelativePath": "api/Suscripcione/UpdateSuscripcion",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updatedSuscripcion",
+        "Type": "Modelo.Sistecom.Modelo.Database.Suscripcione",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UsersController",
+    "Method": "Get",
+    "RelativePath": "api/Users",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Page",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "RecordsPerPage",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Identity.Api.Model.DTO.UserDTO, Identity.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UsersController",
+    "Method": "AssignRole",
+    "RelativePath": "api/Users/assignRole",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "editRoleDTO",
+        "Type": "Identity.Api.Model.DTO.EditRoleDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UsersController",
+    "Method": "RemoveRole",
+    "RelativePath": "api/Users/removeRole",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "editRoleDTO",
+        "Type": "Identity.Api.Model.DTO.EditRoleDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UsersController",
+    "Method": "Get",
+    "RelativePath": "api/Users/roles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Identity.Api.Model.DTO.RoleDTO, Identity.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UsuarioController",
+    "Method": "Delete",
+    "RelativePath": "api/Usuario/DeleteUsuario",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuario",
+        "Type": "Modelo.Sistecom.Modelo.Database.Usuario",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UsuarioController",
+    "Method": "DeleteById",
+    "RelativePath": "api/Usuario/DeleteUsuarioById/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UsuarioController",
+    "Method": "GetAll",
+    "RelativePath": "api/Usuario/GetAllUsuarios",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UsuarioController",
+    "Method": "GetById",
+    "RelativePath": "api/Usuario/GetUsuarioById/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UsuarioController",
+    "Method": "Create",
+    "RelativePath": "api/Usuario/InsertUsuario",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuario",
+        "Type": "Modelo.Sistecom.Modelo.Database.Usuario",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UsuarioController",
+    "Method": "Update",
+    "RelativePath": "api/Usuario/UpdateUsuario",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "usuario",
+        "Type": "Modelo.Sistecom.Modelo.Database.Usuario",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.WeatherForecastController",
+    "Method": "Get",
+    "RelativePath": "WeatherForecast",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Identity.Api.WeatherForecast, Identity.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  }
+]

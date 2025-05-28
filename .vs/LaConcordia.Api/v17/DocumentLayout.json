@@ -1,0 +1,202 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\users\\gmora\\source\\proyecto la concordia\\laconcordia.api\\identity.api\\controllers\\accountscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\controllers\\accountscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\users\\gmora\\source\\proyecto la concordia\\laconcordia.api\\identity.api\\model\\dto\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\model\\dto\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\users\\gmora\\source\\proyecto la concordia\\laconcordia.api\\identity.api\\model\\dto\\roledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\model\\dto\\roledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\users\\gmora\\source\\proyecto la concordia\\laconcordia.api\\identity.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\users\\gmora\\source\\proyecto la concordia\\laconcordia.api\\identity.api\\persistence.database\\configuration\\applicationuserconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\persistence.database\\configuration\\applicationuserconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\users\\gmora\\source\\proyecto la concordia\\laconcordia.api\\identity.api\\model\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\model\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\users\\gmora\\source\\proyecto la concordia\\laconcordia.api\\identity.api\\helpers\\queryableextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\helpers\\queryableextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\users\\gmora\\source\\proyecto la concordia\\laconcordia.api\\identity.api\\model\\usertoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\model\\usertoken.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\users\\gmora\\source\\proyecto la concordia\\laconcordia.api\\identity.api\\model\\userinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\model\\userinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\users\\gmora\\source\\proyecto la concordia\\laconcordia.api\\identity.api\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 283,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Program.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Program.cs",
+              "ToolTip": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Program.cs",
+              "RelativeToolTip": "Identity.Api\\Program.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T12:31:50.71Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ApplicationUserConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Persistence.DataBase\\configuration\\ApplicationUserConfiguration.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Persistence.DataBase\\configuration\\ApplicationUserConfiguration.cs",
+              "ToolTip": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Persistence.DataBase\\configuration\\ApplicationUserConfiguration.cs",
+              "RelativeToolTip": "Identity.Api\\Persistence.DataBase\\configuration\\ApplicationUserConfiguration.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwBQAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T04:18:18.353Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ApplicationUser.cs",
+              "DocumentMoniker": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Model\\ApplicationUser.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Model\\ApplicationUser.cs",
+              "ToolTip": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Model\\ApplicationUser.cs",
+              "RelativeToolTip": "Identity.Api\\Model\\ApplicationUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T04:18:11.59Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AccountsController.cs",
+              "DocumentMoniker": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Controllers\\AccountsController.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Controllers\\AccountsController.cs",
+              "ToolTip": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Controllers\\AccountsController.cs",
+              "RelativeToolTip": "Identity.Api\\Controllers\\AccountsController.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAowDkAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T04:10:53.643Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UserToken.cs",
+              "DocumentMoniker": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Model\\UserToken.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Model\\UserToken.cs",
+              "ToolTip": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Model\\UserToken.cs",
+              "RelativeToolTip": "Identity.Api\\Model\\UserToken.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T04:03:05.342Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "UserInfo.cs",
+              "DocumentMoniker": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Model\\UserInfo.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Model\\UserInfo.cs",
+              "ToolTip": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Model\\UserInfo.cs",
+              "RelativeToolTip": "Identity.Api\\Model\\UserInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T04:02:24.591Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserDTO.cs",
+              "DocumentMoniker": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Model\\DTO\\UserDTO.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Model\\DTO\\UserDTO.cs",
+              "ToolTip": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Model\\DTO\\UserDTO.cs",
+              "RelativeToolTip": "Identity.Api\\Model\\DTO\\UserDTO.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAxwAoAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T04:00:33.105Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "RoleDTO.cs",
+              "DocumentMoniker": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Model\\DTO\\RoleDTO.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Model\\DTO\\RoleDTO.cs",
+              "ToolTip": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Model\\DTO\\RoleDTO.cs",
+              "RelativeToolTip": "Identity.Api\\Model\\DTO\\RoleDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T03:59:49.081Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "QueryableExtensions.cs",
+              "DocumentMoniker": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Helpers\\QueryableExtensions.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Helpers\\QueryableExtensions.cs",
+              "ToolTip": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Helpers\\QueryableExtensions.cs",
+              "RelativeToolTip": "Identity.Api\\Helpers\\QueryableExtensions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T03:47:04.861Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Controllers\\UsersController.cs",
+              "ToolTip": "C:\\Users\\gmora\\source\\Proyecto La Concordia\\LaConcordia.Api\\Identity.Api\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "Identity.Api\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T03:37:09.096Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

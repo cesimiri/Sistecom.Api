@@ -1,0 +1,117 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Identity.Api.Model;
+using Identity.Api.Persistence.DataBase;
+using Identity.Api.Services;
+using Identity.Api.Interfaces;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Define la variable para CORS
+string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+// Add services to the container (equivalente a ConfigureServices)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .WithExposedHeaders("totalAmountPages")
+                        .AllowAnyMethod();
+                    });
+});
+
+// DbContext
+builder.Services.AddDbContext<ApplicationDBContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//  options.UseOracle(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//builder.Services.AddDbContext<ApplicationDBContext>(options =>
+//{
+//    options.UseOracle(builder.Configuration.GetConnectionString("DefaultConnection"));
+//});
+
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
+    .AddEntityFrameworkStores<ApplicationDBContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+builder.Services.AddRazorPages();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["jwt:key"])),
+        ClockSkew = TimeSpan.Zero
+    });
+
+
+//--------------------------------------
+//SERVICIOS PERSONALIZADOS 
+//--------------------------------------
+// Servicios de Empresas 
+builder.Services.AddScoped<IEmpresaCliente, EmpresaClienteService>();
+         
+// Servicios de Usuarios
+builder.Services.AddScoped<IUsuario, UsuarioService>();
+
+////// Servicios de Suscripciones
+builder.Services.AddScoped<ISuscripcione, SuscripcioneService>();
+
+////// Servicios de Proveedores
+builder.Services.AddScoped<IProveedor, ProveedorService>();
+
+// Servicios Contrato
+builder.Services.AddScoped<IContrato, ContratoService>();
+
+
+// Servicios de Solicitudes de Compra
+builder.Services.AddScoped<ISolicitudesCompra, SolicitudesCompraService>();
+
+
+
+
+//Fin de servicios
+
+//*builder.Services.AddScoped<IMenuInfo, MenuInfoServices>();
+//builder.Services.AddScoped<IVollenda, VollendaServices>();
+builder.Services.AddControllers();
+
+// Construir la aplicación
+var app = builder.Build();
+
+// Configure the HTTP request pipeline (equivalente a Configure)
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler("/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios.
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseCors(MyAllowSpecificOrigins);
+
+app.MapControllers();
+
+app.Run();
