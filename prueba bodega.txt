@@ -1,0 +1,38 @@
+public partial class Bodega
+{
+    public int IdBodega { get; set; }
+
+    public string Codigo { get; set; } = null!;
+
+    public string Nombre { get; set; } = null!;
+
+    public string? Direccion { get; set; }
+
+    public string? Telefono { get; set; }
+
+    public string? Responsable { get; set; }
+
+    public string? Tipo { get; set; }
+
+    public bool? PermiteVentas { get; set; }
+
+    public bool? PermiteEnsamblaje { get; set; }
+
+    public string? Estado { get; set; }
+
+    public DateTime? FechaRegistro { get; set; }
+
+    public virtual ICollection<FacturasCompra> FacturasCompras { get; set; } = new List<FacturasCompra>();
+
+    public virtual ICollection<MovimientosInventario> MovimientosInventarioIdBodegaDestinoNavigations { get; set; } = new List<MovimientosInventario>();
+
+    public virtual ICollection<MovimientosInventario> MovimientosInventarioIdBodegaNavigations { get; set; } = new List<MovimientosInventario>();
+
+    public virtual ICollection<MovimientosInventario> MovimientosInventarioIdBodegaOrigenNavigations { get; set; } = new List<MovimientosInventario>();
+
+    public virtual ICollection<OrdenesEnsamblaje> OrdenesEnsamblajeIdBodegaDestinoNavigations { get; set; } = new List<OrdenesEnsamblaje>();
+
+    public virtual ICollection<OrdenesEnsamblaje> OrdenesEnsamblajeIdBodegaOrigenNavigations { get; set; } = new List<OrdenesEnsamblaje>();
+
+    public virtual ICollection<StockBodega> StockBodegas { get; set; } = new List<StockBodega>();
+}
