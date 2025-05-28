@@ -1,0 +1,26 @@
+public partial class DetalleSolicitud
+{
+    public int IdDetalle { get; set; }
+
+    public int IdSolicitud { get; set; }
+
+    public int IdProducto { get; set; }
+
+    public decimal Cantidad { get; set; }
+
+    public decimal PrecioUnitario { get; set; }
+
+    public decimal? Descuento { get; set; }
+
+    public decimal Subtotal { get; set; }
+
+    public int? IdUsuarioDestino { get; set; }
+
+    public string? Observaciones { get; set; }
+
+    public virtual Producto IdProductoNavigation { get; set; } = null!;
+
+    public virtual SolicitudesCompra IdSolicitudNavigation { get; set; } = null!;
+
+    public virtual Usuario? IdUsuarioDestinoNavigation { get; set; }
+}
