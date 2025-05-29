@@ -3,6 +3,7 @@ using Identity.Api.DataRepository;
 using Modelo.Sistecom.Modelo.Database;
 namespace Identity.Api.Services
 {
+
     public class FacturasCompraServices : IFacturasCompra
     {
         private FacturasCompraRepository _dataRepository = new FacturasCompraRepository();

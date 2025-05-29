@@ -11,7 +11,7 @@ namespace Identity.Api.DataRepository
         {
             using (var context = new InvensisContext())
             {
-                return context.DetalleSolicitudes.ToList();
+                return context.DetalleSolicituds.ToList();
             }
         }
 
@@ -19,7 +19,7 @@ namespace Identity.Api.DataRepository
         {
             using (var context = new InvensisContext())
             {
-                return context.DetalleSolicitudes.FirstOrDefault(d => d.IdDetalle == idDetalle);
+                return context.DetalleSolicituds.FirstOrDefault(d => d.IdDetalle == idDetalle);
             }
         }
 
@@ -27,7 +27,7 @@ namespace Identity.Api.DataRepository
         {
             using (var context = new InvensisContext())
             {
-                context.DetalleSolicitudes.Add(newItem);
+                context.DetalleSolicituds.Add(newItem);
                 context.SaveChanges();
             }
         }
@@ -36,7 +36,7 @@ namespace Identity.Api.DataRepository
         {
             using (var context = new InvensisContext())
             {
-                var registrado = context.DetalleSolicitudes.FirstOrDefault(d => d.IdDetalle == updItem.IdDetalle);
+                var registrado = context.DetalleSolicituds.FirstOrDefault(d => d.IdDetalle == updItem.IdDetalle);
 
                 if (registrado != null)
                 {
@@ -58,7 +58,7 @@ namespace Identity.Api.DataRepository
         {
             using (var context = new InvensisContext())
             {
-                context.DetalleSolicitudes.Remove(delItem);
+                context.DetalleSolicituds.Remove(delItem);
                 context.SaveChanges();
             }
         }
@@ -67,11 +67,11 @@ namespace Identity.Api.DataRepository
         {
             using (var context = new InvensisContext())
             {
-                var registrado = context.DetalleSolicitudes.FirstOrDefault(d => d.IdDetalle == idDetalle);
+                var registrado = context.DetalleSolicituds.FirstOrDefault(d => d.IdDetalle == idDetalle);
 
                 if (registrado != null)
                 {
-                    context.DetalleSolicitudes.Remove(registrado);
+                    context.DetalleSolicituds.Remove(registrado);
                     context.SaveChanges();
                 }
             }

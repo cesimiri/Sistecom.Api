@@ -82,6 +82,9 @@ builder.Services.AddScoped<IContrato, ContratoService>();
 // Servicios de Solicitudes de Compra
 builder.Services.AddScoped<ISolicitudesCompra, SolicitudesCompraService>();
 
+//FacturCompra
+builder.Services.AddScoped<IFacturasCompra, FacturasCompraServices>();
+
 // Servicios de Bodegas
 builder.Services.AddScoped<IBodega,  BodegaService>();
 
@@ -90,6 +93,33 @@ builder.Services.AddScoped<IStockBodega, StockBodegaServices>();
 
 //DetalleSolicitud
 builder.Services.AddScoped<IDetalleSolicitud, DetalleSolicitudService>();
+
+//Servicio OrdenesEtrega
+builder.Services.AddScoped<IOrdenesEntrega, OrdenesEntregaServices>();
+
+//Servicio DetalleFacturaCompra
+builder.Services.AddScoped<IDetalleFacturaCompra, DetalleFacturaCompraService>();
+
+//CategoriasProducto
+builder.Services.AddScoped<ICategoriasProducto, CategoriasProductoSevices>();
+
+//Producto
+builder.Services.AddScoped<IProducto, ProductoServices>();
+
+//Activo
+builder.Services.AddScoped<IActivo, ActivoServices>();
+
+//Mantenimiento
+builder.Services.AddScoped<IMantenimiento, MantenimientoServices>();
+
+//HistorialActivo
+builder.Services.AddScoped<IHistorialActivo, HistorialActivoServices>();
+
+//AsignacionesActivo
+builder.Services.AddScoped<IAsignacionesActivo, AsignacionesActivoServices>();
+
+//ServiciosServidor
+builder.Services.AddScoped<IServiciosServidor, ServiciosServidorServices>();
 
 
 //Fin de servicios

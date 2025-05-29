@@ -3,7 +3,6 @@ using Identity.Api.Persistence.DataBase;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Identity.Api.DataRepository
 {
