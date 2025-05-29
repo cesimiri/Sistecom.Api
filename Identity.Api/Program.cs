@@ -82,7 +82,14 @@ builder.Services.AddScoped<IContrato, ContratoService>();
 // Servicios de Solicitudes de Compra
 builder.Services.AddScoped<ISolicitudesCompra, SolicitudesCompraService>();
 
+// Servicios de Bodegas
+builder.Services.AddScoped<IBodega,  BodegaService>();
 
+// Servicios de Stock Bodega
+builder.Services.AddScoped<IStockBodega, StockBodegaServices>();
+
+//DetalleSolicitud
+builder.Services.AddScoped<IDetalleSolicitud, DetalleSolicitudService>();
 
 
 //Fin de servicios

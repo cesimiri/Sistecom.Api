@@ -10,40 +10,39 @@ namespace Identity.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class EmpresaClienteController : Controller
+    public class BodegaController : Controller
     {
-        private readonly IEmpresaCliente _empresaCliente;
+        private readonly IBodega _bodega;
 
-        public EmpresaClienteController(IEmpresaCliente iEmpresaCliente)
+        public BodegaController(IBodega iBodega)
         {
-            _empresaCliente = iEmpresaCliente;
+            _bodega = iBodega;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("EmpresasClientesInfoAll")]
+        [HttpGet("BodegaInfoAll")]
         public IActionResult GetAll()
         {
-            return Ok(_empresaCliente.EmpresasClientesInfoAll);
+            return Ok(_bodega.BodegaInfoAll);
         }
 
-        
-        [HttpGet("GetEmpresaClienteById/{idEmpresaCliente}")]
-        public IActionResult GetEmpresaClienteById(int idEmpresaCliente)
+
+        [HttpGet("GetBodegaById/{idBodega}")]
+        public IActionResult GetBodegaById(int idBodega)
         {
-            //var proveedor = _proveedorService.GetProveedorById(idProveedor);
 
-            var empresaCliente = _empresaCliente.GetEmpresaClienteById(idEmpresaCliente);
+            var bodega = _bodega.GetBodegaById(idBodega);
 
-            if (empresaCliente == null)
+            if (bodega == null)
             {
-                return NotFound($"Empresa Cliente con ID {idEmpresaCliente} no encontrado.");
+                return NotFound($"No existe esa bodega con el ID: {idBodega} no encontrado.");
             }
 
-            return Ok(empresaCliente);
+            return Ok(bodega);
         }
 
-        [HttpPost("InsertEmpresaCliente")]
-        public IActionResult Create([FromBody] EmpresasCliente NewItem)
+        [HttpPost("InsertBodega")]
+        public IActionResult Create([FromBody] Bodega NewItem)
         {
             try
             {
@@ -52,7 +51,7 @@ namespace Identity.Api.Controllers
                     return BadRequest("Error: Envio de datos");
                 }
 
-                _empresaCliente.InsertEmpresaCliente(NewItem);
+                _bodega.InsertBodega(NewItem);
             }
             catch (Exception ex)
             {
@@ -62,8 +61,8 @@ namespace Identity.Api.Controllers
             return Ok(NewItem);
         }
 
-        [HttpPut("UpdateEmpresaCliente")]
-        public IActionResult Update([FromBody] EmpresasCliente UpdItem)
+        [HttpPut("UpdateBodega")]
+        public IActionResult Update([FromBody] Bodega UpdItem)
         {
             try
             {
@@ -72,7 +71,7 @@ namespace Identity.Api.Controllers
                     return BadRequest("Error: Envio de datos");
                 }
 
-                _empresaCliente.UpdateEmpresaCliente(UpdItem);
+                _bodega.UpdateBodega(UpdItem);
             }
             catch (Exception ex)
             {
@@ -82,8 +81,8 @@ namespace Identity.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("DeleteEmpresaCliente")]
-        public IActionResult Delete([FromBody] EmpresasCliente DelItem)
+        [HttpDelete("DeleteBodega")]
+        public IActionResult Delete([FromBody] Bodega DelItem)
         {
             try
             {
@@ -92,7 +91,7 @@ namespace Identity.Api.Controllers
                     return BadRequest("Error: Envio de datos");
                 }
 
-                _empresaCliente.DeleteEmpresaCliente(DelItem);
+                _bodega.DeleteBodega(DelItem);
             }
             catch (Exception ex)
             {
@@ -102,12 +101,12 @@ namespace Identity.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("DeleteEmpresaCliente/{IdRegistrado}")]
-        public IActionResult DeleteById(int IdRegistrado)
+        [HttpDelete("DeleteBodegaById/{IdBodega}")]
+        public IActionResult DeleteBodegaById(int IdBodega)
         {
             try
             {
-                _empresaCliente.DeleteEmpresaClienteById(IdRegistrado);
+                _bodega.DeleteBodegaById(IdBodega);
             }
             catch (Exception ex)
             {

@@ -1,18 +1,26 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\",
+  "WorkspaceRootPath": "D:\\Molinera\\Sistecom.Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\interfaces\\ifacturascompra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\interfaces\\ifacturascompra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\services\\facturascompraservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\services\\facturascompraservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|d:\\molinera\\sistecom.api\\identity.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|d:\\molinera\\sistecom.api\\identity.api\\services\\detallesolicitudservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\services\\detallesolicitudservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|d:\\molinera\\sistecom.api\\identity.api\\interfaces\\idetallesolicitud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\interfaces\\idetallesolicitud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|d:\\molinera\\sistecom.api\\identity.api\\datarepository\\detallesolicituddatarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\datarepository\\detallesolicituddatarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|d:\\molinera\\sistecom.api\\identity.api\\controllers\\detallesolicitudcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\controllers\\detallesolicitudcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,17 +30,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Program.cs",
+              "DocumentMoniker": "D:\\Molinera\\Sistecom.Api\\Identity.Api\\Program.cs",
               "RelativeDocumentMoniker": "Identity.Api\\Program.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Program.cs",
+              "ToolTip": "D:\\Molinera\\Sistecom.Api\\Identity.Api\\Program.cs",
               "RelativeToolTip": "Identity.Api\\Program.cs",
-              "ViewState": "AgIAAEYAAAAAAAAAAAAAAFQAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAAAFoAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-27T14:47:21.994Z",
               "IsPinned": true,
@@ -40,29 +48,67 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "IFacturasCompra.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\IFacturasCompra.cs",
-              "RelativeDocumentMoniker": "Identity.Api\\Interfaces\\IFacturasCompra.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\IFacturasCompra.cs",
-              "RelativeToolTip": "Identity.Api\\Interfaces\\IFacturasCompra.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAkAAAAWAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "DetalleSolicitudService.cs",
+              "DocumentMoniker": "D:\\Molinera\\Sistecom.Api\\Identity.Api\\Services\\DetalleSolicitudService.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Services\\DetalleSolicitudService.cs",
+              "ToolTip": "D:\\Molinera\\Sistecom.Api\\Identity.Api\\Services\\DetalleSolicitudService.cs",
+              "RelativeToolTip": "Identity.Api\\Services\\DetalleSolicitudService.cs",
+              "ViewState": "AgIAABQAAAAAAAAAAAAmwCoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-28T21:24:52.434Z",
+              "WhenOpened": "2025-05-29T03:00:26.028Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "FacturasCompraServices.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\FacturasCompraServices.cs",
-              "RelativeDocumentMoniker": "Identity.Api\\Services\\FacturasCompraServices.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\FacturasCompraServices.cs",
-              "RelativeToolTip": "Identity.Api\\Services\\FacturasCompraServices.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAUAAAA5AAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "IDetalleSolicitud.cs",
+              "DocumentMoniker": "D:\\Molinera\\Sistecom.Api\\Identity.Api\\Interfaces\\IDetalleSolicitud.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Interfaces\\IDetalleSolicitud.cs",
+              "ToolTip": "D:\\Molinera\\Sistecom.Api\\Identity.Api\\Interfaces\\IDetalleSolicitud.cs",
+              "RelativeToolTip": "Identity.Api\\Interfaces\\IDetalleSolicitud.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-28T21:06:09.817Z",
+              "WhenOpened": "2025-05-29T02:59:59.512Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DetalleSolicitudDataRepository.cs",
+              "DocumentMoniker": "D:\\Molinera\\Sistecom.Api\\Identity.Api\\DataRepository\\DetalleSolicitudDataRepository.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\DataRepository\\DetalleSolicitudDataRepository.cs",
+              "ToolTip": "D:\\Molinera\\Sistecom.Api\\Identity.Api\\DataRepository\\DetalleSolicitudDataRepository.cs",
+              "RelativeToolTip": "Identity.Api\\DataRepository\\DetalleSolicitudDataRepository.cs",
+              "ViewState": "AgIAADsAAAAAAAAAAAAiwFAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T02:59:23.696Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DetalleSolicitudController.cs",
+              "DocumentMoniker": "D:\\Molinera\\Sistecom.Api\\Identity.Api\\Controllers\\DetalleSolicitudController.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Controllers\\DetalleSolicitudController.cs",
+              "ToolTip": "D:\\Molinera\\Sistecom.Api\\Identity.Api\\Controllers\\DetalleSolicitudController.cs",
+              "RelativeToolTip": "Identity.Api\\Controllers\\DetalleSolicitudController.cs",
+              "ViewState": "AgIAAGYAAAAAAAAAAAAywHUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-29T02:58:54.032Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
             }
           ]
         }
