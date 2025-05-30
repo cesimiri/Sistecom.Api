@@ -1,12 +1,13 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using Identity.Api.Interfaces;
 using Identity.Api.Model;
 using Identity.Api.Persistence.DataBase;
 using Identity.Api.Services;
-using Identity.Api.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Modelo.Sistecom.Modelo.Database;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -120,6 +121,40 @@ builder.Services.AddScoped<IAsignacionesActivo, AsignacionesActivoServices>();
 
 //ServiciosServidor
 builder.Services.AddScoped<IServiciosServidor, ServiciosServidorServices>();
+
+//servidore
+builder.Services.AddScoped<IServidore, ServidoreServices>();
+
+//DetalleOrdenEntrega
+builder.Services.AddScoped<IDetalleOrdenEntrega, DetalleOrdenEntregaServices>();
+
+//AsignacionesLicencia
+builder.Services.AddScoped<IAsignacionesLicencia, AsignacionesLicenciaServices>();
+
+//TiposLicencium
+builder.Services.AddScoped<ITiposLicencium, TiposLicenciumServices>();
+
+//MovimientosInventario
+builder.Services.AddScoped<IMovimientosInventario, MovimientosInventarioServices>();
+
+//ComponentesEnsamblaje
+builder.Services.AddScoped<IComponentesEnsamblaje, ComponentesEnsamblajeServices>();
+
+//OrdenesEnsamblaje
+builder.Services.AddScoped<IOrdenesEnsamblaje, OrdenesEnsamblajeServices>();
+
+//DetalleEnsamblaje
+builder.Services.AddScoped<IDetalleEnsamblaje, DetalleEnsamblajeServices>();
+
+//Licencia
+builder.Services.AddScoped<ILicencia, LicenciaServices>();
+
+
+
+
+
+
+
 
 
 //Fin de servicios
