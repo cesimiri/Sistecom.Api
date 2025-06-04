@@ -9,6 +9,8 @@ namespace Identity.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     public class SuscripcioneController : Controller
     {
         private readonly ISuscripcione _suscripcioneService;

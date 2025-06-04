@@ -11,6 +11,8 @@ namespace Identity.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     public class OrdenesEntegaController : Controller
     {
         private readonly IOrdenesEntrega _empresaCliente;

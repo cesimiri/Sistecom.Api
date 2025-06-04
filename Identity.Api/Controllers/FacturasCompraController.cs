@@ -10,6 +10,8 @@ namespace Identity.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     public class FacturasCompraController : Controller
     {
         private readonly IFacturasCompra _facturasCompra;

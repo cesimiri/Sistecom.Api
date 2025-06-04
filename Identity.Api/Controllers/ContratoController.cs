@@ -9,6 +9,8 @@ namespace Identity.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     public class ContratoController : Controller
     {
         private readonly IContrato _contratoService;

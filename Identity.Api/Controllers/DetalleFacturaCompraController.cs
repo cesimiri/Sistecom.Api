@@ -1,4 +1,5 @@
 ﻿using Identity.Api.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Modelo.Sistecom.Modelo.Database;
@@ -8,6 +9,8 @@ namespace Identity.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     public class DetalleFacturaCompraController : Controller
     {
         private readonly IDetalleFacturaCompra _detalleFacturaService;
