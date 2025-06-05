@@ -9,34 +9,50 @@ namespace Identity.Api.Services
     {
         private readonly SuscripcioneDataRepository _dataRepository = new SuscripcioneDataRepository();
 
-        public IEnumerable<Suscripcione> SuscripcionesAll
+        //public async Task<IEnumerable<Suscripcione>> SuscripcionesAll
+        //{
+        //    get => await _dataRepository.SuscripcionesAll();
+        //}
+        public async Task<IEnumerable<Suscripcione>> SuscripcionesAll()
         {
-            get { return _dataRepository.GetAllSuscripciones(); }
+            return await _dataRepository.SuscripcionesAll();
         }
 
-        public Suscripcione GetSuscripcionById(int idSuscripcion)
+        public async Task<Suscripcione?> GetSuscripcionById(int idSuscripcion)
         {
-            return _dataRepository.GetSuscripcionById(idSuscripcion);
+            return await _dataRepository.GetSuscripcionById(idSuscripcion);
         }
 
-        public void InsertSuscripcion(Suscripcione newSuscripcion)
+        public async Task InsertSuscripcion(Suscripcione newSuscripcion)
         {
-            _dataRepository.InsertSuscripcion(newSuscripcion);
+            await _dataRepository.InsertSuscripcion(newSuscripcion);
         }
 
-        public void UpdateSuscripcion(Suscripcione updatedSuscripcion)
+        public async Task UpdateSuscripcion(Suscripcione updatedSuscripcion)
         {
-            _dataRepository.UpdateSuscripcion(updatedSuscripcion);
+            await _dataRepository.UpdateSuscripcion(updatedSuscripcion);
         }
 
-        public void DeleteSuscripcion(Suscripcione suscripcionToDelete)
+        public async Task DeleteSuscripcion(Suscripcione suscripcionToDelete)
         {
-            _dataRepository.DeleteSuscripcion(suscripcionToDelete);
+            await _dataRepository.DeleteSuscripcion(suscripcionToDelete);
         }
 
-        public void DeleteSuscripcionById(int idSuscripcion)
+        public async Task DeleteSuscripcionById(int idSuscripcion)
         {
-            _dataRepository.DeleteSuscripcionById(idSuscripcion);
+            await _dataRepository.DeleteSuscripcionById(idSuscripcion);
+        }
+
+
+        // Agregado 
+        public async Task<IEnumerable<EmpresasCliente>> GetEmpresaClienteAsync()
+        {
+            return await _dataRepository.GetEmpresaClienteAsync();
+        }
+
+        public async Task<IEnumerable<Proveedore>> GetProveedoreAsync()
+        {
+            return await _dataRepository.GetProveedoreAsync();
         }
     }
 }

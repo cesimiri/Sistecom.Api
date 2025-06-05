@@ -3,15 +3,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Modelo.Sistecom.Modelo.Database;
+using System.Threading.Tasks;
 
 namespace Identity.Api.Controllers
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-
-    public class SuscripcioneController : Controller
+    public class SuscripcioneController : ControllerBase
     {
         private readonly ISuscripcione _suscripcioneService;
 
@@ -20,17 +19,17 @@ namespace Identity.Api.Controllers
             _suscripcioneService = suscripcioneService;
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("SuscripcionesAll")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(_suscripcioneService.SuscripcionesAll);
+            var suscripciones = await _suscripcioneService.SuscripcionesAll();
+            return Ok(suscripciones);
         }
 
         [HttpGet("GetSuscripcionById/{idSuscripcion}")]
-        public IActionResult GetById(int idSuscripcion)
+        public async Task<IActionResult> GetById(int idSuscripcion)
         {
-            var suscripcion = _suscripcioneService.GetSuscripcionById(idSuscripcion);
+            var suscripcion = await _suscripcioneService.GetSuscripcionById(idSuscripcion);
 
             if (suscripcion == null)
             {
@@ -41,45 +40,45 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPost("InsertSuscripcion")]
-        public IActionResult Insert([FromBody] Suscripcione newSuscripcion)
+        public async Task<IActionResult> Insert([FromBody] Suscripcione newSuscripcion)
         {
             if (newSuscripcion == null || !ModelState.IsValid)
             {
                 return BadRequest("Error: Datos inválidos");
             }
 
-            _suscripcioneService.InsertSuscripcion(newSuscripcion);
+            await _suscripcioneService.InsertSuscripcion(newSuscripcion);
             return Ok(newSuscripcion);
         }
 
         [HttpPut("UpdateSuscripcion")]
-        public IActionResult Update([FromBody] Suscripcione updatedSuscripcion)
+        public async Task<IActionResult> Update([FromBody] Suscripcione updatedSuscripcion)
         {
             if (updatedSuscripcion == null || !ModelState.IsValid)
             {
                 return BadRequest("Error: Datos inválidos");
             }
 
-            _suscripcioneService.UpdateSuscripcion(updatedSuscripcion);
+            await _suscripcioneService.UpdateSuscripcion(updatedSuscripcion);
             return NoContent();
         }
 
         [HttpDelete("DeleteSuscripcion")]
-        public IActionResult Delete([FromBody] Suscripcione suscripcionToDelete)
+        public async Task<IActionResult> Delete([FromBody] Suscripcione suscripcionToDelete)
         {
             if (suscripcionToDelete == null || !ModelState.IsValid)
             {
                 return BadRequest("Error: Datos inválidos");
             }
 
-            _suscripcioneService.DeleteSuscripcion(suscripcionToDelete);
+            await _suscripcioneService.DeleteSuscripcion(suscripcionToDelete);
             return NoContent();
         }
 
-        [HttpDelete("DeleteSuscripcion/{idSuscripcion}")]
-        public IActionResult DeleteById(int idSuscripcion)
+        [HttpDelete("DeleteSuscripcionById/{idSuscripcion}")]
+        public async Task<IActionResult> DeleteById(int idSuscripcion)
         {
-            _suscripcioneService.DeleteSuscripcionById(idSuscripcion);
+            await _suscripcioneService.DeleteSuscripcionById(idSuscripcion);
             return NoContent();
         }
     }

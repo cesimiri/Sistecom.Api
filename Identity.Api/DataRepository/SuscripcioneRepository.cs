@@ -1,42 +1,50 @@
 ﻿using Modelo.Sistecom.Modelo.Database;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Identity.Api.DataRepository
 {
     public class SuscripcioneDataRepository
     {
-        public List<Suscripcione> GetAllSuscripciones()
+        public async Task<List<Suscripcione>> SuscripcionesAll()
         {
             using (var context = new InvensisContext())
             {
-                return context.Suscripciones.ToList();
+                return await context.Suscripciones
+                    .Include(s => s.IdEmpresaNavigation)
+                    .Include(s => s.IdProveedorNavigation)
+                    .ToListAsync();
             }
         }
 
-        public Suscripcione GetSuscripcionById(int idSuscripcion)
+        public async Task<Suscripcione?> GetSuscripcionById(int idSuscripcion)
         {
             using (var context = new InvensisContext())
             {
-                return context.Suscripciones.FirstOrDefault(s => s.IdSuscripcion == idSuscripcion);
+                return await context.Suscripciones
+                    .Include(s => s.IdEmpresaNavigation)
+                    .Include(s => s.IdProveedorNavigation)
+                    .FirstOrDefaultAsync(s => s.IdSuscripcion == idSuscripcion);
             }
         }
 
-        public void InsertSuscripcion(Suscripcione newSuscripcion)
+        public async Task InsertSuscripcion(Suscripcione newSuscripcion)
         {
             using (var context = new InvensisContext())
             {
-                context.Suscripciones.Add(newSuscripcion);
-                context.SaveChanges();
+                await context.Suscripciones.AddAsync(newSuscripcion);
+                await context.SaveChangesAsync();
             }
         }
 
-        public void UpdateSuscripcion(Suscripcione updatedSuscripcion)
+        public async Task UpdateSuscripcion(Suscripcione updatedSuscripcion)
         {
             using (var context = new InvensisContext())
             {
-                var suscripcion = context.Suscripciones
-                    .FirstOrDefault(s => s.IdSuscripcion == updatedSuscripcion.IdSuscripcion);
+                var suscripcion = await context.Suscripciones
+                    .FirstOrDefaultAsync(s => s.IdSuscripcion == updatedSuscripcion.IdSuscripcion);
 
                 if (suscripcion != null)
                 {
@@ -57,32 +65,48 @@ namespace Identity.Api.DataRepository
                     suscripcion.Observaciones = updatedSuscripcion.Observaciones;
                     suscripcion.FechaRegistro = updatedSuscripcion.FechaRegistro;
 
-                    context.SaveChanges();
+                    await context.SaveChangesAsync();
                 }
             }
         }
 
-        public void DeleteSuscripcion(Suscripcione suscripcionToDelete)
+        public async Task DeleteSuscripcion(Suscripcione suscripcionToDelete)
         {
             using (var context = new InvensisContext())
             {
                 context.Suscripciones.Remove(suscripcionToDelete);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
 
-        public void DeleteSuscripcionById(int idSuscripcion)
+        public async Task DeleteSuscripcionById(int idSuscripcion)
         {
             using (var context = new InvensisContext())
             {
-                var suscripcion = context.Suscripciones
-                    .FirstOrDefault(s => s.IdSuscripcion == idSuscripcion);
+                var suscripcion = await context.Suscripciones
+                    .FirstOrDefaultAsync(s => s.IdSuscripcion == idSuscripcion);
 
                 if (suscripcion != null)
                 {
                     context.Suscripciones.Remove(suscripcion);
-                    context.SaveChanges();
+                    await context.SaveChangesAsync();
                 }
+            }
+        }
+        // agregado
+        public async Task<IEnumerable<EmpresasCliente>> GetEmpresaClienteAsync()
+        {
+            using (var context = new InvensisContext())
+            {
+                return await context.EmpresasClientes.ToListAsync();
+            }
+        }
+
+        public async Task<IEnumerable<Proveedore>> GetProveedoreAsync()
+        {
+            using (var context = new InvensisContext())
+            {
+                return await context.Proveedores.ToListAsync();
             }
         }
     }
