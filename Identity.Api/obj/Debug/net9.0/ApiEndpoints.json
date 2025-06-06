@@ -2340,7 +2340,7 @@
   {
     "ContainingType": "Identity.Api.Controllers.SuscripcioneController",
     "Method": "DeleteById",
-    "RelativePath": "api/Suscripcione/DeleteSuscripcionById/{idSuscripcion}",
+    "RelativePath": "api/Suscripcione/DeleteSuscripcion/{idSuscripcion}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,

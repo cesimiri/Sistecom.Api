@@ -6,11 +6,20 @@ using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Controllers
 {
+<<<<<<< HEAD
     
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class SuscripcioneController : ControllerBase
+=======
+    [Authorize]
+    [Route("api/[controller]")]
+    [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
+    public class SuscripcioneController : Controller
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
     {
         private readonly ISuscripcione _suscripcioneService;
 
@@ -19,17 +28,17 @@ namespace Identity.Api.Controllers
             _suscripcioneService = suscripcioneService;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("SuscripcionesAll")]
-        public async Task<IActionResult> GetAll()
+        public IActionResult GetAll()
         {
-            var suscripciones = await _suscripcioneService.SuscripcionesAll();
-            return Ok(suscripciones);
+            return Ok(_suscripcioneService.SuscripcionesAll);
         }
 
         [HttpGet("GetSuscripcionById/{idSuscripcion}")]
-        public async Task<IActionResult> GetById(int idSuscripcion)
+        public IActionResult GetById(int idSuscripcion)
         {
-            var suscripcion = await _suscripcioneService.GetSuscripcionById(idSuscripcion);
+            var suscripcion = _suscripcioneService.GetSuscripcionById(idSuscripcion);
 
             if (suscripcion == null)
             {
@@ -40,7 +49,7 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPost("InsertSuscripcion")]
-        public async Task<IActionResult> Insert([FromBody] Suscripcione newSuscripcion)
+        public IActionResult Insert([FromBody] Suscripcione newSuscripcion)
         {
             if (!ModelState.IsValid)
             {
@@ -59,6 +68,7 @@ namespace Identity.Api.Controllers
                 });
             }
 
+<<<<<<< HEAD
             try
             {
                 // El service se encarga de toda la validación y lógica de negocio
@@ -77,16 +87,21 @@ namespace Identity.Api.Controllers
                     detalle = ex.Message
                 });
             }
+=======
+            _suscripcioneService.InsertSuscripcion(newSuscripcion);
+            return Ok(newSuscripcion);
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
         }
 
         [HttpPut("UpdateSuscripcion")]
-        public async Task<IActionResult> Update([FromBody] Suscripcione updatedSuscripcion)
+        public IActionResult Update([FromBody] Suscripcione updatedSuscripcion)
         {
             if (updatedSuscripcion == null || !ModelState.IsValid)
             {
                 return BadRequest("Error: Datos inválidos");
             }
 
+<<<<<<< HEAD
             try
             {
                 // El service se encarga de toda la validación y lógica de negocio
@@ -101,16 +116,21 @@ namespace Identity.Api.Controllers
                     detalle = ex.Message
                 });
             }
+=======
+            _suscripcioneService.UpdateSuscripcion(updatedSuscripcion);
+            return NoContent();
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
         }
 
         [HttpDelete("DeleteSuscripcion")]
-        public async Task<IActionResult> Delete([FromBody] Suscripcione suscripcionToDelete)
+        public IActionResult Delete([FromBody] Suscripcione suscripcionToDelete)
         {
             if (suscripcionToDelete == null || !ModelState.IsValid)
             {
                 return BadRequest("Error: Datos inválidos");
             }
 
+<<<<<<< HEAD
             try
             {
                 await _suscripcioneService.DeleteSuscripcion(suscripcionToDelete);
@@ -124,11 +144,16 @@ namespace Identity.Api.Controllers
                     detalle = ex.Message
                 });
             }
+=======
+            _suscripcioneService.DeleteSuscripcion(suscripcionToDelete);
+            return NoContent();
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
         }
 
-        [HttpDelete("DeleteSuscripcionById/{idSuscripcion}")]
-        public async Task<IActionResult> DeleteById(int idSuscripcion)
+        [HttpDelete("DeleteSuscripcion/{idSuscripcion}")]
+        public IActionResult DeleteById(int idSuscripcion)
         {
+<<<<<<< HEAD
             try
             {
                 await _suscripcioneService.DeleteSuscripcionById(idSuscripcion);
@@ -157,6 +182,10 @@ namespace Identity.Api.Controllers
         {
             var empresas = await _suscripcioneService.GetEmpresaClienteAsync();
             return Ok(empresas);
+=======
+            _suscripcioneService.DeleteSuscripcionById(idSuscripcion);
+            return NoContent();
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
         }
     }
 }
