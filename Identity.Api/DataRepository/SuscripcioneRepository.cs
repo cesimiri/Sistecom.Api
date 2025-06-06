@@ -1,113 +1,108 @@
 ﻿using Modelo.Sistecom.Modelo.Database;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Identity.Api.Interfaces;
 
-namespace Identity.Api.DataRepository
+namespace Identity.Api.Repositories
 {
-    public class SuscripcioneDataRepository
+    public class SuscripcionRepository : ISuscripcione
     {
-        public async Task<List<Suscripcione>> SuscripcionesAll()
+        private readonly InvensisContext _context;
+
+        public SuscripcionRepository(InvensisContext context)
         {
-            using (var context = new InvensisContext())
-            {
-                return await context.Suscripciones
-                    .Include(s => s.IdEmpresaNavigation)
-                    .Include(s => s.IdProveedorNavigation)
-                    .ToListAsync();
-            }
+            _context = context;
+        }
+
+        public async Task<IEnumerable<Suscripcione>> SuscripcionesAll()
+        {
+            return await _context.Suscripciones
+                .Include(s => s.IdEmpresaNavigation)
+                .Include(s => s.IdProveedorNavigation)
+                .AsNoTracking() // Para consultas de solo lectura
+                .ToListAsync();
         }
 
         public async Task<Suscripcione?> GetSuscripcionById(int idSuscripcion)
         {
-            using (var context = new InvensisContext())
-            {
-                return await context.Suscripciones
-                    .Include(s => s.IdEmpresaNavigation)
-                    .Include(s => s.IdProveedorNavigation)
-                    .FirstOrDefaultAsync(s => s.IdSuscripcion == idSuscripcion);
-            }
+            return await _context.Suscripciones
+                .Include(s => s.IdEmpresaNavigation)
+                .Include(s => s.IdProveedorNavigation)
+                .FirstOrDefaultAsync(s => s.IdSuscripcion == idSuscripcion);
         }
 
         public async Task InsertSuscripcion(Suscripcione newSuscripcion)
         {
-            using (var context = new InvensisContext())
+            // Establecer fecha de registro si no está establecida
+            if (newSuscripcion.FechaRegistro == null)
             {
-                await context.Suscripciones.AddAsync(newSuscripcion);
-                await context.SaveChangesAsync();
+                newSuscripcion.FechaRegistro = DateTime.UtcNow;
             }
+
+            await _context.Suscripciones.AddAsync(newSuscripcion);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateSuscripcion(Suscripcione updatedSuscripcion)
         {
-            using (var context = new InvensisContext())
+            var existingSuscripcion = await _context.Suscripciones
+                .FirstOrDefaultAsync(s => s.IdSuscripcion == updatedSuscripcion.IdSuscripcion);
+
+            if (existingSuscripcion == null)
             {
-                var suscripcion = await context.Suscripciones
-                    .FirstOrDefaultAsync(s => s.IdSuscripcion == updatedSuscripcion.IdSuscripcion);
-
-                if (suscripcion != null)
-                {
-                    suscripcion.IdProveedor = updatedSuscripcion.IdProveedor;
-                    suscripcion.IdEmpresa = updatedSuscripcion.IdEmpresa;
-                    suscripcion.NombreServicio = updatedSuscripcion.NombreServicio;
-                    suscripcion.TipoSuscripcion = updatedSuscripcion.TipoSuscripcion;
-                    suscripcion.FechaInicio = updatedSuscripcion.FechaInicio;
-                    suscripcion.FechaRenovacion = updatedSuscripcion.FechaRenovacion;
-                    suscripcion.PeriodoFacturacion = updatedSuscripcion.PeriodoFacturacion;
-                    suscripcion.CostoPeriodo = updatedSuscripcion.CostoPeriodo;
-                    suscripcion.UsuariosIncluidos = updatedSuscripcion.UsuariosIncluidos;
-                    suscripcion.AlmacenamientoGb = updatedSuscripcion.AlmacenamientoGb;
-                    suscripcion.UrlAcceso = updatedSuscripcion.UrlAcceso;
-                    suscripcion.Administrador = updatedSuscripcion.Administrador;
-                    suscripcion.Estado = updatedSuscripcion.Estado;
-                    suscripcion.NotificarDiasAntes = updatedSuscripcion.NotificarDiasAntes;
-                    suscripcion.Observaciones = updatedSuscripcion.Observaciones;
-                    suscripcion.FechaRegistro = updatedSuscripcion.FechaRegistro;
-
-                    await context.SaveChangesAsync();
-                }
+                throw new ArgumentException($"Suscripción con ID {updatedSuscripcion.IdSuscripcion} no encontrada");
             }
+
+            // Usar AutoMapper o método de extensión para mapear propiedades
+            _context.Entry(existingSuscripcion).CurrentValues.SetValues(updatedSuscripcion);
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteSuscripcion(Suscripcione suscripcionToDelete)
         {
-            using (var context = new InvensisContext())
-            {
-                context.Suscripciones.Remove(suscripcionToDelete);
-                await context.SaveChangesAsync();
-            }
+            _context.Suscripciones.Remove(suscripcionToDelete);
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteSuscripcionById(int idSuscripcion)
         {
-            using (var context = new InvensisContext())
-            {
-                var suscripcion = await context.Suscripciones
-                    .FirstOrDefaultAsync(s => s.IdSuscripcion == idSuscripcion);
+            var suscripcion = await _context.Suscripciones
+                .FirstOrDefaultAsync(s => s.IdSuscripcion == idSuscripcion);
 
-                if (suscripcion != null)
-                {
-                    context.Suscripciones.Remove(suscripcion);
-                    await context.SaveChangesAsync();
-                }
+            if (suscripcion == null)
+            {
+                throw new ArgumentException($"Suscripción con ID {idSuscripcion} no encontrada");
             }
+
+            _context.Suscripciones.Remove(suscripcion);
+            await _context.SaveChangesAsync();
         }
-        // agregado
+
+        public async Task<Proveedore?> GetProveedorByIdAsync(int idProveedor)
+        {
+            return await _context.Proveedores
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p => p.IdProveedor == idProveedor);
+        }
+
+        public async Task<EmpresasCliente?> GetEmpresaByIdAsync(int idEmpresa)
+        {
+            return await _context.EmpresasClientes
+                .AsNoTracking()
+                .FirstOrDefaultAsync(e => e.IdEmpresa == idEmpresa);
+        }
+
         public async Task<IEnumerable<EmpresasCliente>> GetEmpresaClienteAsync()
         {
-            using (var context = new InvensisContext())
-            {
-                return await context.EmpresasClientes.ToListAsync();
-            }
+            return await _context.EmpresasClientes
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Proveedore>> GetProveedoreAsync()
         {
-            using (var context = new InvensisContext())
-            {
-                return await context.Proveedores.ToListAsync();
-            }
+            return await _context.Proveedores
+                .AsNoTracking()
+                .ToListAsync();
         }
     }
 }

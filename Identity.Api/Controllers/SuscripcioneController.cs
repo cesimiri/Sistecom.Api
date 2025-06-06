@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Modelo.Sistecom.Modelo.Database;
-using System.Threading.Tasks;
 
 namespace Identity.Api.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class SuscripcioneController : ControllerBase
     {
         private readonly ISuscripcione _suscripcioneService;
@@ -42,13 +42,41 @@ namespace Identity.Api.Controllers
         [HttpPost("InsertSuscripcion")]
         public async Task<IActionResult> Insert([FromBody] Suscripcione newSuscripcion)
         {
-            if (newSuscripcion == null || !ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return BadRequest("Error: Datos inválidos");
+                var errores = ModelState
+                    .Where(ms => ms.Value?.Errors.Count > 0)
+                    .Select(kvp => new
+                    {
+                        Campo = kvp.Key,
+                        Errores = kvp.Value?.Errors.Select(e => e.ErrorMessage)
+                    });
+
+                return BadRequest(new
+                {
+                    mensaje = "Errores de validación",
+                    detalles = errores
+                });
             }
 
-            await _suscripcioneService.InsertSuscripcion(newSuscripcion);
-            return Ok(newSuscripcion);
+            try
+            {
+                // El service se encarga de toda la validación y lógica de negocio
+                await _suscripcioneService.InsertSuscripcion(newSuscripcion);
+
+                // Obtener la entidad completa con las navegaciones cargadas
+                var suscripcionCreada = await _suscripcioneService.GetSuscripcionById(newSuscripcion.IdSuscripcion);
+
+                return Ok(suscripcionCreada);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    mensaje = "Error al insertar la suscripción",
+                    detalle = ex.Message
+                });
+            }
         }
 
         [HttpPut("UpdateSuscripcion")]
@@ -59,8 +87,20 @@ namespace Identity.Api.Controllers
                 return BadRequest("Error: Datos inválidos");
             }
 
-            await _suscripcioneService.UpdateSuscripcion(updatedSuscripcion);
-            return NoContent();
+            try
+            {
+                // El service se encarga de toda la validación y lógica de negocio
+                await _suscripcioneService.UpdateSuscripcion(updatedSuscripcion);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    mensaje = "Error al actualizar la suscripción",
+                    detalle = ex.Message
+                });
+            }
         }
 
         [HttpDelete("DeleteSuscripcion")]
@@ -71,15 +111,52 @@ namespace Identity.Api.Controllers
                 return BadRequest("Error: Datos inválidos");
             }
 
-            await _suscripcioneService.DeleteSuscripcion(suscripcionToDelete);
-            return NoContent();
+            try
+            {
+                await _suscripcioneService.DeleteSuscripcion(suscripcionToDelete);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    mensaje = "Error al eliminar la suscripción",
+                    detalle = ex.Message
+                });
+            }
         }
 
         [HttpDelete("DeleteSuscripcionById/{idSuscripcion}")]
         public async Task<IActionResult> DeleteById(int idSuscripcion)
         {
-            await _suscripcioneService.DeleteSuscripcionById(idSuscripcion);
-            return NoContent();
+            try
+            {
+                await _suscripcioneService.DeleteSuscripcionById(idSuscripcion);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    mensaje = "Error al eliminar la suscripción",
+                    detalle = ex.Message
+                });
+            }
+        }
+
+        // Endpoints adicionales para obtener proveedores y empresas (útiles para el frontend)
+        [HttpGet("GetProveedores")]
+        public async Task<IActionResult> GetProveedores()
+        {
+            var proveedores = await _suscripcioneService.GetProveedoreAsync();
+            return Ok(proveedores);
+        }
+
+        [HttpGet("GetEmpresas")]
+        public async Task<IActionResult> GetEmpresas()
+        {
+            var empresas = await _suscripcioneService.GetEmpresaClienteAsync();
+            return Ok(empresas);
         }
     }
 }
