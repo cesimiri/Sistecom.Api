@@ -19,6 +19,7 @@ namespace Identity.Api.Services
             _logger = logger;
         }
 
+<<<<<<< HEAD
         public async Task<IEnumerable<Suscripcione>> SuscripcionesAll()
         {
             try
@@ -31,10 +32,16 @@ namespace Identity.Api.Services
                 _logger.LogError(ex, "Error al obtener todas las suscripciones");
                 throw;
             }
+=======
+        public IEnumerable<Suscripcione> SuscripcionesAll
+        {
+            get { return _dataRepository.GetAllSuscripciones(); }
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
         }
 
-        public async Task<Suscripcione?> GetSuscripcionById(int idSuscripcion)
+        public Suscripcione GetSuscripcionById(int idSuscripcion)
         {
+<<<<<<< HEAD
             if (idSuscripcion <= 0)
                 throw new ArgumentException("El ID de suscripción debe ser mayor a cero", nameof(idSuscripcion));
 
@@ -48,10 +55,14 @@ namespace Identity.Api.Services
                 _logger.LogError(ex, "Error al obtener suscripción con ID: {IdSuscripcion}", idSuscripcion);
                 throw;
             }
+=======
+            return _dataRepository.GetSuscripcionById(idSuscripcion);
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
         }
 
-        public async Task InsertSuscripcion(Suscripcione newSuscripcion)
+        public void InsertSuscripcion(Suscripcione newSuscripcion)
         {
+<<<<<<< HEAD
             try
             {
                 await ValidateSuscripcionBusinessRules(newSuscripcion);
@@ -77,10 +88,14 @@ namespace Identity.Api.Services
                 _logger.LogError(ex, "Error al insertar suscripción");
                 throw;
             }
+=======
+            _dataRepository.InsertSuscripcion(newSuscripcion);
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
         }
 
-        public async Task UpdateSuscripcion(Suscripcione updatedSuscripcion)
+        public void UpdateSuscripcion(Suscripcione updatedSuscripcion)
         {
+<<<<<<< HEAD
             try
             {
                 await ValidateSuscripcionBusinessRules(updatedSuscripcion);
@@ -107,10 +122,14 @@ namespace Identity.Api.Services
                 _logger.LogError(ex, "Error al actualizar suscripción con ID: {IdSuscripcion}", updatedSuscripcion.IdSuscripcion);
                 throw;
             }
+=======
+            _dataRepository.UpdateSuscripcion(updatedSuscripcion);
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
         }
 
-        public async Task DeleteSuscripcion(Suscripcione suscripcionToDelete)
+        public void DeleteSuscripcion(Suscripcione suscripcionToDelete)
         {
+<<<<<<< HEAD
             if (suscripcionToDelete?.IdSuscripcion <= 0)
                 throw new ArgumentException("Suscripción inválida para eliminar");
 
@@ -125,10 +144,14 @@ namespace Identity.Api.Services
                 _logger.LogError(ex, "Error al eliminar suscripción");
                 throw;
             }
+=======
+            _dataRepository.DeleteSuscripcion(suscripcionToDelete);
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
         }
 
-        public async Task DeleteSuscripcionById(int idSuscripcion)
+        public void DeleteSuscripcionById(int idSuscripcion)
         {
+<<<<<<< HEAD
             if (idSuscripcion <= 0)
                 throw new ArgumentException("El ID de suscripción debe ser mayor a cero", nameof(idSuscripcion));
 
@@ -171,6 +194,9 @@ namespace Identity.Api.Services
                 _logger.LogError(ex, "Error al obtener proveedores");
                 throw;
             }
+=======
+            _dataRepository.DeleteSuscripcionById(idSuscripcion);
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
         }
 
         public async Task<Proveedore?> GetProveedorByIdAsync(int idProveedor)

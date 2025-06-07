@@ -3,12 +3,17 @@ using Identity.Api.Interfaces;
 using Modelo.Sistecom.Modelo.Database;
 using System;
 using System.Collections.Generic;
+<<<<<<< HEAD
 using System.Threading.Tasks;
+=======
+using System.Linq;
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
 
 namespace Identity.Api.Repositories
 {
     public class SuscripcionRepository : ISuscripcione
     {
+<<<<<<< HEAD
         private readonly InvensisContext _context;
 
         public SuscripcionRepository(InvensisContext context)
@@ -23,46 +28,91 @@ namespace Identity.Api.Repositories
                 .Include(s => s.IdProveedorNavigation)
                 .AsNoTracking()
                 .ToListAsync();
+=======
+        public List<Suscripcione> GetAllSuscripciones()
+        {
+            using (var context = new InvensisContext())
+            {
+                return context.Suscripciones.ToList();
+            }
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
         }
 
-        public async Task<Suscripcione?> GetSuscripcionById(int idSuscripcion)
+        public Suscripcione GetSuscripcionById(int idSuscripcion)
         {
+<<<<<<< HEAD
             return await _context.Suscripciones
                 .Include(s => s.IdEmpresaNavigation)
                 .Include(s => s.IdProveedorNavigation)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(s => s.IdSuscripcion == idSuscripcion);
+=======
+            using (var context = new InvensisContext())
+            {
+                return context.Suscripciones.FirstOrDefault(s => s.IdSuscripcion == idSuscripcion);
+            }
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
         }
 
-        public async Task InsertSuscripcion(Suscripcione newSuscripcion)
+        public void InsertSuscripcion(Suscripcione newSuscripcion)
         {
+<<<<<<< HEAD
             if (newSuscripcion.FechaRegistro == null)
                 newSuscripcion.FechaRegistro = DateTime.UtcNow;
 
             await _context.Suscripciones.AddAsync(newSuscripcion);
             await _context.SaveChangesAsync();
+=======
+            using (var context = new InvensisContext())
+            {
+                context.Suscripciones.Add(newSuscripcion);
+                context.SaveChanges();
+            }
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
         }
 
-        public async Task UpdateSuscripcion(Suscripcione updatedSuscripcion)
+        public void UpdateSuscripcion(Suscripcione updatedSuscripcion)
         {
+<<<<<<< HEAD
             var existing = await _context.Suscripciones
                 .FirstOrDefaultAsync(s => s.IdSuscripcion == updatedSuscripcion.IdSuscripcion);
+=======
+            using (var context = new InvensisContext())
+            {
+                var suscripcion = context.Suscripciones
+                    .FirstOrDefault(s => s.IdSuscripcion == updatedSuscripcion.IdSuscripcion);
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
 
             if (existing == null)
                 throw new ArgumentException($"Suscripción con ID {updatedSuscripcion.IdSuscripcion} no encontrada");
 
+<<<<<<< HEAD
             _context.Entry(existing).CurrentValues.SetValues(updatedSuscripcion);
             await _context.SaveChangesAsync();
+=======
+                    context.SaveChanges();
+                }
+            }
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
         }
 
-        public async Task DeleteSuscripcion(Suscripcione suscripcionToDelete)
+        public void DeleteSuscripcion(Suscripcione suscripcionToDelete)
         {
+<<<<<<< HEAD
             _context.Suscripciones.Remove(suscripcionToDelete);
             await _context.SaveChangesAsync();
+=======
+            using (var context = new InvensisContext())
+            {
+                context.Suscripciones.Remove(suscripcionToDelete);
+                context.SaveChanges();
+            }
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
         }
 
-        public async Task DeleteSuscripcionById(int idSuscripcion)
+        public void DeleteSuscripcionById(int idSuscripcion)
         {
+<<<<<<< HEAD
             var suscripcion = await _context.Suscripciones
                 .FirstOrDefaultAsync(s => s.IdSuscripcion == idSuscripcion);
 
@@ -100,5 +150,19 @@ namespace Identity.Api.Repositories
                 .AsNoTracking()
                 .ToListAsync();
         }
+=======
+            using (var context = new InvensisContext())
+            {
+                var suscripcion = context.Suscripciones
+                    .FirstOrDefault(s => s.IdSuscripcion == idSuscripcion);
+
+                if (suscripcion != null)
+                {
+                    context.Suscripciones.Remove(suscripcion);
+                    context.SaveChanges();
+                }
+            }
+        }
+>>>>>>> parent of dfa63f3 (5-6-25 16:13)
     }
 }
