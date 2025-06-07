@@ -1,191 +1,56 @@
 ﻿using Identity.Api.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+using Identity.Api.Repositories;
+using Microsoft.Extensions.Logging;
 using Modelo.Sistecom.Modelo.Database;
 
-namespace Identity.Api.Controllers
+namespace Identity.Api.Services
 {
-<<<<<<< HEAD
-    
-    [Route("api/[controller]")]
-    [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class SuscripcioneController : ControllerBase
-=======
-    [Authorize]
-    [Route("api/[controller]")]
-    [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-
-    public class SuscripcioneController : Controller
->>>>>>> parent of dfa63f3 (5-6-25 16:13)
+    public class SuscripcionService : ISuscripcione
     {
-        private readonly ISuscripcione _suscripcioneService;
+        private readonly SuscripcionRepository _suscripcionRepository;
+        private readonly ILogger<SuscripcionService> _logger;
 
-        public SuscripcioneController(ISuscripcione suscripcioneService)
+        public SuscripcionService(SuscripcionRepository suscripcionRepository, ILogger<SuscripcionService> logger)
         {
-            _suscripcioneService = suscripcioneService;
+            _suscripcionRepository = suscripcionRepository ?? throw new ArgumentNullException(nameof(suscripcionRepository));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("SuscripcionesAll")]
-        public IActionResult GetAll()
+        #region Métodos CRUD
+
+        public async Task<IEnumerable<Suscripcione>> SuscripcionesAll()
         {
-            return Ok(_suscripcioneService.SuscripcionesAll);
-        }
-
-        [HttpGet("GetSuscripcionById/{idSuscripcion}")]
-        public IActionResult GetById(int idSuscripcion)
-        {
-            var suscripcion = _suscripcioneService.GetSuscripcionById(idSuscripcion);
-
-            if (suscripcion == null)
-            {
-                return NotFound($"Suscripción con ID {idSuscripcion} no encontrada.");
-            }
-
-            return Ok(suscripcion);
-        }
-
-        [HttpPost("InsertSuscripcion")]
-        public IActionResult Insert([FromBody] Suscripcione newSuscripcion)
-        {
-            if (!ModelState.IsValid)
-            {
-                var errores = ModelState
-                    .Where(ms => ms.Value?.Errors.Count > 0)
-                    .Select(kvp => new
-                    {
-                        Campo = kvp.Key,
-                        Errores = kvp.Value?.Errors.Select(e => e.ErrorMessage)
-                    });
-
-                return BadRequest(new
-                {
-                    mensaje = "Errores de validación",
-                    detalles = errores
-                });
-            }
-
-<<<<<<< HEAD
             try
             {
-                // El service se encarga de toda la validación y lógica de negocio
-                await _suscripcioneService.InsertSuscripcion(newSuscripcion);
-
-                // Obtener la entidad completa con las navegaciones cargadas
-                var suscripcionCreada = await _suscripcioneService.GetSuscripcionById(newSuscripcion.IdSuscripcion);
-
-                return Ok(suscripcionCreada);
+                _logger.LogInformation("Obteniendo todas las suscripciones");
+                return await _suscripcionRepository.SuscripcionesAll();
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    mensaje = "Error al insertar la suscripción",
-                    detalle = ex.Message
-                });
+                _logger.LogError(ex, "Error al obtener todas las suscripciones");
+                throw;
             }
-=======
-            _suscripcioneService.InsertSuscripcion(newSuscripcion);
-            return Ok(newSuscripcion);
->>>>>>> parent of dfa63f3 (5-6-25 16:13)
         }
 
-        [HttpPut("UpdateSuscripcion")]
-        public IActionResult Update([FromBody] Suscripcione updatedSuscripcion)
+        public async Task<Suscripcione> GetSuscripcionById(int idSuscripcion)
         {
-            if (updatedSuscripcion == null || !ModelState.IsValid)
-            {
-                return BadRequest("Error: Datos inválidos");
-            }
+            if (idSuscripcion <= 0)
+                throw new ArgumentException("El ID de suscripción debe ser mayor a cero", nameof(idSuscripcion));
 
-<<<<<<< HEAD
             try
             {
-                // El service se encarga de toda la validación y lógica de negocio
-                await _suscripcioneService.UpdateSuscripcion(updatedSuscripcion);
-                return NoContent();
+                _logger.LogInformation("Obteniendo suscripción con ID: {Id}", idSuscripcion);
+                var suscripcion = await _suscripcionRepository.GetSuscripcionById(idSuscripcion);
+                if (suscripcion == null)
+                    throw new InvalidOperationException($"No se encontró la suscripción con ID {idSuscripcion}");
+
+                return suscripcion;
             }
             catch (Exception ex)
             {
-                return BadRequest(new
-                {
-                    mensaje = "Error al actualizar la suscripción",
-                    detalle = ex.Message
-                });
-            }
-=======
-            _suscripcioneService.UpdateSuscripcion(updatedSuscripcion);
-            return NoContent();
->>>>>>> parent of dfa63f3 (5-6-25 16:13)
-        }
-
-        [HttpDelete("DeleteSuscripcion")]
-        public IActionResult Delete([FromBody] Suscripcione suscripcionToDelete)
-        {
-            if (suscripcionToDelete == null || !ModelState.IsValid)
-            {
-                return BadRequest("Error: Datos inválidos");
-            }
-
-<<<<<<< HEAD
-            try
-            {
-                await _suscripcioneService.DeleteSuscripcion(suscripcionToDelete);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new
-                {
-                    mensaje = "Error al eliminar la suscripción",
-                    detalle = ex.Message
-                });
-            }
-=======
-            _suscripcioneService.DeleteSuscripcion(suscripcionToDelete);
-            return NoContent();
->>>>>>> parent of dfa63f3 (5-6-25 16:13)
-        }
-
-        [HttpDelete("DeleteSuscripcion/{idSuscripcion}")]
-        public IActionResult DeleteById(int idSuscripcion)
-        {
-<<<<<<< HEAD
-            try
-            {
-                await _suscripcioneService.DeleteSuscripcionById(idSuscripcion);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new
-                {
-                    mensaje = "Error al eliminar la suscripción",
-                    detalle = ex.Message
-                });
+                _logger.LogError(ex, "Error al obtener suscripción por ID");
+                throw;
             }
         }
 
-        // Endpoints adicionales para obtener proveedores y empresas (útiles para el frontend)
-        [HttpGet("GetProveedores")]
-        public async Task<IActionResult> GetProveedores()
-        {
-            var proveedores = await _suscripcioneService.GetProveedoreAsync();
-            return Ok(proveedores);
-        }
-
-        [HttpGet("GetEmpresas")]
-        public async Task<IActionResult> GetEmpresas()
-        {
-            var empresas = await _suscripcioneService.GetEmpresaClienteAsync();
-            return Ok(empresas);
-=======
-            _suscripcioneService.DeleteSuscripcionById(idSuscripcion);
-            return NoContent();
->>>>>>> parent of dfa63f3 (5-6-25 16:13)
-        }
-    }
-}
+        public async Task InsertSuscripcion(Suscripcione n

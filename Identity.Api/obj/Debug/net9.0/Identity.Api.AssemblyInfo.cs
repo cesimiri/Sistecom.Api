@@ -14,11 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Identity.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dfa63f3cea1e766097b58b5ddeee88417812ac8e")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d201fd5b5ec8914830dae35ee897ef2703d1d820")]
->>>>>>> parent of dfa63f3 (5-6-25 16:13)
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+13f3899e1a192dba724b365308c3af92237535d9")]
 [assembly: System.Reflection.AssemblyProductAttribute("Identity.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Identity.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
