@@ -10,8 +10,6 @@ namespace Identity.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-
     public class ServidoreController : Controller
     {
         private readonly IServidore _bodega;

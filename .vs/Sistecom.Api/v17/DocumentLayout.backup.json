@@ -4,6 +4,7 @@
   "Documents": [
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
       "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\controllers\\suscripcionecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\controllers\\suscripcionecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -28,6 +29,8 @@
       "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+=======
+>>>>>>> parent of 0d7b5e1 (4/6/25 11:31)
       "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\services\\empresasclienteservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\services\\empresasclienteservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -38,6 +41,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\datarepository\\empresasclienterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\datarepository\\empresasclienterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\controllers\\empresaclientecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\controllers\\empresaclientecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -48,34 +59,40 @@
         {
           "DockedWidth": 200,
 <<<<<<< HEAD
+<<<<<<< HEAD
           "SelectedChildIndex": 3,
 =======
           "SelectedChildIndex": 4,
 >>>>>>> parent of dfa63f3 (5-6-25 16:13)
+=======
+          "SelectedChildIndex": 2,
+>>>>>>> parent of 0d7b5e1 (4/6/25 11:31)
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Program.cs",
               "RelativeDocumentMoniker": "Identity.Api\\Program.cs",
               "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Program.cs",
               "RelativeToolTip": "Identity.Api\\Program.cs",
 <<<<<<< HEAD
+<<<<<<< HEAD
               "ViewState": "AgIAAM8AAAAAAAAAAAApwNsAAAAAAAAAAAAAAA==",
 =======
               "ViewState": "AgIAAFIAAAAAAAAAAAAuwGAAAAAAAAAAAAAAAA==",
 >>>>>>> parent of dfa63f3 (5-6-25 16:13)
+=======
+              "ViewState": "AgIAAGkAAAAAAAAAAAAwwG0AAAAIAAAAAAAAAA==",
+>>>>>>> parent of 0d7b5e1 (4/6/25 11:31)
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-27T14:47:21.994Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 3,
 <<<<<<< HEAD
               "Title": "ISuscripcione.cs",
@@ -85,30 +102,40 @@
               "RelativeToolTip": "Identity.Api\\Interfaces\\ISuscripcione.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAAuwBIAAABEAAAAAAAAAA==",
 =======
+=======
+              "DocumentIndex": 1,
+>>>>>>> parent of 0d7b5e1 (4/6/25 11:31)
               "Title": "IEmpresasCliente.cs",
               "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\IEmpresasCliente.cs",
               "RelativeDocumentMoniker": "Identity.Api\\Interfaces\\IEmpresasCliente.cs",
               "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\IEmpresasCliente.cs",
               "RelativeToolTip": "Identity.Api\\Interfaces\\IEmpresasCliente.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T19:20:23.919Z"
+              "WhenOpened": "2025-05-30T19:20:23.919Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "EmpresasClienteServices.cs",
               "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\EmpresasClienteServices.cs",
               "RelativeDocumentMoniker": "Identity.Api\\Services\\EmpresasClienteServices.cs",
               "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\EmpresasClienteServices.cs",
               "RelativeToolTip": "Identity.Api\\Services\\EmpresasClienteServices.cs",
+<<<<<<< HEAD
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
 >>>>>>> parent of dfa63f3 (5-6-25 16:13)
+=======
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+>>>>>>> parent of 0d7b5e1 (4/6/25 11:31)
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-30T19:20:03.8Z"
+              "WhenOpened": "2025-05-30T19:20:03.8Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
               "DocumentIndex": 0,
 <<<<<<< HEAD
               "Title": "SuscripcioneController.cs",
@@ -118,19 +145,27 @@
               "RelativeToolTip": "Identity.Api\\Controllers\\SuscripcioneController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAFAAAAAAAAAA==",
 =======
+=======
+              "DocumentIndex": 3,
+>>>>>>> parent of 0d7b5e1 (4/6/25 11:31)
               "Title": "EmpresaClienteController.cs",
               "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\EmpresaClienteController.cs",
               "RelativeDocumentMoniker": "Identity.Api\\Controllers\\EmpresaClienteController.cs",
               "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\EmpresaClienteController.cs",
               "RelativeToolTip": "Identity.Api\\Controllers\\EmpresaClienteController.cs",
+<<<<<<< HEAD
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAPAAAAAAAAAA==",
 >>>>>>> parent of dfa63f3 (5-6-25 16:13)
+=======
+              "ViewState": "AgIAABAAAAAAAAAAAAAgwBQAAABTAAAAAAAAAA==",
+>>>>>>> parent of 0d7b5e1 (4/6/25 11:31)
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-30T19:19:45.936Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+<<<<<<< HEAD
 <<<<<<< HEAD
               "DocumentIndex": 1,
               "Title": "SuscripcioneRepository.cs",
@@ -157,6 +192,9 @@
               "EditorCaption": ""
 =======
               "DocumentIndex": 4,
+=======
+              "DocumentIndex": 2,
+>>>>>>> parent of 0d7b5e1 (4/6/25 11:31)
               "Title": "EmpresasClienteRepository.cs",
               "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\EmpresasClienteRepository.cs",
               "RelativeDocumentMoniker": "Identity.Api\\DataRepository\\EmpresasClienteRepository.cs",
@@ -164,8 +202,17 @@
               "RelativeToolTip": "Identity.Api\\DataRepository\\EmpresasClienteRepository.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAA1wAUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+<<<<<<< HEAD
               "WhenOpened": "2025-05-30T19:19:39Z"
 >>>>>>> parent of dfa63f3 (5-6-25 16:13)
+=======
+              "WhenOpened": "2025-05-30T19:19:39Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+>>>>>>> parent of 0d7b5e1 (4/6/25 11:31)
             }
           ]
         }

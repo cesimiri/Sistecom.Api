@@ -5,7 +5,6 @@ using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Modelo.Sistecom.Modelo.Database;
 using System.Text;
@@ -13,59 +12,7 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // Define la variable para CORS
-// Define la variable para CORS
 string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
-// CORS CORREGIDO
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-                    policy =>
-                    {
-                        if (builder.Environment.IsDevelopment())
-                        {
-                            // Desarrollo: permitir orígenes específicos de localhost
-                            policy.WithOrigins(
-                                    "https://localhost:7180",      // Tu Blazor HTTPS
-                                    "http://localhost:7180",       // Tu Blazor HTTP
-                                    "https://localhost:7171",      // Puerto alternativo HTTPS
-                                    "http://localhost:5047",       // Blazor Server
-                                    "http://localhost:5000",       // Puerto alternativo
-                                    "http://localhost:3000",      // Otro puerto común
-                                    "http://localhost:5213",        // Otro puerto común
-                                     "https://localhost:44377"        // Otro puerto común
-                                  )
-                                  .AllowAnyHeader()
-                                  .WithExposedHeaders("totalAmountPages")
-                                  .AllowAnyMethod()
-                                  .AllowCredentials();
-                        }
-                        else
-                        {
-                            // Producción: dominios específicos
-                            policy.WithOrigins(
-                                    "https://lconcordia.compugtech.com",    // Tu dominio principal
-                                    "http://lconcordia.compugtech.com",     // HTTP fallback
-                                    "https://www.lconcordia.compugtech.com", // Con www
-                                    "http://www.lconcordia.compugtech.com",  // Con www HTTP
-                                    "https://localhost:7180",      // Tu Blazor HTTPS
-                                    "http://localhost:7180",       // Tu Blazor HTTP
-                                    "https://localhost:7171",      // Puerto alternativo HTTPS
-                                    "http://localhost:5047",       // Blazor Server
-                                    "http://localhost:5000",       // Puerto alternativo
-                                    "http://localhost:3000",      // Otro puerto común
-                                    "http://localhost:5213"       // Otro puerto común
-
-                                  )
-                                  .AllowAnyHeader()
-                                  .WithExposedHeaders("totalAmountPages")
-                                  .AllowAnyMethod()
-                                  .AllowCredentials();
-                        }
-                    });
-});
-
-
 
 // Add services to the container (equivalente a ConfigureServices)
 builder.Services.AddCors(options =>
@@ -231,13 +178,12 @@ else
     app.UseHsts();
 }
 
-app.UseCors(MyAllowSpecificOrigins); // CORS PRIMERO
 app.UseHttpsRedirection();
-app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapControllers();
+app.UseCors(MyAllowSpecificOrigins);
 
+app.MapControllers();
 
 app.Run();

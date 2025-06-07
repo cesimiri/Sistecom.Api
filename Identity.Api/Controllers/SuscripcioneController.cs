@@ -11,8 +11,6 @@ namespace Identity.Api.Services
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-
     public class SuscripcioneController : Controller
 >>>>>>> parent of dfa63f3 (5-6-25 16:13)
     {

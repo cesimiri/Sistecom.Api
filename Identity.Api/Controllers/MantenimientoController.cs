@@ -9,8 +9,6 @@ namespace Identity.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-
     public class MantenimientoController : Controller
     {
         private readonly IMantenimiento _empresaCliente;
