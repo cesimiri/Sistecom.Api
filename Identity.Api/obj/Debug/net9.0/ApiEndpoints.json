@@ -2371,15 +2371,15 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.SuscripcioneController",
-    "Method": "Insert",
+    "Method": "InsertSuscripcion",
     "RelativePath": "api/Suscripcione/InsertSuscripcion",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "newSuscripcion",
-        "Type": "Modelo.Sistecom.Modelo.Database.Suscripcione",
+        "Name": "dto",
+        "Type": "Identity.Api.DTO.SuscripcionDto",
         "IsRequired": true
       }
     ],

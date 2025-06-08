@@ -1,5 +1,6 @@
-﻿using Identity.Api.Interfaces;
-using Identity.Api.DataRepository;
+﻿using Identity.Api.DataRepository;
+using Identity.Api.DTO;
+using Identity.Api.Interfaces;
 using Modelo.Sistecom.Modelo.Database;
 using System.Collections.Generic;
 
@@ -19,9 +20,9 @@ namespace Identity.Api.Services
             return _dataRepository.GetSuscripcionById(idSuscripcion);
         }
 
-        public void InsertSuscripcion(Suscripcione newSuscripcion)
+        public void InsertSuscripcion(SuscripcionDto dto)
         {
-            _dataRepository.InsertSuscripcion(newSuscripcion);
+            _dataRepository.InsertSuscripcion(dto);
         }
 
         public void UpdateSuscripcion(Suscripcione updatedSuscripcion)

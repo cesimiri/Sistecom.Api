@@ -1,12 +1,13 @@
-﻿using Identity.Api.Interfaces;
+﻿using Identity.Api.DTO;
+using Identity.Api.Interfaces;
+using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Modelo.Sistecom.Modelo.Database;
-
 namespace Identity.Api.Controllers
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -40,17 +41,21 @@ namespace Identity.Api.Controllers
             return Ok(suscripcion);
         }
 
-        [HttpPost("InsertSuscripcion")]
-        public IActionResult Insert([FromBody] Suscripcione newSuscripcion)
-        {
-            if (newSuscripcion == null || !ModelState.IsValid)
-            {
-                return BadRequest("Error: Datos inválidos");
-            }
 
-            _suscripcioneService.InsertSuscripcion(newSuscripcion);
-            return Ok(newSuscripcion);
+        [HttpPost("InsertSuscripcion")]
+        public IActionResult InsertSuscripcion([FromBody] SuscripcionDto dto)
+        {
+            try
+            {
+                _suscripcioneService.InsertSuscripcion(dto); // solo llamas
+                return Ok(new { message = "Suscripción guardada exitosamente." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
+
 
         [HttpPut("UpdateSuscripcion")]
         public IActionResult Update([FromBody] Suscripcione updatedSuscripcion)
