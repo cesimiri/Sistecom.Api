@@ -2330,8 +2330,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "suscripcionToDelete",
-        "Type": "Modelo.Sistecom.Modelo.Database.Suscripcione",
+        "Name": "dto",
+        "Type": "Identity.Api.DTO.SuscripcionDto",
         "IsRequired": true
       }
     ],
@@ -2340,7 +2340,7 @@
   {
     "ContainingType": "Identity.Api.Controllers.SuscripcioneController",
     "Method": "DeleteById",
-    "RelativePath": "api/Suscripcione/DeleteSuscripcion/{idSuscripcion}",
+    "RelativePath": "api/Suscripcione/DeleteSuscripcionById/{idSuscripcion}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -2404,8 +2404,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "updatedSuscripcion",
-        "Type": "Modelo.Sistecom.Modelo.Database.Suscripcione",
+        "Name": "dto",
+        "Type": "Identity.Api.DTO.SuscripcionDto",
         "IsRequired": true
       }
     ],

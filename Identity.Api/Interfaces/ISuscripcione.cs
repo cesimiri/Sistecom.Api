@@ -6,11 +6,11 @@ namespace Identity.Api.Interfaces
 {
     public interface ISuscripcione
     {
-        IEnumerable<Suscripcione> SuscripcionesAll { get; }
-        Suscripcione GetSuscripcionById(int idSuscripcion);
+        IEnumerable<SuscripcionDto> GetAllSuscripciones();
+        SuscripcionDto? GetSuscripcionById(int idSuscripcion);
         void InsertSuscripcion(SuscripcionDto dto);
-        void UpdateSuscripcion(Suscripcione updatedSuscripcion);
-        void DeleteSuscripcion(Suscripcione suscripcionToDelete);
+        void UpdateSuscripcion(SuscripcionDto dto);
+        void DeleteSuscripcion(SuscripcionDto dto);
         void DeleteSuscripcionById(int idSuscripcion);
     }
 }

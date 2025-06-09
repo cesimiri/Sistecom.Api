@@ -8,27 +8,71 @@ namespace Identity.Api.DataRepository
 {
     public class SuscripcioneDataRepository
     {
-        public List<Suscripcione> GetAllSuscripciones()
+        public List<SuscripcionDto> GetAllSuscripciones()
         {
-            using (var context = new InvensisContext())
-            {
-                return context.Suscripciones
+            using var context = new InvensisContext();
+
+            return context.Suscripciones
                 .Include(s => s.IdEmpresaNavigation)
                 .Include(s => s.IdProveedorNavigation)
+                .Select(s => new SuscripcionDto
+                {
+                    IdSuscripcion = s.IdSuscripcion,
+                    IdEmpresa = s.IdEmpresa,
+                    IdProveedor = s.IdProveedor,
+                    NombreServicio = s.NombreServicio,
+                    TipoSuscripcion = s.TipoSuscripcion,
+                    FechaInicio = s.FechaInicio.ToDateTime(new TimeOnly(0, 0)),
+                    FechaRenovacion = s.FechaRenovacion.ToDateTime(new TimeOnly(0, 0)),
+                    PeriodoFacturacion = s.PeriodoFacturacion,
+                    CostoPeriodo = s.CostoPeriodo,
+                    UsuariosIncluidos = s.UsuariosIncluidos,
+                    AlmacenamientoGb = s.AlmacenamientoGb,
+                    UrlAcceso = s.UrlAcceso,
+                    Administrador = s.Administrador,
+                    Estado = s.Estado,
+                    NotificarDiasAntes = s.NotificarDiasAntes,
+                    Observaciones = s.Observaciones,
+                    // Campos relacionados:
+                    RazonSocialEmpresa = s.IdEmpresaNavigation.RazonSocial,
+                    RazonSocialProveedor = s.IdProveedorNavigation.RazonSocial
+                })
                 .ToList();
-            }
         }
 
-        public Suscripcione GetSuscripcionById(int idSuscripcion)
+        public SuscripcionDto? GetSuscripcionById(int idSuscripcion)
         {
-            using (var context = new InvensisContext())
-            {
-                return context.Suscripciones
-    .Include(s => s.IdEmpresaNavigation)
-    .Include(s => s.IdProveedorNavigation)
-    .FirstOrDefault(s => s.IdSuscripcion == idSuscripcion);
-            }
+            using var context = new InvensisContext();
+
+            return context.Suscripciones
+                .Include(s => s.IdEmpresaNavigation)
+                .Include(s => s.IdProveedorNavigation)
+                .Where(s => s.IdSuscripcion == idSuscripcion)
+                .Select(s => new SuscripcionDto
+                {
+                    IdSuscripcion = s.IdSuscripcion,
+                    IdEmpresa = s.IdEmpresa,
+                    IdProveedor = s.IdProveedor,
+                    NombreServicio = s.NombreServicio,
+                    TipoSuscripcion = s.TipoSuscripcion,
+                    FechaInicio = s.FechaInicio.ToDateTime(new TimeOnly(0, 0)),
+                    FechaRenovacion = s.FechaRenovacion.ToDateTime(new TimeOnly(0, 0)),
+                    PeriodoFacturacion = s.PeriodoFacturacion,
+                    CostoPeriodo = s.CostoPeriodo,
+                    UsuariosIncluidos = s.UsuariosIncluidos,
+                    AlmacenamientoGb = s.AlmacenamientoGb,
+                    UrlAcceso = s.UrlAcceso,
+                    Administrador = s.Administrador,
+                    Estado = s.Estado,
+                    NotificarDiasAntes = s.NotificarDiasAntes,
+                    Observaciones = s.Observaciones,
+                    // Campos relacionados:
+                    RazonSocialEmpresa = s.IdEmpresaNavigation.RazonSocial,
+                    RazonSocialProveedor = s.IdProveedorNavigation.RazonSocial
+                })
+                .FirstOrDefault();
         }
+
 
         public void InsertSuscripcion(SuscripcionDto dto)
         {
@@ -69,53 +113,56 @@ namespace Identity.Api.DataRepository
 
 
 
-        public void UpdateSuscripcion(Suscripcione updatedSuscripcion)
+        public void UpdateSuscripcion(SuscripcionDto dto)
         {
-            using (var context = new InvensisContext())
+            using var context = new InvensisContext();
+
+            var suscripcion = context.Suscripciones
+                .FirstOrDefault(s => s.IdSuscripcion == dto.IdSuscripcion);
+
+            if (suscripcion != null)
             {
-                var suscripcion = context.Suscripciones
-                    .FirstOrDefault(s => s.IdSuscripcion == updatedSuscripcion.IdSuscripcion);
+                suscripcion.IdProveedor = dto.IdProveedor;
+                suscripcion.IdEmpresa = dto.IdEmpresa;
+                suscripcion.NombreServicio = dto.NombreServicio;
+                suscripcion.TipoSuscripcion = dto.TipoSuscripcion;
+                //conversion de DATETIME a DATEONLY
+                suscripcion.FechaInicio = DateOnly.FromDateTime(dto.FechaInicio);
+                suscripcion.FechaRenovacion = DateOnly.FromDateTime(dto.FechaRenovacion);
+                suscripcion.PeriodoFacturacion = dto.PeriodoFacturacion;
+                suscripcion.CostoPeriodo = dto.CostoPeriodo;
+                suscripcion.UsuariosIncluidos = dto.UsuariosIncluidos;
+                suscripcion.AlmacenamientoGb = dto.AlmacenamientoGb;
+                suscripcion.UrlAcceso = dto.UrlAcceso;
+                suscripcion.Administrador = dto.Administrador;
+                suscripcion.Estado = dto.Estado;
+                suscripcion.NotificarDiasAntes = dto.NotificarDiasAntes;
+                suscripcion.Observaciones = dto.Observaciones;
+                suscripcion.FechaRegistro = dto.FechaRegistro;
 
-                if (suscripcion != null)
-                {
-                    suscripcion.IdProveedor = updatedSuscripcion.IdProveedor;
-                    suscripcion.IdEmpresa = updatedSuscripcion.IdEmpresa;
-                    suscripcion.NombreServicio = updatedSuscripcion.NombreServicio;
-                    suscripcion.TipoSuscripcion = updatedSuscripcion.TipoSuscripcion;
-                    suscripcion.FechaInicio = updatedSuscripcion.FechaInicio;
-                    suscripcion.FechaRenovacion = updatedSuscripcion.FechaRenovacion;
-                    suscripcion.PeriodoFacturacion = updatedSuscripcion.PeriodoFacturacion;
-                    suscripcion.CostoPeriodo = updatedSuscripcion.CostoPeriodo;
-                    suscripcion.UsuariosIncluidos = updatedSuscripcion.UsuariosIncluidos;
-                    suscripcion.AlmacenamientoGb = updatedSuscripcion.AlmacenamientoGb;
-                    suscripcion.UrlAcceso = updatedSuscripcion.UrlAcceso;
-                    suscripcion.Administrador = updatedSuscripcion.Administrador;
-                    suscripcion.Estado = updatedSuscripcion.Estado;
-                    suscripcion.NotificarDiasAntes = updatedSuscripcion.NotificarDiasAntes;
-                    suscripcion.Observaciones = updatedSuscripcion.Observaciones;
-                    suscripcion.FechaRegistro = updatedSuscripcion.FechaRegistro;
+                // Actualizar navegación (opcional)
+                suscripcion.IdEmpresaNavigation = context.EmpresasClientes
+                    .FirstOrDefault(e => e.IdEmpresa == dto.IdEmpresa);
+                suscripcion.IdProveedorNavigation = context.Proveedores
+                    .FirstOrDefault(p => p.IdProveedor == dto.IdProveedor);
 
-                    // Cargar y asignar las relaciones
-                    suscripcion.IdEmpresaNavigation = context.EmpresasClientes
-                        .FirstOrDefault(e => e.IdEmpresa == updatedSuscripcion.IdEmpresa);
-
-                    suscripcion.IdProveedorNavigation = context.Proveedores
-                        .FirstOrDefault(p => p.IdProveedor == updatedSuscripcion.IdProveedor);
-
-                    context.SaveChanges();
-                }
-            }
-        }
-
-        public void DeleteSuscripcion(Suscripcione suscripcionToDelete)
-        {
-            using (var context = new InvensisContext())
-            {
-                context.Suscripciones.Remove(suscripcionToDelete);
                 context.SaveChanges();
             }
         }
 
+        public void DeleteSuscripcion(SuscripcionDto dto)
+        {
+            using var context = new InvensisContext();
+
+            var suscripcion = context.Suscripciones
+                .FirstOrDefault(s => s.IdSuscripcion == dto.IdSuscripcion);
+
+            if (suscripcion != null)
+            {
+                context.Suscripciones.Remove(suscripcion);
+                context.SaveChanges();
+            }
+        }
         public void DeleteSuscripcionById(int idSuscripcion)
         {
             using (var context = new InvensisContext())

@@ -1,7 +1,6 @@
 ﻿using Identity.Api.DataRepository;
 using Identity.Api.DTO;
 using Identity.Api.Interfaces;
-using Modelo.Sistecom.Modelo.Database;
 using System.Collections.Generic;
 
 namespace Identity.Api.Services
@@ -10,12 +9,12 @@ namespace Identity.Api.Services
     {
         private readonly SuscripcioneDataRepository _dataRepository = new SuscripcioneDataRepository();
 
-        public IEnumerable<Suscripcione> SuscripcionesAll
+        public IEnumerable<SuscripcionDto> GetAllSuscripciones()
         {
-            get { return _dataRepository.GetAllSuscripciones(); }
+            return _dataRepository.GetAllSuscripciones();
         }
 
-        public Suscripcione GetSuscripcionById(int idSuscripcion)
+        public SuscripcionDto? GetSuscripcionById(int idSuscripcion)
         {
             return _dataRepository.GetSuscripcionById(idSuscripcion);
         }
@@ -25,14 +24,14 @@ namespace Identity.Api.Services
             _dataRepository.InsertSuscripcion(dto);
         }
 
-        public void UpdateSuscripcion(Suscripcione updatedSuscripcion)
+        public void UpdateSuscripcion(SuscripcionDto dto)
         {
-            _dataRepository.UpdateSuscripcion(updatedSuscripcion);
+            _dataRepository.UpdateSuscripcion(dto);
         }
 
-        public void DeleteSuscripcion(Suscripcione suscripcionToDelete)
+        public void DeleteSuscripcion(SuscripcionDto dto)
         {
-            _dataRepository.DeleteSuscripcion(suscripcionToDelete);
+            _dataRepository.DeleteSuscripcion(dto);
         }
 
         public void DeleteSuscripcionById(int idSuscripcion)

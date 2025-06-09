@@ -2,6 +2,7 @@
 {
     public class SuscripcionDto
     {
+        public int IdSuscripcion { get; set; }
         public int IdEmpresa { get; set; }
         public int IdProveedor { get; set; }
         public string NombreServicio { get; set; } = null!;
@@ -18,5 +19,9 @@
         public int? NotificarDiasAntes { get; set; }
         public string? Observaciones { get; set; }
         public DateTime? FechaRegistro { get; set; }
+
+        public string? RazonSocialEmpresa { get; set; }
+        public string? RazonSocialProveedor { get; set; }
+
     }
 }

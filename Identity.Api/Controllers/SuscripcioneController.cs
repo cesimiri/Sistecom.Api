@@ -1,18 +1,15 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
-using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Modelo.Sistecom.Modelo.Database;
+
 namespace Identity.Api.Controllers
 {
-    
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-
-    public class SuscripcioneController : Controller
+    public class SuscripcioneController : ControllerBase
     {
         private readonly ISuscripcione _suscripcioneService;
 
@@ -21,33 +18,35 @@ namespace Identity.Api.Controllers
             _suscripcioneService = suscripcioneService;
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("SuscripcionesAll")]
         public IActionResult GetAll()
         {
-            return Ok(_suscripcioneService.SuscripcionesAll);
+            var suscripciones = _suscripcioneService.GetAllSuscripciones();
+            return Ok(suscripciones);
         }
 
         [HttpGet("GetSuscripcionById/{idSuscripcion}")]
         public IActionResult GetById(int idSuscripcion)
         {
             var suscripcion = _suscripcioneService.GetSuscripcionById(idSuscripcion);
-
             if (suscripcion == null)
             {
                 return NotFound($"Suscripción con ID {idSuscripcion} no encontrada.");
             }
-
             return Ok(suscripcion);
         }
-
 
         [HttpPost("InsertSuscripcion")]
         public IActionResult InsertSuscripcion([FromBody] SuscripcionDto dto)
         {
+            if (dto == null || !ModelState.IsValid)
+            {
+                return BadRequest("Datos inválidos.");
+            }
+
             try
             {
-                _suscripcioneService.InsertSuscripcion(dto); // solo llamas
+                _suscripcioneService.InsertSuscripcion(dto);
                 return Ok(new { message = "Suscripción guardada exitosamente." });
             }
             catch (Exception ex)
@@ -56,36 +55,56 @@ namespace Identity.Api.Controllers
             }
         }
 
-
         [HttpPut("UpdateSuscripcion")]
-        public IActionResult Update([FromBody] Suscripcione updatedSuscripcion)
+        public IActionResult Update([FromBody] SuscripcionDto dto)
         {
-            if (updatedSuscripcion == null || !ModelState.IsValid)
+            if (dto == null || !ModelState.IsValid)
             {
-                return BadRequest("Error: Datos inválidos");
+                return BadRequest("Datos inválidos.");
             }
 
-            _suscripcioneService.UpdateSuscripcion(updatedSuscripcion);
-            return NoContent();
+            try
+            {
+                _suscripcioneService.UpdateSuscripcion(dto);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
         [HttpDelete("DeleteSuscripcion")]
-        public IActionResult Delete([FromBody] Suscripcione suscripcionToDelete)
+        public IActionResult Delete([FromBody] SuscripcionDto dto)
         {
-            if (suscripcionToDelete == null || !ModelState.IsValid)
+            if (dto == null || !ModelState.IsValid)
             {
-                return BadRequest("Error: Datos inválidos");
+                return BadRequest("Datos inválidos.");
             }
 
-            _suscripcioneService.DeleteSuscripcion(suscripcionToDelete);
-            return NoContent();
+            try
+            {
+                _suscripcioneService.DeleteSuscripcion(dto);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
 
-        [HttpDelete("DeleteSuscripcion/{idSuscripcion}")]
+        [HttpDelete("DeleteSuscripcionById/{idSuscripcion}")]
         public IActionResult DeleteById(int idSuscripcion)
         {
-            _suscripcioneService.DeleteSuscripcionById(idSuscripcion);
-            return NoContent();
+            try
+            {
+                _suscripcioneService.DeleteSuscripcionById(idSuscripcion);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
     }
 }
