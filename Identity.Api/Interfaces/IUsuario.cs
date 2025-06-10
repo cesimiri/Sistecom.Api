@@ -1,4 +1,5 @@
-﻿using Modelo.Sistecom.Modelo.Database;
+﻿using Identity.Api.DTO;
+using Modelo.Sistecom.Modelo.Database;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,11 +7,13 @@ namespace Identity.Api.Interfaces
 {
     public interface IUsuario
     {
-        IEnumerable<Usuario> GetAllUsuarios { get; }
-        Usuario GetById(int id);
-        void InsertUsuario(Usuario usuario);
-        void UpdateUsuario(Usuario usuario);
-        void DeleteUsuario(Usuario usuario);
-        void DeleteUsuarioById(int id);
+        IEnumerable<UsuarioDTO> GetAllUsuarios { get; }
+        UsuarioDTO GetUsuarioById(int IdUsuario);
+        void InsertUsuario(UsuarioDTO dto);
+        void UpdateUsuario(UsuarioDTO dto);
+        void DeleteUsuario(UsuarioDTO dto);
+        void DeleteUsuarioById(int IdUsuario);
+
+
     }
 }

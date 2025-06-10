@@ -6,7 +6,7 @@ using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -27,39 +27,87 @@ namespace Identity.Api.Controllers
         }
 
         
-        [HttpGet("GetEmpresaClienteById/{idEmpresaCliente}")]
-        public IActionResult GetEmpresaClienteById(int idEmpresaCliente)
+        [HttpGet("GetEmpresaClienteById/{ruc}")]
+        public IActionResult GetEmpresaClienteById(string ruc)
         {
             //var proveedor = _proveedorService.GetProveedorById(idProveedor);
 
-            var empresaCliente = _empresaCliente.GetEmpresaClienteById(idEmpresaCliente);
+            var empresaCliente = _empresaCliente.GetEmpresaClienteById(ruc);
 
             if (empresaCliente == null)
             {
-                return NotFound($"Empresa Cliente con ID {idEmpresaCliente} no encontrado.");
+                return NotFound($"Empresa Cliente con ID {ruc} no encontrado.");
             }
 
             return Ok(empresaCliente);
+
         }
 
         [HttpPost("InsertEmpresaCliente")]
+        //public IActionResult Create([FromBody] EmpresasCliente NewItem)
+        //{
+        //    try
+        //    {
+        //        if (NewItem == null || !ModelState.IsValid)
+        //        {
+        //            return BadRequest("Error: Envio de datos");
+        //        }
+
+        //        _empresaCliente.InsertEmpresaCliente(NewItem);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest("Error:" + ex.Message);
+        //    }
+
+        //    //return Ok(NewItem);
+        //    return CreatedAtAction(nameof(GetEmpresaClienteById), new { ruc = NewItem.Ruc }, NewItem);
+
+        //}
         public IActionResult Create([FromBody] EmpresasCliente NewItem)
         {
             try
             {
-                if (NewItem == null || !ModelState.IsValid)
+                // Validaciones más específicas
+                if (NewItem == null)
                 {
-                    return BadRequest("Error: Envio de datos");
+                    return BadRequest("Los datos de la empresa cliente son requeridos");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                // Validación específica del RUC
+                if (string.IsNullOrWhiteSpace(NewItem.Ruc))
+                {
+                    return BadRequest("El RUC es requerido");
+                }
+
+                // Verificar si ya existe
+                var existente = _empresaCliente.GetEmpresaClienteById(NewItem.Ruc);
+                if (existente != null)
+                {
+                    return Conflict($"Ya existe una empresa cliente con RUC: {NewItem.Ruc}");
                 }
 
                 _empresaCliente.InsertEmpresaCliente(NewItem);
+
+                return CreatedAtAction(nameof(GetEmpresaClienteById), new { ruc = NewItem.Ruc }, NewItem);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest($"Error de validación: {ex.Message}");
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest($"Error de operación: {ex.Message}");
             }
             catch (Exception ex)
             {
-                return BadRequest("Error:" + ex.Message);
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
-
-            return Ok(NewItem);
         }
 
         [HttpPut("UpdateEmpresaCliente")]
@@ -102,12 +150,12 @@ namespace Identity.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("DeleteEmpresaCliente/{IdRegistrado}")]
-        public IActionResult DeleteById(int IdRegistrado)
+        [HttpDelete("DeleteEmpresaCliente/{ruc}")]
+        public IActionResult DeleteById(string ruc)
         {
             try
             {
-                _empresaCliente.DeleteEmpresaClienteById(IdRegistrado);
+                _empresaCliente.DeleteEmpresaClienteById(ruc);
             }
             catch (Exception ex)
             {

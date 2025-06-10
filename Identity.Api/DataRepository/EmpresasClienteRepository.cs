@@ -16,11 +16,11 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        public EmpresasCliente GetEmpresaClienteById(int idEmpresaCliente)
+        public EmpresasCliente GetEmpresaClienteById(string ruc)
         {
             using (var context = new InvensisContext())
             {
-                return context.EmpresasClientes.FirstOrDefault(p => p.IdEmpresa == idEmpresaCliente); ;
+                return context.EmpresasClientes.FirstOrDefault(p => p.Ruc == ruc); ;
             }
            
         }
@@ -39,15 +39,14 @@ namespace Identity.Api.DataRepository
             using (var context = new InvensisContext())
             {
                 var registrado = context.EmpresasClientes
-                                         .Where(a => a.IdEmpresa == UpdItem.IdEmpresa)
+                                         .Where(a => a.Ruc == UpdItem.Ruc)
                                          .FirstOrDefault();
 
                 if (registrado != null)
                 {
-                    registrado.Ruc = UpdItem.Ruc;
                     registrado.RazonSocial = UpdItem.RazonSocial;
                     registrado.NombreComercial = UpdItem.NombreComercial;
-                    registrado.Direccion = UpdItem.Direccion;
+                    registrado.DireccionMatriz = UpdItem.DireccionMatriz;
                     registrado.Ciudad = UpdItem.Ciudad;
                     registrado.Telefono = UpdItem.Telefono;
                     registrado.Email = UpdItem.Email;
@@ -65,6 +64,7 @@ namespace Identity.Api.DataRepository
 
         public void DeleteEmpresaCliente(EmpresasCliente NewItem)
         {
+            
             using (var context = new InvensisContext())
             {
                 context.EmpresasClientes.Remove(NewItem);
@@ -72,12 +72,12 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        public void DeleteEmpresaClienteById(int IdRegistrado)
+        public void DeleteEmpresaClienteById(string ruc)
         {
             using (var context = new InvensisContext())
             {
                 var registrado = context.EmpresasClientes
-                                         .Where(a => a.IdEmpresa == IdRegistrado)
+                                         .Where(a => a.Ruc == ruc)
                                          .FirstOrDefault();
 
                 if (registrado != null)

@@ -1,13 +1,18 @@
-﻿namespace Identity.Api.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Identity.Api.DTO
 {
     public class SuscripcionDto
     {
         public int IdSuscripcion { get; set; }
-        public int IdEmpresa { get; set; }
+        [Required(ErrorMessage = "Debe seleccionar una empresa")]
+        public string RucEmpresa { get; set; } = null!;
+
+        [Required(ErrorMessage = "Debe seleccionar una Proveedor")]
         public int IdProveedor { get; set; }
         public string NombreServicio { get; set; } = null!;
         public string? TipoSuscripcion { get; set; }
-        public DateTime  FechaInicio { get; set; }
+        public DateTime FechaInicio { get; set; }
         public DateTime FechaRenovacion { get; set; }
         public string? PeriodoFacturacion { get; set; }
         public decimal CostoPeriodo { get; set; }
@@ -18,10 +23,11 @@
         public string? Estado { get; set; }
         public int? NotificarDiasAntes { get; set; }
         public string? Observaciones { get; set; }
-        public DateTime? FechaRegistro { get; set; }
 
-        public string? RazonSocialEmpresa { get; set; }
         public string? RazonSocialProveedor { get; set; }
+        public string? RazonSocialEmpresa { get; set; }
 
     }
+
 }
+

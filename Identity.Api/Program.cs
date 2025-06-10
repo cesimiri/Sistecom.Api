@@ -121,16 +121,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddScoped<IEmpresaCliente, EmpresaClienteService>();
          
 // Servicios de Usuarios
-builder.Services.AddScoped<IUsuario, UsuarioService>();
+//builder.Services.AddScoped<IUsuario, UsuarioService>();
 
 ////// Servicios de Suscripciones
 builder.Services.AddScoped<ISuscripcione, SuscripcioneService>();
 
 ////// Servicios de Proveedores
 builder.Services.AddScoped<IProveedor, ProveedorService>();
-
-// Servicios Contrato
-builder.Services.AddScoped<IContrato, ContratoService>();
 
 
 // Servicios de Solicitudes de Compra
@@ -202,7 +199,8 @@ builder.Services.AddScoped<IDetalleEnsamblaje, DetalleEnsamblajeServices>();
 //Licencia
 builder.Services.AddScoped<ILicencia, LicenciaServices>();
 
-
+//Sucursale
+builder.Services.AddScoped<ISucursale, SucursaleServices>();
 
 
 

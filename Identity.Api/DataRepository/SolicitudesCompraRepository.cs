@@ -40,9 +40,9 @@ namespace Identity.Api.DataRepository
                 if (solicitud != null)
                 {
                     solicitud.NumeroSolicitud = updatedSolicitud.NumeroSolicitud;
-                    solicitud.IdEmpresa = updatedSolicitud.IdEmpresa;
+                    solicitud.RucEmpresa = updatedSolicitud.RucEmpresa;
                     solicitud.IdUsuarioSolicita = updatedSolicitud.IdUsuarioSolicita;
-                    solicitud.IdContrato = updatedSolicitud.IdContrato;
+                    //solicitud.IdContrato = updatedSolicitud.IdContrato;
                     solicitud.FechaSolicitud = updatedSolicitud.FechaSolicitud;
                     solicitud.FechaAprobacion = updatedSolicitud.FechaAprobacion;
                     solicitud.FechaRequerida = updatedSolicitud.FechaRequerida;

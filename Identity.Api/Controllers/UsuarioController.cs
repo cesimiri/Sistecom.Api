@@ -1,9 +1,10 @@
-﻿using Identity.Api.Interfaces;
+﻿using Identity.Api.DTO;
+using Identity.Api.Interfaces;
 using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Modelo.Sistecom.Modelo.Database;
+
 
 namespace Identity.Api.Controllers
 {
@@ -25,80 +26,87 @@ namespace Identity.Api.Controllers
         [HttpGet("GetAllUsuarios")]
         public IActionResult GetAll()
         {
+
             return Ok(_usuario.GetAllUsuarios);
         }
 
         [HttpGet("GetUsuarioById/{id}")]
         public IActionResult GetById(int id)
         {
-            var usuario = _usuario.GetById(id);
+
+            var usuario = _usuario.GetUsuarioById(id);
             if (usuario == null)
             {
-                return NotFound($"Usuario con ese ID: {id} no encontrado.");
+                return NotFound($"Suscripción con ID {id} no encontrada.");
             }
             return Ok(usuario);
         }
 
         [HttpPost("InsertUsuario")]
-        public IActionResult Create([FromBody] Usuario usuario)
+        public IActionResult InsertUsuario([FromBody] UsuarioDTO dto)
         {
+
+            if (dto == null || !ModelState.IsValid)
+            {
+                return BadRequest("Datos invalidos");
+            }
+
             try
             {
-                if (usuario == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Invalid data.");
-                }
-                _usuario.InsertUsuario(usuario);
-                return Ok(usuario);
+                _usuario.InsertUsuario(dto);
+                return Ok(new { message = "Usuario guardada exitosamente." });
             }
             catch (Exception ex)
             {
-                return BadRequest($"Error: {ex.Message}");
+                var innerMessage = ex.InnerException?.Message ?? ex.Message;
+                return BadRequest(new { error = innerMessage });
             }
         }
 
         [HttpPut("UpdateUsuario")]
-        public IActionResult Update([FromBody] Usuario usuario)
+        public IActionResult UpdateUsuario([FromBody] UsuarioDTO dto)
         {
+            if (dto == null || !ModelState.IsValid)
+            {
+                return BadRequest("Datos inválidos.");
+            }
+
             try
             {
-                if (usuario == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Invalid data.");
-                }
-                _usuario.UpdateUsuario(usuario);
+                _usuario.UpdateUsuario(dto);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                return BadRequest($"Error: {ex.Message}");
+                return BadRequest(new { error = ex.Message });
             }
         }
 
         [HttpDelete("DeleteUsuario")]
-        public IActionResult Delete([FromBody] Usuario usuario)
+        public IActionResult Delete([FromBody] UsuarioDTO dto)
         {
+            if (dto == null || !ModelState.IsValid)
+            {
+                return BadRequest("Datos inválidos.");
+            }
+
             try
             {
-                if (usuario == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Invalid data.");
-                }
-                _usuario.DeleteUsuario(usuario);
+                _usuario.DeleteUsuario(dto);
                 return NoContent();
             }
             catch (Exception ex)
             {
-                return BadRequest($"Error: {ex.Message}");
+                return BadRequest(new { error = ex.Message });
             }
         }
 
-        [HttpDelete("DeleteUsuarioById/{id}")]
-        public IActionResult DeleteById(int id)
+        [HttpDelete("DeleteUsuarioById/{idUsuario}")]
+        public IActionResult DeleteById(int idUsuario)
         {
             try
             {
-                _usuario.DeleteUsuarioById(id);
+                _usuario.DeleteUsuarioById(idUsuario);
                 return NoContent();
             }
             catch (Exception ex)

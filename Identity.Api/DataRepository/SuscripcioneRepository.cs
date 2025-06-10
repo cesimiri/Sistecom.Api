@@ -13,12 +13,12 @@ namespace Identity.Api.DataRepository
             using var context = new InvensisContext();
 
             return context.Suscripciones
-                .Include(s => s.IdEmpresaNavigation)
+                .Include(s => s.RucEmpresaNavigation)
                 .Include(s => s.IdProveedorNavigation)
                 .Select(s => new SuscripcionDto
                 {
                     IdSuscripcion = s.IdSuscripcion,
-                    IdEmpresa = s.IdEmpresa,
+                    RucEmpresa = s.RucEmpresa,
                     IdProveedor = s.IdProveedor,
                     NombreServicio = s.NombreServicio,
                     TipoSuscripcion = s.TipoSuscripcion,
@@ -34,7 +34,7 @@ namespace Identity.Api.DataRepository
                     NotificarDiasAntes = s.NotificarDiasAntes,
                     Observaciones = s.Observaciones,
                     // Campos relacionados:
-                    RazonSocialEmpresa = s.IdEmpresaNavigation.RazonSocial,
+                    RazonSocialEmpresa = s.RucEmpresaNavigation.RazonSocial,
                     RazonSocialProveedor = s.IdProveedorNavigation.RazonSocial
                 })
                 .ToList();
@@ -45,13 +45,13 @@ namespace Identity.Api.DataRepository
             using var context = new InvensisContext();
 
             return context.Suscripciones
-                .Include(s => s.IdEmpresaNavigation)
+                .Include(s => s.RucEmpresaNavigation)
                 .Include(s => s.IdProveedorNavigation)
                 .Where(s => s.IdSuscripcion == idSuscripcion)
                 .Select(s => new SuscripcionDto
                 {
                     IdSuscripcion = s.IdSuscripcion,
-                    IdEmpresa = s.IdEmpresa,
+                    RucEmpresa = s.RucEmpresa,
                     IdProveedor = s.IdProveedor,
                     NombreServicio = s.NombreServicio,
                     TipoSuscripcion = s.TipoSuscripcion,
@@ -67,49 +67,54 @@ namespace Identity.Api.DataRepository
                     NotificarDiasAntes = s.NotificarDiasAntes,
                     Observaciones = s.Observaciones,
                     // Campos relacionados:
-                    RazonSocialEmpresa = s.IdEmpresaNavigation.RazonSocial,
+                    RazonSocialEmpresa = s.RucEmpresaNavigation.RazonSocial,
                     RazonSocialProveedor = s.IdProveedorNavigation.RazonSocial
                 })
                 .FirstOrDefault();
         }
 
-
         public void InsertSuscripcion(SuscripcionDto dto)
         {
-            using var context = new InvensisContext();
-
-            var empresa = context.EmpresasClientes.Find(dto.IdEmpresa);
-            var proveedor = context.Proveedores.Find(dto.IdProveedor);
-
-            if (empresa == null || proveedor == null)
+            try
             {
-                throw new Exception("IdEmpresa o IdProveedor no existen en la base de datos.");
+                using var context = new InvensisContext();
+
+                var empresa = context.EmpresasClientes.Find(dto.RucEmpresa);
+                var proveedor = context.Proveedores.Find(dto.IdProveedor);
+
+                if (empresa == null || proveedor == null)
+                {
+                    throw new Exception("La empresa o el proveedor no existen en la base de datos.");
+                }
+
+                var nueva = new Suscripcione
+                {
+                    RucEmpresa = dto.RucEmpresa,
+                    IdProveedor = dto.IdProveedor,
+                    NombreServicio = dto.NombreServicio,
+                    TipoSuscripcion = dto.TipoSuscripcion,
+                    //cambio de datetime a dateonly 
+                    FechaInicio = DateOnly.FromDateTime(dto.FechaInicio),
+                    FechaRenovacion = DateOnly.FromDateTime(dto.FechaRenovacion),
+                    PeriodoFacturacion = dto.PeriodoFacturacion,
+                    CostoPeriodo = dto.CostoPeriodo,
+                    UsuariosIncluidos = dto.UsuariosIncluidos,
+                    AlmacenamientoGb = dto.AlmacenamientoGb,
+                    UrlAcceso = dto.UrlAcceso,
+                    Administrador = dto.Administrador,
+                    Estado = dto.Estado,
+                    NotificarDiasAntes = dto.NotificarDiasAntes,
+                    Observaciones = dto.Observaciones
+                };
+
+                context.Suscripciones.Add(nueva);
+                context.SaveChanges();
             }
-
-            var nueva = new Suscripcione
+            catch (Exception ex)
             {
-                IdEmpresa = dto.IdEmpresa,
-                IdProveedor = dto.IdProveedor,
-                NombreServicio = dto.NombreServicio,
-                TipoSuscripcion = dto.TipoSuscripcion,
-                FechaInicio = DateOnly.FromDateTime(dto.FechaInicio),
-                FechaRenovacion = DateOnly.FromDateTime(dto.FechaRenovacion),
-                PeriodoFacturacion = dto.PeriodoFacturacion,
-                CostoPeriodo = dto.CostoPeriodo,
-                UsuariosIncluidos = dto.UsuariosIncluidos,
-                AlmacenamientoGb = dto.AlmacenamientoGb,
-                UrlAcceso = dto.UrlAcceso,
-                Administrador = dto.Administrador,
-                Estado = dto.Estado,
-                NotificarDiasAntes = dto.NotificarDiasAntes,
-                Observaciones = dto.Observaciones,
-                FechaRegistro = dto.FechaRegistro
-            };
-
-            context.Suscripciones.Add(nueva);
-            context.SaveChanges();
+                throw new Exception("Error al insertar la suscripción: " + ex.InnerException?.Message ?? ex.Message);
+            }
         }
-
 
 
 
@@ -123,7 +128,7 @@ namespace Identity.Api.DataRepository
             if (suscripcion != null)
             {
                 suscripcion.IdProveedor = dto.IdProveedor;
-                suscripcion.IdEmpresa = dto.IdEmpresa;
+                suscripcion.RucEmpresa = dto.RucEmpresa;
                 suscripcion.NombreServicio = dto.NombreServicio;
                 suscripcion.TipoSuscripcion = dto.TipoSuscripcion;
                 //conversion de DATETIME a DATEONLY
@@ -138,11 +143,11 @@ namespace Identity.Api.DataRepository
                 suscripcion.Estado = dto.Estado;
                 suscripcion.NotificarDiasAntes = dto.NotificarDiasAntes;
                 suscripcion.Observaciones = dto.Observaciones;
-                suscripcion.FechaRegistro = dto.FechaRegistro;
+               
 
                 // Actualizar navegación (opcional)
-                suscripcion.IdEmpresaNavigation = context.EmpresasClientes
-                    .FirstOrDefault(e => e.IdEmpresa == dto.IdEmpresa);
+                suscripcion.RucEmpresaNavigation = context.EmpresasClientes
+                    .FirstOrDefault(e => e.Ruc == dto.RucEmpresa);
                 suscripcion.IdProveedorNavigation = context.Proveedores
                     .FirstOrDefault(p => p.IdProveedor == dto.IdProveedor);
 

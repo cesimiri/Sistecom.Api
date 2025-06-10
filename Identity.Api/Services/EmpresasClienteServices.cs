@@ -13,9 +13,9 @@ namespace Identity.Api.Services
             get { return _dataRepository.GetAllEmpresasClientes(); }
         }
 
-        public EmpresasCliente GetEmpresaClienteById(int idEmpresaCliente)
+        public EmpresasCliente GetEmpresaClienteById(string ruc)
         {
-            return _dataRepository.GetEmpresaClienteById(idEmpresaCliente);
+            return _dataRepository.GetEmpresaClienteById(ruc);
         }
 
         public void InsertEmpresaCliente(EmpresasCliente New)
@@ -33,9 +33,9 @@ namespace Identity.Api.Services
             _dataRepository.DeleteEmpresaCliente(DelItem);
         }
 
-        public void DeleteEmpresaClienteById(int idregistrado)
+        public void DeleteEmpresaClienteById(string ruc)
         {
-            _dataRepository.DeleteEmpresaClienteById(idregistrado);
+            _dataRepository.DeleteEmpresaClienteById(ruc);
         }
     }
 }
