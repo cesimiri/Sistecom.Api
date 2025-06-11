@@ -202,7 +202,8 @@ builder.Services.AddScoped<ILicencia, LicenciaServices>();
 //Sucursale
 builder.Services.AddScoped<ISucursale, SucursaleServices>();
 
-
+//cargo
+builder.Services.AddScoped<ICargo, CargoServices>();
 
 
 

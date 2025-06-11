@@ -25,16 +25,16 @@ namespace Identity.Api.Controllers
             return Ok(_cargo.GetAllCargo);
         }
 
-        [HttpGet("GetCargoById/{id}")]
-        public IActionResult GetCargoById(int id)
+        [HttpGet("GetCargoById/{idCargo}")]
+        public IActionResult GetCargoById(int idCargo)
         {
             
 
-            var cargo = _cargo.GetCargoById(id);
+            var cargo = _cargo.GetCargoById(idCargo);
 
             if (cargo == null)
             {
-                return NotFound($"Cargo con ID {id} no encontrado.");
+                return NotFound($"Cargo con ID {idCargo} no encontrado.");
             }
 
             return Ok(cargo);
@@ -49,20 +49,20 @@ namespace Identity.Api.Controllers
             {
                 if (NewItem == null || !ModelState.IsValid)
                 {
-                    return BadRequest("Error: Envio de datos");
+                    return BadRequest("Error: Envío de datos inválido.");
                 }
 
                 _cargo.InsertCargo(NewItem);
             }
             catch (Exception ex)
             {
-                return BadRequest("Error:" + ex.Message);
+                var innerMessage = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return StatusCode(500, $"Error al insertar cargo: {innerMessage}");
             }
 
-            //return Ok(NewItem);
             return CreatedAtAction(nameof(GetCargoById), new { idCargo = NewItem.IdCargo }, NewItem);
-
         }
+
 
         [HttpPut("UpdateCargo")]
         public IActionResult Update([FromBody] Cargo UpdItem)

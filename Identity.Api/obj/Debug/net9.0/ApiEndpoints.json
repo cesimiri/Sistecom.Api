@@ -476,13 +476,13 @@
   {
     "ContainingType": "Identity.Api.Controllers.CargoController",
     "Method": "GetCargoById",
-    "RelativePath": "api/Cargo/GetCargoById/{id}",
+    "RelativePath": "api/Cargo/GetCargoById/{idCargo}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
+        "Name": "idCargo",
         "Type": "System.Int32",
         "IsRequired": true
       }
