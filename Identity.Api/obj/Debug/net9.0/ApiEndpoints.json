@@ -1857,22 +1857,6 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.ProductoController",
-    "Method": "Delete",
-    "RelativePath": "api/Producto/DeleteProducto",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "DelItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.Producto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.ProductoController",
     "Method": "DeleteById",
     "RelativePath": "api/Producto/DeleteProductoById/{IdProducto}",
     "HttpMethod": "DELETE",
@@ -1896,7 +1880,7 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "IdProducto",
+        "Name": "idProducto",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -1913,7 +1897,7 @@
     "Parameters": [
       {
         "Name": "NewItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.Producto",
+        "Type": "Identity.Api.DTO.ProductoDTO",
         "IsRequired": true
       }
     ],
@@ -1939,7 +1923,7 @@
     "Parameters": [
       {
         "Name": "UpdItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.Producto",
+        "Type": "Identity.Api.DTO.ProductoDTO",
         "IsRequired": true
       }
     ],

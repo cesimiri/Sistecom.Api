@@ -1,14 +1,15 @@
-﻿using Modelo.Sistecom.Modelo.Database;
+﻿using Identity.Api.DTO;
+using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Interfaces
 {
     public interface IProducto
     {
-        IEnumerable<Producto> ProductoInfoAll { get; }
-        Producto GetProductoById(int IdProducto);
-        void InsertProducto(Producto New);
-        void UpdateProducto(Producto UpdItem);
-        void DeleteProducto(Producto DelItem);
-        void DeleteProductoById(int IdProducto);
+        IEnumerable<ProductoDTO> GetAllProducto { get; }
+        ProductoDTO GetProductoById(int idProducto);
+        void InsertProducto(ProductoDTO dto);
+        void UpdateProducto(ProductoDTO dto);
+        //void DeleteUsuario(UsuarioDTO dto);
+        void DeleteProductoById(int idProducto);
     }
 }

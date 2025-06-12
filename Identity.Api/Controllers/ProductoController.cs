@@ -1,4 +1,5 @@
-﻿using Identity.Api.Interfaces;
+﻿using Identity.Api.DTO;
+using Identity.Api.Interfaces;
 using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -7,7 +8,7 @@ using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -25,26 +26,26 @@ namespace Identity.Api.Controllers
         [HttpGet("ProductoInfoAll")]
         public IActionResult GetAll()
         {
-            return Ok(_empresaCliente.ProductoInfoAll);
+            return Ok(_empresaCliente.GetAllProducto);
         }
 
 
         [HttpGet("GetProductoById/{IdProducto}")]
-        public IActionResult GetProductoById(int IdProducto)
+        public IActionResult GetProductoById(int idProducto)
         {
 
-            var empresaCliente = _empresaCliente.GetProductoById(IdProducto);
+            var empresaCliente = _empresaCliente.GetProductoById(idProducto);
 
             if (empresaCliente == null)
             {
-                return NotFound($"Producto con ese ID: {IdProducto} no encontrado.");
+                return NotFound($"Producto con ese ID: {idProducto} no encontrado.");
             }
 
             return Ok(empresaCliente);
         }
 
         [HttpPost("InsertProducto")]
-        public IActionResult Create([FromBody] Producto NewItem)
+        public IActionResult Create([FromBody] ProductoDTO NewItem)
         {
             try
             {
@@ -64,7 +65,7 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPut("UpdateProducto")]
-        public IActionResult Update([FromBody] Producto UpdItem)
+        public IActionResult Update([FromBody] ProductoDTO UpdItem)
         {
             try
             {
@@ -83,25 +84,25 @@ namespace Identity.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("DeleteProducto")]
-        public IActionResult Delete([FromBody] Producto DelItem)
-        {
-            try
-            {
-                if (DelItem == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Error: Envio de datos");
-                }
+        //[HttpDelete("DeleteProducto")]
+        //public IActionResult Delete([FromBody] Producto DelItem)
+        //{
+        //    try
+        //    {
+        //        if (DelItem == null || !ModelState.IsValid)
+        //        {
+        //            return BadRequest("Error: Envio de datos");
+        //        }
 
-                _empresaCliente.DeleteProducto(DelItem);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Error:" + ex.Message);
-            }
+        //        _empresaCliente.DeleteProducto(DelItem);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest("Error:" + ex.Message);
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         [HttpDelete("DeleteProductoById/{IdProducto}")]
         public IActionResult DeleteById(int IdProducto)

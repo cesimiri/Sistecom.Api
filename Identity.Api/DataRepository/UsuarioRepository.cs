@@ -17,6 +17,7 @@ namespace identity.api.datarepository
 
                 .Select(s => new UsuarioDTO
                 {
+                    IdUsuario = s.IdUsuario,
                     IdDepartamento = s.IdDepartamento,
                     IdCargo = s.IdCargo,
                     Cedula = s.Cedula,
@@ -50,6 +51,7 @@ namespace identity.api.datarepository
                 .Where(s => s.IdUsuario == idUsuario)
                 .Select(s => new UsuarioDTO
                 {
+                    IdUsuario = s.IdUsuario,
                     IdDepartamento = s.IdDepartamento,
                     IdCargo = s.IdCargo,
                     Cedula = s.Cedula,
