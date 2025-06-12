@@ -119,9 +119,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 //--------------------------------------
 // Servicios de Empresas 
 builder.Services.AddScoped<IEmpresaCliente, EmpresaClienteService>();
-         
+
 // Servicios de Usuarios
-//builder.Services.AddScoped<IUsuario, UsuarioService>();
+builder.Services.AddScoped<IUsuario, UsuarioService>();
 
 ////// Servicios de Suscripciones
 builder.Services.AddScoped<ISuscripcione, SuscripcioneService>();
@@ -205,6 +205,8 @@ builder.Services.AddScoped<ISucursale, SucursaleServices>();
 //cargo
 builder.Services.AddScoped<ICargo, CargoServices>();
 
+//Departamento
+builder.Services.AddScoped<IDepartamento, DepartamentoServices>();
 
 
 

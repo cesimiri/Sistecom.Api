@@ -82,24 +82,24 @@ namespace Identity.Api.Controllers
             }
         }
 
-        [HttpDelete("DeleteUsuario")]
-        public IActionResult Delete([FromBody] UsuarioDTO dto)
-        {
-            if (dto == null || !ModelState.IsValid)
-            {
-                return BadRequest("Datos inválidos.");
-            }
+        //[HttpDelete("DeleteUsuario")]
+        //public IActionResult Delete([FromBody] UsuarioDTO dto)
+        //{
+        //    if (dto == null || !ModelState.IsValid)
+        //    {
+        //        return BadRequest("Datos inválidos.");
+        //    }
 
-            try
-            {
-                _usuario.DeleteUsuario(dto);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
-        }
+        //    try
+        //    {
+        //        _usuario.DeleteUsuario(dto);
+        //        return NoContent();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(new { error = ex.Message });
+        //    }
+        //}
 
         [HttpDelete("DeleteUsuarioById/{idUsuario}")]
         public IActionResult DeleteById(int idUsuario)

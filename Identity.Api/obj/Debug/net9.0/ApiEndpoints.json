@@ -702,6 +702,80 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Identity.Api.Controllers.DepartamentoController",
+    "Method": "DeleteById",
+    "RelativePath": "api/Departamento/DeleteDepartamentoById/{idDepartamento}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idDepartamento",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.DepartamentoController",
+    "Method": "GetAll",
+    "RelativePath": "api/Departamento/GetAllDepartamento",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.DepartamentoController",
+    "Method": "GetById",
+    "RelativePath": "api/Departamento/GetDepartamentoById/{idDepartamento}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idDepartamento",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.DepartamentoController",
+    "Method": "InsertDepartamento",
+    "RelativePath": "api/Departamento/InsertDepartamento",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Identity.Api.DTO.DepartamentoDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.DepartamentoController",
+    "Method": "Update",
+    "RelativePath": "api/Departamento/UpdateDepartamento",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Identity.Api.DTO.DepartamentoDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Identity.Api.Controllers.DetalleEnsamblajeController",
     "Method": "Delete",
     "RelativePath": "api/DetalleEnsamblaje/DeleteDetalleEnsamblaje",
@@ -2657,22 +2731,6 @@
         "StatusCode": 200
       }
     ]
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.UsuarioController",
-    "Method": "Delete",
-    "RelativePath": "api/Usuario/DeleteUsuario",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "dto",
-        "Type": "Identity.Api.DTO.UsuarioDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
   },
   {
     "ContainingType": "Identity.Api.Controllers.UsuarioController",

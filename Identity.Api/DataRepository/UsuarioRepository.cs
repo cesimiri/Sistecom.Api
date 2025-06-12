@@ -1,115 +1,115 @@
 ﻿using Identity.Api.DTO;
-using Identity.Api.Interfaces;
-using Identity.Api.Persistence.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace Identity.Api.DataRepository
+namespace identity.api.datarepository
 {
     public class UsuarioDataRepository
     {
 
-        // Obtener todos los usuarios
-        //public List<UsuarioDTO> GetAllUsuarios()
-        //{
-            //using var context = new InvensisContext();
-            //return context.Usuarios
-            //    .Include(s => s.IdEmpresaNavigation)
-            //    .Select(s => new UsuarioDTO
-            //    {
-            //        IdUsuario = s.IdUsuario,
-            //        IdEmpresa = s.IdEmpresa,
-            //        Cedula = s.Cedula,
-            //        Nombres = s.Nombres,
-            //        Apellidos = s.Apellidos,
-            //        Cargo = s.Cargo,
-            //        Departamento = s.Departamento,
-            //        Email = s.Email,
-            //        Telefono = s.Telefono,
-            //        Extension = s.Extension,
-            //        PuedeSolicitar = s.PuedeSolicitar,
-            //        LimiteSolicitud = s.LimiteSolicitud,
-            //        Estado = s.Estado,
-                    
-            //        // Campos relacionados:
-            //        RazonSocialEmpresa = s.IdEmpresaNavigation.RazonSocial,
-                    
-            //    })
-            //    .ToList();
-
-        //}
-       
-
-        // Obtener un usuario por su ID
-        //public UsuarioDTO GetUsuarioById(int IdUsuario)
-        //{
-            //using var context = new InvensisContext();
-
-            //return context.Usuarios
-            //    .Include(s => s.IdEmpresaNavigation)
-
-            //    .Where(s => s.IdUsuario == IdUsuario)
-            //    .Select(s => new UsuarioDTO
-            //    {
-            //        IdUsuario = s.IdUsuario,
-            //        IdEmpresa = s.IdEmpresa,
-            //        Cedula = s.Cedula,
-            //        Nombres = s.Nombres,
-            //        Apellidos = s.Apellidos,
-            //        Cargo = s.Cargo,
-            //        Departamento = s.Departamento,
-            //        Email = s.Email,
-            //        Telefono = s.Telefono,
-            //        Extension = s.Extension,
-            //        PuedeSolicitar = s.PuedeSolicitar,
-            //        LimiteSolicitud = s.LimiteSolicitud,
-            //        Estado = s.Estado,
-
-            //        // Campos relacionados:
-            //        RazonSocialEmpresa = s.IdEmpresaNavigation.RazonSocial,
-            //    })
-            //    .FirstOrDefault();
-
-        //}
-
-        // Insertar un nuevo usuario
-        public void InsertUsuario(UsuarioDTO dto)
+        //obtener todos los usuarios
+        public List<UsuarioDTO> GetAllUsuarios()
         {
-            //using var context = new InvensisContext();
+            using var context = new InvensisContext();
+            return context.Usuarios
+                .Include(s => s.IdDepartamentoNavigation)
+                .Include(s => s.IdCargoNavigation)
 
-            //var empresa = context.EmpresasClientes.Find(dto.IdEmpresa);
+                .Select(s => new UsuarioDTO
+                {
+                    IdDepartamento = s.IdDepartamento,
+                    IdCargo = s.IdCargo,
+                    Cedula = s.Cedula,
+                    Nombres = s.Nombres,
+                    Apellidos = s.Apellidos,
+                    Email = s.Email,
+                    Telefono = s.Telefono,
+                    Extension = s.Extension,
 
-            //if (empresa == null )
-            //{
-            //    throw new Exception("IdEmpresa no existe en la base de datos.");
-            //}
+                    Estado = s.Estado,
 
-            //var nueva = new Usuario
-            //{
+                    // campos relacionados:
+                    NombreDepartamento = s.IdDepartamentoNavigation.NombreDepartamento,
+                    NombreCargo = s.IdCargoNavigation.NombreCargo
 
-            //    IdEmpresa = dto.IdEmpresa,
-            //    Cedula = dto.Cedula,
-            //    Nombres = dto.Nombres,
-            //    Apellidos = dto.Apellidos,
-            //    Cargo = dto.Cargo,
-            //    Departamento = dto.Departamento,
-            //    Email = dto.Email,
-            //    Telefono = dto.Telefono,
-            //    Extension = dto.Extension,
-            //    PuedeSolicitar = dto.PuedeSolicitar,
-            //    LimiteSolicitud = dto.LimiteSolicitud,
-            //    Estado = dto.Estado
-               
-            //};
-
-            //context.Usuarios.Add(nueva);
-            //context.SaveChanges();
+                })
+                .ToList();
 
         }
 
-        // Actualizar un usuario existente
+
+        //obtener un usuario por su id
+        public UsuarioDTO GetUsuarioById(int idUsuario)
+        {
+            using var context = new InvensisContext();
+
+            return context.Usuarios
+                .Include(s => s.IdDepartamentoNavigation)
+                .Include(s => s.IdCargoNavigation)
+
+                .Where(s => s.IdUsuario == idUsuario)
+                .Select(s => new UsuarioDTO
+                {
+                    IdDepartamento = s.IdDepartamento,
+                    IdCargo = s.IdCargo,
+                    Cedula = s.Cedula,
+                    Nombres = s.Nombres,
+                    Apellidos = s.Apellidos,
+                    Email = s.Email,
+                    Telefono = s.Telefono,
+                    Extension = s.Extension,
+
+                    Estado = s.Estado,
+
+                    // campos relacionados:
+                    NombreDepartamento = s.IdDepartamentoNavigation.NombreDepartamento,
+                    NombreCargo = s.IdCargoNavigation.NombreCargo
+                })
+                .FirstOrDefault();
+
+        }
+
+        //insertar un nuevo usuario
+        public void InsertUsuario(UsuarioDTO dto)
+        {
+            try {
+                using var context = new InvensisContext();
+
+                var departamento = context.Departamentos.Find(dto.IdDepartamento);
+                var cargo = context.Cargos.Find(dto.IdCargo);
+
+                if (departamento == null || cargo == null)
+                {
+                    throw new Exception("departamento o cargo  no existe en la base de datos.");
+                }
+
+                var nueva = new Usuario
+                {
+
+                    IdDepartamento = dto.IdDepartamento,
+                    IdCargo = dto.IdCargo,
+                    Cedula = dto.Cedula,
+                    Nombres = dto.Nombres,
+                    Apellidos = dto.Apellidos,
+                    Email = dto.Email,
+                    Telefono = dto.Telefono,
+                    Extension = dto.Extension,
+                    Estado = dto.Estado,
+
+                };
+
+                context.Usuarios.Add(nueva);
+                context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al insertar al usuario: " + ex.InnerException?.Message ?? ex.Message);
+            }
+
+
+        }
+
+        //actualizar un usuario existente
         public void UpdateUsuario(UsuarioDTO dto)
         {
             using var context = new InvensisContext();
@@ -120,7 +120,6 @@ namespace Identity.Api.DataRepository
             if (usuario != null)
             {
 
-                usuario.IdUsuario = dto.IdUsuario;
                 usuario.IdDepartamento = dto.IdDepartamento;
                 usuario.IdCargo = dto.IdCargo;
                 usuario.Cedula = dto.Cedula;
@@ -129,44 +128,42 @@ namespace Identity.Api.DataRepository
                 usuario.Email = dto.Email;
                 usuario.Telefono = dto.Telefono;
                 usuario.Extension = dto.Extension;
-                //usuario.PuedeSolicitar = dto.PuedeSolicitar;
-                //usuario.LimiteSolicitud = dto.LimiteSolicitud;
-
-
                 usuario.Estado = dto.Estado;
 
 
-                // Actualizar navegación (opcional)
-                //usuario.IdEmpresaNavigation = context.EmpresasClientes
-                //    .FirstOrDefault(e => e.Ruc == dto.RucEmpresa);
+                //actualizar navegación(opcional)
+                usuario.IdDepartamentoNavigation = context.Departamentos
+                    .FirstOrDefault(e => e.IdDepartamento == dto.IdDepartamento);
+                usuario.IdCargoNavigation = context.Cargos
+                    .FirstOrDefault(e => e.IdCargo == dto.IdCargo);
 
-                //context.SaveChanges();
-            }     
-        }
-
-        // Eliminar un usuario por objeto
-        public void DeleteUsuario(UsuarioDTO dto)
-        {
-            using var context = new InvensisContext();
-
-            var usuario = context.Usuarios
-                .FirstOrDefault(s => s.IdUsuario == dto.IdUsuario);
-
-            if (usuario != null)
-            {
-                context.Usuarios.Remove(usuario);
                 context.SaveChanges();
             }
-
         }
 
-        // Eliminar un usuario por ID
-        public void DeleteUsuarioById(int IdUsuario)
+        ////eliminar un usuario por objeto se debe cambiar 
+        //public void deleteusuario(usuariodto dto)
+        //{
+        //    using var context = new invensiscontext();
+
+        //    var usuario = context.usuarios
+        //        .firstordefault(s => s.idusuario == dto.idusuario);
+
+        //    if (usuario != null)
+        //    {
+        //        context.usuarios.remove(usuario);
+        //        context.savechanges();
+        //    }
+
+        //}
+
+        //eliminar un usuario por id
+        public void DeleteUsuarioById(int idUsuario)
         {
             using (var context = new InvensisContext())
             {
                 var usuario = context.Usuarios
-                    .FirstOrDefault(s => s.IdUsuario == IdUsuario);
+                    .FirstOrDefault(s => s.IdUsuario == idUsuario);
 
                 if (usuario != null)
                 {
