@@ -491,13 +491,6 @@ C:\Users\gmora\source\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\ref\Id
 \\192.168.120.213\cmiranda\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.416A3443.Up2Date
 \\192.168.120.213\cmiranda\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.genruntimeconfig.cache
 \\192.168.120.213\cmiranda\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\ref\Identity.Api.dll
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.csproj.AssemblyReference.cache
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.GeneratedMSBuildEditorConfig.editorconfig
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.AssemblyInfoInputs.cache
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.AssemblyInfo.cs
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.csproj.CoreCompileInputs.cache
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.MvcApplicationPartsAssemblyInfo.cache
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.sourcelink.json
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\appsettings.Development.json
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\appsettings.json
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Identity.Api.staticwebassets.endpoints.json
@@ -651,6 +644,13 @@ C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\runtimes\win\lib
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Modelo.Sistecom.dll
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.csproj.AssemblyReference.cache
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.GeneratedMSBuildEditorConfig.editorconfig
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.AssemblyInfoInputs.cache
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.AssemblyInfo.cs
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.csproj.CoreCompileInputs.cache
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.MvcApplicationPartsAssemblyInfo.cache
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.sourcelink.json
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\scopedcss\bundle\Identity.Api.styles.css
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\staticwebassets.build.json
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\staticwebassets.build.json.cache

@@ -185,7 +185,7 @@ namespace Identity.Api.Migrations
                 schema: "Identity",
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "8e445865-a24d-4543-a6c6-9443d048cdb9", 0, "677aabfc-80b1-453e-a766-3c95310832b2", "admin@example.com", true, "Admin", "User", false, null, "ADMIN@EXAMPLE.COM", "ADMIN@EXAMPLE.COM", "AQAAAAIAAYagAAAAEHTyWjdeP3XRzuoU2SXdE5meAAFDBhqzggt/5tyMJMn9CfwYu5/Jq+H1bF20tIgUYA==", null, true, "VVPCRDAS3MJWQD5CSW2GWPRADBXEZPN3", false, "admin@example.com" });
+                values: new object[] { "8e445865-a24d-4543-a6c6-9443d048cdb9", 0, "dde91ed8-80c3-4596-8456-505a54d9706c", "admin@example.com", true, "Admin", "User", false, null, "ADMIN@EXAMPLE.COM", "ADMIN@EXAMPLE.COM", "AQAAAAIAAYagAAAAEHTyWjdeP3XRzuoU2SXdE5meAAFDBhqzggt/5tyMJMn9CfwYu5/Jq+H1bF20tIgUYA==", null, true, "VVPCRDAS3MJWQD5CSW2GWPRADBXEZPN3", false, "admin@example.com" });
 
             migrationBuilder.InsertData(
                 schema: "Identity",

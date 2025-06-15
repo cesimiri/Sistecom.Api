@@ -2201,22 +2201,6 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
-    "Method": "Delete",
-    "RelativePath": "api/SolicitudesCompra/DeleteSolicitud",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "solicitudToDelete",
-        "Type": "Modelo.Sistecom.Modelo.Database.SolicitudesCompra",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
     "Method": "DeleteById",
     "RelativePath": "api/SolicitudesCompra/DeleteSolicitud/{idSolicitud}",
     "HttpMethod": "DELETE",
@@ -2229,6 +2213,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
+    "Method": "GetAll",
+    "RelativePath": "api/SolicitudesCompra/GetAllSolicitudesCompra",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -2257,20 +2251,10 @@
     "Parameters": [
       {
         "Name": "newSolicitud",
-        "Type": "Modelo.Sistecom.Modelo.Database.SolicitudesCompra",
+        "Type": "Identity.Api.DTO.SolicitudesCompraDTO",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
-    "Method": "GetAll",
-    "RelativePath": "api/SolicitudesCompra/SolicitudesCompraAll",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -2282,8 +2266,8 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "updatedSolicitud",
-        "Type": "Modelo.Sistecom.Modelo.Database.SolicitudesCompra",
+        "Name": "UpdateSolicitud",
+        "Type": "Identity.Api.DTO.SolicitudesCompraDTO",
         "IsRequired": true
       }
     ],

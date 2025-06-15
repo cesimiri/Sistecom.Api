@@ -1,6 +1,7 @@
 ﻿using Identity.Api.DataRepository;
+using Identity.Api.DTO;
 using Identity.Api.Interfaces;
-using Modelo.Sistecom.Modelo.Database;
+
 using System.Collections.Generic;
 
 namespace Identity.Api.Services
@@ -9,30 +10,30 @@ namespace Identity.Api.Services
     {
         private readonly SolicitudesCompraDataRepository _dataRepository = new SolicitudesCompraDataRepository();
 
-        public IEnumerable<SolicitudesCompra> SolicitudesCompraAll
+        public IEnumerable<SolicitudesCompraDTO> GetAllSolicitudesCompra
         {
             get { return _dataRepository.GetAllSolicitudesCompra(); }
         }
 
-        public SolicitudesCompra GetSolicitudById(int idSolicitud)
+        public SolicitudesCompraDTO GetSolicitudById(int idSolicitud)
         {
             return _dataRepository.GetSolicitudById(idSolicitud);
         }
 
-        public void InsertSolicitud(SolicitudesCompra newSolicitud)
+        public void InsertSolicitud(SolicitudesCompraDTO newSolicitud)
         {
             _dataRepository.InsertSolicitud(newSolicitud);
         }
 
-        public void UpdateSolicitud(SolicitudesCompra updatedSolicitud)
+        public void UpdateSolicitud(SolicitudesCompraDTO updatedSolicitud)
         {
             _dataRepository.UpdateSolicitud(updatedSolicitud);
         }
 
-        public void DeleteSolicitud(SolicitudesCompra solicitudToDelete)
-        {
-            _dataRepository.DeleteSolicitud(solicitudToDelete);
-        }
+        //public void DeleteSolicitud(solic solicitudToDelete)
+        //{
+        //    _dataRepository.DeleteSolicitud(solicitudToDelete);
+        //}
 
         public void DeleteSolicitudById(int idSolicitud)
         {

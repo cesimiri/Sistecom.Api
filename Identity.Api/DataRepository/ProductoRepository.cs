@@ -57,7 +57,6 @@ namespace Identity.Api.DataRepository
             return context.Productos
                 .Include(s => s.IdCategoriaNavigation)
 
-
                 .Where(s => s.IdProducto == idProducto)
                 .Select(s => new ProductoDTO
                 {
@@ -108,10 +107,29 @@ namespace Identity.Api.DataRepository
                     throw new Exception("Esa Categoria no existe en la base de datos.");
                 }
 
+                // Generar el Código Principal automático
+                var lastCodigo = context.Productos
+                    .Where(s => s.CodigoPrincipal.StartsWith("CODP-"))
+                    .OrderByDescending(s => s.CodigoPrincipal)
+                    .Select(s => s.CodigoPrincipal)
+                    .FirstOrDefault();
+
+                int nextNumber = 1;
+                if (lastCodigo != null)
+                {
+                    var lastNumberStr = lastCodigo.Split('-').Last();
+                    if (int.TryParse(lastNumberStr, out var parsedNumber))
+                    {
+                        nextNumber = parsedNumber + 1;
+                    }
+                }
+
+                var NuevoCodigoPrincipal = $"CODP-{nextNumber:D4}";
+
                 var nueva = new Producto
                 {
 
-                    CodigoPrincipal = dto.CodigoPrincipal,
+                    CodigoPrincipal = NuevoCodigoPrincipal,
                     CodigoAuxiliar = dto.CodigoAuxiliar,
                     Nombre = dto.Nombre,
                     Descripcion = dto.Descripcion,

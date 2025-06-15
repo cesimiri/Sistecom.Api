@@ -1,4 +1,5 @@
-﻿using Identity.Api.Interfaces;
+﻿using Identity.Api.DTO;
+using Identity.Api.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,10 +22,10 @@ namespace Identity.Api.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("SolicitudesCompraAll")]
+        [HttpGet("GetAllSolicitudesCompra")]
         public IActionResult GetAll()
         {
-            return Ok(_solicitudesCompraService.SolicitudesCompraAll);
+            return Ok(_solicitudesCompraService.GetAllSolicitudesCompra);
         }
 
         [HttpGet("GetSolicitudById/{idSolicitud}")]
@@ -41,7 +42,7 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPost("InsertSolicitud")]
-        public IActionResult Insert([FromBody] SolicitudesCompra newSolicitud)
+        public IActionResult Insert([FromBody] SolicitudesCompraDTO newSolicitud)
         {
             if (newSolicitud == null || !ModelState.IsValid)
             {
@@ -53,28 +54,28 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPut("UpdateSolicitud")]
-        public IActionResult Update([FromBody] SolicitudesCompra updatedSolicitud)
+        public IActionResult Update([FromBody] SolicitudesCompraDTO UpdateSolicitud)
         {
-            if (updatedSolicitud == null || !ModelState.IsValid)
+            if (UpdateSolicitud == null || !ModelState.IsValid)
             {
                 return BadRequest("Error: Datos inválidos");
             }
 
-            _solicitudesCompraService.UpdateSolicitud(updatedSolicitud);
+            _solicitudesCompraService.UpdateSolicitud(UpdateSolicitud);
             return NoContent();
         }
 
-        [HttpDelete("DeleteSolicitud")]
-        public IActionResult Delete([FromBody] SolicitudesCompra solicitudToDelete)
-        {
-            if (solicitudToDelete == null || !ModelState.IsValid)
-            {
-                return BadRequest("Error: Datos inválidos");
-            }
+        //[HttpDelete("DeleteSolicitud")]
+        //public IActionResult Delete([FromBody] SoliciudesCompraDTO solicitudToDelete)
+        //{
+        //    if (solicitudToDelete == null || !ModelState.IsValid)
+        //    {
+        //        return BadRequest("Error: Datos inválidos");
+        //    }
 
-            _solicitudesCompraService.DeleteSolicitud(solicitudToDelete);
-            return NoContent();
-        }
+        //    _solicitudesCompraService.DeleteSolicitud(solicitudToDelete);
+        //    return NoContent();
+        //}
 
         [HttpDelete("DeleteSolicitud/{idSolicitud}")]
         public IActionResult DeleteById(int idSolicitud)

@@ -137,7 +137,7 @@ namespace Identity.Api.Migrations
                         {
                             Id = "8e445865-a24d-4543-a6c6-9443d048cdb9",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "677aabfc-80b1-453e-a766-3c95310832b2",
+                            ConcurrencyStamp = "dde91ed8-80c3-4596-8456-505a54d9706c",
                             Email = "admin@example.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",

@@ -6,11 +6,11 @@ namespace Identity.Api.DTO
     {
         public int IdProducto { get; set; }
 
-        [Required(ErrorMessage = "El campo obligatorio")]
-        public string CodigoPrincipal { get; set; } = null!;
+
+        public string? CodigoPrincipal { get; set; } = null!;
 
         [Required(ErrorMessage = "El campo obligatorio")]
-        public string? CodigoAuxiliar { get; set; }
+        public string CodigoAuxiliar { get; set; }
 
         [Required(ErrorMessage = "El campo obligatorio")]
         public string Nombre { get; set; } = null!;

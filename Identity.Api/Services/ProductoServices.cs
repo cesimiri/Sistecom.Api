@@ -1,6 +1,6 @@
 ﻿using Identity.Api.Interfaces;
 using Identity.Api.DataRepository;
-using Modelo.Sistecom.Modelo.Database;
+
 using Identity.Api.DTO;
 
 namespace Identity.Api.Services
