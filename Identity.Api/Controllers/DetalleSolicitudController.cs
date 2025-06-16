@@ -1,4 +1,5 @@
-﻿using Identity.Api.Interfaces;
+﻿using Identity.Api.DTO;
+using Identity.Api.Interfaces;
 using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -25,7 +26,7 @@ namespace Identity.Api.Controllers
         [HttpGet("DetalleSolicitudesAll")]
         public IActionResult GetAll()
         {
-            return Ok(_detalleSolicitud.DetalleSolicitudesInfoAll);
+            return Ok(_detalleSolicitud.DetalleSolicitudesAll);
         }
 
         [HttpGet("GetDetalleSolicitudById/{idDetalle}")]
@@ -42,7 +43,7 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPost("InsertDetalleSolicitud")]
-        public IActionResult Create([FromBody] DetalleSolicitud newItem)
+        public IActionResult Create([FromBody] DetalleSolicitudDTO newItem)
         {
             try
             {
@@ -62,7 +63,7 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPut("UpdateDetalleSolicitud")]
-        public IActionResult Update([FromBody] DetalleSolicitud updItem)
+        public IActionResult Update([FromBody] DetalleSolicitudDTO updItem)
         {
             try
             {
@@ -81,25 +82,25 @@ namespace Identity.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("DeleteDetalleSolicitud")]
-        public IActionResult Delete([FromBody] DetalleSolicitud delItem)
-        {
-            try
-            {
-                if (delItem == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Error: Envío de datos inválido");
-                }
+        //[HttpDelete("DeleteDetalleSolicitud")]
+        //public IActionResult Delete([FromBody] DetalleSolicitud delItem)
+        //{
+        //    try
+        //    {
+        //        if (delItem == null || !ModelState.IsValid)
+        //        {
+        //            return BadRequest("Error: Envío de datos inválido");
+        //        }
 
-                _detalleSolicitud.DeleteDetalleSolicitud(delItem);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Error:" + ex.Message);
-            }
+        //        _detalleSolicitud.DeleteDetalleSolicitud(delItem);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest("Error:" + ex.Message);
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         [HttpDelete("DeleteDetalleSolicitud/{idDetalle}")]
         public IActionResult DeleteById(int idDetalle)

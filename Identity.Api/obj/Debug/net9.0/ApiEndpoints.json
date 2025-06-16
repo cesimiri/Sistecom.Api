@@ -353,22 +353,6 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.BodegaController",
-    "Method": "Delete",
-    "RelativePath": "api/Bodega/DeleteBodega",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "DelItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.Bodega",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.BodegaController",
     "Method": "DeleteBodegaById",
     "RelativePath": "api/Bodega/DeleteBodegaById/{IdBodega}",
     "HttpMethod": "DELETE",
@@ -409,7 +393,7 @@
     "Parameters": [
       {
         "Name": "NewItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.Bodega",
+        "Type": "Identity.Api.DTO.BodegaDTO",
         "IsRequired": true
       }
     ],
@@ -1047,22 +1031,6 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.DetalleSolicitudController",
-    "Method": "Delete",
-    "RelativePath": "api/DetalleSolicitud/DeleteDetalleSolicitud",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "delItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.DetalleSolicitud",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.DetalleSolicitudController",
     "Method": "DeleteById",
     "RelativePath": "api/DetalleSolicitud/DeleteDetalleSolicitud/{idDetalle}",
     "HttpMethod": "DELETE",
@@ -1113,7 +1081,7 @@
     "Parameters": [
       {
         "Name": "newItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.DetalleSolicitud",
+        "Type": "Identity.Api.DTO.DetalleSolicitudDTO",
         "IsRequired": true
       }
     ],
@@ -1129,7 +1097,7 @@
     "Parameters": [
       {
         "Name": "updItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.DetalleSolicitud",
+        "Type": "Identity.Api.DTO.DetalleSolicitudDTO",
         "IsRequired": true
       }
     ],

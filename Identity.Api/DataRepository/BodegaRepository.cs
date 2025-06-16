@@ -3,6 +3,7 @@ using Identity.Api.Persistence.DataBase;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Identity.Api.DTO;
 
 namespace Identity.Api.DataRepository
 {
@@ -25,12 +26,53 @@ namespace Identity.Api.DataRepository
 
         }
 
-        public void InsertBodega(Bodega NewItem)
+        public void InsertBodega(BodegaDTO NewItem)
         {
-            using (var context = new InvensisContext())
+            try
             {
-                context.Bodegas.Add(NewItem);
+                using var context = new InvensisContext();
+
+
+                // Generar el Código Principal automático
+                var lastCodigo = context.Bodegas
+                    .Where(s => s.Codigo.StartsWith("CODB-"))
+                    .OrderByDescending(s => s.Codigo)
+                    .Select(s => s.Codigo)
+                    .FirstOrDefault();
+
+                int nextNumber = 1;
+                if (lastCodigo != null)
+                {
+                    var lastNumberStr = lastCodigo.Split('-').Last();
+                    if (int.TryParse(lastNumberStr, out var parsedNumber))
+                    {
+                        nextNumber = parsedNumber + 1;
+                    }
+                }
+
+                var NuevoCodigoBodega = $"CODB-{nextNumber:D4}";
+
+                var nueva = new Bodega
+                {
+
+                    Codigo = NuevoCodigoBodega,
+                    Nombre = NewItem.Nombre,
+                    Direccion = NewItem.Direccion,
+                    Telefono = NewItem.Telefono,
+                    Responsable = NewItem.Responsable,
+                    Tipo = NewItem.Tipo,
+                    PermiteVentas = NewItem.PermiteVentas,
+                    PermiteEnsamblaje = NewItem.PermiteEnsamblaje,
+                    Estado = NewItem.Estado
+
+                };
+
+                context.Bodegas.Add(nueva);
                 context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al insertar la bodega : " + ex.InnerException?.Message ?? ex.Message);
             }
         }
 

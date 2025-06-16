@@ -1,4 +1,5 @@
-﻿using Identity.Api.Interfaces;
+﻿using Identity.Api.DTO;
+using Identity.Api.Interfaces;
 using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -44,7 +45,7 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPost("InsertBodega")]
-        public IActionResult Create([FromBody] Bodega NewItem)
+        public IActionResult Create([FromBody] BodegaDTO NewItem)
         {
             try
             {
@@ -83,25 +84,25 @@ namespace Identity.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("DeleteBodega")]
-        public IActionResult Delete([FromBody] Bodega DelItem)
-        {
-            try
-            {
-                if (DelItem == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Error: Envio de datos");
-                }
+        //[HttpDelete("DeleteBodega")]
+        //public IActionResult Delete([FromBody] Bodega DelItem)
+        //{
+        //    try
+        //    {
+        //        if (DelItem == null || !ModelState.IsValid)
+        //        {
+        //            return BadRequest("Error: Envio de datos");
+        //        }
 
-                _bodega.DeleteBodega(DelItem);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Error:" + ex.Message);
-            }
+        //        _bodega.DeleteBodega(DelItem);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest("Error:" + ex.Message);
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         [HttpDelete("DeleteBodegaById/{IdBodega}")]
         public IActionResult DeleteBodegaById(int IdBodega)

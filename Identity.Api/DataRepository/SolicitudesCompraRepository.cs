@@ -101,7 +101,7 @@ namespace Identity.Api.DataRepository
             try
             {
                 using var context = new InvensisContext();
-
+                //ver los datos(dto.RucEmpresa) que se ingresa existen
                 var empresa = context.EmpresasClientes.Find(dto.RucEmpresa);
                 var usuarioSolicita = context.Usuarios.Find(dto.IdUsuarioSolicita);
                 var usuarioAutoriza = context.Usuarios.Find(dto.IdUsuarioAutoriza);

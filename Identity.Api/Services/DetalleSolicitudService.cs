@@ -2,6 +2,7 @@
 using Identity.Api.DataRepository;
 using Modelo.Sistecom.Modelo.Database;
 using System.Collections.Generic;
+using Identity.Api.DTO;
 
 namespace Identity.Api.Services
 {
@@ -9,30 +10,30 @@ namespace Identity.Api.Services
     {
         private DetalleSolicitudDataRepository _dataRepository = new DetalleSolicitudDataRepository();
 
-        public IEnumerable<DetalleSolicitud> DetalleSolicitudesInfoAll
+        public IEnumerable<DetalleSolicitudDTO> DetalleSolicitudesAll
         {
-            get { return _dataRepository.GetAllDetalleSolicitudes(); }
+            get { return _dataRepository.DetalleSolicitudesAll(); }
         }
 
-        public DetalleSolicitud GetDetalleSolicitudById(int idDetalle)
+        public DetalleSolicitudDTO GetDetalleSolicitudById(int idDetalle)
         {
             return _dataRepository.GetDetalleSolicitudById(idDetalle);
         }
 
-        public void InsertDetalleSolicitud(DetalleSolicitud newItem)
+        public void InsertDetalleSolicitud(DetalleSolicitudDTO newItem)
         {
             _dataRepository.InsertDetalleSolicitud(newItem);
         }
 
-        public void UpdateDetalleSolicitud(DetalleSolicitud updItem)
+        public void UpdateDetalleSolicitud(DetalleSolicitudDTO updItem)
         {
             _dataRepository.UpdateDetalleSolicitud(updItem);
         }
 
-        public void DeleteDetalleSolicitud(DetalleSolicitud delItem)
-        {
-            _dataRepository.DeleteDetalleSolicitud(delItem);
-        }
+        //public void DeleteDetalleSolicitud(DetalleSolicitudDTO delItem)
+        //{
+        //    _dataRepository.DeleteDetalleSolicitud(delItem);
+        //}
 
         public void DeleteDetalleSolicitudById(int idDetalle)
         {

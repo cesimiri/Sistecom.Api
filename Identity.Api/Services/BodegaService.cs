@@ -1,6 +1,7 @@
 ﻿using Identity.Api.DataRepository;
 using Modelo.Sistecom.Modelo.Database;
 using Identity.Api.Interfaces;
+using Identity.Api.DTO;
 
 namespace Identity.Api.Services
 {
@@ -18,7 +19,7 @@ namespace Identity.Api.Services
             return _dataRepository.GetBodegaById(IdBodega);
         }
 
-        public void InsertBodega(Bodega New)
+        public void InsertBodega(BodegaDTO New)
         {
             _dataRepository.InsertBodega(New);
         }

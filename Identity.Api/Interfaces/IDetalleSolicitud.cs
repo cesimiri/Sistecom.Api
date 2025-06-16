@@ -1,15 +1,18 @@
-﻿using Modelo.Sistecom.Modelo.Database;
+﻿using Identity.Api.DTO;
+using Modelo.Sistecom.Modelo.Database;
 using System.Collections.Generic;
 
 namespace Identity.Api.Interfaces
 {
     public interface IDetalleSolicitud
     {
-        IEnumerable<DetalleSolicitud> DetalleSolicitudesInfoAll { get; }
-        DetalleSolicitud GetDetalleSolicitudById(int idDetalle);
-        void InsertDetalleSolicitud(DetalleSolicitud newItem);
-        void UpdateDetalleSolicitud(DetalleSolicitud updItem);
-        void DeleteDetalleSolicitud(DetalleSolicitud delItem);
+        IEnumerable<DetalleSolicitudDTO> DetalleSolicitudesAll { get; }
+        DetalleSolicitudDTO GetDetalleSolicitudById(int idDetalle);
+        void InsertDetalleSolicitud(DetalleSolicitudDTO newItem);
+        void UpdateDetalleSolicitud(DetalleSolicitudDTO updItem);
+        //void DeleteDetalleSolicitud(DetalleSolicitudDTO delItem);
         void DeleteDetalleSolicitudById(int idDetalle);
+
+
     }
 }
