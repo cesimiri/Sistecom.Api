@@ -13,7 +13,7 @@ namespace Identity.Api.DataRepository
         {
             using var context = new InvensisContext();
             return context.DetalleSolicituds
-                .Include(s => s.IdUsuarioDestinoNavigation)
+                //.Include(s => s.IdUsuarioDestinoNavigation)
                 .Include(s => s.IdSolicitudNavigation)
                 .Include(s => s.IdProductoNavigation)
                 
@@ -26,11 +26,11 @@ namespace Identity.Api.DataRepository
                     PrecioUnitario = s.PrecioUnitario,
                     Descuento = s.Descuento,
                     Subtotal = s.Subtotal,
-                    IdUsuarioDestino = s.IdUsuarioDestino,
+                    //IdUsuarioDestino = s.IdUsuarioDestino,
                     Observaciones = s.Observaciones,
 
                     // campos relacionados:
-                    UsuarioDestino = s.IdUsuarioDestinoNavigation.Nombres + " " + s.IdUsuarioDestinoNavigation.Apellidos,
+                    //UsuarioDestino = s.IdUsuarioDestinoNavigation.Nombres + " " + s.IdUsuarioDestinoNavigation.Apellidos,
                     NumeroSolicitud = s.IdSolicitudNavigation.NumeroSolicitud,
                     CodigoPrincipal = s.IdProductoNavigation.Nombre
                 })
@@ -42,7 +42,7 @@ namespace Identity.Api.DataRepository
             using var context = new InvensisContext();
 
             return context.DetalleSolicituds
-                .Include(s => s.IdUsuarioDestinoNavigation)
+                //.Include(s => s.IdUsuarioDestinoNavigation)
                 .Include(s => s.IdSolicitudNavigation)
                 .Include(s => s.IdProductoNavigation)
 
@@ -57,10 +57,10 @@ namespace Identity.Api.DataRepository
                     PrecioUnitario = s.PrecioUnitario,
                     Descuento = s.Descuento,
                     Subtotal = s.Subtotal,
-                    IdUsuarioDestino = s.IdUsuarioDestino,
+                    //IdUsuarioDestino = s.IdUsuarioDestino,
                     Observaciones = s.Observaciones,
                     // campos relacionados:
-                    UsuarioDestino = s.IdUsuarioDestinoNavigation.Nombres + " " + s.IdUsuarioDestinoNavigation.Apellidos,
+                    //UsuarioDestino = s.IdUsuarioDestinoNavigation.Nombres + " " + s.IdUsuarioDestinoNavigation.Apellidos,
                     NumeroSolicitud = s.IdSolicitudNavigation.NumeroSolicitud,
                     CodigoPrincipal = s.IdProductoNavigation.Nombre
 
@@ -96,7 +96,7 @@ namespace Identity.Api.DataRepository
                     PrecioUnitario = newItem.PrecioUnitario,
                     Descuento = newItem.Descuento,
                     Subtotal = newItem.Subtotal,
-                    IdUsuarioDestino = newItem.IdUsuarioDestino,
+                    //IdUsuarioDestino = newItem.IdUsuarioDestino,
                     Observaciones = newItem.Observaciones,
                 };
 
@@ -126,7 +126,7 @@ namespace Identity.Api.DataRepository
                     registrado.PrecioUnitario = updItem.PrecioUnitario;
                     registrado.Descuento = updItem.Descuento;
                     registrado.Subtotal = updItem.Subtotal;
-                    registrado.IdUsuarioDestino = updItem.IdUsuarioDestino;
+                    //registrado.IdUsuarioDestino = updItem.IdUsuarioDestino;
                     registrado.Observaciones = updItem.Observaciones;
 
                     context.SaveChanges();

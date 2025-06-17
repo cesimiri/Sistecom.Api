@@ -208,6 +208,10 @@ builder.Services.AddScoped<ICargo, CargoServices>();
 //Departamento
 builder.Services.AddScoped<IDepartamento, DepartamentoServices>();
 
+//Marca
+builder.Services.AddScoped<IMarca, MarcaServices>();
+
+
 
 
 

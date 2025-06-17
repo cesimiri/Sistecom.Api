@@ -1,4 +1,5 @@
-﻿using Identity.Api.Persistence.DataBase;
+﻿using Identity.Api.DTO;
+using Identity.Api.Persistence.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
 using System.Collections.Generic;
@@ -30,12 +31,42 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        public void InsertStockBodega(StockBodega item)
+        public void InsertStockBodega(stockBodegaDTO item)
         {
-            using (var context = new InvensisContext())
+            try
             {
-                context.StockBodegas.Add(item);
+                using var context = new InvensisContext();
+
+
+                var bodega = context.Bodegas.Find(item.IdBodega);
+                var producto = context.Productos.Find(item.IdProducto);
+
+                if (bodega == null || producto == null)
+                {
+                    throw new Exception("Esa bodega o producto no existe en la base de datos.");
+                }
+
+               
+
+                var nueva = new StockBodega
+                {
+
+                    IdBodega = item.IdBodega,
+                    IdProducto = item.IdProducto,
+                    CantidadDisponible = item.CantidadDisponible,
+                    CantidadReservada = item.CantidadReservada,
+                    CantidadEnsamblaje = item.CantidadEnsamblaje,
+                    ValorPromedio = item.ValorPromedio,
+                   
+
+                };
+
+                context.StockBodegas.Add(nueva);
                 context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al insertar el stock Bodegas: " + ex.InnerException?.Message ?? ex.Message);
             }
         }
 
@@ -62,14 +93,14 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        public void DeleteStockBodega(StockBodega item)
-        {
-            using (var context = new InvensisContext())
-            {
-                context.StockBodegas.Remove(item);
-                context.SaveChanges();
-            }
-        }
+        //public void DeleteStockBodega(StockBodega item)
+        //{
+        //    using (var context = new InvensisContext())
+        //    {
+        //        context.StockBodegas.Remove(item);
+        //        context.SaveChanges();
+        //    }
+        //}
 
         public void DeleteStockBodegaById(int idStock)
         {

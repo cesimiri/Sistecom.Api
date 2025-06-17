@@ -1554,6 +1554,80 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Identity.Api.Controllers.MarcaController",
+    "Method": "DeleteMarcaById",
+    "RelativePath": "api/Marca/DeleteMarcaById/{idMarca}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idMarca",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.MarcaController",
+    "Method": "GetAll",
+    "RelativePath": "api/Marca/GetAllMarca",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.MarcaController",
+    "Method": "GetMarcaById",
+    "RelativePath": "api/Marca/GetMarcaById/{idMarca}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idMarca",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.MarcaController",
+    "Method": "Create",
+    "RelativePath": "api/Marca/InsertMarca",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "NewItem",
+        "Type": "Identity.Api.DTO.MarcaDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.MarcaController",
+    "Method": "Update",
+    "RelativePath": "api/Marca/UpdateMarca",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UpdItem",
+        "Type": "Modelo.Sistecom.Modelo.Database.Marca",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Identity.Api.Controllers.MovimientosInventarioController",
     "Method": "Delete",
     "RelativePath": "api/MovimientosInventario/DeleteMovimientosInventario",
@@ -2251,23 +2325,7 @@
     "Parameters": [
       {
         "Name": "item",
-        "Type": "Modelo.Sistecom.Modelo.Database.StockBodega",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.StockBodegaController",
-    "Method": "Delete",
-    "RelativePath": "api/StockBodega/Delete",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "item",
-        "Type": "Modelo.Sistecom.Modelo.Database.StockBodega",
+        "Type": "Identity.Api.DTO.stockBodegaDTO",
         "IsRequired": true
       }
     ],

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Modelo.Sistecom.Modelo.Database;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Identity.Api.DTO;
 
 namespace Identity.Api.Controllers
 {
@@ -37,7 +38,7 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPost("Create")]
-        public IActionResult Create([FromBody] StockBodega item)
+        public IActionResult Create([FromBody] stockBodegaDTO item)
         {
             if (item == null || !ModelState.IsValid)
                 return BadRequest("Datos inválidos.");
@@ -56,15 +57,15 @@ namespace Identity.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("Delete")]
-        public IActionResult Delete([FromBody] StockBodega item)
-        {
-            if (item == null)
-                return BadRequest("Datos inválidos.");
+        //[HttpDelete("Delete")]
+        //public IActionResult Delete([FromBody] StockBodega item)
+        //{
+        //    if (item == null)
+        //        return BadRequest("Datos inválidos.");
 
-            _service.DeleteStockBodega(item);
-            return NoContent();
-        }
+        //    _service.DeleteStockBodega(item);
+        //    return NoContent();
+        //}
 
         [HttpDelete("DeleteById/{id}")]
         public IActionResult DeleteById(int id)

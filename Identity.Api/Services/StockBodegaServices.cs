@@ -1,4 +1,5 @@
 ﻿using Identity.Api.DataRepository;
+using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Modelo.Sistecom.Modelo.Database;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace Identity.Api.Services
             return _dataRepository.GetStockBodegaById(idStock);
         }
 
-        public void InsertStockBodega(StockBodega item)
+        public void InsertStockBodega(stockBodegaDTO item)
         {
             _dataRepository.InsertStockBodega(item);
         }
@@ -29,10 +30,10 @@ namespace Identity.Api.Services
             _dataRepository.UpdateStockBodega(item);
         }
 
-        public void DeleteStockBodega(StockBodega item)
-        {
-            _dataRepository.DeleteStockBodega(item);
-        }
+        //public void DeleteStockBodega(StockBodega item)
+        //{
+        //    _dataRepository.DeleteStockBodega(item);
+        //}
 
         public void DeleteStockBodegaById(int idStock)
         {

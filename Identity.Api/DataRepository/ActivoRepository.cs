@@ -41,8 +41,8 @@ namespace Identity.Api.DataRepository
                     existente.IdProducto = updActivo.IdProducto;
                     existente.NumeroSerie = updActivo.NumeroSerie;
                     existente.NumeroParte = updActivo.NumeroParte;
-                    existente.Modelo = updActivo.Modelo;
-                    existente.Marca = updActivo.Marca;
+                    //existente.Modelo = updActivo.Modelo;
+                    //existente.Marca = updActivo.Marca;
                     existente.FechaAdquisicion = updActivo.FechaAdquisicion;
                     existente.FechaGarantiaFin = updActivo.FechaGarantiaFin;
                     existente.IdFacturaCompra = updActivo.IdFacturaCompra;
