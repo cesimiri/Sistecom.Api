@@ -211,6 +211,9 @@ builder.Services.AddScoped<IDepartamento, DepartamentoServices>();
 //Marca
 builder.Services.AddScoped<IMarca, MarcaServices>();
 
+//Modelo
+builder.Services.AddScoped<IModelo, ModeloServices>();
+
 
 
 

@@ -1628,6 +1628,80 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Identity.Api.Controllers.ModeloController",
+    "Method": "DeleteById",
+    "RelativePath": "api/Modelo/DeleteModeloById/{idModelo}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idModelo",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ModeloController",
+    "Method": "GetAll",
+    "RelativePath": "api/Modelo/GetAllModelo",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ModeloController",
+    "Method": "GetModeloById",
+    "RelativePath": "api/Modelo/GetModeloById/{idModelo}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idModelo",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ModeloController",
+    "Method": "Create",
+    "RelativePath": "api/Modelo/InsertModelo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "NewItem",
+        "Type": "Identity.Api.DTO.ModeloDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ModeloController",
+    "Method": "Update",
+    "RelativePath": "api/Modelo/UpdateModelo",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UpdItem",
+        "Type": "Identity.Api.DTO.ModeloDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Identity.Api.Controllers.MovimientosInventarioController",
     "Method": "Delete",
     "RelativePath": "api/MovimientosInventario/DeleteMovimientosInventario",
