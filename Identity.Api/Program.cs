@@ -214,6 +214,9 @@ builder.Services.AddScoped<IMarca, MarcaServices>();
 //Modelo
 builder.Services.AddScoped<IModelo, ModeloServices>();
 
+//UnidadesMedidum
+builder.Services.AddScoped<IUnidadesMedidum, UnidadesMedidumServices>();
+
 
 
 

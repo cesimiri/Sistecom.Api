@@ -2718,6 +2718,80 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Identity.Api.Controllers.UnidadesMediumController",
+    "Method": "DeleteById",
+    "RelativePath": "api/UnidadesMedium/DeleteUnidadesById/{idUnidades}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUnidades",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UnidadesMediumController",
+    "Method": "GetAll",
+    "RelativePath": "api/UnidadesMedium/GetAllUnidades",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UnidadesMediumController",
+    "Method": "GetById",
+    "RelativePath": "api/UnidadesMedium/GetUnidadesById/{idUnidades}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUnidades",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UnidadesMediumController",
+    "Method": "InsertUnidades",
+    "RelativePath": "api/UnidadesMedium/InsertUnidades",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Identity.Api.DTO.UnidadesMedidumDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UnidadesMediumController",
+    "Method": "Update",
+    "RelativePath": "api/UnidadesMedium/UpdateUnidades",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Modelo.Sistecom.Modelo.Database.UnidadesMedidum",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Identity.Api.Controllers.UsersController",
     "Method": "Get",
     "RelativePath": "api/Users",
