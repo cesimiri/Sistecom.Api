@@ -39,5 +39,10 @@ namespace Identity.Api.Services
         {
             _dataRepository.DeleteSolicitudById(idSolicitud);
         }
+
+        public IEnumerable<UsuarioDTO> ObtenerUsuarioSolicitaAsync()
+        {
+            return _dataRepository.ObtenerUsuarioSolicitaAsync();
+        }
     }
 }

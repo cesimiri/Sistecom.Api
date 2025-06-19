@@ -21,7 +21,9 @@ namespace Identity.Api.DataRepository
                     NombreDepartamento = s.NombreDepartamento,
                     Descripcion = s.Descripcion,
                     Responsable = s.Responsable,
+                    EmailDepartamento = s.EmailDepartamento,
                     Extension = s.Extension,
+                    CentroCosto = s.CentroCosto,
                     Estado = s.Estado,
 
                     // Campos relacionados:
@@ -46,7 +48,9 @@ namespace Identity.Api.DataRepository
                     NombreDepartamento = s.NombreDepartamento,
                     Descripcion = s.Descripcion,
                     Responsable = s.Responsable,
+                    EmailDepartamento = s.EmailDepartamento,
                     Extension = s.Extension,
+                    CentroCosto = s.CentroCosto,
                     Estado = s.Estado,
 
                     // Campos relacionados:
@@ -61,6 +65,28 @@ namespace Identity.Api.DataRepository
             {
                 using var context = new InvensisContext();
 
+                // Generar el NumeroSolicitud automático
+                
+                // Obtener la última solicitud para este año para sacar el siguiente número
+                var lastNumero = context.Departamentos
+                    .Where(s => s.CodigoDepartamento.StartsWith($"DP-"))
+                    .OrderByDescending(s => s.CodigoDepartamento)
+                    .Select(s => s.CodigoDepartamento)
+                    .FirstOrDefault();
+
+                int nextNumber = 1;
+                if (lastNumero != null)
+                {
+                    // Ejemplo: SC-2025-0005
+                    var lastNumberStr = lastNumero.Split('-').Last();
+                    if (int.TryParse(lastNumberStr, out var lastNumber))
+                    {
+                        nextNumber = lastNumber + 1;
+                    }
+                }
+                var nuevoCodigoDepartamento = $"DP-{nextNumber:D4}";
+
+
                 var sucursal = context.Sucursales.Find(dto.IdSucursal);
                 
 
@@ -74,11 +100,13 @@ namespace Identity.Api.DataRepository
 
                     IdDepartamento = dto.IdDepartamento,
                     IdSucursal = dto.IdSucursal,
-                    CodigoDepartamento = dto.CodigoDepartamento,
+                    CodigoDepartamento = nuevoCodigoDepartamento,
                     NombreDepartamento = dto.NombreDepartamento,
                     Descripcion = dto.Descripcion,
                     Responsable = dto.Responsable,
+                    EmailDepartamento = dto.EmailDepartamento,
                     Extension = dto.Extension,
+                    CentroCosto = dto.CentroCosto,
                     Estado = dto.Estado
                 };
 
@@ -108,7 +136,9 @@ namespace Identity.Api.DataRepository
                 departamento.NombreDepartamento = dto.NombreDepartamento;
                 departamento.Descripcion = dto.Descripcion;
                 departamento.Responsable = dto.Responsable;
+                departamento.EmailDepartamento = dto.EmailDepartamento;
                 departamento.Extension = dto.Extension;
+                departamento.CentroCosto = dto.CentroCosto;
                 departamento.Estado = dto.Estado;
 
                 // Actualizar navegación (opcional)

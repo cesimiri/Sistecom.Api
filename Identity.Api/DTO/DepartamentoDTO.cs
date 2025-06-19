@@ -9,8 +9,9 @@ namespace Identity.Api.DTO
         [Required(ErrorMessage = "El campo obligatorio")]
         public int IdSucursal { get; set; }
 
+        public string? CodigoDepartamento { get; set; } = null!;
+
         [Required(ErrorMessage = "El campo obligatorio")]
-        public string CodigoDepartamento { get; set; } = null!;
 
         public string NombreDepartamento { get; set; } = null!;
 
@@ -18,8 +19,11 @@ namespace Identity.Api.DTO
 
         public string? Responsable { get; set; }
 
+        public string? EmailDepartamento { get; set; }
+
         public string? Extension { get; set; }
 
+        public string? CentroCosto { get; set; }
 
 
         public string? Estado { get; set; }

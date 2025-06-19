@@ -28,6 +28,20 @@ namespace Identity.Api.Controllers
             return Ok(_solicitudesCompraService.GetAllSolicitudesCompra);
         }
 
+        //busqueda de usuario que solicita porque sean rol 4,3,2
+        [HttpGet("ObtenerUsuariosSolicitantes")]
+        public IActionResult ObtenerUsuariosSolicitantes()
+        {
+            var usuarios = _solicitudesCompraService.ObtenerUsuarioSolicitaAsync();
+
+            if (usuarios == null || !usuarios.Any())
+            {
+                return NotFound("No se encontraron usuarios solicitantes.");
+            }
+
+            return Ok(usuarios);
+        }
+
         [HttpGet("GetSolicitudById/{idSolicitud}")]
         public IActionResult GetById(int idSolicitud)
         {

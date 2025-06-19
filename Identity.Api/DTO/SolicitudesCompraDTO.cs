@@ -6,8 +6,8 @@ namespace Identity.Api.DTO
     public class SolicitudesCompraDTO
     {
         public int IdSolicitud { get; set; }
-
-        public string? NumeroSolicitud { get; set; }
+        //automatica
+        public string NumeroSolicitud { get; set; } = null!;
 
 
         [Required(ErrorMessage = "El campo obligatorio")]
@@ -21,6 +21,11 @@ namespace Identity.Api.DTO
 
         [Required(ErrorMessage = "El campo obligatorio")]
         public int? IdUsuarioAutoriza { get; set; }
+
+        //agregado
+        [Required(ErrorMessage = "El campo obligatorio")]
+        public int? IdUsuarioDestino { get; set; }
+
 
         [Required(ErrorMessage = "El campo obligatorio")]
         public DateTime FechaSolicitud { get; set; }

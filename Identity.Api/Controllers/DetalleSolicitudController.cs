@@ -29,6 +29,8 @@ namespace Identity.Api.Controllers
             return Ok(_detalleSolicitud.DetalleSolicitudesAll);
         }
 
+        
+
         [HttpGet("GetDetalleSolicitudById/{idDetalle}")]
         public IActionResult GetDetalleSolicitudById(int idDetalle)
         {

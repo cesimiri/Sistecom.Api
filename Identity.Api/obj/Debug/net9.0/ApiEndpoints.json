@@ -2391,6 +2391,16 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
+    "Method": "ObtenerUsuariosSolicitantes",
+    "RelativePath": "api/SolicitudesCompra/ObtenerUsuariosSolicitantes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
     "Method": "Update",
     "RelativePath": "api/SolicitudesCompra/UpdateSolicitud",
     "HttpMethod": "PUT",

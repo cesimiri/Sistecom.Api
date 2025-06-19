@@ -2,6 +2,7 @@
 using Identity.Api.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -47,6 +48,36 @@ namespace Identity.Api.DataRepository
                     NombreSolicitanteCompleto = s.IdUsuarioSolicitaNavigation.Nombres + " " + s.IdUsuarioSolicitaNavigation.Apellidos,
                     NombreAutorizadorCompleto = s.IdUsuarioAutorizaNavigation.Nombres + " " + s.IdUsuarioAutorizaNavigation.Apellidos,
                     NombreDepartamento = s.IdDepartamentoNavigation.NombreDepartamento
+                })
+                .ToList();
+        }
+
+        //traer los usuarios q solicita dependiendo cargo 
+
+        public List<UsuarioDTO> ObtenerUsuarioSolicitaAsync()
+        {
+            using var context = new InvensisContext();
+
+            return context.Usuarios
+                .Include(u => u.IdCargoNavigation)
+                .Include(u => u.IdDepartamentoNavigation)
+                .Where(u => u.Estado == "ACTIVO"
+
+                 && new[] { 2, 3, 4 }.Contains(u.IdCargoNavigation.NivelJerarquico.GetValueOrDefault()))
+                .Select(u => new UsuarioDTO
+                {
+                    IdUsuario = u.IdUsuario,
+                    Cedula = u.Cedula,
+                    Nombres = u.Nombres,
+                    Apellidos = u.Apellidos,
+                    Email = u.Email,
+                    Telefono = u.Telefono,
+                    Extension = u.Extension,
+                    Estado = u.Estado,
+                    IdCargo = u.IdCargo,
+                    IdDepartamento = u.IdDepartamento,
+                    NombreCargo = u.IdCargoNavigation.Descripcion,
+                    NombreDepartamento = u.IdDepartamentoNavigation.NombreDepartamento
                 })
                 .ToList();
         }

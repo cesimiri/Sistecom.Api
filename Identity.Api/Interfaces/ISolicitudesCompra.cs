@@ -12,5 +12,7 @@ namespace Identity.Api.Interfaces
         void UpdateSolicitud(SolicitudesCompraDTO updatedSolicitud);
         //void DeleteSolicitud(SoliciudesCompraDTO solicitudToDelete);
         void DeleteSolicitudById(int idSolicitud);
+
+        IEnumerable<UsuarioDTO> ObtenerUsuarioSolicitaAsync();
     }
 }

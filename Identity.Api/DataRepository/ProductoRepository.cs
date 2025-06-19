@@ -89,7 +89,7 @@ namespace Identity.Api.DataRepository
             Descontinuado = m.Descontinuado,
             FechaDescontinuacion = m.FechaDescontinuacion.HasValue
                 ? m.FechaDescontinuacion.Value.ToDateTime(TimeOnly.MinValue)
-    : null,
+            : null,
             EspecificacionesGenerales = m.EspecificacionesGenerales,
             ImagenUrl = m.ImagenUrl,
             Estado = m.Estado
