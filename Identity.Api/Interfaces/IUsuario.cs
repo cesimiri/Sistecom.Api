@@ -14,6 +14,10 @@ namespace Identity.Api.Interfaces
         //void DeleteUsuario(UsuarioDTO dto);
         void DeleteUsuarioById(int idUsuario);
 
+        IEnumerable<SucursaleDTO> ObtenerSucursalesByRuc(string RucEmpresa);
+
+        IEnumerable<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal);
+
 
     }
 }

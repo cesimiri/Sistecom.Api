@@ -2960,6 +2960,38 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.UsuarioController",
+    "Method": "ObtenerDepartamentosBySucursal",
+    "RelativePath": "api/Usuario/ObtenerDepartamentosBySucursal/{idSucursal}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idSucursal",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UsuarioController",
+    "Method": "ObtenerSucursalesByRuc",
+    "RelativePath": "api/Usuario/ObtenerSucursalesByRuc/{RucEmpresa}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "RucEmpresa",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UsuarioController",
     "Method": "UpdateUsuario",
     "RelativePath": "api/Usuario/UpdateUsuario",
     "HttpMethod": "PUT",

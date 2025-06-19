@@ -4,6 +4,7 @@ using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Modelo.Sistecom.Modelo.Database;
 
 
 namespace Identity.Api.Controllers
@@ -28,6 +29,35 @@ namespace Identity.Api.Controllers
         {
 
             return Ok(_usuario.GetAllUsuarios);
+        }
+
+
+        //Obtener las sucursales por empresa
+        [HttpGet("ObtenerSucursalesByRuc/{RucEmpresa}")]
+        public IActionResult ObtenerSucursalesByRuc(string RucEmpresa)
+        {
+            var modelos = _usuario.ObtenerSucursalesByRuc(RucEmpresa);
+
+            if (modelos == null || !modelos.Any())
+            {
+                return NotFound($"No se encontraron Sucursales con esa Ruc de empresa {RucEmpresa}.");
+            }
+
+            return Ok(modelos);
+        }
+
+        //Obtener las departamentos por sucursal
+        [HttpGet("ObtenerDepartamentosBySucursal/{idSucursal}")]
+        public IActionResult ObtenerDepartamentosBySucursal(int idSucursal)
+        {
+            var modelos = _usuario.ObtenerDepartamentosBySucursal(idSucursal);
+
+            if (modelos == null || !modelos.Any())
+            {
+                return NotFound($"No se encontraron los departamentos por esa id de sucursal: {idSucursal}.");
+            }
+
+            return Ok(modelos);
         }
 
         [HttpGet("GetUsuarioById/{id}")]

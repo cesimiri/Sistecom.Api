@@ -32,8 +32,14 @@ namespace Identity.Api.DTO
 
         //relacion
 
+        public string? NombreEmpresa { get; set; }
+        public string? nombreSucursal { get; set; }
         public string? NombreDepartamento { get; set; }
+
+
         public string? NombreCargo { get; set; }
+
+
 
     }
 }

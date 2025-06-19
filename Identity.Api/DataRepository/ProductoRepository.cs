@@ -72,6 +72,8 @@ namespace Identity.Api.DataRepository
         //        })
         //        .ToList();
         //}
+
+        //obtener los modelso luego de seleccionar la marca
         public List<ModeloDTO> GetModelosByIdMarca(int idMarca)
         {
             using var context = new InvensisContext();

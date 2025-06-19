@@ -38,5 +38,17 @@ namespace Identity.Api.Services
         {
             _dataRepository.DeleteUsuarioById(IdUsuario);
         }
+
+        //traer datos por la empresa seleccionada
+        public IEnumerable<SucursaleDTO> ObtenerSucursalesByRuc(string RucEmpresa)
+        {
+            return _dataRepository.ObtenerSucursalesByRuc(RucEmpresa);
+        }
+
+        //traer departamentos por la sucursal
+        public IEnumerable<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal)
+        {
+            return _dataRepository.ObtenerDepartamentosBySucursal(idSucursal);
+        }
     }
 }

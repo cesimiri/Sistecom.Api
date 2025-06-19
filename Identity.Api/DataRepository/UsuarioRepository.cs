@@ -38,6 +38,60 @@ namespace identity.api.datarepository
 
         }
 
+        //obtener las sucursales despues de seleccionar la empresa
+        public List<SucursaleDTO> ObtenerSucursalesByRuc(string RucEmpresa)
+        {
+            using var context = new InvensisContext();
+
+            return context.Sucursales
+                .Where(m => m.RucEmpresa == RucEmpresa)
+        .Select(m => new SucursaleDTO
+        {
+            IdSucursal = m.IdSucursal,
+            RucEmpresa = m.RucEmpresa,
+            CodigoSucursal = m.CodigoSucursal!,
+            NombreSucursal = m.NombreSucursal,
+            Direccion = m.Direccion,
+            Ciudad = m.Ciudad,
+            Telefono = m.Telefono,
+            Email = m.Email,
+            //FechaDescontinuacion = m.FechaDescontinuacion.HasValue
+            //    ? m.FechaDescontinuacion.Value.ToDateTime(TimeOnly.MinValue)
+            //: null,
+            Responsable = m.Responsable,
+            TelefonoResponsable = m.TelefonoResponsable,
+            EsMatriz = m.EsMatriz,
+            Estado = m.Estado
+        })
+        .ToList();
+        }
+
+        //obtener los departamentos despues de seleccionar la sucursal
+        public List<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal)
+        {
+            using var context = new InvensisContext();
+
+            return context.Departamentos
+                .Where(m => m.IdSucursal == idSucursal)
+        .Select(m => new DepartamentoDTO
+        {
+            IdDepartamento = m.IdDepartamento,
+            IdSucursal = m.IdSucursal,
+            CodigoDepartamento = m.CodigoDepartamento,
+            NombreDepartamento = m.NombreDepartamento!,
+            Descripcion = m.Descripcion,
+            Responsable = m.Responsable,
+            EmailDepartamento = m.EmailDepartamento,
+            Extension = m.Extension,
+            CentroCosto = m.CentroCosto,
+            //FechaDescontinuacion = m.FechaDescontinuacion.HasValue
+            //    ? m.FechaDescontinuacion.Value.ToDateTime(TimeOnly.MinValue)
+            //: null,
+            Estado = m.Estado
+        })
+        .ToList();
+        }
+
 
         //obtener un usuario por su id
         public UsuarioDTO GetUsuarioById(int idUsuario)

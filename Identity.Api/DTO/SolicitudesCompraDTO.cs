@@ -34,15 +34,15 @@ namespace Identity.Api.DTO
 
         public DateTime FechaRequerida { get; set; }
 
-        [Required(ErrorMessage = "El campo obligatorio")]
+        //[Required(ErrorMessage = "El campo obligatorio")]
         public decimal SubtotalSinImpuestos { get; set; }
 
         public decimal? DescuentoTotal { get; set; }
 
-        [Required(ErrorMessage = "El campo obligatorio")]
+        //[Required(ErrorMessage = "El campo obligatorio")]
         public decimal Iva { get; set; }
 
-        [Required(ErrorMessage = "El campo obligatorio")]
+        //[Required(ErrorMessage = "El campo obligatorio")]
         public decimal ValorTotal { get; set; }
 
         public string? Justificacion { get; set; }

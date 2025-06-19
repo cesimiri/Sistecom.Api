@@ -13,6 +13,13 @@ namespace Identity.Api.Interfaces
         //void DeleteSolicitud(SoliciudesCompraDTO solicitudToDelete);
         void DeleteSolicitudById(int idSolicitud);
 
+        //FUNCIONES DE BACKEND
+
+
         IEnumerable<UsuarioDTO> ObtenerUsuarioSolicitaAsync();
+
+        IEnumerable<SucursaleDTO> ObtenerSucursalesByRuc(string RucEmpresa);
+
+        IEnumerable<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal);
     }
 }
