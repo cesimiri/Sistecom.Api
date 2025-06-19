@@ -12,6 +12,9 @@ namespace Identity.Api.DataRepository
             using var context = new InvensisContext();
             return context.Productos
                 .Include(s => s.IdCategoriaNavigation)
+                .Include(s => s.IdMarcaNavigation)
+                .Include(s => s.IdModeloNavigation)
+                .Include(s => s.IdUnidadMedidaNavigation)
 
 
                 .Select(s => new ProductoDTO
@@ -27,9 +30,9 @@ namespace Identity.Api.DataRepository
                     EsComponente = s.EsComponente,
                     EsEnsamblable = s.EsEnsamblable,
                     RequiereSerial = s.RequiereSerial,
-                    //Marca = s.Marca,
-                    //Modelo = s.Modelo,
-                    //UnidadMedida = s.UnidadMedida,
+                    IdMarca = s.IdMarca,
+                    IdModelo = s.IdModelo,
+                    IdUnidadMedida = s.IdUnidadMedida,
                     PrecioUnitario = s.PrecioUnitario,
                     PrecioVentaSugerido = s.PrecioVentaSugerido,
                     CostoEnsamblaje = s.CostoEnsamblaje,
@@ -44,10 +47,54 @@ namespace Identity.Api.DataRepository
                     Estado = s.Estado,
 
                     // campos relacionados:
-                    NombreCategoria = s.IdCategoriaNavigation.Nombre
+                    NombreCategoria = s.IdCategoriaNavigation.Nombre,
+                    NombreMarca = s.IdMarcaNavigation.Nombre,
+                    NombreModelo = s.IdModeloNavigation.Nombre,
+                    NombreUnidadesMedidas = s.IdUnidadMedidaNavigation.Nombre
 
                 })
                 .ToList();
+        }
+
+
+
+        // para traer los modelo 
+        //public List<ModeloDTO> GetModelosByIdMarca(int idMarca)
+        //{
+        //    using var context = new InvensisContext();
+
+        //    return context.Modelos
+        //        .Where(m => m.IdMarca == idMarca)
+        //        .Select(m => new ModeloDTO
+        //        {
+        //            IdModelo = m.IdModelo,
+        //            Nombre = m.Nombre
+        //        })
+        //        .ToList();
+        //}
+        public List<ModeloDTO> GetModelosByIdMarca(int idMarca)
+        {
+            using var context = new InvensisContext();
+
+            return context.Modelos
+                .Where(m => m.IdMarca == idMarca)
+        .Select(m => new ModeloDTO
+        {
+            IdModelo = m.IdModelo,
+            IdMarca = m.IdMarca,
+            Codigo = m.Codigo!,
+            Nombre = m.Nombre,
+            Descripcion = m.Descripcion,
+            AñoLanzamiento = m.AñoLanzamiento,
+            Descontinuado = m.Descontinuado,
+            FechaDescontinuacion = m.FechaDescontinuacion.HasValue
+                ? m.FechaDescontinuacion.Value.ToDateTime(TimeOnly.MinValue)
+    : null,
+            EspecificacionesGenerales = m.EspecificacionesGenerales,
+            ImagenUrl = m.ImagenUrl,
+            Estado = m.Estado
+        })
+        .ToList();  
         }
 
         public ProductoDTO GetProductoById(int idProducto)
@@ -56,6 +103,9 @@ namespace Identity.Api.DataRepository
 
             return context.Productos
                 .Include(s => s.IdCategoriaNavigation)
+                .Include(s => s.IdMarcaNavigation)
+                .Include(s => s.IdModeloNavigation)
+                .Include(s => s.IdUnidadMedidaNavigation)
 
                 .Where(s => s.IdProducto == idProducto)
                 .Select(s => new ProductoDTO
@@ -70,9 +120,9 @@ namespace Identity.Api.DataRepository
                     EsComponente = s.EsComponente,
                     EsEnsamblable = s.EsEnsamblable,
                     RequiereSerial = s.RequiereSerial,
-                    //Marca = s.Marca,
-                    //Modelo = s.Modelo,
-                    //UnidadMedida = s.UnidadMedida,
+                    IdMarca = s.IdMarca,
+                    IdModelo = s.IdModelo,
+                    IdUnidadMedida = s.IdUnidadMedida,
                     PrecioUnitario = s.PrecioUnitario,
                     PrecioVentaSugerido = s.PrecioVentaSugerido,
                     CostoEnsamblaje = s.CostoEnsamblaje,
@@ -87,7 +137,10 @@ namespace Identity.Api.DataRepository
                     Estado = s.Estado,
 
                     // campos relacionados:
-                    NombreCategoria = s.IdCategoriaNavigation.Nombre
+                    NombreCategoria = s.IdCategoriaNavigation.Nombre,
+                    NombreMarca = s.IdMarcaNavigation.Nombre,
+                    NombreModelo = s.IdModeloNavigation.Nombre,
+                    NombreUnidadesMedidas = s.IdUnidadMedidaNavigation.Nombre
                 })
                 .FirstOrDefault();
 
@@ -99,12 +152,15 @@ namespace Identity.Api.DataRepository
             {
                 using var context = new InvensisContext();
 
-
+                //validación para el ingreso de los id relacionados.
                 var categoria = context.CategoriasProductos.Find(dto.IdCategoria);
+                var marca = context.Marcas.Find(dto.IdMarca);
+                var modelo = context.Modelos.Find(dto.IdModelo);
+                var nombreUnidadesMedidas = context.UnidadesMedida.Find(dto.IdUnidadMedida);
 
-                if (categoria == null )
+                if (categoria == null|| marca == null || modelo == null || nombreUnidadesMedidas == null)
                 {
-                    throw new Exception("Esa Categoria no existe en la base de datos.");
+                    throw new Exception("Esa Categoria , marca, modelo, unidadesmedidas no existe en la base de datos.");
                 }
 
                 // Generar el Código Principal automático
@@ -138,9 +194,9 @@ namespace Identity.Api.DataRepository
                     EsComponente = dto.EsComponente,
                     EsEnsamblable = dto.EsEnsamblable,
                     RequiereSerial = dto.RequiereSerial,
-                    //Marca = dto.Marca,
-                    //Modelo = dto.Modelo,
-                    //UnidadMedida = dto.UnidadMedida,
+                    IdMarca = dto.IdMarca,
+                    IdModelo = dto.IdModelo,
+                    IdUnidadMedida = dto.IdUnidadMedida,
                     PrecioUnitario = dto.PrecioUnitario,
                     PrecioVentaSugerido = dto.PrecioVentaSugerido,
                     CostoEnsamblaje = dto.CostoEnsamblaje,
@@ -184,9 +240,9 @@ namespace Identity.Api.DataRepository
                     existente.EsComponente = updItem.EsComponente;
                     existente.EsEnsamblable = updItem.EsEnsamblable;
                     existente.RequiereSerial = updItem.RequiereSerial;
-                    //existente.Marca = updItem.Marca;
-                    //existente.Modelo = updItem.Modelo;
-                    //existente.UnidadMedida = updItem.UnidadMedida;
+                    existente.IdMarca = updItem.IdMarca;
+                    existente.IdModelo = updItem.IdModelo;
+                    existente.IdUnidadMedida = updItem.IdUnidadMedida;
                     existente.PrecioUnitario = updItem.PrecioUnitario;
                     existente.PrecioVentaSugerido = updItem.PrecioVentaSugerido;
                     existente.CostoEnsamblaje = updItem.CostoEnsamblaje;
@@ -204,14 +260,7 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        //public void DeleteProducto(Producto NewItem)
-        //{
-        //    using (var context = new InvensisContext())
-        //    {
-        //        context.Productos.Remove(NewItem);
-        //        context.SaveChanges();
-        //    }
-        //}
+        
 
         public void DeleteProductoById(int idProducto)
         {

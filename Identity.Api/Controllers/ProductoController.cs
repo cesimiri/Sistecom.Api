@@ -43,6 +43,19 @@ namespace Identity.Api.Controllers
 
             return Ok(empresaCliente);
         }
+        // trae todos los modelos con esa marca
+        [HttpGet("GetModelosByIdMarca/{idMarca}")]
+        public IActionResult GetModelosByIdMarca(int idMarca)
+        {
+            var modelos = _empresaCliente.GetModelosByIdMarca(idMarca);
+
+            if (modelos == null || !modelos.Any())
+            {
+                return NotFound($"No se encontraron modelos para la marca con ID: {idMarca}.");
+            }
+
+            return Ok(modelos);
+        }
 
         [HttpPost("InsertProducto")]
         public IActionResult Create([FromBody] ProductoDTO NewItem)

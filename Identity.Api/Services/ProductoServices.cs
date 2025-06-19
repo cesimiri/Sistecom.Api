@@ -29,14 +29,16 @@ namespace Identity.Api.Services
             _dataRepository.UpdateProducto(UpdItem);
         }
 
-        //public void DeleteProducto(Producto DelItem)
-        //{
-        //    _dataRepository.DeleteProducto(DelItem);
-        //}
 
         public void DeleteProductoById(int idProducto)
         {
             _dataRepository.DeleteProductoById(idProducto);
+        }
+
+        // referenciables por espera de otra seleccion
+        public IEnumerable<ModeloDTO> GetModelosByIdMarca(int idMarca)
+        {
+            return _dataRepository.GetModelosByIdMarca(idMarca);
         }
     }
 }

@@ -6,15 +6,18 @@ namespace Identity.Api.DTO
     {
 
         public int IdProducto { get; set; }
+
         public string? CodigoPrincipal { get; set; } = null!;
 
         [Required(ErrorMessage = "El campo obligatorio")]
         public string? CodigoAuxiliar { get; set; }
 
+        [Required(ErrorMessage = "El campo obligatorio")]
         public string Nombre { get; set; } = null!;
 
         public string? Descripcion { get; set; }
 
+        //Relacion
         [Required(ErrorMessage = "El campo obligatorio")]
         public int? IdCategoria { get; set; }
 
@@ -27,17 +30,20 @@ namespace Identity.Api.DTO
 
         public bool? RequiereSerial { get; set; }
 
-        //cambio 
-        [Required(ErrorMessage = "El campo obligatorio")]
-        public string? IdMarca { get; set; }
+        //antes y relacion
+        //public string? Marca { get; set; }
 
-        //cambio
-        [Required(ErrorMessage = "El campo obligatorio")]
-        public string? IdModelo { get; set; }
+        public int? IdMarca { get; set; }
 
-        //cambio
-        [Required(ErrorMessage = "El campo obligatorio")]
-        public string? IdUnidadMedida { get; set; }
+        //antes y relacion
+        //public string? Modelo { get; set; }
+
+        public int? IdModelo { get; set; }
+
+        //antes y relacion
+        //public string? UnidadMedida { get; set; }
+        public int IdUnidadMedida { get; set; }
+
 
         [Required(ErrorMessage = "El campo obligatorio")]
         public decimal PrecioUnitario { get; set; }
@@ -67,5 +73,8 @@ namespace Identity.Api.DTO
         //relacion 
 
         public string? NombreCategoria { get; set; }
+        public string? NombreMarca { get; set; }
+        public string? NombreModelo { get; set; }
+        public string? NombreUnidadesMedidas { get; set; }
     }
 }

@@ -11,5 +11,7 @@ namespace Identity.Api.Interfaces
         void UpdateProducto(ProductoDTO dto);
         //void DeleteUsuario(UsuarioDTO dto);
         void DeleteProductoById(int idProducto);
+
+        IEnumerable<ModeloDTO> GetModelosByIdMarca(int idMarca);
     }
 }

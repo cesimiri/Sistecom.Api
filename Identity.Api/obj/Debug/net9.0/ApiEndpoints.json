@@ -1989,6 +1989,22 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.ProductoController",
+    "Method": "GetModelosByIdMarca",
+    "RelativePath": "api/Producto/GetModelosByIdMarca/{idMarca}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idMarca",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ProductoController",
     "Method": "GetProductoById",
     "RelativePath": "api/Producto/GetProductoById/{IdProducto}",
     "HttpMethod": "GET",
