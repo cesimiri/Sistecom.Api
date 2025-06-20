@@ -2391,6 +2391,64 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
+    "Method": "ObtenerDepartamentosBySucursal",
+    "RelativePath": "api/SolicitudesCompra/ObtenerDepartamentosBySucursal/{idSucursal}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idSucursal",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
+    "Method": "ObtenerSucursalesByRuc",
+    "RelativePath": "api/SolicitudesCompra/ObtenerSucursalesByRuc/{RucEmpresa}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "RucEmpresa",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
+    "Method": "ObtenerUsuarioDestino",
+    "RelativePath": "api/SolicitudesCompra/ObtenerUsuarioDestino/{idDepartamento}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idDepartamento",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
+    "Method": "ObtenerUsuariosAutorizaAsync",
+    "RelativePath": "api/SolicitudesCompra/ObtenerUsuariosAutoriza",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
     "Method": "ObtenerUsuariosSolicitantes",
     "RelativePath": "api/SolicitudesCompra/ObtenerUsuariosSolicitantes",
     "HttpMethod": "GET",

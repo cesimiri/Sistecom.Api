@@ -7,7 +7,7 @@ namespace Identity.Api.DTO
     {
         public int IdSolicitud { get; set; }
         //automatica
-        public string NumeroSolicitud { get; set; } = null!;
+        public string? NumeroSolicitud { get; set; } = null!;
 
 
         [Required(ErrorMessage = "El campo obligatorio")]
@@ -47,7 +47,7 @@ namespace Identity.Api.DTO
 
         public string? Justificacion { get; set; }
 
-        [Required(ErrorMessage = "El campo obligatorio")]
+        //[Required(ErrorMessage = "El campo obligatorio")]
         //('BAJA', 'NORMAL', 'ALTA', 'URGENTE')
         public string? Prioridad { get; set; }
 

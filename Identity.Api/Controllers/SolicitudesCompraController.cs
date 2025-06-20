@@ -28,6 +28,35 @@ namespace Identity.Api.Controllers
             return Ok(_solicitudesCompraService.GetAllSolicitudesCompra);
         }
 
+        //BUSQUEDA USUARIO DESTINO POR DEPARTAMENTO
+        [HttpGet("ObtenerUsuarioDestino/{idDepartamento}")]
+        public IActionResult ObtenerUsuarioDestino(int idDepartamento)
+        {
+            var modelos = _solicitudesCompraService.ObtenerUsuarioDestinoAsync(idDepartamento);
+
+            if (modelos == null || !modelos.Any())
+            {
+                return NotFound($"No se encontraron Usuario que pertenezcan a ese departamento{idDepartamento}.");
+            }
+
+            return Ok(modelos);
+        }
+
+
+        //busqueda de usuario que autoriza porque sean 1 gerencia,2 subjefe,3 jefe
+        [HttpGet("ObtenerUsuariosAutoriza")]
+        public IActionResult ObtenerUsuariosAutorizaAsync()
+        {
+            var usuarios = _solicitudesCompraService.ObtenerUsuariosAutorizaAsync();
+
+            if (usuarios == null || !usuarios.Any())
+            {
+                return NotFound("No se encontraron usuarios solicitantes.");
+            }
+
+            return Ok(usuarios);
+        }
+
         //busqueda de usuario que solicita porque sean rol 4,3,2
         [HttpGet("ObtenerUsuariosSolicitantes")]
         public IActionResult ObtenerUsuariosSolicitantes()
@@ -40,6 +69,34 @@ namespace Identity.Api.Controllers
             }
 
             return Ok(usuarios);
+        }
+
+        //Obtener las sucursales por empresa
+        [HttpGet("ObtenerSucursalesByRuc/{RucEmpresa}")]
+        public IActionResult ObtenerSucursalesByRuc(string RucEmpresa)
+        {
+            var modelos = _solicitudesCompraService.ObtenerSucursalesByRuc(RucEmpresa);
+
+            if (modelos == null || !modelos.Any())
+            {
+                return NotFound($"No se encontraron Sucursales con esa Ruc de empresa {RucEmpresa}.");
+            }
+
+            return Ok(modelos);
+        }
+
+        //Obtener las departamentos por sucursal
+        [HttpGet("ObtenerDepartamentosBySucursal/{idSucursal}")]
+        public IActionResult ObtenerDepartamentosBySucursal(int idSucursal)
+        {
+            var modelos = _solicitudesCompraService.ObtenerDepartamentosBySucursal(idSucursal);
+
+            if (modelos == null || !modelos.Any())
+            {
+                return NotFound($"No se encontraron los departamentos por esa id de sucursal: {idSucursal}.");
+            }
+
+            return Ok(modelos);
         }
 
         [HttpGet("GetSolicitudById/{idSolicitud}")]

@@ -44,5 +44,28 @@ namespace Identity.Api.Services
         {
             return _dataRepository.ObtenerUsuarioSolicitaAsync();
         }
+
+        public IEnumerable<UsuarioDTO> ObtenerUsuariosAutorizaAsync()
+        {
+            return _dataRepository.ObtenerUsuariosAutorizaAsync();
+        }
+
+        public IEnumerable<UsuarioDTO> ObtenerUsuarioDestinoAsync(int idDepartamento)
+        {
+            return _dataRepository.ObtenerUsuarioDestino(idDepartamento);
+        }
+
+
+        //traer los datos de combobox anidados
+        public IEnumerable<SucursaleDTO> ObtenerSucursalesByRuc(string RucEmpresa)
+        {
+            return _dataRepository.ObtenerSucursalesByRuc(RucEmpresa);
+        }
+
+        //traer departamentos por la sucursal
+        public IEnumerable<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal)
+        {
+            return _dataRepository.ObtenerDepartamentosBySucursal(idSucursal);
+        }
     }
 }

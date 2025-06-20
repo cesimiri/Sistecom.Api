@@ -28,6 +28,8 @@ namespace Identity.Api.DTO
 
         public string? Extension { get; set; }
 
+        public bool? PuedeSolicitar { get; set; }
+
         public string? Estado { get; set; }
 
         //relacion

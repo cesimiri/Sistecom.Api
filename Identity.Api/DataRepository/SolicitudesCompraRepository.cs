@@ -52,8 +52,64 @@ namespace Identity.Api.DataRepository
                 .ToList();
         }
 
-        //traer los usuarios q solicita dependiendo cargo 
+        //traer los usuarios destino por departamento ya que es identificador unico 
+        public List<UsuarioDTO> ObtenerUsuarioDestino(int idDepartamento)
+        {
+            using var context = new InvensisContext(); // No se pasa idDepartamento aquí
 
+            return context.Usuarios
+                .Include(u => u.IdCargoNavigation)
+                .Include(u => u.IdDepartamentoNavigation)
+                .Where(u => u.Estado == "ACTIVO" && u.IdDepartamento == idDepartamento)
+                .Select(u => new UsuarioDTO
+                {
+                    IdUsuario = u.IdUsuario,
+                    IdDepartamento = u.IdDepartamento,
+                    IdCargo = u.IdCargo,
+                    Cedula = u.Cedula,
+                    Nombres = u.Nombres,
+                    Apellidos = u.Apellidos,
+                    Email = u.Email,
+                    Telefono = u.Telefono,
+                    Extension = u.Extension,
+                    PuedeSolicitar = u.PuedeSolicitar,
+                    Estado = u.Estado
+                })
+                .ToList();
+        }
+
+        //traer los usuarios quienes pueden autorizar solo por cargo jefe subjefe y gerencia
+        public List<UsuarioDTO> ObtenerUsuariosAutorizaAsync()
+        {
+            using var context = new InvensisContext();
+
+            return context.Usuarios
+                .Include(u => u.IdCargoNavigation)
+                .Include(u => u.IdDepartamentoNavigation)
+                .Where(u => u.Estado == "ACTIVO"
+
+                 && new[] { 1, 2, 3 }.Contains(u.IdCargoNavigation.NivelJerarquico.GetValueOrDefault()))
+                .Select(u => new UsuarioDTO
+                {
+                    
+                    IdUsuario = u.IdUsuario,
+                    IdDepartamento = u.IdDepartamento,
+                    IdCargo = u.IdCargo,
+                    Cedula = u.Cedula,
+                    Nombres = u.Nombres,
+                    Apellidos = u.Apellidos,
+                    Email = u.Email,
+                    Telefono = u.Telefono,
+                    Extension = u.Extension,
+                    PuedeSolicitar = u.PuedeSolicitar,
+                    Estado = u.Estado
+
+                })
+                .ToList();
+
+        }
+
+        //traer los usuarios q solicita dependiendo cargo 4,3,2 o tecnico jefe subjefe
         public List<UsuarioDTO> ObtenerUsuarioSolicitaAsync()
         {
             using var context = new InvensisContext();
@@ -66,20 +122,86 @@ namespace Identity.Api.DataRepository
                  && new[] { 2, 3, 4 }.Contains(u.IdCargoNavigation.NivelJerarquico.GetValueOrDefault()))
                 .Select(u => new UsuarioDTO
                 {
+                    //IdUsuario = u.IdUsuario,
+                    //Cedula = u.Cedula,
+                    //Nombres = u.Nombres,
+                    //Apellidos = u.Apellidos,
+                    //Email = u.Email,
+                    //Telefono = u.Telefono,
+                    //Extension = u.Extension,
+                    //Estado = u.Estado,
+                    //IdCargo = u.IdCargo,
+                    //IdDepartamento = u.IdDepartamento,
+                    //NombreCargo = u.IdCargoNavigation.Descripcion,
+                    //NombreDepartamento = u.IdDepartamentoNavigation.NombreDepartamento
                     IdUsuario = u.IdUsuario,
+                    IdDepartamento = u.IdDepartamento,
+                    IdCargo = u.IdCargo,
                     Cedula = u.Cedula,
                     Nombres = u.Nombres,
                     Apellidos = u.Apellidos,
                     Email = u.Email,
                     Telefono = u.Telefono,
                     Extension = u.Extension,
+                    PuedeSolicitar = u.PuedeSolicitar,
                     Estado = u.Estado,
-                    IdCargo = u.IdCargo,
-                    IdDepartamento = u.IdDepartamento,
-                    NombreCargo = u.IdCargoNavigation.Descripcion,
-                    NombreDepartamento = u.IdDepartamentoNavigation.NombreDepartamento
+
                 })
                 .ToList();
+        }
+
+        //obtener las sucursales despues de seleccionar la empresa
+        public List<SucursaleDTO> ObtenerSucursalesByRuc(string RucEmpresa)
+        {
+            using var context = new InvensisContext();
+
+            return context.Sucursales
+                .Where(m => m.RucEmpresa == RucEmpresa)
+        .Select(m => new SucursaleDTO
+        {
+            IdSucursal = m.IdSucursal,
+            RucEmpresa = m.RucEmpresa,
+            CodigoSucursal = m.CodigoSucursal!,
+            NombreSucursal = m.NombreSucursal,
+            Direccion = m.Direccion,
+            Ciudad = m.Ciudad,
+            Telefono = m.Telefono,
+            Email = m.Email,
+            //FechaDescontinuacion = m.FechaDescontinuacion.HasValue
+            //    ? m.FechaDescontinuacion.Value.ToDateTime(TimeOnly.MinValue)
+            //: null,
+            Responsable = m.Responsable,
+            TelefonoResponsable = m.TelefonoResponsable,
+            EsMatriz = m.EsMatriz,
+            Estado = m.Estado
+        })
+        .ToList();
+        }
+
+        //obtener los departamentos despues de seleccionar la sucursal
+        public List<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal)
+        {
+            using var context = new InvensisContext();
+
+            return context.Departamentos
+                .Where(m => m.IdSucursal == idSucursal)
+        .Select(m => new DepartamentoDTO
+        {
+            IdDepartamento = m.IdDepartamento,
+            IdSucursal = m.IdSucursal,
+            CodigoDepartamento = m.CodigoDepartamento,
+            NombreDepartamento = m.NombreDepartamento!,
+            Descripcion = m.Descripcion,
+            Responsable = m.Responsable,
+            EmailDepartamento = m.EmailDepartamento,
+            Extension = m.Extension,
+            CentroCosto = m.CentroCosto,
+            //FechaDescontinuacion = m.FechaDescontinuacion.HasValue
+            //    ? m.FechaDescontinuacion.Value.ToDateTime(TimeOnly.MinValue)
+            //: null,
+            Estado = m.Estado
+        })
+        .ToList();
         }
 
         public SolicitudesCompraDTO GetSolicitudById(int idSolicitud)
@@ -168,9 +290,10 @@ namespace Identity.Api.DataRepository
                 {
                     NumeroSolicitud = nuevoNumeroSolicitud, // Aquí asignas el nuevo número generado
                     RucEmpresa = dto.RucEmpresa,
-                    IdDepartamento = 0,
-                    IdUsuarioSolicita = 0,
-                    IdUsuarioAutoriza = 0,
+                    IdDepartamento = dto.IdDepartamento,
+                    IdUsuarioSolicita = dto.IdUsuarioSolicita,
+                    IdUsuarioAutoriza = dto.IdUsuarioAutoriza,
+                    IdUsuarioDestino = dto.IdUsuarioDestino,
                     FechaSolicitud = dto.FechaSolicitud,
                     FechaAprobacion = dto.FechaAprobacion,
                     FechaRequerida = DateOnly.FromDateTime(dto.FechaRequerida),
@@ -179,11 +302,12 @@ namespace Identity.Api.DataRepository
                     Iva = 0,
                     ValorTotal = 0,
                     Justificacion = dto.Justificacion,
-                    Prioridad = "NOMAL",
+                    Prioridad = "NORMAL",
+                    Estado = dto.Estado,
                     MotivoRechazo = dto.MotivoRechazo,
                     Observaciones = dto.Observaciones,
-                    ArchivoOc = dto.ArchivoOc,
-                    Estado = dto.Estado,
+                    ArchivoOc = dto.ArchivoOc
+                    
                 };
 
                 context.SolicitudesCompras.Add(nueva);
