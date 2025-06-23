@@ -17,7 +17,8 @@ namespace Identity.Api.Interfaces
 
 
         IEnumerable<UsuarioDTO> ObtenerUsuarioSolicitaAsync();
-        IEnumerable<UsuarioDTO> ObtenerUsuariosAutorizaAsync();
+        //por sucursal
+        IEnumerable<UsuarioDTO> ObtenerUsuariosAutorizaAsync(int idSucursal);
         IEnumerable<UsuarioDTO> ObtenerUsuarioDestinoAsync(int idDepartamento);
 
 

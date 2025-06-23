@@ -1032,7 +1032,7 @@
   {
     "ContainingType": "Identity.Api.Controllers.DetalleSolicitudController",
     "Method": "DeleteById",
-    "RelativePath": "api/DetalleSolicitud/DeleteDetalleSolicitud/{idDetalle}",
+    "RelativePath": "api/DetalleSolicitud/DeleteDetalleSolicitudById/{idDetalle}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -1057,6 +1057,32 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.DetalleSolicitudController",
+    "Method": "GetDetallesBySolicitudId",
+    "RelativePath": "api/DetalleSolicitud/GetDetallesBySolicitudId/{idSolicitud}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idSolicitud",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Identity.Api.DTO.DetalleSolicitudDTO, Identity.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.DetalleSolicitudController",
     "Method": "GetDetalleSolicitudById",
     "RelativePath": "api/DetalleSolicitud/GetDetalleSolicitudById/{idDetalle}",
     "HttpMethod": "GET",
@@ -1066,6 +1092,22 @@
       {
         "Name": "idDetalle",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.DetalleSolicitudController",
+    "Method": "InsertarDetallesMasivos",
+    "RelativePath": "api/DetalleSolicitud/InsertarDetallesMasivos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "lista",
+        "Type": "System.Collections.Generic.List\u00601[[Identity.Api.DTO.DetalleSolicitudDTO, Identity.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
       }
     ],
@@ -1085,6 +1127,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.DetalleSolicitudController",
+    "Method": "SolicitudesDeCompraPorEstadoAsync",
+    "RelativePath": "api/DetalleSolicitud/SolicitudesDeCompraPorEstado",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -2334,7 +2386,7 @@
   {
     "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
     "Method": "DeleteById",
-    "RelativePath": "api/SolicitudesCompra/DeleteSolicitud/{idSolicitud}",
+    "RelativePath": "api/SolicitudesCompra/DeleteSolicitudById/{idSolicitud}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -2440,11 +2492,17 @@
   {
     "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
     "Method": "ObtenerUsuariosAutorizaAsync",
-    "RelativePath": "api/SolicitudesCompra/ObtenerUsuariosAutoriza",
+    "RelativePath": "api/SolicitudesCompra/ObtenerUsuariosAutoriza/{idSucursal}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "idSucursal",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

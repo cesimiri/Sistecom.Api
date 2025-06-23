@@ -13,6 +13,11 @@ namespace Identity.Api.Interfaces
         //void DeleteDetalleSolicitud(DetalleSolicitudDTO delItem);
         void DeleteDetalleSolicitudById(int idDetalle);
 
+        void InsertarDetallesMasivos(List<DetalleSolicitudDTO> lista);
 
+        IEnumerable<SolicitudesCompraDTO> SolicitudesDeCompraPorEstadoAsync();
+
+        //nos trae toda las lineas por el número de solicitud para poder editarla 
+        IEnumerable<DetalleSolicitudDTO> GetDetallesBySolicitudId(int idSolicitud);
     }
 }

@@ -39,5 +39,21 @@ namespace Identity.Api.Services
         {
             _dataRepository.DeleteDetalleSolicitudById(idDetalle);
         }
+
+        public void InsertarDetallesMasivos(List<DetalleSolicitudDTO> lista)
+        {
+            _dataRepository.InsertarDetallesMasivos(lista);
+        }
+
+        public IEnumerable<SolicitudesCompraDTO> SolicitudesDeCompraPorEstadoAsync()
+        {
+            return _dataRepository.SolicitudesDeCompraPorEstadoAsync();
+        }
+
+        public IEnumerable<DetalleSolicitudDTO> GetDetallesBySolicitudId(int idSolicitud)
+        {
+            return _dataRepository.GetDetallesBySolicitudId(idSolicitud);
+        }
+
     }
 }

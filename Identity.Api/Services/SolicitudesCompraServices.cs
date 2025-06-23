@@ -45,9 +45,10 @@ namespace Identity.Api.Services
             return _dataRepository.ObtenerUsuarioSolicitaAsync();
         }
 
-        public IEnumerable<UsuarioDTO> ObtenerUsuariosAutorizaAsync()
+        //buscar los usuarios por sucursal y que sea gerencia, subjefe, jefe
+        public IEnumerable<UsuarioDTO> ObtenerUsuariosAutorizaAsync( int idSucursal)
         {
-            return _dataRepository.ObtenerUsuariosAutorizaAsync();
+            return _dataRepository.ObtenerUsuariosAutorizaAsync(idSucursal);
         }
 
         public IEnumerable<UsuarioDTO> ObtenerUsuarioDestinoAsync(int idDepartamento)

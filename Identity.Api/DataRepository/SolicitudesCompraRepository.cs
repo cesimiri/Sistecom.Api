@@ -79,7 +79,7 @@ namespace Identity.Api.DataRepository
         }
 
         //traer los usuarios quienes pueden autorizar solo por cargo jefe subjefe y gerencia
-        public List<UsuarioDTO> ObtenerUsuariosAutorizaAsync()
+        public List<UsuarioDTO> ObtenerUsuariosAutorizaAsync(int idSucursal)
         {
             using var context = new InvensisContext();
 
@@ -87,6 +87,7 @@ namespace Identity.Api.DataRepository
                 .Include(u => u.IdCargoNavigation)
                 .Include(u => u.IdDepartamentoNavigation)
                 .Where(u => u.Estado == "ACTIVO"
+                && u.IdDepartamentoNavigation.IdSucursal == idSucursal
 
                  && new[] { 1, 2, 3 }.Contains(u.IdCargoNavigation.NivelJerarquico.GetValueOrDefault()))
                 .Select(u => new UsuarioDTO
@@ -118,6 +119,7 @@ namespace Identity.Api.DataRepository
                 .Include(u => u.IdCargoNavigation)
                 .Include(u => u.IdDepartamentoNavigation)
                 .Where(u => u.Estado == "ACTIVO"
+                
 
                  && new[] { 2, 3, 4 }.Contains(u.IdCargoNavigation.NivelJerarquico.GetValueOrDefault()))
                 .Select(u => new UsuarioDTO
@@ -296,7 +298,7 @@ namespace Identity.Api.DataRepository
                     IdUsuarioDestino = dto.IdUsuarioDestino,
                     FechaSolicitud = dto.FechaSolicitud,
                     FechaAprobacion = dto.FechaAprobacion,
-                    FechaRequerida = DateOnly.FromDateTime(dto.FechaRequerida),
+                    FechaRequerida = DateOnly.FromDateTime(dto.FechaSolicitud.AddDays(10)),
                     SubtotalSinImpuestos = 0,
                     DescuentoTotal = 0,
                     Iva = 0,

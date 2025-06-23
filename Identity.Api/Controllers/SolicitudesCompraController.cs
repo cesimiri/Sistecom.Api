@@ -44,10 +44,10 @@ namespace Identity.Api.Controllers
 
 
         //busqueda de usuario que autoriza porque sean 1 gerencia,2 subjefe,3 jefe
-        [HttpGet("ObtenerUsuariosAutoriza")]
-        public IActionResult ObtenerUsuariosAutorizaAsync()
+        [HttpGet("ObtenerUsuariosAutoriza/{idSucursal}")]
+        public IActionResult ObtenerUsuariosAutorizaAsync(int idSucursal)
         {
-            var usuarios = _solicitudesCompraService.ObtenerUsuariosAutorizaAsync();
+            var usuarios = _solicitudesCompraService.ObtenerUsuariosAutorizaAsync(idSucursal);
 
             if (usuarios == null || !usuarios.Any())
             {
@@ -148,7 +148,7 @@ namespace Identity.Api.Controllers
         //    return NoContent();
         //}
 
-        [HttpDelete("DeleteSolicitud/{idSolicitud}")]
+        [HttpDelete("DeleteSolicitudById/{idSolicitud}")]
         public IActionResult DeleteById(int idSolicitud)
         {
             _solicitudesCompraService.DeleteSolicitudById(idSolicitud);

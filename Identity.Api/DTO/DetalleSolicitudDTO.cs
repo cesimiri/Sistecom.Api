@@ -23,17 +23,15 @@ namespace Identity.Api.DTO
         [Required(ErrorMessage = "El campo obligatorio")]
         public decimal Subtotal { get; set; }
 
-        public int? IdUsuarioDestino { get; set; }
-
         public string? Observaciones { get; set; }
 
         //relaciones
 
-        public string? UsuarioDestino { get; set; }
 
-        public string NumeroSolicitud { get; set; }
 
-        public string? CodigoPrincipal { get; set; }
+        public string? NumeroSolicitud { get; set; }
+
+        public string? CodigoPrincipalsolicitud { get; set; }
 
     }
 }

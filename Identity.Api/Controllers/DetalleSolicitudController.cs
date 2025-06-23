@@ -29,7 +29,7 @@ namespace Identity.Api.Controllers
             return Ok(_detalleSolicitud.DetalleSolicitudesAll);
         }
 
-        
+
 
         [HttpGet("GetDetalleSolicitudById/{idDetalle}")]
         public IActionResult GetDetalleSolicitudById(int idDetalle)
@@ -63,6 +63,34 @@ namespace Identity.Api.Controllers
 
             return Ok(newItem);
         }
+
+        //TRAE TODAS LAS SOLICITUDES DE COMPRAR DIFERENTE AL ESTAD RECHAZADA COMPLETADA Y CANCELADA
+        [HttpGet("SolicitudesDeCompraPorEstado")]
+        public IActionResult SolicitudesDeCompraPorEstadoAsync()
+        {
+            return Ok(_detalleSolicitud.SolicitudesDeCompraPorEstadoAsync());
+        }
+
+
+
+        //INGRESO MASIVO
+        [HttpPost("InsertarDetallesMasivos")]
+        public IActionResult InsertarDetallesMasivos([FromBody] List<DetalleSolicitudDTO> lista)
+        {
+            try
+            {
+                if (lista == null || !lista.Any())
+                    return BadRequest("La lista está vacía o es nula.");
+
+                _detalleSolicitud.InsertarDetallesMasivos(lista);
+                return Ok("Inserción masiva completada.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Error en la inserción masiva: " + ex.Message);
+            }
+        }
+
 
         [HttpPut("UpdateDetalleSolicitud")]
         public IActionResult Update([FromBody] DetalleSolicitudDTO updItem)
@@ -104,7 +132,7 @@ namespace Identity.Api.Controllers
         //    return NoContent();
         //}
 
-        [HttpDelete("DeleteDetalleSolicitud/{idDetalle}")]
+        [HttpDelete("DeleteDetalleSolicitudById/{idDetalle}")]
         public IActionResult DeleteById(int idDetalle)
         {
             try
@@ -117,6 +145,26 @@ namespace Identity.Api.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpGet("GetDetallesBySolicitudId/{idSolicitud}")]
+        public ActionResult<IEnumerable<DetalleSolicitudDTO>> GetDetallesBySolicitudId(int idSolicitud)
+        {
+            try
+            {
+                var detalles = _detalleSolicitud.GetDetallesBySolicitudId(idSolicitud);
+
+                if (detalles == null || !detalles.Any())
+                {
+                    return NotFound("No se encontraron detalles para la solicitud.");
+                }
+
+                return Ok(detalles);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Error al obtener los detalles: " + ex.Message);
+            }
         }
     }
 }

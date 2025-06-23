@@ -3,24 +3,16 @@
   "WorkspaceRootPath": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\services\\solicitudescompraservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\services\\solicitudescompraservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\controllers\\solicitudescompracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\controllers\\solicitudescompracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\datarepository\\detallesolicituddatarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\datarepository\\detallesolicituddatarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\datarepository\\solicitudescomprarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\datarepository\\solicitudescomprarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\interfaces\\isolicitudescompra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\interfaces\\isolicitudescompra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\controllers\\detallesolicitudcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\controllers\\detallesolicitudcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,84 +26,60 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Program.cs",
               "RelativeDocumentMoniker": "Identity.Api\\Program.cs",
               "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Program.cs",
               "RelativeToolTip": "Identity.Api\\Program.cs",
-              "ViewState": "AgIAAJMAAAAAAAAAAAAAALYAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAJoAAAAAAAAAAAAqwKAAAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-27T14:47:21.994Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "SolicitudesCompraRepository.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\SolicitudesCompraRepository.cs",
-              "RelativeDocumentMoniker": "Identity.Api\\DataRepository\\SolicitudesCompraRepository.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\SolicitudesCompraRepository.cs",
-              "RelativeToolTip": "Identity.Api\\DataRepository\\SolicitudesCompraRepository.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAAAmwDcAAAA1AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-19T20:58:13.507Z",
+              "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "SolicitudesCompraController.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\SolicitudesCompraController.cs",
-              "RelativeDocumentMoniker": "Identity.Api\\Controllers\\SolicitudesCompraController.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\SolicitudesCompraController.cs",
-              "RelativeToolTip": "Identity.Api\\Controllers\\SolicitudesCompraController.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAcwB8AAAAnAAAAAAAAAA==",
+              "Title": "SolicitudesCompraRepository.cs",
+              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\SolicitudesCompraRepository.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\DataRepository\\SolicitudesCompraRepository.cs",
+              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\SolicitudesCompraRepository.cs",
+              "RelativeToolTip": "Identity.Api\\DataRepository\\SolicitudesCompraRepository.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwCIBAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-19T21:12:49.496Z",
+              "WhenOpened": "2025-06-23T19:35:19.481Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "SolicitudesCompraServices.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\SolicitudesCompraServices.cs",
-              "RelativeDocumentMoniker": "Identity.Api\\Services\\SolicitudesCompraServices.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\SolicitudesCompraServices.cs",
-              "RelativeToolTip": "Identity.Api\\Services\\SolicitudesCompraServices.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAADgvzYAAABJAAAAAAAAAA==",
+              "Title": "DetalleSolicitudDataRepository.cs",
+              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\DetalleSolicitudDataRepository.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\DataRepository\\DetalleSolicitudDataRepository.cs",
+              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\DetalleSolicitudDataRepository.cs",
+              "RelativeToolTip": "Identity.Api\\DataRepository\\DetalleSolicitudDataRepository.cs",
+              "ViewState": "AgIAAM0AAAAAAAAAAAAswOAAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-19T20:56:21.077Z",
+              "WhenOpened": "2025-06-23T19:34:03.758Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ISolicitudesCompra.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\ISolicitudesCompra.cs",
-              "RelativeDocumentMoniker": "Identity.Api\\Interfaces\\ISolicitudesCompra.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\ISolicitudesCompra.cs",
-              "RelativeToolTip": "Identity.Api\\Interfaces\\ISolicitudesCompra.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAA3wBQAAABNAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "DetalleSolicitudController.cs",
+              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\DetalleSolicitudController.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Controllers\\DetalleSolicitudController.cs",
+              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\DetalleSolicitudController.cs",
+              "RelativeToolTip": "Identity.Api\\Controllers\\DetalleSolicitudController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-19T20:47:43.342Z",
+              "WhenOpened": "2025-06-23T19:34:02.663Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "UsuarioController.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\UsuarioController.cs",
-              "RelativeDocumentMoniker": "Identity.Api\\Controllers\\UsuarioController.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\UsuarioController.cs",
-              "RelativeToolTip": "Identity.Api\\Controllers\\UsuarioController.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAowDwAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-19T21:12:29.489Z"
             }
           ]
         }
