@@ -112,16 +112,35 @@ namespace Identity.Api.Controllers
             return Ok(solicitud);
         }
 
+        //[HttpPost("InsertSolicitud")]
+        //public IActionResult Insert([FromBody] SolicitudesCompraDTO newSolicitud)
+        //{
+        //    if (newSolicitud == null || !ModelState.IsValid)
+        //    {
+        //        return BadRequest("Error: Datos inválidos");
+        //    }
+
+        //    _solicitudesCompraService.InsertSolicitud(newSolicitud);
+        //    return Ok(newSolicitud);
+        //}
+
         [HttpPost("InsertSolicitud")]
         public IActionResult Insert([FromBody] SolicitudesCompraDTO newSolicitud)
         {
             if (newSolicitud == null || !ModelState.IsValid)
             {
-                return BadRequest("Error: Datos inválidos");
+                return BadRequest("Datos inválidos.");
             }
 
-            _solicitudesCompraService.InsertSolicitud(newSolicitud);
-            return Ok(newSolicitud);
+            try
+            {
+                int idSolicitud = _solicitudesCompraService.InsertSolicitud(newSolicitud);
+                return Ok(idSolicitud); // 🔁 Devuelve solo el ID
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error al insertar la solicitud: {ex.Message}");
+            }
         }
 
         [HttpPut("UpdateSolicitud")]

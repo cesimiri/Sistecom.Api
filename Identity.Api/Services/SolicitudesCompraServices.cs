@@ -20,9 +20,10 @@ namespace Identity.Api.Services
             return _dataRepository.GetSolicitudById(idSolicitud);
         }
 
-        public void InsertSolicitud(SolicitudesCompraDTO newSolicitud)
+
+        public int InsertSolicitud(SolicitudesCompraDTO newSolicitud)
         {
-            _dataRepository.InsertSolicitud(newSolicitud);
+            return _dataRepository.InsertSolicitud(newSolicitud);
         }
 
         public void UpdateSolicitud(SolicitudesCompraDTO updatedSolicitud)

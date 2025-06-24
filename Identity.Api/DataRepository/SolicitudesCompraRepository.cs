@@ -251,7 +251,7 @@ namespace Identity.Api.DataRepository
 
   
 
-        public void InsertSolicitud(SolicitudesCompraDTO dto)
+        public int InsertSolicitud(SolicitudesCompraDTO dto)
         {
             try
             {
@@ -315,6 +315,8 @@ namespace Identity.Api.DataRepository
                 context.SolicitudesCompras.Add(nueva);
                 context.SaveChanges();
 
+                //devuelve el numero de solicitud
+                return nueva.IdSolicitud;
             }
             catch (Exception ex)
             {
