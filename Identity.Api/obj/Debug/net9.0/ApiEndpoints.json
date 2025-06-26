@@ -851,24 +851,8 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.DetalleFacturaCompraController",
-    "Method": "Delete",
-    "RelativePath": "api/DetalleFacturaCompra/DeleteDetalleFacturaCompra",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "DelItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.DetalleFacturaCompra",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.DetalleFacturaCompraController",
     "Method": "DeleteById",
-    "RelativePath": "api/DetalleFacturaCompra/DeleteDetalleFacturaCompra/{id}",
+    "RelativePath": "api/DetalleFacturaCompra/DeleteDetalleFacturaCompraById/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -902,6 +886,22 @@
       {
         "Name": "id",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.DetalleFacturaCompraController",
+    "Method": "InsertarDetallesMasivos",
+    "RelativePath": "api/DetalleFacturaCompra/InsertarDetallesMasivos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "lista",
+        "Type": "System.Collections.Generic.List\u00601[[Identity.Api.DTO.DetalleFacturaCompraDTO, Identity.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
       }
     ],
@@ -1247,22 +1247,6 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.FacturasCompraController",
-    "Method": "Delete",
-    "RelativePath": "api/FacturasCompra/DeleteFacturasCompra",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "DelItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.FacturasCompra",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.FacturasCompraController",
     "Method": "DeleteById",
     "RelativePath": "api/FacturasCompra/DeleteFacturasCompraById/{IdFacturasCompra}",
     "HttpMethod": "DELETE",
@@ -1313,7 +1297,7 @@
     "Parameters": [
       {
         "Name": "NewItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.FacturasCompra",
+        "Type": "Identity.Api.DTO.FacturasCompraDTO",
         "IsRequired": true
       }
     ],

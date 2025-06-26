@@ -1,4 +1,5 @@
-﻿using Identity.Api.Interfaces;
+﻿using Identity.Api.DTO;
+using Identity.Api.Interfaces;
 using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -45,25 +46,24 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPost("InsertFacturasCompra")]
-        public IActionResult Create([FromBody] FacturasCompra NewItem)
+        public IActionResult Create([FromBody] FacturasCompraDTO NewItem)
         {
             try
             {
                 if (NewItem == null || !ModelState.IsValid)
                 {
-                    return BadRequest("Error: Envio de datos");
+                    return BadRequest("Error: Envío de datos inválido.");
                 }
 
-                _facturasCompra.InsertFacturasCompra(NewItem);
+                int idGenerado = _facturasCompra.InsertFacturasCompra(NewItem);
+
+                return Ok(idGenerado); // ← retorna solo el ID
             }
             catch (Exception ex)
             {
-                return BadRequest("Error:" + ex.Message);
+                return BadRequest("Error: " + ex.Message);
             }
-
-            return Ok(NewItem);
         }
-
 
         [HttpPut("UpdateFacturasCompra")]
         public IActionResult Update([FromBody] FacturasCompra UpdItem)
@@ -86,25 +86,25 @@ namespace Identity.Api.Controllers
         }
 
 
-        [HttpDelete("DeleteFacturasCompra")]
-        public IActionResult Delete([FromBody] FacturasCompra DelItem)
-        {
-            try
-            {
-                if (DelItem == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Error: Envio de datos");
-                }
+        //[HttpDelete("DeleteFacturasCompra")]
+        //public IActionResult Delete([FromBody] FacturasCompra DelItem)
+        //{
+        //    try
+        //    {
+        //        if (DelItem == null || !ModelState.IsValid)
+        //        {
+        //            return BadRequest("Error: Envio de datos");
+        //        }
 
-                _facturasCompra.DeleteFacturasCompra(DelItem);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Error:" + ex.Message);
-            }
+        //        _facturasCompra.DeleteFacturasCompra(DelItem);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest("Error:" + ex.Message);
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         [HttpDelete("DeleteFacturasCompraById/{IdFacturasCompra}")]
         public IActionResult DeleteById(int IdFacturasCompra)

@@ -1,5 +1,6 @@
-﻿using Identity.Api.Interfaces;
-using Identity.Api.DataRepository;
+﻿using Identity.Api.DataRepository;
+using Identity.Api.DTO;
+using Identity.Api.Interfaces;
 using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Services
@@ -28,14 +29,21 @@ namespace Identity.Api.Services
             _dataRepository.UpdateDetalleFacturaCompra(UpdItem);
         }
 
-        public void DeleteDetalleFacturaCompra(DetalleFacturaCompra DelItem)
-        {
-            _dataRepository.DeleteDetalleFacturaCompra(DelItem);
-        }
+        //public void DeleteDetalleFacturaCompra(DetalleFacturaCompra DelItem)
+        //{
+        //    _dataRepository.DeleteDetalleFacturaCompra(DelItem);
+        //}
 
         public void DeleteDetalleFacturaCompraById(int idRegistrado)
         {
             _dataRepository.DeleteDetalleFacturaCompraById(idRegistrado);
         }
+
+        public void InsertarDetallesMasivos(List<DetalleFacturaCompraDTO> lista)
+        {
+            _dataRepository.InsertarDetallesMasivos(lista);
+        }
+
+        
     }
 }

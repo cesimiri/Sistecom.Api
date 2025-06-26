@@ -1,4 +1,5 @@
-﻿using Modelo.Sistecom.Modelo.Database;
+﻿using Identity.Api.DTO;
+using Modelo.Sistecom.Modelo.Database;
 using System.Collections.Generic;
 
 namespace Identity.Api.Interfaces
@@ -9,7 +10,11 @@ namespace Identity.Api.Interfaces
         DetalleFacturaCompra GetDetalleFacturaCompraById(int idDetalle);
         void InsertDetalleFacturaCompra(DetalleFacturaCompra NewItem);
         void UpdateDetalleFacturaCompra(DetalleFacturaCompra UpdItem);
-        void DeleteDetalleFacturaCompra(DetalleFacturaCompra DelItem);
+        //void DeleteDetalleFacturaCompra(DetalleFacturaCompra DelItem);
         void DeleteDetalleFacturaCompraById(int idRegistrado);
+
+        void InsertarDetallesMasivos(List<DetalleFacturaCompraDTO> lista);
+
+
     }
 }

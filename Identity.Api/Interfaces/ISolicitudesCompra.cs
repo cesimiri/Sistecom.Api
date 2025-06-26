@@ -8,6 +8,7 @@ namespace Identity.Api.Interfaces
     {
         IEnumerable<SolicitudesCompraDTO> GetAllSolicitudesCompra { get; }
         SolicitudesCompraDTO GetSolicitudById(int idSolicitud);
+        //devuelve el id de la solicitud
         int InsertSolicitud(SolicitudesCompraDTO newSolicitud);
         void UpdateSolicitud(SolicitudesCompraDTO updatedSolicitud);
         //void DeleteSolicitud(SoliciudesCompraDTO solicitudToDelete);

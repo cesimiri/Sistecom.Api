@@ -250,7 +250,7 @@ namespace Identity.Api.DataRepository
         }
 
   
-
+        //ingresa la solicitud y devuelve el idSolcitud
         public int InsertSolicitud(SolicitudesCompraDTO dto)
         {
             try

@@ -1,4 +1,5 @@
-﻿using Identity.Api.Interfaces;
+﻿using Identity.Api.DTO;
+using Identity.Api.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,23 @@ namespace Identity.Api.Controllers
             return Ok(NewItem);
         }
 
+        [HttpPost("InsertarDetallesMasivos")]
+        public IActionResult InsertarDetallesMasivos([FromBody] List<DetalleFacturaCompraDTO> lista)
+        {
+            try
+            {
+                if (lista == null || !lista.Any())
+                    return BadRequest("La lista está vacía o es nula.");
+
+                _detalleFacturaService.InsertarDetallesMasivos(lista);
+                return Ok("Inserción masiva completada.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Error en la inserción masiva: " + ex.Message);
+            }
+        }
+
         [HttpPut("UpdateDetalleFacturaCompra")]
         public IActionResult Update([FromBody] DetalleFacturaCompra UpdItem)
         {
@@ -55,17 +73,17 @@ namespace Identity.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("DeleteDetalleFacturaCompra")]
-        public IActionResult Delete([FromBody] DetalleFacturaCompra DelItem)
-        {
-            if (DelItem == null || !ModelState.IsValid)
-                return BadRequest("Datos inválidos.");
+        //[HttpDelete("DeleteDetalleFacturaCompra")]
+        //public IActionResult Delete([FromBody] DetalleFacturaCompra DelItem)
+        //{
+        //    if (DelItem == null || !ModelState.IsValid)
+        //        return BadRequest("Datos inválidos.");
 
-            _detalleFacturaService.DeleteDetalleFacturaCompra(DelItem);
-            return NoContent();
-        }
+        //    _detalleFacturaService.DeleteDetalleFacturaCompra(DelItem);
+        //    return NoContent();
+        //}
 
-        [HttpDelete("DeleteDetalleFacturaCompra/{id}")]
+        [HttpDelete("DeleteDetalleFacturaCompraById/{id}")]
         public IActionResult DeleteById(int id)
         {
             _detalleFacturaService.DeleteDetalleFacturaCompraById(id);

@@ -1,6 +1,7 @@
 ﻿using Identity.Api.Interfaces;
 using Identity.Api.DataRepository;
 using Modelo.Sistecom.Modelo.Database;
+using Identity.Api.DTO;
 namespace Identity.Api.Services
 {
 
@@ -18,9 +19,9 @@ namespace Identity.Api.Services
             return _dataRepository.GetFacturasCompraById(idFacturasCompra);
         }
 
-        public void InsertFacturasCompra(FacturasCompra New)
+        public int InsertFacturasCompra(FacturasCompraDTO New)
         {
-            _dataRepository.InsertFacturasCompra(New);
+            return _dataRepository.InsertFacturasCompra(New);
         }
 
         public void UpdateFacturasCompra(FacturasCompra UpdItem)
@@ -28,10 +29,10 @@ namespace Identity.Api.Services
             _dataRepository.UpdateFacturasCompra(UpdItem);
         }
 
-        public void DeleteFacturasCompra(FacturasCompra DelItem)
-        {
-            _dataRepository.DeleteFacturasCompra(DelItem);
-        }
+        //public void DeleteFacturasCompra(FacturasCompra DelItem)
+        //{
+        //    _dataRepository.DeleteFacturasCompra(DelItem);
+        //}
 
         public void DeleteFacturasCompraById(int idFacturasCompra)
         {
