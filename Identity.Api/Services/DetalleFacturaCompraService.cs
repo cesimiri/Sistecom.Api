@@ -44,6 +44,9 @@ namespace Identity.Api.Services
             _dataRepository.InsertarDetallesMasivos(lista);
         }
 
-        
+        public IEnumerable<DetalleFacturaCompraDTO> GetDetalleFacturaCompraByIdFactura(int idFactura)
+        {
+            return _dataRepository.GetDetalleFacturaCompraByIdFactura(idFactura);
+        }
     }
 }

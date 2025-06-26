@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\controllers\\facturascompracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\controllers\\facturascompracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\interfaces\\idetallefacturacompra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\interfaces\\idetallefacturacompra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\datarepository\\facturascomprarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\datarepository\\facturascomprarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\controllers\\detallefacturacompracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\controllers\\detallefacturacompracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\services\\facturascompraservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\services\\facturascompraservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\datarepository\\detallefacturacompradatarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\datarepository\\detallefacturacompradatarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\interfaces\\ifacturascompra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\interfaces\\ifacturascompra.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\services\\detallefacturacompraservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\services\\detallefacturacompraservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
@@ -40,7 +40,7 @@
               "RelativeDocumentMoniker": "Identity.Api\\Program.cs",
               "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Program.cs",
               "RelativeToolTip": "Identity.Api\\Program.cs",
-              "ViewState": "AgIAAGQAAAAAAAAAAAAqwKAAAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAAGQAAAAAAAAAAAAqwGoAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-27T14:47:21.994Z",
               "IsPinned": true,
@@ -48,54 +48,54 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "FacturasCompraController.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\FacturasCompraController.cs",
-              "RelativeDocumentMoniker": "Identity.Api\\Controllers\\FacturasCompraController.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\FacturasCompraController.cs",
-              "RelativeToolTip": "Identity.Api\\Controllers\\FacturasCompraController.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAwwD4AAAANAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "DetalleFacturaCompraController.cs",
+              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\DetalleFacturaCompraController.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Controllers\\DetalleFacturaCompraController.cs",
+              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\DetalleFacturaCompraController.cs",
+              "RelativeToolTip": "Identity.Api\\Controllers\\DetalleFacturaCompraController.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAQwA4AAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-26T00:36:50.255Z",
+              "WhenOpened": "2025-06-26T20:40:14.041Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "FacturasCompraServices.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\FacturasCompraServices.cs",
-              "RelativeDocumentMoniker": "Identity.Api\\Services\\FacturasCompraServices.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\FacturasCompraServices.cs",
-              "RelativeToolTip": "Identity.Api\\Services\\FacturasCompraServices.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABgAAAAJAAAAAAAAAA==",
+              "Title": "DetalleFacturaCompraDataRepository.cs",
+              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\DetalleFacturaCompraDataRepository.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\DataRepository\\DetalleFacturaCompraDataRepository.cs",
+              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\DetalleFacturaCompraDataRepository.cs",
+              "RelativeToolTip": "Identity.Api\\DataRepository\\DetalleFacturaCompraDataRepository.cs",
+              "ViewState": "AgIAAJcAAAAAAAAAAAApwKUAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-26T00:36:11.667Z",
+              "WhenOpened": "2025-06-26T20:29:43.53Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "IFacturasCompra.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\IFacturasCompra.cs",
-              "RelativeDocumentMoniker": "Identity.Api\\Interfaces\\IFacturasCompra.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\IFacturasCompra.cs",
-              "RelativeToolTip": "Identity.Api\\Interfaces\\IFacturasCompra.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAIAAAAAAAAAA==",
+              "Title": "DetalleFacturaCompraService.cs",
+              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\DetalleFacturaCompraService.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Services\\DetalleFacturaCompraService.cs",
+              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\DetalleFacturaCompraService.cs",
+              "RelativeToolTip": "Identity.Api\\Services\\DetalleFacturaCompraService.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAcwDEAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-26T00:34:56.62Z",
+              "WhenOpened": "2025-06-26T20:28:55.984Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "FacturasCompraRepository.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\FacturasCompraRepository.cs",
-              "RelativeDocumentMoniker": "Identity.Api\\DataRepository\\FacturasCompraRepository.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\FacturasCompraRepository.cs",
-              "RelativeToolTip": "Identity.Api\\DataRepository\\FacturasCompraRepository.cs",
-              "ViewState": "AgIAADsAAAAAAAAAAAAwwEEAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "IDetalleFacturaCompra.cs",
+              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\IDetalleFacturaCompra.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Interfaces\\IDetalleFacturaCompra.cs",
+              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\IDetalleFacturaCompra.cs",
+              "RelativeToolTip": "Identity.Api\\Interfaces\\IDetalleFacturaCompra.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAA5wBIAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-25T22:12:30.662Z",
+              "WhenOpened": "2025-06-26T20:26:25.284Z",
               "EditorCaption": ""
             }
           ]

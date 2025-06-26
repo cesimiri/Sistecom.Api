@@ -9,12 +9,39 @@ namespace Identity.Api.DataRepository
 {
     public class FacturasCompraRepository
     {
-        public List<FacturasCompra> GetAllFacturasCompra()
+        public List<FacturasCompraDTO> GetAllFacturasCompra()
         {
-            using (var context = new InvensisContext())
-            {
-                return context.FacturasCompras.ToList();
-            }
+            using var context = new InvensisContext();
+            return context.FacturasCompras
+                .Include(s => s.IdBodegaNavigation)
+                .Include(s => s.IdProveedorNavigation)
+
+                .Select(s => new FacturasCompraDTO
+                {
+
+                    IdFactura = s.IdFactura,
+                    NumeroFactura = s.NumeroFactura,
+                    NumeroAutorizacion = s.NumeroAutorizacion,
+                    ClaveAcceso = s.ClaveAcceso,
+                    IdProveedor = s.IdProveedor,
+                    IdBodega = s.IdBodega,
+                    FechaEmision = s.FechaEmision,
+                    SubtotalSinImpuestos = s.SubtotalSinImpuestos,
+                    DescuentoTotal = s.DescuentoTotal,
+                    Ice = s.Ice,
+                    Iva = s.Iva,
+                    ValorTotal = s.ValorTotal,
+                    FormaPago = s.FormaPago,
+                    Estado = s.Estado,
+                    Observaciones = s.Observaciones,
+                   
+
+                    // campos relacionados:
+                    RazonSocial= s.IdProveedorNavigation.RazonSocial,
+                    NombreBodega = s.IdBodegaNavigation.Nombre
+
+                })
+                .ToList();
         }
 
         public FacturasCompra GetFacturasCompraById(int idFacturasCompra)

@@ -9,7 +9,7 @@ namespace Identity.Api.Services
     {
         private FacturasCompraRepository _dataRepository = new FacturasCompraRepository();
 
-        public IEnumerable<FacturasCompra> FacturasCompraInfoAll
+        public IEnumerable<FacturasCompraDTO> FacturasCompraInfoAll
         {
             get { return _dataRepository.GetAllFacturasCompra(); }
         }

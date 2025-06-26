@@ -7,7 +7,7 @@ namespace Identity.Api.Interfaces
 {
     public interface IFacturasCompra
     {
-        IEnumerable<FacturasCompra> FacturasCompraInfoAll { get; }
+        IEnumerable<FacturasCompraDTO> FacturasCompraInfoAll { get; }
         FacturasCompra GetFacturasCompraById(int idFacturasCompra);
         int InsertFacturasCompra(FacturasCompraDTO New);
         void UpdateFacturasCompra(FacturasCompra UpdItem);

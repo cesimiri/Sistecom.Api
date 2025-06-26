@@ -1,4 +1,5 @@
 ﻿using Identity.Api.DTO;
+using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.DataRepository
@@ -60,14 +61,18 @@ namespace Identity.Api.DataRepository
         //    }
         //}
 
+        // borra todos los registros que tengan IdFactura el valor que le paso en idRegistrado
         public void DeleteDetalleFacturaCompraById(int idRegistrado)
         {
             using (var context = new InvensisContext())
             {
-                var existente = context.DetalleFacturaCompras.FirstOrDefault(d => d.IdDetalle == idRegistrado);
-                if (existente != null)
+                var existentes = context.DetalleFacturaCompras
+                    .Where(d => d.IdFactura == idRegistrado)
+                    .ToList();
+
+                if (existentes.Any())
                 {
-                    context.DetalleFacturaCompras.Remove(existente);
+                    context.DetalleFacturaCompras.RemoveRange(existentes);
                     context.SaveChanges();
                 }
             }
@@ -138,6 +143,27 @@ namespace Identity.Api.DataRepository
         }
 
 
+        public IEnumerable<DetalleFacturaCompraDTO> GetDetalleFacturaCompraByIdFactura(int idFactura)
+        {
+            using var context = new InvensisContext();
+
+            return context.DetalleFacturaCompras
+                .Include(s => s.IdProductoNavigation)
+                .Where(s => s.IdFactura == idFactura)
+                .Select(s => new DetalleFacturaCompraDTO
+                {
+                    IdDetalle = s.IdDetalle,
+                    IdFactura = s.IdFactura,
+                    IdProducto = s.IdProducto,
+                    Cantidad = s.Cantidad,
+                    PrecioUnitario = s.PrecioUnitario,
+                    Descuento = s.Descuento,
+                    Subtotal = s.Subtotal,
+                    NumerosSerie = s.NumerosSerie,
+                    DetallesAdicionales = s.DetallesAdicionales
+                })
+                .ToList();
+        }
 
     }
 }

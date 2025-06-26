@@ -89,5 +89,15 @@ namespace Identity.Api.Controllers
             _detalleFacturaService.DeleteDetalleFacturaCompraById(id);
             return NoContent();
         }
+
+
+        [HttpGet("GetDetalleFacturaCompraByIdFactura/{idFactura}")]
+        public IActionResult GetDetalleFacturaCompraByIdFactura(int idFactura)
+        {
+            var detalle = _detalleFacturaService.GetDetalleFacturaCompraByIdFactura(idFactura);
+            if (detalle == null || !detalle.Any())
+                return NotFound($"No se encontraron detalles con ID de factura {idFactura}.");
+            return Ok(detalle);
+        }
     }
 }

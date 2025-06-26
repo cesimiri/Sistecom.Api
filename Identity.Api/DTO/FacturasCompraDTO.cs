@@ -31,5 +31,9 @@
         public string? Estado { get; set; }
 
         public string? Observaciones { get; set; }
+
+        //relacion 
+        public string? RazonSocial { get; set; }
+        public string? NombreBodega { get; set; }
     }
 }

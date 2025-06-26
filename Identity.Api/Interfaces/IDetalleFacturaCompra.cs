@@ -15,6 +15,7 @@ namespace Identity.Api.Interfaces
 
         void InsertarDetallesMasivos(List<DetalleFacturaCompraDTO> lista);
 
-
+        //trae todos los registros por la idFactura
+        IEnumerable<DetalleFacturaCompraDTO> GetDetalleFacturaCompraByIdFactura(int idFactura);
     }
 }

@@ -893,6 +893,22 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.DetalleFacturaCompraController",
+    "Method": "GetDetalleFacturaCompraByIdFactura",
+    "RelativePath": "api/DetalleFacturaCompra/GetDetalleFacturaCompraByIdFactura/{idFactura}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idFactura",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.DetalleFacturaCompraController",
     "Method": "InsertarDetallesMasivos",
     "RelativePath": "api/DetalleFacturaCompra/InsertarDetallesMasivos",
     "HttpMethod": "POST",
