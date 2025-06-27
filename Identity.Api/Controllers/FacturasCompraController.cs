@@ -66,7 +66,7 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPut("UpdateFacturasCompra")]
-        public IActionResult Update([FromBody] FacturasCompra UpdItem)
+        public IActionResult Update([FromBody] FacturasCompraDTO UpdItem)
         {
             try
             {

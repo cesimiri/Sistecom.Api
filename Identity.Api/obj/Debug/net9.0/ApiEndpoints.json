@@ -1329,7 +1329,7 @@
     "Parameters": [
       {
         "Name": "UpdItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.FacturasCompra",
+        "Type": "Identity.Api.DTO.FacturasCompraDTO",
         "IsRequired": true
       }
     ],
@@ -1427,22 +1427,6 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.LicenciaController",
-    "Method": "Delete",
-    "RelativePath": "api/Licencia/DeleteLicencia",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "DelItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.Licencia",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.LicenciaController",
     "Method": "DeleteLicenciaById",
     "RelativePath": "api/Licencia/DeleteLicenciaById/{IdLicencia}",
     "HttpMethod": "DELETE",
@@ -1483,7 +1467,7 @@
     "Parameters": [
       {
         "Name": "NewItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.Licencia",
+        "Type": "Identity.Api.DTO.LicenciaDTO",
         "IsRequired": true
       }
     ],

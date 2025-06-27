@@ -24,9 +24,10 @@ namespace Identity.Api.Services
             return _dataRepository.InsertFacturasCompra(New);
         }
 
-        public void UpdateFacturasCompra(FacturasCompra UpdItem)
+        //por el front
+        public async Task UpdateFacturasCompra(FacturasCompraDTO UpdItem)
         {
-            _dataRepository.UpdateFacturasCompra(UpdItem);
+            await _dataRepository.UpdateFacturasCompra(UpdItem);
         }
 
         //public void DeleteFacturasCompra(FacturasCompra DelItem)

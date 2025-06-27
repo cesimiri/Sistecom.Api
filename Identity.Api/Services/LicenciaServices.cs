@@ -1,4 +1,5 @@
 ﻿using Identity.Api.DataRepository;
+using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Modelo.Sistecom.Modelo.Database;
 
@@ -8,7 +9,7 @@ namespace Identity.Api.Services
     {
         private LicenciaRepository _dataRepository = new LicenciaRepository();
 
-        public IEnumerable<Licencia> LicenciaInfoAll
+        public IEnumerable<LicenciaDTO> LicenciaInfoAll
         {
             get { return _dataRepository.LicenciaInfoAll(); }
         }
@@ -18,9 +19,9 @@ namespace Identity.Api.Services
             return _dataRepository.GetLicenciaById(idLicencia);
         }
 
-        public void InsertLicencia(Licencia New)
+        public void InsertLicencia(LicenciaDTO dto)
         {
-            _dataRepository.InsertLicencia(New);
+            _dataRepository.InsertLicencia(dto);
         }
 
         public void UpdateLicencia(Licencia UpdItem)
@@ -28,10 +29,10 @@ namespace Identity.Api.Services
             _dataRepository.UpdateLicencia(UpdItem);
         }
 
-        public void DeleteLicencia(Licencia DelItem)
-        {
-            _dataRepository.DeleteLicencia(DelItem);
-        }
+        //public void DeleteLicencia(Licencia DelItem)
+        //{
+        //    _dataRepository.DeleteLicencia(DelItem);
+        //}
 
         public void DeleteLicenciaById(int idLicencia)
         {

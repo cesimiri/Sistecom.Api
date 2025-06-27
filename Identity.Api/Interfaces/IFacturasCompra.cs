@@ -10,7 +10,8 @@ namespace Identity.Api.Interfaces
         IEnumerable<FacturasCompraDTO> FacturasCompraInfoAll { get; }
         FacturasCompra GetFacturasCompraById(int idFacturasCompra);
         int InsertFacturasCompra(FacturasCompraDTO New);
-        void UpdateFacturasCompra(FacturasCompra UpdItem);
+        //por enventos en el front solo en update
+        Task UpdateFacturasCompra(FacturasCompraDTO UpdItem);
 
         //void DeleteFacturasCompra(FacturasCompra DelItem);
         void DeleteFacturasCompraById(int IdFacturasCompra);

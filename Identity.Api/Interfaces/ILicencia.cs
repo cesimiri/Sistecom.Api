@@ -1,14 +1,15 @@
-﻿using Modelo.Sistecom.Modelo.Database;
+﻿using Identity.Api.DTO;
+using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Interfaces
 {
     public interface ILicencia
     {
-        IEnumerable<Licencia> LicenciaInfoAll { get; }
+        IEnumerable<LicenciaDTO> LicenciaInfoAll { get; }
         Licencia GetLicenciaById(int IdLicencia);
-        void InsertLicencia(Licencia New);
+        void InsertLicencia(LicenciaDTO New);
         void UpdateLicencia(Licencia UpdItem);
-        void DeleteLicencia(Licencia DelItem);
+        //void DeleteLicencia(Licencia DelItem);
         void DeleteLicenciaById(int IdLicencia);
     }
 }

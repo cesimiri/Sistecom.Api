@@ -105,7 +105,7 @@ namespace Identity.Api.DataRepository
 
 
 
-        public void UpdateFacturasCompra(FacturasCompra UpdItem)
+        public async Task UpdateFacturasCompra(FacturasCompraDTO UpdItem)
         {
             using (var context = new InvensisContext())
             {
@@ -129,10 +129,10 @@ namespace Identity.Api.DataRepository
                     registrado.FormaPago = UpdItem.FormaPago;
                     registrado.Estado = UpdItem.Estado;
                     registrado.Observaciones = UpdItem.Observaciones;
-                    registrado.FechaRegistro = UpdItem.FechaRegistro;
-                    
 
-                    context.SaveChanges();
+
+
+                    await context.SaveChangesAsync(); // <- importante
                 }
             }
         }

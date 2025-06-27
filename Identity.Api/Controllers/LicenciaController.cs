@@ -1,4 +1,5 @@
-﻿using Identity.Api.Interfaces;
+﻿using Identity.Api.DTO;
+using Identity.Api.Interfaces;
 using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -44,7 +45,7 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPost("InsertLicencia")]
-        public IActionResult Create([FromBody] Licencia NewItem)
+        public IActionResult Create([FromBody] LicenciaDTO NewItem)
         {
             try
             {
@@ -83,25 +84,25 @@ namespace Identity.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("DeleteLicencia")]
-        public IActionResult Delete([FromBody] Licencia DelItem)
-        {
-            try
-            {
-                if (DelItem == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Error: Envio de datos");
-                }
+        //[HttpDelete("DeleteLicencia")]
+        //public IActionResult Delete([FromBody] Licencia DelItem)
+        //{
+        //    try
+        //    {
+        //        if (DelItem == null || !ModelState.IsValid)
+        //        {
+        //            return BadRequest("Error: Envio de datos");
+        //        }
 
-                _bodega.DeleteLicencia(DelItem);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Error:" + ex.Message);
-            }
+        //        _bodega.DeleteLicencia(DelItem);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest("Error:" + ex.Message);
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         [HttpDelete("DeleteLicenciaById/{IdLicencia}")]
         public IActionResult DeleteLicenciaById(int IdLicencia)
