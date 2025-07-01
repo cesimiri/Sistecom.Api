@@ -192,7 +192,7 @@ namespace Identity.Api.DataRepository
                     Nombre = dto.Nombre,
                     Descripcion = dto.Descripcion,
                     IdCategoria = dto.IdCategoria,
-                    TipoProducto = dto.TipoProducto,
+                    TipoProducto = "PRODUCTO_FINAL",
                     EsComponente = dto.EsComponente,
                     EsEnsamblable = dto.EsEnsamblable,
                     RequiereSerial = dto.RequiereSerial,

@@ -84,25 +84,7 @@ namespace Identity.Api.Controllers
             return NoContent();
         }
 
-        //[HttpDelete("DeleteLicencia")]
-        //public IActionResult Delete([FromBody] Licencia DelItem)
-        //{
-        //    try
-        //    {
-        //        if (DelItem == null || !ModelState.IsValid)
-        //        {
-        //            return BadRequest("Error: Envio de datos");
-        //        }
-
-        //        _bodega.DeleteLicencia(DelItem);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest("Error:" + ex.Message);
-        //    }
-
-        //    return NoContent();
-        //}
+        
 
         [HttpDelete("DeleteLicenciaById/{IdLicencia}")]
         public IActionResult DeleteLicenciaById(int IdLicencia)
@@ -117,6 +99,20 @@ namespace Identity.Api.Controllers
             }
 
             return NoContent();
+        }
+
+
+
+        [HttpGet("GetFacturasConCategoria6")]
+        public IActionResult GetFacturasConCategoria6()
+        {
+            return Ok(_bodega.GetFacturasConCategoria6());
+        }
+
+        [HttpGet("GetProductoConCategoria6")]
+        public IActionResult GetProductoConCategoria6()
+        {
+            return Ok(_bodega.GetProductoConCategoria6());
         }
     }
 }

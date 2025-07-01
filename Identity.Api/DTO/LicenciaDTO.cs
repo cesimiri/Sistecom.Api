@@ -38,6 +38,6 @@
 
         public string? nombreProducto { get; set; }
 
-        public string numeroFactura {  get; set; }
+        public string? numeroFactura {  get; set; }
     }
 }

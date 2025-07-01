@@ -38,5 +38,16 @@ namespace Identity.Api.Services
         {
             _dataRepository.DeleteLicenciaById(idLicencia);
         }
+
+        //relacion
+        public IEnumerable<FacturasCompraDTO> GetFacturasConCategoria6()
+        {
+            return _dataRepository.GetFacturasConCategoria6();
+        }
+
+        public IEnumerable<ProductoDTO> GetProductoConCategoria6()
+        {
+            return _dataRepository.GetProductoConCategoria6();
+        }
     }
 }

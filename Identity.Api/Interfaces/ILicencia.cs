@@ -11,5 +11,9 @@ namespace Identity.Api.Interfaces
         void UpdateLicencia(Licencia UpdItem);
         //void DeleteLicencia(Licencia DelItem);
         void DeleteLicenciaById(int IdLicencia);
+
+        IEnumerable<FacturasCompraDTO> GetFacturasConCategoria6();
+
+        IEnumerable<ProductoDTO> GetProductoConCategoria6();
     }
 }

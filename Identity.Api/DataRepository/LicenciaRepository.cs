@@ -10,7 +10,7 @@ namespace Identity.Api.DataRepository
         {
             using var context = new InvensisContext();
             return context.Licencias
-                .Include(s => s.IdTipoLicencia)
+                .Include(s => s.IdTipoLicenciaNavigation)
                 .Include(s => s.IdProductoNavigation)
                 .Include(s => s.IdFacturaCompraNavigation)
 
@@ -168,6 +168,158 @@ namespace Identity.Api.DataRepository
                     context.SaveChanges();
                 }
             }
+        }
+
+
+        //public List<FacturasCompraDTO> GetFacturasConCategoria6()
+        //{
+        //    using var context = new InvensisContext();
+
+        //    var facturas = context.FacturasCompras
+        //        .Include(f => f.IdProveedorNavigation)
+        //        .Include(f => f.IdBodegaNavigation)
+        //        .Include(f => f.DetalleFacturaCompras!)
+        //            .ThenInclude(d => d.IdProductoNavigation)
+        //        .Where(f => f.DetalleFacturaCompras!
+        //            .Any(d => d.IdProductoNavigation != null && d.IdProductoNavigation.IdCategoria == 6))
+        //        .Select(s => new FacturasCompraDTO
+        //        {
+        //            IdFactura = s.IdFactura,
+        //            NumeroFactura = s.NumeroFactura,
+        //            NumeroAutorizacion = s.NumeroAutorizacion,
+        //            ClaveAcceso = s.ClaveAcceso,
+        //            IdProveedor = s.IdProveedor,
+        //            IdBodega = s.IdBodega,
+        //            FechaEmision = s.FechaEmision,
+        //            SubtotalSinImpuestos = s.SubtotalSinImpuestos,
+        //            DescuentoTotal = s.DescuentoTotal,
+        //            Ice = s.Ice,
+        //            Iva = s.Iva,
+        //            ValorTotal = s.ValorTotal,
+        //            FormaPago = s.FormaPago,
+        //            Estado = s.Estado,
+        //            Observaciones = s.Observaciones,
+
+        //            // Datos relacionados
+        //            RazonSocial = s.IdProveedorNavigation.RazonSocial,
+        //            NombreBodega = s.IdBodegaNavigation.Nombre
+        //        })
+        //        .ToList();
+
+        //    return facturas;
+        //}
+
+        public List<FacturasCompraDTO> GetFacturasConCategoria6()
+        {
+            using var context = new InvensisContext();
+
+            // Paso 1: Agrupar detalle de facturas por producto (solo productos categoría 6)
+            var detalleFacturas = context.DetalleFacturaCompras
+                .Where(d => d.IdProductoNavigation.IdCategoria == 6)
+                .GroupBy(d => new { d.IdFactura, d.IdProducto })
+                .Select(g => new
+                {
+                    IdFactura = g.Key.IdFactura,
+                    IdProducto = g.Key.IdProducto,
+                    CantidadComprada = g.Sum(x => x.Cantidad)
+                }).ToList();
+
+            // Paso 2: Agrupar licencias ya registradas por factura y producto
+            var licencias = context.Licencias
+                .Where(l => l.IdProducto != null && l.IdFacturaCompra != null)
+                .GroupBy(l => new { l.IdFacturaCompra, l.IdProducto })
+                .Select(g => new
+                {
+                    IdFactura = g.Key.IdFacturaCompra.Value,
+                    IdProducto = g.Key.IdProducto.Value,
+                    LicenciasUsadas = g.Count()
+                }).ToList();
+
+            // Paso 3: Ver facturas que aún tienen productos disponibles
+            var facturasDisponibles = detalleFacturas
+                .GroupJoin(licencias,
+                    df => new { df.IdFactura, df.IdProducto },
+                    l => new { l.IdFactura, l.IdProducto },
+                    (df, lic) => new
+                    {
+                        df.IdFactura,
+                        df.IdProducto,
+                        CantidadComprada = df.CantidadComprada,
+                        LicenciasUsadas = lic.FirstOrDefault()?.LicenciasUsadas ?? 0
+                    })
+                .Where(x => x.LicenciasUsadas < x.CantidadComprada)
+                .Select(x => x.IdFactura)
+                .Distinct()
+                .ToList();
+
+            // Paso 4: Traer los datos completos solo de esas facturas
+            var facturas = context.FacturasCompras
+                .Include(f => f.IdProveedorNavigation)
+                .Include(f => f.IdBodegaNavigation)
+                .Where(f => facturasDisponibles.Contains(f.IdFactura))
+                .Select(s => new FacturasCompraDTO
+                {
+                    IdFactura = s.IdFactura,
+                    NumeroFactura = s.NumeroFactura,
+                    NumeroAutorizacion = s.NumeroAutorizacion,
+                    ClaveAcceso = s.ClaveAcceso,
+                    IdProveedor = s.IdProveedor,
+                    IdBodega = s.IdBodega,
+                    FechaEmision = s.FechaEmision,
+                    SubtotalSinImpuestos = s.SubtotalSinImpuestos,
+                    DescuentoTotal = s.DescuentoTotal,
+                    Ice = s.Ice,
+                    Iva = s.Iva,
+                    ValorTotal = s.ValorTotal,
+                    FormaPago = s.FormaPago,
+                    Estado = s.Estado,
+                    Observaciones = s.Observaciones,
+                    RazonSocial = s.IdProveedorNavigation.RazonSocial,
+                    NombreBodega = s.IdBodegaNavigation.Nombre
+                })
+                .ToList();
+
+            return facturas;
+        }
+
+
+
+        public List<ProductoDTO> GetProductoConCategoria6()
+        {
+            using var context = new InvensisContext();
+            var productos = context.Productos
+                .Where(s=> s.IdCategoria ==6)
+                .Select(s => new ProductoDTO
+                {
+                    IdProducto = s.IdProducto,
+                    CodigoPrincipal = s.CodigoPrincipal,
+                    CodigoAuxiliar = s.CodigoAuxiliar,
+                    Nombre = s.Nombre,
+                    Descripcion = s.Descripcion,
+                    IdCategoria = s.IdCategoria,
+                    TipoProducto = s.TipoProducto,
+                    EsComponente = s.EsComponente,
+                    EsEnsamblable = s.EsEnsamblable,
+                    RequiereSerial = s.RequiereSerial,
+                    IdMarca = s.IdMarca,
+                    IdModelo = s.IdModelo,
+                    IdUnidadMedida = s.IdUnidadMedida,
+                    PrecioUnitario = s.PrecioUnitario,
+                    PrecioVentaSugerido = s.PrecioVentaSugerido,
+                    CostoEnsamblaje = s.CostoEnsamblaje,
+                    TiempoEnsamblajeMinutos = s.TiempoEnsamblajeMinutos,
+                    AplicaIva = s.AplicaIva,
+                    PorcentajeIva = s.PorcentajeIva,
+                    StockMinimo = s.StockMinimo,
+                    StockMaximo = s.StockMaximo,
+                    GarantiaMeses = s.GarantiaMeses,
+                    EspecificacionesTecnicas = s.EspecificacionesTecnicas,
+                    ImagenUrl = s.ImagenUrl,
+                    Estado = s.Estado
+
+                })
+                .ToList();
+            return productos;
         }
     }
 }

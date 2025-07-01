@@ -21,8 +21,8 @@ namespace Identity.Api.DTO
         [Required(ErrorMessage = "El campo obligatorio")]
         public int? IdCategoria { get; set; }
 
-        [Required(ErrorMessage = "El campo obligatorio")]
-        public string TipoProducto { get; set; } = null!;
+        //[Required(ErrorMessage = "El campo obligatorio")]
+        public string? TipoProducto { get; set; } = null!;
 
         public bool? EsComponente { get; set; }
 

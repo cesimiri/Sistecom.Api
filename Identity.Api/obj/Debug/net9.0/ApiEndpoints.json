@@ -1443,6 +1443,16 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.LicenciaController",
+    "Method": "GetFacturasConCategoria6",
+    "RelativePath": "api/Licencia/GetFacturasConCategoria6",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.LicenciaController",
     "Method": "GetLicenciaById",
     "RelativePath": "api/Licencia/GetLicenciaById/{idLicencia}",
     "HttpMethod": "GET",
@@ -1455,6 +1465,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.LicenciaController",
+    "Method": "GetProductoConCategoria6",
+    "RelativePath": "api/Licencia/GetProductoConCategoria6",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {

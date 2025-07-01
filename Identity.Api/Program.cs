@@ -29,6 +29,7 @@ builder.Services.AddCors(options =>
                                     "https://localhost:7180",      // Tu Blazor HTTPS
                                     "http://localhost:7180",       // Tu Blazor HTTP
                                     "https://localhost:7171",      // Puerto alternativo HTTPS
+                                    "https://192.168.120.241:2103",
                                     "http://localhost:5047",       // Blazor Server
                                     "http://localhost:5000",       // Puerto alternativo
                                     "http://localhost:3000",      // Otro puerto común
@@ -47,7 +48,7 @@ builder.Services.AddCors(options =>
                                     "https://lconcordia.compugtech.com",    // Tu dominio principal
                                     "http://lconcordia.compugtech.com",     // HTTP fallback
                                     "https://www.lconcordia.compugtech.com", // Con www
-                                    "http://www.lconcordia.compugtech.com",  // Con www HTTP
+                                    "http://192.168.120.241:2103",  // Con www HTTP 192.168
                                     "https://localhost:7180",      // Tu Blazor HTTPS
                                     "http://localhost:7180",       // Tu Blazor HTTP
                                     "https://localhost:7171",      // Puerto alternativo HTTPS
