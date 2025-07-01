@@ -1,6 +1,7 @@
 ﻿using Identity.Api.DTO;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
+using Identity.Api.Paginado;
 
 namespace identity.api.datarepository
 {
@@ -229,5 +230,67 @@ namespace identity.api.datarepository
             }
 
         }
+
+        //PAGINADA 
+        public PagedResult<UsuarioDTO> GetUsuariosPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.Usuarios
+                .Include(s => s.IdDepartamentoNavigation)
+                .Include(s => s.IdCargoNavigation)
+                .AsQueryable();
+
+            // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                filtro = filtro.ToLower();
+                query = query.Where(u =>
+                    u.Cedula.ToLower().Contains(filtro) ||
+                    u.Nombres.ToLower().Contains(filtro) ||
+                    u.Apellidos.ToLower().Contains(filtro));
+            }
+
+            // Aplicar filtro por estado
+            if (!string.IsNullOrEmpty(estado))
+            {
+                query = query.Where(u => u.Estado == estado);
+            }
+
+            // Total de registros filtrados
+            var totalItems = query.Count();
+
+            // Obtener página solicitada con paginado
+            var usuarios = query
+                .OrderBy(u => u.IdUsuario) // importante ordenar antes de Skip/Take
+                .Skip((pagina - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new UsuarioDTO
+                {
+                    IdUsuario = s.IdUsuario,
+                    IdDepartamento = s.IdDepartamento,
+                    IdCargo = s.IdCargo,
+                    Cedula = s.Cedula,
+                    Nombres = s.Nombres,
+                    Apellidos = s.Apellidos,
+                    Email = s.Email,
+                    Telefono = s.Telefono,
+                    Extension = s.Extension,
+                    Estado = s.Estado,
+                    NombreDepartamento = s.IdDepartamentoNavigation.NombreDepartamento,
+                    NombreCargo = s.IdCargoNavigation.NombreCargo
+                })
+                .ToList();
+
+            return new PagedResult<UsuarioDTO>
+            {
+                Items = usuarios,
+                TotalItems = totalItems,
+                Page = pagina,
+                PageSize = pageSize
+            };
+        }
+
+
     }
 }

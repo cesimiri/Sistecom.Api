@@ -2,6 +2,7 @@
 using Identity.Api.DataRepository;
 using Identity.Api.DTO;
 using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 using Modelo.Sistecom.Modelo.Database;
 namespace Identity.Api.Services
 {
@@ -49,6 +50,12 @@ namespace Identity.Api.Services
         public IEnumerable<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal)
         {
             return _dataRepository.ObtenerDepartamentosBySucursal(idSucursal);
+        }
+
+        //paginado
+        public PagedResult<UsuarioDTO> GetUsuariosPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            return _dataRepository.GetUsuariosPaginados(pagina, pageSize, filtro, estado);
         }
     }
 }

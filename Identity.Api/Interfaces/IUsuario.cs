@@ -2,6 +2,8 @@
 using Modelo.Sistecom.Modelo.Database;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Identity.Api.Paginado;
+
 
 namespace Identity.Api.Interfaces
 {
@@ -18,6 +20,7 @@ namespace Identity.Api.Interfaces
 
         IEnumerable<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal);
 
-
+        // Nuevo método para paginado:
+        PagedResult<UsuarioDTO> GetUsuariosPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
     }
 }

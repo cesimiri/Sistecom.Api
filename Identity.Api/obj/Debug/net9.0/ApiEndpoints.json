@@ -3064,6 +3064,37 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.UsuarioController",
+    "Method": "GetUsuariosPaginados",
+    "RelativePath": "api/Usuario/GetUsuariosPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UsuarioController",
     "Method": "InsertUsuario",
     "RelativePath": "api/Usuario/InsertUsuario",
     "HttpMethod": "POST",

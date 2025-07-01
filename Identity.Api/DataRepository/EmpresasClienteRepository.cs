@@ -1,8 +1,11 @@
-﻿using Modelo.Sistecom.Modelo.Database;
+﻿using Identity.Api.DTO;
+using Identity.Api.Paginado;
 using Identity.Api.Persistence.DataBase;
 using Microsoft.EntityFrameworkCore;
+using Modelo.Sistecom.Modelo.Database;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Identity.Api.Paginado;
 
 namespace Identity.Api.DataRepository
 {
@@ -86,6 +89,67 @@ namespace Identity.Api.DataRepository
                     context.SaveChanges();
                 }
             }
+        }
+
+        //PAGINADA 
+        public PagedResult<EmpresasCliente> GetEmpresasPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.EmpresasClientes
+                
+                .AsQueryable();
+
+            // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                filtro = filtro.ToLower();
+                query = query.Where(u =>
+                    u.NombreComercial.ToLower().Contains(filtro) 
+                    );
+            }
+
+            // Aplicar filtro por estado
+            if (!string.IsNullOrEmpty(estado))
+            {
+                query = query.Where(u => u.Estado == estado);
+            }
+
+            // Total de registros filtrados
+            var totalItems = query.Count();
+
+            // Obtener página solicitada con paginado
+            var usuarios = query
+                .OrderBy(u => u.Ruc) // importante ordenar antes de Skip/Take
+                .Skip((pagina - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new EmpresasCliente
+                {
+                    Ruc = s.Ruc,
+                    RazonSocial = s.RazonSocial,
+                    NombreComercial = s.NombreComercial,
+                    DireccionMatriz = s.DireccionMatriz,
+                    Ciudad = s.Ciudad,
+                    Telefono = s.Telefono,
+                    Email = s.Email,
+                    ContactoPrincipal = s.ContactoPrincipal,
+                    TelefonoContacto = s.TelefonoContacto,
+                    TipoCliente = s.TipoCliente,
+                    LimiteCredito = s.LimiteCredito,
+                    DiasCredito = s.DiasCredito,
+                    Estado = s.Estado
+
+
+                })
+                .ToList();
+
+            return new PagedResult<EmpresasCliente>
+            {
+                Items = usuarios,
+                TotalItems = totalItems,
+                Page = pagina,
+                PageSize = pageSize
+            };
         }
     }
 }
