@@ -1,4 +1,5 @@
 ﻿using Identity.Api.DTO;
+using Identity.Api.Paginado;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
 
@@ -321,5 +322,76 @@ namespace Identity.Api.DataRepository
                 .ToList();
             return productos;
         }
+
+        //PAGINADA 
+        public PagedResult<LicenciaDTO> GetLicenciaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.Licencias
+                .Include(s => s.IdTipoLicenciaNavigation)
+                .Include(s => s.IdProductoNavigation)
+                .Include(s => s.IdFacturaCompraNavigation)
+                .AsQueryable();
+
+            // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                filtro = filtro.ToLower();
+                query = query.Where(u =>
+                    u.NumeroLicencia.ToLower().Contains(filtro) );
+            }
+
+            // Aplicar filtro por estado
+            if (!string.IsNullOrEmpty(estado))
+            {
+                query = query.Where(u => u.Estado == estado);
+            }
+
+            // Total de registros filtrados
+            var totalItems = query.Count();
+
+            // Obtener página solicitada con paginado
+            var usuarios = query
+                .OrderBy(u => u.IdLicencia) // importante ordenar antes de Skip/Take
+                .Skip((pagina - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new LicenciaDTO
+                {
+                    IdLicencia = s.IdLicencia,
+                    IdTipoLicencia = s.IdTipoLicencia,
+                    IdProducto = s.IdProducto,
+                    IdFacturaCompra = s.IdFacturaCompra,
+                    NumeroLicencia = s.NumeroLicencia,
+                    ClaveProducto = s.ClaveProducto,
+                    FechaAdquisicion = s.FechaAdquisicion,
+                    FechaInicioVigencia = s.FechaInicioVigencia,
+                    FechaFinVigencia = s.FechaFinVigencia,
+                    TipoSuscripcion = s.TipoSuscripcion,
+                    CantidadUsuarios = s.CantidadUsuarios,
+                    CostoLicencia = s.CostoLicencia,
+                    RenovacionAutomatica = s.RenovacionAutomatica,
+                    Observaciones = s.Observaciones,
+                    Estado = s.Estado,
+
+
+                    // campos relacionados:
+                    nombreLicencia = s.IdTipoLicenciaNavigation.Nombre,
+                    nombreProducto = s.IdProductoNavigation.Nombre,
+                    numeroFactura = s.IdFacturaCompraNavigation.NumeroFactura
+                })
+                .ToList();
+
+            return new PagedResult<LicenciaDTO>
+            {
+                Items = usuarios,
+                TotalItems = totalItems,
+                Page = pagina,
+                PageSize = pageSize
+            };
+
+
+        }
+        // fin paginada
     }
 }

@@ -16,6 +16,12 @@
 
         public decimal? ValorPromedio { get; set; }
 
+        public DateOnly? UltimaEntrada { get; set; }
+
+        public DateOnly? UltimaSalida { get; set; }
+
+        public DateTime? FechaActualizacion { get; set; }
+
         //relacion 
 
         public string? nombreBodega { get; set; }

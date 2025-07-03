@@ -1,9 +1,10 @@
-﻿using Modelo.Sistecom.Modelo.Database;
+﻿using Identity.Api.DTO;
+using Identity.Api.Paginado;
 using Identity.Api.Persistence.DataBase;
 using Microsoft.EntityFrameworkCore;
+using Modelo.Sistecom.Modelo.Database;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Identity.Api.DTO;
 
 namespace Identity.Api.DataRepository
 {
@@ -163,5 +164,72 @@ namespace Identity.Api.DataRepository
             }
         }
 
+
+        //PAGINADA 
+        public PagedResult<FacturasCompraDTO> GetFacturasCompraPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.FacturasCompras
+                .Include(s => s.IdBodegaNavigation)
+                .Include(s => s.IdProveedorNavigation)
+                .AsQueryable();
+
+            // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                filtro = filtro.ToLower();
+                query = query.Where(u =>
+                    u.NumeroFactura.ToLower().Contains(filtro)
+                );
+            }
+
+            // Aplicar filtro por estado
+            if (!string.IsNullOrEmpty(estado))
+            {
+                query = query.Where(u => u.Estado == estado);
+            }
+
+            // Total de registros filtrados
+            var totalItems = query.Count();
+
+            // Obtener página solicitada con paginado
+            var usuarios = query
+                .OrderBy(u => u.IdFactura) // importante ordenar antes de Skip/Take
+                .Skip((pagina - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new FacturasCompraDTO
+                {
+                    IdFactura = s.IdFactura,
+                    NumeroFactura = s.NumeroFactura,
+                    NumeroAutorizacion = s.NumeroAutorizacion,
+                    ClaveAcceso = s.ClaveAcceso,
+                    IdProveedor = s.IdProveedor,
+                    IdBodega = s.IdBodega,
+                    FechaEmision = s.FechaEmision,
+                    SubtotalSinImpuestos = s.SubtotalSinImpuestos,
+                    DescuentoTotal = s.DescuentoTotal,
+                    Ice = s.Ice,
+                    Iva = s.Iva,
+                    ValorTotal = s.ValorTotal,
+                    FormaPago = s.FormaPago,
+                    Estado = s.Estado,
+                    Observaciones = s.Observaciones,
+
+
+                    // campos relacionados:
+                    RazonSocial = s.IdProveedorNavigation.RazonSocial,
+                    NombreBodega = s.IdBodegaNavigation.Nombre
+                })
+                .ToList();
+
+            return new PagedResult<FacturasCompraDTO>
+            {
+                Items = usuarios,
+                TotalItems = totalItems,
+                Page = pagina,
+                PageSize = pageSize
+            };
+        }
     }
 }

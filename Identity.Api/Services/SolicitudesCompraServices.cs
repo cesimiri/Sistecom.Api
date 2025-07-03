@@ -1,7 +1,7 @@
 ﻿using Identity.Api.DataRepository;
 using Identity.Api.DTO;
 using Identity.Api.Interfaces;
-
+using Identity.Api.Paginado;
 using System.Collections.Generic;
 
 namespace Identity.Api.Services
@@ -68,6 +68,12 @@ namespace Identity.Api.Services
         public IEnumerable<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal)
         {
             return _dataRepository.ObtenerDepartamentosBySucursal(idSucursal);
+        }
+
+        //paginado
+        public PagedResult<SolicitudesCompraDTO> GetSolicitudesCompraPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            return _dataRepository.GetSolicitudesCompraPaginados(pagina, pageSize, filtro, estado);
         }
     }
 }

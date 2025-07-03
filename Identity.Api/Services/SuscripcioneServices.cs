@@ -1,6 +1,7 @@
 ﻿using Identity.Api.DataRepository;
 using Identity.Api.DTO;
 using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 using System.Collections.Generic;
 
 namespace Identity.Api.Services
@@ -37,6 +38,13 @@ namespace Identity.Api.Services
         public void DeleteSuscripcionById(int idSuscripcion)
         {
             _dataRepository.DeleteSuscripcionById(idSuscripcion);
+        }
+
+
+        //paginado
+        public PagedResult<SuscripcionDto> GetSuscripcionPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            return _dataRepository.GetSuscripcionPaginados(pagina, pageSize, filtro, estado);
         }
     }
 }

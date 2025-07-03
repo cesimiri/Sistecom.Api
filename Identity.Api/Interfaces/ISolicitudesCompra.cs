@@ -1,5 +1,5 @@
 ﻿using Identity.Api.DTO;
-
+using Identity.Api.Paginado;
 using System.Collections.Generic;
 
 namespace Identity.Api.Interfaces
@@ -7,6 +7,9 @@ namespace Identity.Api.Interfaces
     public interface ISolicitudesCompra
     {
         IEnumerable<SolicitudesCompraDTO> GetAllSolicitudesCompra { get; }
+        // Nuevo método para paginado:
+        PagedResult<SolicitudesCompraDTO> GetSolicitudesCompraPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
+
         SolicitudesCompraDTO GetSolicitudById(int idSolicitud);
         //devuelve el id de la solicitud
         int InsertSolicitud(SolicitudesCompraDTO newSolicitud);

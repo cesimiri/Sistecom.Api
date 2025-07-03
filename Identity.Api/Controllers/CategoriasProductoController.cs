@@ -1,4 +1,5 @@
 ﻿using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -116,6 +117,27 @@ namespace Identity.Api.Controllers
             }
 
             return NoContent();
+        }
+
+
+        [HttpGet("GetCategoriasProductoPaginados")]
+        public IActionResult GetCategoriasProductoPaginados(
+        int pagina = 1,
+        int pageSize = PaginadorHelper.NumeroDeDatosPorPagina,
+        string? filtro = null,
+        string? estado = null)
+        {
+            try
+            {
+                // Llamamos al método que devuelve el paginado (en el servicio)
+                var resultado = _empresaCliente.GetCategoriasProductoPaginados(pagina, pageSize, filtro, estado);
+
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
     }
 }

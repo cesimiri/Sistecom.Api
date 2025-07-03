@@ -1,6 +1,9 @@
-﻿using Modelo.Sistecom.Modelo.Database;
+﻿using Identity.Api.DTO;
+using Microsoft.EntityFrameworkCore;
+using Modelo.Sistecom.Modelo.Database;
+using Identity.Api.Paginado;
 
-namespace Identity.Api.DataRepository
+namespace identity.api.datarepository
 {
     public class TiposLicenciumRepository
     {
@@ -70,6 +73,60 @@ namespace Identity.Api.DataRepository
                     context.SaveChanges();
                 }
             }
+        }
+
+        //PAGINADA 
+        public PagedResult<TiposLicencium> GetTiposLicenciumPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.TiposLicencia
+                
+                .AsQueryable();
+
+            // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                filtro = filtro.ToLower();
+                query = query.Where(u =>
+                    u.Nombre.ToLower().Contains(filtro));
+            }
+
+            // Aplicar filtro por estado
+            if (!string.IsNullOrEmpty(estado))
+            {
+                query = query.Where(u => u.Estado == estado);
+            }
+
+            // Total de registros filtrados
+            var totalItems = query.Count();
+
+            // Obtener página solicitada con paginado
+            var usuarios = query
+                .OrderBy(u => u.IdTipoLicencia) // importante ordenar antes de Skip/Take
+                .Skip((pagina - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new TiposLicencium
+                {
+                    IdTipoLicencia = s.IdTipoLicencia,
+                    Nombre = s.Nombre,
+                    Fabricante = s.Fabricante,
+                    Categoria = s.Categoria,
+                    TipoLicenciamiento = s.TipoLicenciamiento,
+                    PermiteMultipleUso = s.PermiteMultipleUso,
+                    Descripcion = s.Descripcion,
+                    Estado = s.Estado
+                    
+                })
+                .ToList();
+
+            return new PagedResult<TiposLicencium>
+            {
+                Items = usuarios,
+                TotalItems = totalItems,
+                Page = pagina,
+                PageSize = pageSize
+            };
         }
     }
 }

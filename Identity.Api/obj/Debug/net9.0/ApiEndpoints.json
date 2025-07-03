@@ -385,6 +385,37 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.BodegaController",
+    "Method": "GetUsuariosPaginados",
+    "RelativePath": "api/Bodega/GetBodegaPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.BodegaController",
     "Method": "Create",
     "RelativePath": "api/Bodega/InsertBodega",
     "HttpMethod": "POST",
@@ -475,6 +506,37 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.CargoController",
+    "Method": "GetCargoPaginados",
+    "RelativePath": "api/Cargo/GetCargoPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.CargoController",
     "Method": "Create",
     "RelativePath": "api/Cargo/InsertCargo",
     "HttpMethod": "POST",
@@ -559,6 +621,37 @@
         "Name": "IdCategoriasProducto",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.CategoriasProductoController",
+    "Method": "GetCategoriasProductoPaginados",
+    "RelativePath": "api/CategoriasProducto/GetCategoriasProductoPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -723,6 +816,37 @@
         "Name": "idDepartamento",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.DepartamentoController",
+    "Method": "GetDepartamentosPaginados",
+    "RelativePath": "api/Departamento/GetDepartamentosPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -1231,6 +1355,37 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.EmpresaClienteController",
+    "Method": "GetEmpresasPaginados",
+    "RelativePath": "api/EmpresaCliente/GetEmpresasPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.EmpresaClienteController",
     "Method": "Create",
     "RelativePath": "api/EmpresaCliente/InsertEmpresaCliente",
     "HttpMethod": "POST",
@@ -1299,6 +1454,37 @@
         "Name": "idFacturasCompra",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.FacturasCompraController",
+    "Method": "GetUsuariosPaginados",
+    "RelativePath": "api/FacturasCompra/GetFacturasCompraPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -1463,6 +1649,37 @@
         "Name": "idLicencia",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.LicenciaController",
+    "Method": "GetUsuariosPaginados",
+    "RelativePath": "api/Licencia/GetLicenciaPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -1653,6 +1870,37 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.MarcaController",
+    "Method": "GetMarcaPaginados",
+    "RelativePath": "api/Marca/GetMarcaPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.MarcaController",
     "Method": "Create",
     "RelativePath": "api/Marca/InsertMarca",
     "HttpMethod": "POST",
@@ -1721,6 +1969,37 @@
         "Name": "idModelo",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ModeloController",
+    "Method": "GetModeloPaginados",
+    "RelativePath": "api/Modelo/GetModeloPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -2077,6 +2356,37 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.ProductoController",
+    "Method": "GetProductoPaginados",
+    "RelativePath": "api/Producto/GetProductoPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ProductoController",
     "Method": "Create",
     "RelativePath": "api/Producto/InsertProducto",
     "HttpMethod": "POST",
@@ -2171,6 +2481,37 @@
         "Name": "idProveedor",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ProveedorController",
+    "Method": "GetUsuariosPaginados",
+    "RelativePath": "api/Proveedor/GetProveedorePaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -2431,6 +2772,37 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
+    "Method": "GetSolicitudesCompraPaginados",
+    "RelativePath": "api/SolicitudesCompra/GetSolicitudesCompraPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SolicitudesCompraController",
     "Method": "Insert",
     "RelativePath": "api/SolicitudesCompra/InsertSolicitud",
     "HttpMethod": "POST",
@@ -2595,6 +2967,37 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.StockBodegaController",
+    "Method": "GetStockBodegaPaginados",
+    "RelativePath": "api/StockBodega/GetStockBodegaPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.StockBodegaController",
     "Method": "Update",
     "RelativePath": "api/StockBodega/Update",
     "HttpMethod": "PUT",
@@ -2647,6 +3050,37 @@
         "Name": "idSucursal",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SucursaleController",
+    "Method": "GetSucursalePaginados",
+    "RelativePath": "api/Sucursale/GetSucursalePaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -2727,6 +3161,37 @@
         "Name": "idSuscripcion",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SuscripcioneController",
+    "Method": "GetSuscripcionPaginados",
+    "RelativePath": "api/Suscripcione/GetSuscripcionPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -2823,6 +3288,37 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.TiposLicenciumController",
+    "Method": "GetTiposLicenciumPaginados",
+    "RelativePath": "api/TiposLicencium/GetTiposLicenciumPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.TiposLicenciumController",
     "Method": "Create",
     "RelativePath": "api/TiposLicencium/InsertTiposLicencium",
     "HttpMethod": "POST",
@@ -2901,6 +3397,37 @@
         "Name": "idUnidades",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UnidadesMediumController",
+    "Method": "GetUnidadesMedidumPaginados",
+    "RelativePath": "api/UnidadesMedium/GetUnidadesMedidumPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

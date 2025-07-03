@@ -1,9 +1,12 @@
-﻿using Identity.Api.Model;
+﻿using Identity.Api.DTO;
+using Identity.Api.Model;
+using Identity.Api.Paginado;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
 using System.Collections.Generic;
 using System.Linq;
-using Identity.Api.DTO;
+
+
 namespace Identity.Api.DataRepository
 {
     public class SuscripcioneDataRepository
@@ -182,5 +185,74 @@ namespace Identity.Api.DataRepository
                 }
             }
         }
+
+
+
+        //PAGINADA 
+        public PagedResult<SuscripcionDto> GetSuscripcionPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.Suscripciones
+                .Include(s => s.RucEmpresaNavigation)
+                .Include(s => s.IdProveedorNavigation)
+                .AsQueryable();
+
+            // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                filtro = filtro.ToLower();
+                query = query.Where(u =>
+                    u.NombreServicio.ToLower().Contains(filtro) );
+            }
+
+            // Aplicar filtro por estado
+            if (!string.IsNullOrEmpty(estado))
+            {
+                query = query.Where(u => u.Estado == estado);
+            }
+
+            // Total de registros filtrados
+            var totalItems = query.Count();
+
+            // Obtener página solicitada con paginado
+            var usuarios = query
+                .OrderBy(u => u.IdSuscripcion) // importante ordenar antes de Skip/Take
+                .Skip((pagina - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new SuscripcionDto
+                {
+                    IdSuscripcion = s.IdSuscripcion,
+                    RucEmpresa = s.RucEmpresa,
+                    IdProveedor = s.IdProveedor,
+                    NombreServicio = s.NombreServicio,
+                    TipoSuscripcion = s.TipoSuscripcion,
+                    FechaInicio = s.FechaInicio.ToDateTime(new TimeOnly(0, 0)),
+                    FechaRenovacion = s.FechaRenovacion.ToDateTime(new TimeOnly(0, 0)),
+                    PeriodoFacturacion = s.PeriodoFacturacion,
+                    CostoPeriodo = s.CostoPeriodo,
+                    UsuariosIncluidos = s.UsuariosIncluidos,
+                    AlmacenamientoGb = s.AlmacenamientoGb,
+                    UrlAcceso = s.UrlAcceso,
+                    Administrador = s.Administrador,
+                    Estado = s.Estado,
+                    NotificarDiasAntes = s.NotificarDiasAntes,
+                    Observaciones = s.Observaciones,
+                    // Campos relacionados:
+                    RazonSocialEmpresa = s.RucEmpresaNavigation.RazonSocial,
+                    RazonSocialProveedor = s.IdProveedorNavigation.RazonSocial
+                })
+                .ToList();
+
+            return new PagedResult<SuscripcionDto>
+            {
+                Items = usuarios,
+                TotalItems = totalItems,
+                Page = pagina,
+                PageSize = pageSize
+            };
+        }
+
+
     }
 }

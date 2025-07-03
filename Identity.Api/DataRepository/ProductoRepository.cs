@@ -1,5 +1,6 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -278,6 +279,83 @@ namespace Identity.Api.DataRepository
                     context.SaveChanges();
                 }
             }
+        }
+
+        //PAGINADA 
+        public PagedResult<ProductoDTO> GetProductoPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.Productos
+                .Include(s => s.IdCategoriaNavigation)
+                .Include(s => s.IdMarcaNavigation)
+                .Include(s => s.IdModeloNavigation)
+                .Include(s => s.IdUnidadMedidaNavigation)
+                .AsQueryable();
+
+            // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                filtro = filtro.ToLower();
+                query = query.Where(u =>
+                    u.Nombre.ToLower().Contains(filtro) );
+            }
+
+            // Aplicar filtro por estado
+            if (!string.IsNullOrEmpty(estado))
+            {
+                query = query.Where(u => u.Estado == estado);
+            }
+
+            // Total de registros filtrados
+            var totalItems = query.Count();
+
+            // Obtener página solicitada con paginado
+            var usuarios = query
+                .OrderBy(u => u.IdProducto) // importante ordenar antes de Skip/Take
+                .Skip((pagina - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new ProductoDTO
+                {
+                    IdProducto = s.IdProducto,
+                    CodigoPrincipal = s.CodigoPrincipal,
+                    CodigoAuxiliar = s.CodigoAuxiliar,
+                    Nombre = s.Nombre,
+                    Descripcion = s.Descripcion,
+                    IdCategoria = s.IdCategoria,
+                    EsComponente = s.EsComponente,
+                    EsEnsamblable = s.EsEnsamblable,
+                    RequiereSerial = s.RequiereSerial,
+                    IdMarca = s.IdMarca,
+                    IdModelo = s.IdModelo,
+                    IdUnidadMedida = s.IdUnidadMedida,
+                    PrecioUnitario = s.PrecioUnitario,
+                    PrecioVentaSugerido = s.PrecioVentaSugerido,
+                    CostoEnsamblaje = s.CostoEnsamblaje,
+                    TiempoEnsamblajeMinutos = s.TiempoEnsamblajeMinutos,
+                    AplicaIva = s.AplicaIva,
+                    PorcentajeIva = s.PorcentajeIva,
+                    StockMinimo = s.StockMinimo,
+                    StockMaximo = s.StockMaximo,
+                    GarantiaMeses = s.GarantiaMeses,
+                    EspecificacionesTecnicas = s.EspecificacionesTecnicas,
+                    ImagenUrl = s.ImagenUrl,
+                    Estado = s.Estado,
+                    // campos relacionados:
+                    NombreCategoria = s.IdCategoriaNavigation.Nombre,
+                    NombreMarca = s.IdMarcaNavigation.Nombre,
+                    NombreModelo = s.IdModeloNavigation.Nombre,
+                    NombreUnidadesMedidas = s.IdUnidadMedidaNavigation.Nombre
+                })
+                .ToList();
+
+            return new PagedResult<ProductoDTO>
+            {
+                Items = usuarios,
+                TotalItems = totalItems,
+                Page = pagina,
+                PageSize = pageSize
+            };
         }
     }
 }

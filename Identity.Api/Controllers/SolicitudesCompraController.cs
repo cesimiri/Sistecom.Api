@@ -1,5 +1,6 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -155,23 +156,35 @@ namespace Identity.Api.Controllers
             return NoContent();
         }
 
-        //[HttpDelete("DeleteSolicitud")]
-        //public IActionResult Delete([FromBody] SoliciudesCompraDTO solicitudToDelete)
-        //{
-        //    if (solicitudToDelete == null || !ModelState.IsValid)
-        //    {
-        //        return BadRequest("Error: Datos inválidos");
-        //    }
-
-        //    _solicitudesCompraService.DeleteSolicitud(solicitudToDelete);
-        //    return NoContent();
-        //}
+   
 
         [HttpDelete("DeleteSolicitudById/{idSolicitud}")]
         public IActionResult DeleteById(int idSolicitud)
         {
             _solicitudesCompraService.DeleteSolicitudById(idSolicitud);
             return NoContent();
+        }
+
+
+
+        [HttpGet("GetSolicitudesCompraPaginados")]
+        public IActionResult GetSolicitudesCompraPaginados(
+        int pagina = 1,
+        int pageSize = PaginadorHelper.NumeroDeDatosPorPagina,
+        string? filtro = null,
+        string? estado = null)
+        {
+            try
+            {
+                // Llamamos al método que devuelve el paginado (en el servicio)
+                var resultado = _solicitudesCompraService.GetSolicitudesCompraPaginados(pagina, pageSize, filtro, estado);
+
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
     }
 }

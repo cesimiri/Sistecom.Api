@@ -3,8 +3,28 @@
   "WorkspaceRootPath": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\controllers\\suscripcionecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\controllers\\suscripcionecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\datarepository\\suscripcionerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\datarepository\\suscripcionerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\services\\suscripcioneservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\services\\suscripcioneservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\datarepository\\usuariorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\datarepository\\usuariorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\interfaces\\isuscripcione.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\interfaces\\isuscripcione.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\services\\usuarioservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -15,20 +35,12 @@
       "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\interfaces\\iusuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\paginado\\paginadorhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\paginado\\paginadorhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\paginado\\pagedresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\paginado\\pagedresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\controllers\\accountscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\controllers\\accountscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,96 +50,139 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Program.cs",
               "RelativeDocumentMoniker": "Identity.Api\\Program.cs",
               "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Program.cs",
               "RelativeToolTip": "Identity.Api\\Program.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAAOMAAAA8AAAAAAAAAA==",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAACIAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-27T14:47:21.994Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "PagedResult.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Paginado\\PagedResult.cs",
-              "RelativeDocumentMoniker": "Identity.Api\\Paginado\\PagedResult.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Paginado\\PagedResult.cs",
-              "RelativeToolTip": "Identity.Api\\Paginado\\PagedResult.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABFAAAAAAAAAA==",
+              "DocumentIndex": 9,
+              "Title": "AccountsController.cs",
+              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\AccountsController.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Controllers\\AccountsController.cs",
+              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\AccountsController.cs",
+              "RelativeToolTip": "Identity.Api\\Controllers\\AccountsController.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAgwCcAAABRAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-01T16:31:11.01Z"
+              "WhenOpened": "2025-07-02T15:27:35.857Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SuscripcioneController.cs",
+              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\SuscripcioneController.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Controllers\\SuscripcioneController.cs",
+              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\SuscripcioneController.cs",
+              "RelativeToolTip": "Identity.Api\\Controllers\\SuscripcioneController.cs",
+              "ViewState": "AgIAAGsAAAAAAAAAAAAwwHAAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-03T18:54:33.735Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SuscripcioneRepository.cs",
+              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\SuscripcioneRepository.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\DataRepository\\SuscripcioneRepository.cs",
+              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\SuscripcioneRepository.cs",
+              "RelativeToolTip": "Identity.Api\\DataRepository\\SuscripcioneRepository.cs",
+              "ViewState": "AgIAAK0AAAAAAAAAAAAgwL8AAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-03T18:34:20.623Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "SuscripcioneServices.cs",
+              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\SuscripcioneServices.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Services\\SuscripcioneServices.cs",
+              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\SuscripcioneServices.cs",
+              "RelativeToolTip": "Identity.Api\\Services\\SuscripcioneServices.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAcwCwAAABCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-03T18:33:44.327Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ISuscripcione.cs",
+              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\ISuscripcione.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Interfaces\\ISuscripcione.cs",
+              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\ISuscripcione.cs",
+              "RelativeToolTip": "Identity.Api\\Interfaces\\ISuscripcione.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-03T18:33:14.537Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "UsuarioController.cs",
               "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\UsuarioController.cs",
               "RelativeDocumentMoniker": "Identity.Api\\Controllers\\UsuarioController.cs",
               "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\UsuarioController.cs",
               "RelativeToolTip": "Identity.Api\\Controllers\\UsuarioController.cs",
-              "ViewState": "AgIAAJMAAAAAAAAAAAAowIsAAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAAIsAAAAAAAAAAAAAwKcAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-01T16:09:29.898Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "UsuarioRepository.cs",
               "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\UsuarioRepository.cs",
               "RelativeDocumentMoniker": "Identity.Api\\DataRepository\\UsuarioRepository.cs",
               "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\UsuarioRepository.cs",
               "RelativeToolTip": "Identity.Api\\DataRepository\\UsuarioRepository.cs",
-              "ViewState": "AgIAAOUAAAAAAAAAAAAqwAkBAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAAOAAAAAAAAAAAAAuwCMBAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-01T16:08:32.611Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "UsuarioServices.cs",
               "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\UsuarioServices.cs",
               "RelativeDocumentMoniker": "Identity.Api\\Services\\UsuarioServices.cs",
               "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\UsuarioServices.cs",
               "RelativeToolTip": "Identity.Api\\Services\\UsuarioServices.cs",
-              "ViewState": "AgIAADEAAAAAAAAAAAA5wDwAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAACsAAAAAAAAAAAAcwDoAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-01T16:08:08.16Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "IUsuario.cs",
               "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\IUsuario.cs",
               "RelativeDocumentMoniker": "Identity.Api\\Interfaces\\IUsuario.cs",
               "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\IUsuario.cs",
               "RelativeToolTip": "Identity.Api\\Interfaces\\IUsuario.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAUwBcAAAA8AAAAAAAAAA==",
+              "ViewState": "AgIAABQAAAAAAAAAAAAAABcAAAB9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-01T16:06:27.496Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "PaginadorHelper.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Paginado\\PaginadorHelper.cs",
-              "RelativeDocumentMoniker": "Identity.Api\\Paginado\\PaginadorHelper.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Paginado\\PaginadorHelper.cs",
-              "RelativeToolTip": "Identity.Api\\Paginado\\PaginadorHelper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-01T16:32:06.093Z"
             }
           ]
         }

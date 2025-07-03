@@ -1,5 +1,7 @@
 ﻿using Identity.Api.DataRepository;
+using Identity.Api.DTO;
 using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
 
@@ -42,6 +44,12 @@ namespace Identity.Api.Services
         public void DeleteProveedorById(int idProveedor)
         {
             _dataRepository.DeleteProveedorById(idProveedor);
+        }
+
+        //paginado
+        public PagedResult<Proveedore> GetProveedorePaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            return _dataRepository.GetProveedorePaginados(pagina, pageSize, filtro, estado);
         }
     }
 }

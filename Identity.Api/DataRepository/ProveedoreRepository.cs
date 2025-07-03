@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Identity.Api.DTO;
+using Identity.Api.Paginado;
+using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.DataRepository
@@ -74,6 +76,66 @@ namespace Identity.Api.DataRepository
                 _context.Proveedores.Remove(proveedor);
                 _context.SaveChanges();
             }
+        }
+
+
+        //PAGINADA 
+        public PagedResult<Proveedore> GetProveedorePaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.Proveedores
+                
+                .AsQueryable();
+
+            // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                filtro = filtro.ToLower();
+                query = query.Where(u =>
+                    u.NombreComercial.ToLower().Contains(filtro) ||
+                    u.RazonSocial.ToLower().Contains(filtro) ||
+                    u.Ruc.ToLower().Contains(filtro));
+            }
+
+            // Aplicar filtro por estado
+            if (!string.IsNullOrEmpty(estado))
+            {
+                query = query.Where(u => u.Estado == estado);
+            }
+
+            // Total de registros filtrados
+            var totalItems = query.Count();
+
+            // Obtener página solicitada con paginado
+            var usuarios = query
+                .OrderBy(u => u.IdProveedor) // importante ordenar antes de Skip/Take
+                .Skip((pagina - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new Proveedore
+                {
+                    IdProveedor = s.IdProveedor,
+                    Ruc = s.Ruc,
+                    RazonSocial = s.RazonSocial,
+                    NombreComercial = s.NombreComercial,
+                    DireccionMatriz = s.DireccionMatriz,
+                    Telefono = s.Telefono,
+                    CorreoElectronico = s.CorreoElectronico,
+                    ObligadoContabilidad = s.ObligadoContabilidad,
+                    ContribuyenteEspecial = s.ContribuyenteEspecial,
+                    AgenteRetencion = s.AgenteRetencion,
+                    Estado = s.Estado,
+
+                })
+                .ToList();
+
+            return new PagedResult<Proveedore>
+            {
+                Items = usuarios,
+                TotalItems = totalItems,
+                Page = pagina,
+                PageSize = pageSize
+            };
         }
     }
 }

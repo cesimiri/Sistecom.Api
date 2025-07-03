@@ -1,6 +1,7 @@
 ﻿using Identity.Api.DataRepository;
 using Identity.Api.DTO;
 using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Services
@@ -48,6 +49,12 @@ namespace Identity.Api.Services
         public IEnumerable<ProductoDTO> GetProductoConCategoria6()
         {
             return _dataRepository.GetProductoConCategoria6();
+        }
+
+        //paginado
+        public PagedResult<LicenciaDTO> GetLicenciaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            return _dataRepository.GetLicenciaPaginados(pagina, pageSize, filtro, estado);
         }
     }
 }

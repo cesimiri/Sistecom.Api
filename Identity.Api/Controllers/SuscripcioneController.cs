@@ -1,8 +1,10 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Controllers
 {
@@ -100,6 +102,27 @@ namespace Identity.Api.Controllers
             {
                 _suscripcioneService.DeleteSuscripcionById(idSuscripcion);
                 return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
+
+
+        [HttpGet("GetSuscripcionPaginados")]
+        public IActionResult GetSuscripcionPaginados(
+        int pagina = 1,
+        int pageSize = PaginadorHelper.NumeroDeDatosPorPagina,
+        string? filtro = null,
+        string? estado = null)
+        {
+            try
+            {
+                // Llamamos al método que devuelve el paginado (en el servicio)
+                var resultado = _suscripcioneService.GetSuscripcionPaginados(pagina, pageSize, filtro, estado);
+
+                return Ok(resultado);
             }
             catch (Exception ex)
             {

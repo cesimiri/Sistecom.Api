@@ -1,4 +1,5 @@
 ﻿using Identity.Api.DTO;
+using Identity.Api.Paginado;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
 
@@ -175,6 +176,64 @@ namespace Identity.Api.DataRepository
                     context.SaveChanges();
                 }
             }
+        }
+
+
+        //PAGINADA 
+        public PagedResult<DepartamentoDTO> GetDepartamentosPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.Departamentos
+                .Include(s => s.IdSucursalNavigation)
+                .AsQueryable();
+
+            // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                filtro = filtro.ToLower();
+                query = query.Where(u =>
+                    u.NombreDepartamento.ToLower().Contains(filtro)
+                );
+            }
+
+            // Aplicar filtro por estado
+            if (!string.IsNullOrEmpty(estado))
+            {
+                query = query.Where(u => u.Estado == estado);
+            }
+
+            // Total de registros filtrados
+            var totalItems = query.Count();
+
+            // Obtener página solicitada con paginado
+            var usuarios = query
+                .OrderBy(u => u.IdDepartamento) // importante ordenar antes de Skip/Take
+                .Skip((pagina - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new DepartamentoDTO
+                {
+                    IdDepartamento = s.IdDepartamento,
+                    IdSucursal = s.IdSucursal,
+                    CodigoDepartamento = s.CodigoDepartamento,
+                    NombreDepartamento = s.NombreDepartamento,
+                    Descripcion = s.Descripcion,
+                    Responsable = s.Responsable,
+                    EmailDepartamento = s.EmailDepartamento,
+                    Extension = s.Extension,
+                    CentroCosto = s.CentroCosto,
+                    Estado = s.Estado,
+                    NombreSucursal = s.IdSucursalNavigation.NombreSucursal
+                })
+                .ToList();
+
+            return new PagedResult<DepartamentoDTO>
+            {
+                Items = usuarios,
+                TotalItems = totalItems,
+                Page = pagina,
+                PageSize = pageSize
+            };
         }
     }
 }

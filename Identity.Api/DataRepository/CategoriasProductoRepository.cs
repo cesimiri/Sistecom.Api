@@ -1,4 +1,7 @@
-﻿using Modelo.Sistecom.Modelo.Database;
+﻿using Identity.Api.DTO;
+using Identity.Api.Paginado;
+using Microsoft.EntityFrameworkCore;
+using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.DataRepository
 {
@@ -76,5 +79,58 @@ namespace Identity.Api.DataRepository
                 }
             }
         }
+
+
+        //PAGINADA 
+        public PagedResult<CategoriasProducto> GetCategoriasProductoPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.CategoriasProductos
+               
+                .AsQueryable();
+
+            // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                filtro = filtro.ToLower();
+                query = query.Where(u =>
+                    u.Nombre.ToLower().Contains(filtro) );
+            }
+
+            // Aplicar filtro por estado
+            if (!string.IsNullOrEmpty(estado))
+            {
+                query = query.Where(u => u.Estado == estado);
+            }
+
+            // Total de registros filtrados
+            var totalItems = query.Count();
+
+            // Obtener página solicitada con paginado
+            var usuarios = query
+                .OrderBy(u => u.IdCategoria) // importante ordenar antes de Skip/Take
+                .Skip((pagina - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new CategoriasProducto
+                {
+                    IdCategoria = s.IdCategoria,
+                    Nombre = s.Nombre,
+                    Descripcion = s.Descripcion,
+                    RequiereSerial = s.RequiereSerial,
+                    VidaUtilMeses = s.VidaUtilMeses,
+                    Estado = s.Estado
+                })
+                .ToList();
+
+            return new PagedResult<CategoriasProducto>
+            {
+                Items = usuarios,
+                TotalItems = totalItems,
+                Page = pagina,
+                PageSize = pageSize
+            };
+        }
+
     }
 }

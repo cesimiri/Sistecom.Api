@@ -1,5 +1,6 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Modelo.Sistecom.Modelo.Database;
@@ -188,6 +189,66 @@ namespace Identity.Api.DataRepository
                     context.SaveChanges();
                 }
             }
+        }
+
+        //PAGINADA 
+        public PagedResult<ModeloDTO> GetModeloPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.Modelos
+                .Include(s => s.IdMarcaNavigation)
+
+                .AsQueryable();
+
+            // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                filtro = filtro.ToLower();
+                query = query.Where(u =>
+                    u.Nombre.ToLower().Contains(filtro) );
+            }
+
+            // Aplicar filtro por estado
+            if (!string.IsNullOrEmpty(estado))
+            {
+                query = query.Where(u => u.Estado == estado);
+            }
+
+            // Total de registros filtrados
+            var totalItems = query.Count();
+
+            // Obtener página solicitada con paginado
+            var usuarios = query
+                .OrderBy(u => u.IdModelo) // importante ordenar antes de Skip/Take
+                .Skip((pagina - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new ModeloDTO
+                {
+                    IdModelo = s.IdModelo,
+                    IdMarca = s.IdMarca,
+                    Codigo = s.Codigo,
+                    Nombre = s.Nombre,
+                    Descripcion = s.Descripcion,
+                    AñoLanzamiento = s.AñoLanzamiento,
+                    Descontinuado = s.Descontinuado,
+                    FechaDescontinuacion = s.FechaDescontinuacion.HasValue
+                    ? s.FechaDescontinuacion.Value.ToDateTime(TimeOnly.MinValue)
+                    : (DateTime?)null,
+                    EspecificacionesGenerales = s.EspecificacionesGenerales,
+                    ImagenUrl = s.ImagenUrl,
+                    Estado = s.Estado,
+                    nombreMarca = s.IdMarcaNavigation.Nombre
+                })
+                .ToList();
+
+            return new PagedResult<ModeloDTO>
+            {
+                Items = usuarios,
+                TotalItems = totalItems,
+                Page = pagina,
+                PageSize = pageSize
+            };
         }
     }
 }

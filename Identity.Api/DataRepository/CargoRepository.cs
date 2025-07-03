@@ -1,4 +1,7 @@
-﻿using Modelo.Sistecom.Modelo.Database;
+﻿using Identity.Api.DTO;
+using Identity.Api.Paginado;
+using Microsoft.EntityFrameworkCore;
+using Modelo.Sistecom.Modelo.Database;
 namespace Identity.Api.DataRepository
 {
     public class CargoRepository
@@ -79,6 +82,62 @@ namespace Identity.Api.DataRepository
                     context.SaveChanges();
                 }
             }
+        }
+
+        //PAGINADA 
+        public PagedResult<Cargo> GetCargoPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.Cargos
+                
+                .AsQueryable();
+
+            // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                filtro = filtro.ToLower();
+                query = query.Where(u =>
+                    u.NombreCargo.ToLower().Contains(filtro) 
+                   );
+            }
+
+            // Aplicar filtro por estado
+            if (!string.IsNullOrEmpty(estado))
+            {
+                query = query.Where(u => u.Estado == estado);
+            }
+
+            // Total de registros filtrados
+            var totalItems = query.Count();
+
+            // Obtener página solicitada con paginado
+            var usuarios = query
+                .OrderBy(u => u.IdCargo) // importante ordenar antes de Skip/Take
+                .Skip((pagina - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new Cargo
+                {
+                    IdCargo = s.IdCargo,
+                    CodigoCargo = s.CodigoCargo,
+                    NombreCargo = s.NombreCargo,
+                    Descripcion = s.Descripcion,
+                    NivelJerarquico = s.NivelJerarquico,
+                    PuedeAutorizarCompras = s.PuedeAutorizarCompras,
+                    LimiteAutorizacion = s.LimiteAutorizacion,
+
+                    Estado = s.Estado
+                   
+                })
+                .ToList();
+
+            return new PagedResult<Cargo>
+            {
+                Items = usuarios,
+                TotalItems = totalItems,
+                Page = pagina,
+                PageSize = pageSize
+            };
         }
     }
 }

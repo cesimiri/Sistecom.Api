@@ -1,5 +1,8 @@
-﻿using Identity.Api.DataRepository;
+﻿using identity.api.datarepository;
+using Identity.Api.DataRepository;
+using Identity.Api.DTO;
 using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Services
@@ -36,6 +39,12 @@ namespace Identity.Api.Services
         public void DeleteTiposLicenciumById(int idTiposLicencium)
         {
             _dataRepository.DeleteTiposLicenciumById(idTiposLicencium);
+        }
+
+        //paginado
+        public PagedResult<TiposLicencium> GetTiposLicenciumPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            return _dataRepository.GetTiposLicenciumPaginados(pagina, pageSize, filtro, estado);
         }
     }
 }

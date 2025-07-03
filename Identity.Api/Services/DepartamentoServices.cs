@@ -1,6 +1,7 @@
 ﻿using Identity.Api.DataRepository;
 using Identity.Api.DTO;
 using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 
 namespace Identity.Api.Services
 {
@@ -36,6 +37,12 @@ namespace Identity.Api.Services
         public void DeleteDepartamentoById(int idDepartamento)
         {
             _dataRepository.DeleteDepartamentoById(idDepartamento);
+        }
+
+        //paginado
+        public PagedResult<DepartamentoDTO> GetDepartamentosPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            return _dataRepository.GetDepartamentosPaginados(pagina, pageSize, filtro, estado);
         }
     }
 }

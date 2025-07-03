@@ -1,7 +1,8 @@
-﻿using Identity.Api.Interfaces;
-using Identity.Api.DataRepository;
-using Modelo.Sistecom.Modelo.Database;
+﻿using Identity.Api.DataRepository;
 using Identity.Api.DTO;
+using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
+using Modelo.Sistecom.Modelo.Database;
 namespace Identity.Api.Services
 {
 
@@ -38,6 +39,12 @@ namespace Identity.Api.Services
         public void DeleteFacturasCompraById(int idFacturasCompra)
         {
             _dataRepository.DeleteFacturasCompraById(idFacturasCompra);
+        }
+
+        //paginado
+        public PagedResult<FacturasCompraDTO> GetFacturasCompraPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            return _dataRepository.GetFacturasCompraPaginados(pagina, pageSize, filtro, estado);
         }
     }
 }

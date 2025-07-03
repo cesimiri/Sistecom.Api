@@ -1,7 +1,7 @@
-﻿using Identity.Api.Interfaces;
-using Identity.Api.DataRepository;
-
+﻿using Identity.Api.DataRepository;
 using Identity.Api.DTO;
+using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 
 namespace Identity.Api.Services
 {
@@ -39,6 +39,12 @@ namespace Identity.Api.Services
         public IEnumerable<ModeloDTO> GetModelosByIdMarca(int idMarca)
         {
             return _dataRepository.GetModelosByIdMarca(idMarca);
+        }
+
+        //paginado
+        public PagedResult<ProductoDTO> GetProductoPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            return _dataRepository.GetProductoPaginados(pagina, pageSize, filtro, estado);
         }
     }
 }

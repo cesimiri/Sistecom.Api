@@ -1,9 +1,10 @@
-﻿using Modelo.Sistecom.Modelo.Database;
+﻿using Identity.Api.DTO;
+using Identity.Api.Paginado;
 using Identity.Api.Persistence.DataBase;
 using Microsoft.EntityFrameworkCore;
+using Modelo.Sistecom.Modelo.Database;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Identity.Api.DTO;
 
 namespace Identity.Api.DataRepository
 {
@@ -125,6 +126,61 @@ namespace Identity.Api.DataRepository
                     context.SaveChanges();
                 }
             }
+        }
+
+
+        public PagedResult<BodegaDTO> GetBodegaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.Bodegas
+                
+                .AsQueryable();
+
+            // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                filtro = filtro.ToLower();
+                query = query.Where(u =>
+                    u.Nombre.ToLower().Contains(filtro) );
+            }
+
+            // Aplicar filtro por estado
+            if (!string.IsNullOrEmpty(estado))
+            {
+                query = query.Where(u => u.Estado == estado);
+            }
+
+            // Total de registros filtrados
+            var totalItems = query.Count();
+
+            // Obtener página solicitada con paginado
+            var usuarios = query
+                .OrderBy(u => u.IdBodega) // importante ordenar antes de Skip/Take
+                .Skip((pagina - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new BodegaDTO
+                {
+                    IdBodega = s.IdBodega,
+                    Codigo = s.Codigo,
+                    Nombre = s.Nombre,
+                    Direccion = s.Direccion,
+                    Telefono = s.Telefono,
+                    Responsable = s.Responsable,
+                    Tipo = s.Tipo,
+                    PermiteVentas = s.PermiteVentas ?? false,
+                    PermiteEnsamblaje = s.PermiteEnsamblaje ?? false,
+                    Estado = s.Estado
+                })
+                .ToList();
+
+            return new PagedResult<BodegaDTO>
+            {
+                Items = usuarios,
+                TotalItems = totalItems,
+                Page = pagina,
+                PageSize = pageSize
+            };
         }
     }
 }

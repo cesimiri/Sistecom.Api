@@ -1,4 +1,5 @@
 ﻿using Identity.Api.DTO;
+using Identity.Api.Paginado;
 using Identity.Api.Persistence.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
@@ -113,6 +114,67 @@ namespace Identity.Api.DataRepository
                     context.SaveChanges();
                 }
             }
+        }
+
+        //PAGINADA 
+        public PagedResult<stockBodegaDTO> GetStockBodegaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.StockBodegas
+                .Include(s => s.IdBodegaNavigation)
+                .Include(s => s.IdProductoNavigation)
+                .AsQueryable();
+
+            // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                filtro = filtro.ToLower();
+                query = query.Where(u =>
+                    u.IdBodegaNavigation.Nombre.ToLower().Contains(filtro) ||
+                    u.IdProductoNavigation.Nombre.ToLower().Contains(filtro) );
+            }
+
+            // Aplicar filtro por estado
+            //if (!string.IsNullOrEmpty(estado))
+            //{
+            //    query = query.Where(u => u.Estado == estado);
+            //}
+
+            // Total de registros filtrados
+            var totalItems = query.Count();
+
+            // Obtener página solicitada con paginado
+            var usuarios = query
+                .OrderBy(u => u.IdStock) // importante ordenar antes de Skip/Take
+                .Skip((pagina - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new stockBodegaDTO
+                {
+                    IdStock = s.IdStock,
+                    IdBodega = s.IdBodega,
+                    IdProducto = s.IdProducto,
+                    CantidadDisponible = s.CantidadDisponible,
+                    CantidadReservada = s.CantidadReservada,
+                    CantidadEnsamblaje = s.CantidadEnsamblaje,
+                    ValorPromedio = s.ValorPromedio,
+                    UltimaEntrada = s.UltimaEntrada,
+                    UltimaSalida = s.UltimaSalida,
+                    FechaActualizacion = s.FechaActualizacion,
+
+
+                    nombreBodega = s.IdBodegaNavigation.Nombre,
+                    nombreProducto = s.IdProductoNavigation.Nombre
+                })
+                .ToList();
+
+            return new PagedResult<stockBodegaDTO>
+            {
+                Items = usuarios,
+                TotalItems = totalItems,
+                Page = pagina,
+                PageSize = pageSize
+            };
         }
     }
 }

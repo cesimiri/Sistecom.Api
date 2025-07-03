@@ -1,5 +1,6 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -113,6 +114,26 @@ namespace Identity.Api.Controllers
         public IActionResult GetProductoConCategoria6()
         {
             return Ok(_bodega.GetProductoConCategoria6());
+        }
+
+        [HttpGet("GetLicenciaPaginados")]
+        public IActionResult GetUsuariosPaginados(
+        int pagina = 1,
+        int pageSize = PaginadorHelper.NumeroDeDatosPorPagina,
+        string? filtro = null,
+        string? estado = null)
+        {
+            try
+            {
+                // Llamamos al método que devuelve el paginado (en el servicio)
+                var resultado = _bodega.GetLicenciaPaginados(pagina, pageSize, filtro, estado);
+
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
     }
 }

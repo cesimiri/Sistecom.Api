@@ -1,5 +1,6 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
 using System;
@@ -124,18 +125,7 @@ namespace Identity.Api.DataRepository
                  && new[] { 2, 3, 4 }.Contains(u.IdCargoNavigation.NivelJerarquico.GetValueOrDefault()))
                 .Select(u => new UsuarioDTO
                 {
-                    //IdUsuario = u.IdUsuario,
-                    //Cedula = u.Cedula,
-                    //Nombres = u.Nombres,
-                    //Apellidos = u.Apellidos,
-                    //Email = u.Email,
-                    //Telefono = u.Telefono,
-                    //Extension = u.Extension,
-                    //Estado = u.Estado,
-                    //IdCargo = u.IdCargo,
-                    //IdDepartamento = u.IdDepartamento,
-                    //NombreCargo = u.IdCargoNavigation.Descripcion,
-                    //NombreDepartamento = u.IdDepartamentoNavigation.NombreDepartamento
+                    
                     IdUsuario = u.IdUsuario,
                     IdDepartamento = u.IdDepartamento,
                     IdCargo = u.IdCargo,
@@ -379,6 +369,87 @@ namespace Identity.Api.DataRepository
                     context.SaveChanges();
                 }
             }
+        }
+
+
+        //PAGINADA 
+        public PagedResult<SolicitudesCompraDTO> GetSolicitudesCompraPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.SolicitudesCompras
+                .Include(s => s.RucEmpresaNavigation)
+                .Include(s => s.IdUsuarioSolicitaNavigation)
+                .Include(s => s.IdDepartamentoNavigation)
+                .AsQueryable();
+
+            // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                filtro = filtro.ToLower();
+                query = query.Where(u =>
+                    u.RucEmpresa.ToLower().Contains(filtro) ||
+                    u.NumeroSolicitud.ToLower().Contains(filtro) ||
+                    u.RucEmpresaNavigation.RazonSocial.ToLower().Contains(filtro) ||
+                    //para filatrado por nombre
+                    (u.IdUsuarioSolicitaNavigation.Nombres + " " + u.IdUsuarioSolicitaNavigation.Apellidos).ToLower().Contains(filtro)
+
+                    );
+            }
+
+            // Aplicar filtro por estado
+            if (!string.IsNullOrEmpty(estado))
+            {
+                query = query.Where(u => u.Estado == estado);
+            }
+
+            // Total de registros filtrados
+            var totalItems = query.Count();
+
+            // Obtener página solicitada con paginado
+            var usuarios = query
+                .OrderBy(u => u.IdSolicitud) // importante ordenar antes de Skip/Take
+                .Skip((pagina - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new SolicitudesCompraDTO
+                {
+                    NumeroSolicitud = s.NumeroSolicitud,
+                    IdSolicitud = s.IdSolicitud,
+                    RucEmpresa = s.RucEmpresa,
+                    IdDepartamento = s.IdDepartamento,
+                    IdUsuarioSolicita = s.IdUsuarioSolicita,
+                    IdUsuarioAutoriza = s.IdUsuarioAutoriza,
+                    FechaSolicitud = s.FechaSolicitud,
+                    FechaAprobacion = s.FechaAprobacion,
+                    FechaRequerida = s.FechaRequerida.HasValue
+                    ? new DateTime(s.FechaRequerida.Value.Year, s.FechaRequerida.Value.Month, s.FechaRequerida.Value.Day)
+                    : DateTime.MinValue,
+                    SubtotalSinImpuestos = s.SubtotalSinImpuestos,
+                    DescuentoTotal = s.DescuentoTotal,
+                    Iva = s.Iva,
+                    ValorTotal = s.ValorTotal,
+                    Justificacion = s.Justificacion,
+                    Prioridad = s.Prioridad,
+                    MotivoRechazo = s.MotivoRechazo,
+                    Observaciones = s.Observaciones,
+                    ArchivoOc = s.ArchivoOc,
+                    Estado = s.Estado,
+
+                    // campos relacionados:
+                    RazonSocial = s.RucEmpresaNavigation.RazonSocial,
+                    NombreSolicitanteCompleto = s.IdUsuarioSolicitaNavigation.Nombres + " " + s.IdUsuarioSolicitaNavigation.Apellidos,
+                    NombreAutorizadorCompleto = s.IdUsuarioAutorizaNavigation.Nombres + " " + s.IdUsuarioAutorizaNavigation.Apellidos,
+                    NombreDepartamento = s.IdDepartamentoNavigation.NombreDepartamento
+                })
+                .ToList();
+
+            return new PagedResult<SolicitudesCompraDTO>
+            {
+                Items = usuarios,
+                TotalItems = totalItems,
+                Page = pagina,
+                PageSize = pageSize
+            };
         }
     }
 }

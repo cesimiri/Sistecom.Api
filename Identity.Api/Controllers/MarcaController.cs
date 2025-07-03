@@ -1,5 +1,6 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -115,6 +116,27 @@ namespace Identity.Api.Controllers
             }
 
             return NoContent();
+        }
+
+
+        [HttpGet("GetMarcaPaginados")]
+        public IActionResult GetMarcaPaginados(
+        int pagina = 1,
+        int pageSize = PaginadorHelper.NumeroDeDatosPorPagina,
+        string? filtro = null,
+        string? estado = null)
+        {
+            try
+            {
+                // Llamamos al método que devuelve el paginado (en el servicio)
+                var resultado = _marca.GetMarcaPaginados(pagina, pageSize, filtro, estado);
+
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
         }
     }
 }
