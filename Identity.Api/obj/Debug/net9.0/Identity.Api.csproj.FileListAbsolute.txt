@@ -662,4 +662,3 @@ C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\refint\Identity.
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.pdb
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.genruntimeconfig.cache
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\ref\Identity.Api.dll
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
