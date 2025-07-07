@@ -28,13 +28,6 @@ namespace Identity.Api.DataRepository
                     TipoSuscripcion = s.TipoSuscripcion,
                     FechaInicio = s.FechaInicio.ToDateTime(new TimeOnly(0, 0)),
                     FechaRenovacion = s.FechaRenovacion.ToDateTime(new TimeOnly(0, 0)),
-                    
-                    //agregado
-                    //Certificado = s.Certificado,
-                    //Dominio = s.Dominio,
-                    //Soporte = s.Soporte,
-
-
                     PeriodoFacturacion = s.PeriodoFacturacion,
                     CostoPeriodo = s.CostoPeriodo,
                     UsuariosIncluidos = s.UsuariosIncluidos,
@@ -114,12 +107,6 @@ namespace Identity.Api.DataRepository
                     //cambio de datetime a dateonly 
                     FechaInicio = DateOnly.FromDateTime(dto.FechaInicio),
                     FechaRenovacion = DateOnly.FromDateTime(dto.FechaRenovacion),
-
-                    //agregado
-                    //Certificado = dto.Certificado,
-                    //Dominio = dto.Dominio,
-                    //Soporte = dto.Soporte,
-
                     PeriodoFacturacion = dto.PeriodoFacturacion,
                     CostoPeriodo = dto.CostoPeriodo,
                     UsuariosIncluidos = dto.UsuariosIncluidos,
@@ -158,13 +145,6 @@ namespace Identity.Api.DataRepository
                 //conversion de DATETIME a DATEONLY
                 suscripcion.FechaInicio = DateOnly.FromDateTime(dto.FechaInicio);
                 suscripcion.FechaRenovacion = DateOnly.FromDateTime(dto.FechaRenovacion);
-
-                //agregado
-                //suscripcion.Certificado = dto.Certificado;
-                //suscripcion.Dominio = dto.Dominio;
-                //suscripcion.Soporte = dto.Soporte;
-                //
-
                 suscripcion.PeriodoFacturacion = dto.PeriodoFacturacion;
                 suscripcion.CostoPeriodo = dto.CostoPeriodo;
                 suscripcion.UsuariosIncluidos = dto.UsuariosIncluidos;
@@ -257,13 +237,6 @@ namespace Identity.Api.DataRepository
                     TipoSuscripcion = s.TipoSuscripcion,
                     FechaInicio = s.FechaInicio.ToDateTime(new TimeOnly(0, 0)),
                     FechaRenovacion = s.FechaRenovacion.ToDateTime(new TimeOnly(0, 0)),
-
-
-                    //suscripcion.Certificado = s.Certificado,
-                    //suscripcion.Dominio = s.Dominio,
-                    //suscripcion.Soporte = s.Soporte,
-
-
                     PeriodoFacturacion = s.PeriodoFacturacion,
                     CostoPeriodo = s.CostoPeriodo,
                     UsuariosIncluidos = s.UsuariosIncluidos,
@@ -288,6 +261,31 @@ namespace Identity.Api.DataRepository
             };
         }
 
+
+        //
+        public IEnumerable<UsuarioDTO> GetUsuarioCargo1()
+        {
+            using var context = new InvensisContext();
+
+            var usuarios = context.Usuarios
+                .Include(u => u.IdCargoNavigation)
+                .Where(u => u.IdCargo == 1 && u.Estado == "ACTIVO") // o el filtro que necesites
+                .Select(u => new UsuarioDTO
+                {
+                    IdUsuario = u.IdUsuario,
+                    IdDepartamento = u.IdDepartamento,
+                    IdCargo = u.IdCargo,
+                    Cedula = u.Cedula,
+                    Nombres = u.Nombres,
+                    Apellidos = u.Apellidos,
+                    Email = u.Email,
+                    Estado = u.Estado,
+                    NombreCargo = u.IdCargoNavigation.NombreCargo
+                })
+                .ToList();
+
+            return usuarios;
+        }
 
     }
 }

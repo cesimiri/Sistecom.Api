@@ -147,13 +147,26 @@ namespace Identity.Api.Controllers
         [HttpPut("UpdateSolicitud")]
         public IActionResult Update([FromBody] SolicitudesCompraDTO UpdateSolicitud)
         {
-            if (UpdateSolicitud == null || !ModelState.IsValid)
+            if (UpdateSolicitud == null)
             {
-                return BadRequest("Error: Datos inválidos");
+                return BadRequest("Error: Solicitud nula");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                var errores = ModelState
+                    .Where(x => x.Value.Errors.Count > 0)
+                    .Select(x => new
+                    {
+                        Campo = x.Key,
+                        Errores = x.Value.Errors.Select(e => e.ErrorMessage)
+                    });
+
+                return BadRequest(errores);
             }
 
             _solicitudesCompraService.UpdateSolicitud(UpdateSolicitud);
-            return NoContent();
+            return Ok("¡Actualizado correctamente!");
         }
 
    

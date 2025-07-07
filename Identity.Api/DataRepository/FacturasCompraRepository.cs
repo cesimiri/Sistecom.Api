@@ -87,7 +87,7 @@ namespace Identity.Api.DataRepository
                     ValorTotal = 0,
                     FormaPago = dto.FormaPago,
                     Estado = dto.Estado,
-                    Observaciones = dto.Observaciones,
+                    Observaciones = dto.Observaciones?.ToUpper()
 
 
                 };
@@ -129,7 +129,7 @@ namespace Identity.Api.DataRepository
                     registrado.ValorTotal = UpdItem.ValorTotal;
                     registrado.FormaPago = UpdItem.FormaPago;
                     registrado.Estado = UpdItem.Estado;
-                    registrado.Observaciones = UpdItem.Observaciones;
+                    registrado.Observaciones = UpdItem.Observaciones?.ToUpper();
 
 
 

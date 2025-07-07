@@ -190,8 +190,8 @@ namespace Identity.Api.DataRepository
 
                     CodigoPrincipal = NuevoCodigoPrincipal,
                     CodigoAuxiliar = dto.CodigoAuxiliar,
-                    Nombre = dto.Nombre,
-                    Descripcion = dto.Descripcion,
+                    Nombre = dto.Nombre?.ToUpper(),
+                    Descripcion = dto.Descripcion?.ToUpper(),
                     IdCategoria = dto.IdCategoria,
                     TipoProducto = "PRODUCTO_FINAL",
                     EsComponente = dto.EsComponente,
@@ -209,7 +209,7 @@ namespace Identity.Api.DataRepository
                     StockMinimo = dto.StockMinimo,
                     StockMaximo = dto.StockMaximo,
                     GarantiaMeses = dto.GarantiaMeses,
-                    EspecificacionesTecnicas = dto.EspecificacionesTecnicas,
+                    EspecificacionesTecnicas = dto.EspecificacionesTecnicas?.ToUpper(),
                     Estado = dto.Estado,
 
                 };
@@ -236,8 +236,8 @@ namespace Identity.Api.DataRepository
                     existente.IdProducto = updItem.IdProducto;
                     existente.CodigoPrincipal = updItem.CodigoPrincipal;
                     existente.CodigoAuxiliar = updItem.CodigoAuxiliar;
-                    existente.Nombre = updItem.Nombre;
-                    existente.Descripcion = updItem.Descripcion;
+                    existente.Nombre = updItem.Nombre?.ToUpper();
+                    existente.Descripcion = updItem.Descripcion?.ToUpper();
                     existente.IdCategoria = updItem.IdCategoria;
                     existente.TipoProducto = updItem.TipoProducto;
                     existente.EsComponente = updItem.EsComponente;
@@ -255,7 +255,7 @@ namespace Identity.Api.DataRepository
                     existente.StockMinimo = updItem.StockMinimo;
                     existente.StockMaximo = updItem.StockMaximo;
                     existente.GarantiaMeses = updItem.GarantiaMeses;
-                    existente.EspecificacionesTecnicas = updItem.EspecificacionesTecnicas;
+                    existente.EspecificacionesTecnicas = updItem.EspecificacionesTecnicas?.ToUpper();
                     existente.ImagenUrl = updItem.ImagenUrl;
                     existente.Estado = updItem.Estado;
                     context.SaveChanges();

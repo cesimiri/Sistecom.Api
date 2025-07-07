@@ -2,6 +2,7 @@
 using Identity.Api.Paginado;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 namespace Identity.Api.DataRepository
 {
     public class CargoRepository
@@ -27,7 +28,19 @@ namespace Identity.Api.DataRepository
         {
             using (var context = new InvensisContext())
             {
-                context.Cargos.Add(NewItem);
+                var nuevo = new Cargo
+                {
+                    CodigoCargo = NewItem.CodigoCargo,
+                    NombreCargo = NewItem.NombreCargo?.ToUpper(),
+                    Descripcion = NewItem.Descripcion?.ToUpper(),
+                    NivelJerarquico = NewItem.NivelJerarquico,
+                    PuedeAutorizarCompras = NewItem.PuedeAutorizarCompras,
+                    LimiteAutorizacion = NewItem.LimiteAutorizacion,
+
+                    Estado = NewItem.Estado
+
+                };
+                context.Cargos.Add(nuevo);
                 context.SaveChanges();
             }
         }
@@ -44,8 +57,8 @@ namespace Identity.Api.DataRepository
                 if (registrado != null)
                 {
                     registrado.CodigoCargo = UpdItem.CodigoCargo;
-                    registrado.NombreCargo = UpdItem.NombreCargo;
-                    registrado.Descripcion = UpdItem.Descripcion;
+                    registrado.NombreCargo = UpdItem.NombreCargo?.ToUpper();
+                    registrado.Descripcion = UpdItem.Descripcion?.ToUpper();
                     registrado.NivelJerarquico = UpdItem.NivelJerarquico;
                     registrado.PuedeAutorizarCompras = UpdItem.PuedeAutorizarCompras;
                     registrado.LimiteAutorizacion = UpdItem.LimiteAutorizacion;

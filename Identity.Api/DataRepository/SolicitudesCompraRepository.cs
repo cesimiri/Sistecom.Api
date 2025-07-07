@@ -216,9 +216,12 @@ namespace Identity.Api.DataRepository
                     IdDepartamento = s.IdDepartamento,
                     IdUsuarioSolicita = s.IdUsuarioSolicita,
                     IdUsuarioAutoriza = s.IdUsuarioAutoriza,
+                    IdUsuarioDestino = s.IdUsuarioDestino,
                     FechaSolicitud = s.FechaSolicitud,
                     FechaAprobacion = s.FechaAprobacion,
-                    //FechaRequerida = s.FechaRequerida,
+                    FechaRequerida = s.FechaRequerida.HasValue
+                     ? s.FechaRequerida.Value.ToDateTime(TimeOnly.MinValue)
+                        : DateTime.MinValue, // o cualquier valor por defecto que tú decidas
                     SubtotalSinImpuestos = s.SubtotalSinImpuestos,
                     DescuentoTotal = s.DescuentoTotal,
                     Iva = s.Iva,
@@ -328,6 +331,7 @@ namespace Identity.Api.DataRepository
                     solicitud.IdDepartamento = updatedSolicitud.IdDepartamento;
                     solicitud.IdUsuarioSolicita = updatedSolicitud.IdUsuarioSolicita;
                     solicitud.IdUsuarioAutoriza = updatedSolicitud.IdUsuarioAutoriza;
+                    solicitud.IdUsuarioDestino = updatedSolicitud.IdUsuarioDestino;
                     solicitud.FechaSolicitud = updatedSolicitud.FechaSolicitud;
                     solicitud.FechaAprobacion = updatedSolicitud.FechaAprobacion;
                     solicitud.FechaRequerida = updatedSolicitud.FechaRequerida == DateTime.MinValue? null
@@ -419,6 +423,7 @@ namespace Identity.Api.DataRepository
                     IdDepartamento = s.IdDepartamento,
                     IdUsuarioSolicita = s.IdUsuarioSolicita,
                     IdUsuarioAutoriza = s.IdUsuarioAutoriza,
+                    IdUsuarioDestino = s.IdUsuarioDestino,
                     FechaSolicitud = s.FechaSolicitud,
                     FechaAprobacion = s.FechaAprobacion,
                     FechaRequerida = s.FechaRequerida.HasValue

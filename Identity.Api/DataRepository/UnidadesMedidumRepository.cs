@@ -55,8 +55,8 @@ namespace Identity.Api.DataRepository
                 {
 
                     Codigo = NuevoCodigoPrincipal,
-                    Nombre = dto.Nombre,
-                    Descripcion = dto.Descripcion,
+                    Nombre = dto.Nombre?.ToUpper(),
+                    Descripcion = dto.Descripcion?.ToUpper(),
                     PermiteDecimales = dto.PermiteDecimales,
                     EsUnidadBase = dto.EsUnidadBase,
                     FactorConversion = dto.FactorConversion,
@@ -87,8 +87,8 @@ namespace Identity.Api.DataRepository
                 {
                     existente.IdUnidadMedida = dto.IdUnidadMedida;
                     existente.Codigo = dto.Codigo;
-                    existente.Nombre = dto.Nombre;
-                    existente.Descripcion = dto.Descripcion;
+                    existente.Nombre = dto.Nombre?.ToUpper();
+                    existente.Descripcion = dto.Descripcion?.ToUpper();
                     existente.PermiteDecimales = dto.PermiteDecimales;
                     existente.EsUnidadBase = dto.EsUnidadBase;
                     existente.FactorConversion = dto.FactorConversion;

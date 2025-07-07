@@ -1,6 +1,7 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
+using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -128,6 +129,13 @@ namespace Identity.Api.Controllers
             {
                 return BadRequest(new { error = ex.Message });
             }
+        }
+
+        [HttpGet("GetUsuarioCargo1")]
+        public ActionResult<IEnumerable<UsuarioDTO>> GetUsuarioCargo1()
+        {
+            var usuarios = _suscripcioneService.GetUsuarioCargo1();
+            return Ok(usuarios);
         }
     }
 }

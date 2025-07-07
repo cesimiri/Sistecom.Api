@@ -103,7 +103,7 @@ namespace Identity.Api.DataRepository
                     CantidadUsuarios = dto.CantidadUsuarios,
                     CostoLicencia = dto.CostoLicencia,
                     RenovacionAutomatica = dto.RenovacionAutomatica,
-                    Observaciones = dto.Observaciones,
+                    Observaciones = dto.Observaciones?.ToUpper(),
                     Estado = dto.Estado,
 
 
@@ -139,7 +139,7 @@ namespace Identity.Api.DataRepository
                     existente.CantidadUsuarios = licenciaActualizada.CantidadUsuarios;
                     existente.CostoLicencia = licenciaActualizada.CostoLicencia;
                     existente.RenovacionAutomatica = licenciaActualizada.RenovacionAutomatica;
-                    existente.Observaciones = licenciaActualizada.Observaciones;
+                    existente.Observaciones = licenciaActualizada.Observaciones?.ToUpper();
                     existente.Estado = licenciaActualizada.Estado;
                     existente.FechaRegistro = licenciaActualizada.FechaRegistro;
 

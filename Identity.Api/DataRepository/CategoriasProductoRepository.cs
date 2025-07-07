@@ -2,6 +2,7 @@
 using Identity.Api.Paginado;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Identity.Api.DataRepository
 {
@@ -28,10 +29,20 @@ namespace Identity.Api.DataRepository
         {
             using (var context = new InvensisContext())
             {
-                context.CategoriasProductos.Add(NewItem);
+                var nuevo = new CategoriasProducto
+                {
+                    Nombre = NewItem.Nombre?.ToUpper(),
+                    Descripcion = NewItem.Descripcion?.ToUpper(),
+                    RequiereSerial = NewItem.RequiereSerial,
+                    VidaUtilMeses = NewItem.VidaUtilMeses,
+                    Estado = NewItem.Estado,
+                };
+                context.CategoriasProductos.Add(nuevo);
                 context.SaveChanges();
             }
+           
         }
+        
 
         public void UpdateCategoriasProducto(CategoriasProducto UpdItem)
         {
@@ -43,8 +54,8 @@ namespace Identity.Api.DataRepository
 
                 if (registrado != null)
                 {
-                    registrado.Nombre = UpdItem.Nombre;
-                    registrado.Descripcion = UpdItem.Descripcion;
+                    registrado.Nombre = UpdItem.Nombre?.ToUpper();
+                    registrado.Descripcion = UpdItem.Descripcion?.ToUpper();
                     registrado.RequiereSerial = UpdItem.RequiereSerial;
                     registrado.VidaUtilMeses = UpdItem.VidaUtilMeses;
                     registrado.Estado = UpdItem.Estado;

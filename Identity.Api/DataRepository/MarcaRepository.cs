@@ -53,9 +53,9 @@ namespace Identity.Api.DataRepository
                 {
 
                     Codigo = NuevoCodigoPrincipal,
-                    Nombre = NewItem.Nombre,
-                    Descripcion = NewItem.Descripcion,
-                    PaisOrigen = NewItem.PaisOrigen,
+                    Nombre = NewItem.Nombre?.ToUpper(),
+                    Descripcion = NewItem.Descripcion?.ToUpper(),
+                    PaisOrigen = NewItem.PaisOrigen?.ToUpper(),
                     SitioWeb = NewItem.SitioWeb,
                     LogoUrl = NewItem.LogoUrl,
                     EsMarcaPropia = NewItem.EsMarcaPropia,
@@ -84,9 +84,9 @@ namespace Identity.Api.DataRepository
                 if (registrado != null)
                 {
                     registrado.Codigo = UpdItem.Codigo;
-                    registrado.Nombre = UpdItem.Nombre;
-                    registrado.Descripcion = UpdItem.Descripcion;
-                    registrado.PaisOrigen = UpdItem.PaisOrigen;
+                    registrado.Nombre = UpdItem.Nombre?.ToUpper();
+                    registrado.Descripcion = UpdItem.Descripcion?.ToUpper();
+                    registrado.PaisOrigen = UpdItem.PaisOrigen?.ToUpper();
                     registrado.SitioWeb = UpdItem.SitioWeb;
                     registrado.LogoUrl = UpdItem.LogoUrl;
                     registrado.EsMarcaPropia = UpdItem.EsMarcaPropia;

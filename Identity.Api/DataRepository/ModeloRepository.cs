@@ -29,8 +29,8 @@ namespace Identity.Api.DataRepository
                     Descontinuado = s.Descontinuado,
                     // covertir de dateonly a datetime 
                     FechaDescontinuacion = s.FechaDescontinuacion.HasValue
-    ? s.FechaDescontinuacion.Value.ToDateTime(TimeOnly.MinValue)
-    : null,
+                    ? s.FechaDescontinuacion.Value.ToDateTime(TimeOnly.MinValue)
+                    : null,
                     EspecificacionesGenerales = s.EspecificacionesGenerales,
                     ImagenUrl = s.ImagenUrl,
                     Estado = s.Estado,
@@ -115,15 +115,15 @@ namespace Identity.Api.DataRepository
                     IdModelo = dto.IdModelo,
                     IdMarca = dto.IdMarca,
                     Codigo = NuevoCodigoPrincipal,
-                    Nombre = dto.Nombre,
-                    Descripcion = dto.Descripcion,
+                    Nombre = dto.Nombre?.ToUpper(),
+                    Descripcion = dto.Descripcion?.ToUpper(),
                     AñoLanzamiento = dto.AñoLanzamiento,
                     Descontinuado = dto.Descontinuado,
                     //covertir de datetime a dateonly 
                     FechaDescontinuacion = dto.FechaDescontinuacion.HasValue
                 ? DateOnly.FromDateTime(dto.FechaDescontinuacion.Value)
                 : null,
-                    EspecificacionesGenerales = dto.EspecificacionesGenerales,
+                    EspecificacionesGenerales = dto.EspecificacionesGenerales?.ToUpper(),
                     ImagenUrl = dto.ImagenUrl,      
                     Estado = dto.Estado,
 
@@ -150,15 +150,14 @@ namespace Identity.Api.DataRepository
                 {
                     existente.IdMarca = updItem.IdMarca;
                     existente.Codigo = updItem.Codigo;
-                    existente.Descripcion = updItem.Descripcion;
-                    existente.Nombre = updItem.Nombre;
-                    existente.Descripcion = updItem.Descripcion;
+                    existente.Descripcion = updItem.Descripcion?.ToUpper();
+                    existente.Nombre = updItem.Nombre?.ToUpper();
                     existente.AñoLanzamiento = updItem.AñoLanzamiento;
                     existente.Descontinuado = updItem.Descontinuado;
                     //covertir de datetime a dateonly 
                     existente.FechaDescontinuacion = updItem.FechaDescontinuacion.HasValue
                     ? DateOnly.FromDateTime(updItem.FechaDescontinuacion.Value): null;
-                    existente.EspecificacionesGenerales = updItem.EspecificacionesGenerales;
+                    existente.EspecificacionesGenerales = updItem.EspecificacionesGenerales?.ToUpper();
                     existente.ImagenUrl = updItem.ImagenUrl;
                     existente.Estado = updItem.Estado;
                     context.SaveChanges();

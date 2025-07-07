@@ -27,6 +27,16 @@ namespace identity.api.datarepository
         {
             using (var context = new InvensisContext())
             {
+                var nuevo = new TiposLicencium
+                {
+                    Nombre = newActivo.Nombre.ToUpper(),
+                    Fabricante = newActivo.Fabricante.ToUpper(),
+                    Categoria = newActivo.Categoria,
+                    TipoLicenciamiento = newActivo.TipoLicenciamiento,
+                    PermiteMultipleUso = newActivo.PermiteMultipleUso,
+                    Descripcion = newActivo.Descripcion?.ToUpper(),
+                    Estado = newActivo.Estado,
+                };
                 context.TiposLicencia.Add(newActivo);
                 context.SaveChanges();
             }
@@ -40,12 +50,12 @@ namespace identity.api.datarepository
                 var existente = context.TiposLicencia.FirstOrDefault(a => a.IdTipoLicencia == tipoActualizado.IdTipoLicencia);
                 if (existente != null)
                 {
-                    existente.Nombre = tipoActualizado.Nombre;
-                    existente.Fabricante = tipoActualizado.Fabricante;
+                    existente.Nombre = tipoActualizado.Nombre.ToUpper();
+                    existente.Fabricante = tipoActualizado.Fabricante.ToUpper();
                     existente.Categoria = tipoActualizado.Categoria;
                     existente.TipoLicenciamiento = tipoActualizado.TipoLicenciamiento;
                     existente.PermiteMultipleUso = tipoActualizado.PermiteMultipleUso;
-                    existente.Descripcion = tipoActualizado.Descripcion;
+                    existente.Descripcion = tipoActualizado.Descripcion.ToUpper();
                     existente.Estado = tipoActualizado.Estado;
 
                     context.SaveChanges();

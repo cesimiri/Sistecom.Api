@@ -57,10 +57,10 @@ namespace Identity.Api.DataRepository
                 {
 
                     Codigo = NuevoCodigoBodega,
-                    Nombre = NewItem.Nombre,
-                    Direccion = NewItem.Direccion,
+                    Nombre = NewItem.Nombre?.ToUpper(),
+                    Direccion = NewItem.Direccion?.ToUpper(),
                     Telefono = NewItem.Telefono,
-                    Responsable = NewItem.Responsable,
+                    Responsable = NewItem.Responsable?.ToUpper(),
                     Tipo = NewItem.Tipo,
                     PermiteVentas = NewItem.PermiteVentas,
                     PermiteEnsamblaje = NewItem.PermiteEnsamblaje,
@@ -88,10 +88,10 @@ namespace Identity.Api.DataRepository
                 if (registrado != null)
                 {
                     registrado.Codigo = UpdItem.Codigo;
-                    registrado.Nombre = UpdItem.Nombre;
-                    registrado.Direccion = UpdItem.Direccion;
+                    registrado.Nombre = UpdItem.Nombre?.ToUpper();
+                    registrado.Direccion = UpdItem.Direccion?.ToUpper();
                     registrado.Telefono = UpdItem.Telefono;
-                    registrado.Responsable = UpdItem.Responsable;
+                    registrado.Responsable = UpdItem.Responsable?.ToUpper();
                     registrado.Tipo = UpdItem.Tipo;
                     registrado.PermiteVentas = UpdItem.PermiteVentas;
                     registrado.PermiteEnsamblaje = UpdItem.PermiteEnsamblaje;

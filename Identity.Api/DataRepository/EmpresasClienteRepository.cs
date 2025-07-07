@@ -28,11 +28,36 @@ namespace Identity.Api.DataRepository
            
         }
 
+        //public void InsertEmpresaCliente(EmpresasCliente NewItem)
+        //{
+        //    using (var context = new InvensisContext())
+        //    {
+        //        context.EmpresasClientes.Add(NewItem);
+        //        context.SaveChanges();
+        //    }
+        //}
         public void InsertEmpresaCliente(EmpresasCliente NewItem)
         {
             using (var context = new InvensisContext())
             {
-                context.EmpresasClientes.Add(NewItem);
+                var nuevo = new EmpresasCliente
+                {
+                    Ruc = NewItem.Ruc, // asumimos que el RUC debe mantenerse como fue ingresado
+                    RazonSocial = NewItem.RazonSocial?.ToUpper(),
+                    NombreComercial = NewItem.NombreComercial?.ToUpper(),
+                    DireccionMatriz = NewItem.DireccionMatriz?.ToUpper(),
+                    Ciudad = NewItem.Ciudad?.ToUpper(),
+                    Telefono = NewItem.Telefono,
+                    Email = NewItem.Email,
+                    ContactoPrincipal = NewItem.ContactoPrincipal?.ToUpper(),
+                    TelefonoContacto = NewItem.TelefonoContacto,
+                    TipoCliente = NewItem.TipoCliente,
+                    LimiteCredito = NewItem.LimiteCredito,
+                    DiasCredito = NewItem.DiasCredito,
+                    Estado = NewItem.Estado
+                };
+
+                context.EmpresasClientes.Add(nuevo);
                 context.SaveChanges();
             }
         }
@@ -47,13 +72,13 @@ namespace Identity.Api.DataRepository
 
                 if (registrado != null)
                 {
-                    registrado.RazonSocial = UpdItem.RazonSocial;
-                    registrado.NombreComercial = UpdItem.NombreComercial;
-                    registrado.DireccionMatriz = UpdItem.DireccionMatriz;
-                    registrado.Ciudad = UpdItem.Ciudad;
+                    registrado.RazonSocial = UpdItem.RazonSocial?.ToUpper();
+                    registrado.NombreComercial = UpdItem.NombreComercial?.ToUpper();
+                    registrado.DireccionMatriz = UpdItem.DireccionMatriz?.ToUpper();
+                    registrado.Ciudad = UpdItem.Ciudad?.ToUpper();
                     registrado.Telefono = UpdItem.Telefono;
                     registrado.Email = UpdItem.Email;
-                    registrado.ContactoPrincipal = UpdItem.ContactoPrincipal;
+                    registrado.ContactoPrincipal = UpdItem.ContactoPrincipal?.ToUpper();
                     registrado.TelefonoContacto = UpdItem.TelefonoContacto;
                     registrado.TipoCliente = UpdItem.TipoCliente;
                     registrado.LimiteCredito = UpdItem.LimiteCredito;

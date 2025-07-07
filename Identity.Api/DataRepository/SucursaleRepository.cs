@@ -80,13 +80,13 @@ namespace Identity.Api.DataRepository
                 {
                     
                     RucEmpresa = dto.RucEmpresa,
-                    CodigoSucursal = dto.CodigoSucursal,
-                    NombreSucursal = dto.NombreSucursal,
-                    Direccion = dto.Direccion,
-                    Ciudad = dto.Ciudad,
+                    CodigoSucursal = dto.CodigoSucursal?.ToUpper(),
+                    NombreSucursal = dto.NombreSucursal?.ToUpper(),
+                    Direccion = dto.Direccion?.ToUpper(),
+                    Ciudad = dto.Ciudad?.ToUpper(),
                     Telefono = dto.Telefono,
                     Email = dto.Email,
-                    Responsable = dto.Responsable,
+                    Responsable = dto.Responsable?.ToUpper(),
                     TelefonoResponsable = dto.TelefonoResponsable,
                     EsMatriz = dto.EsMatriz,
                     Estado = dto.Estado,
@@ -114,11 +114,11 @@ namespace Identity.Api.DataRepository
             {
                 
                 suscripcion.RucEmpresa = dto.RucEmpresa;
-                suscripcion.CodigoSucursal = dto.CodigoSucursal;
-                suscripcion.NombreSucursal = dto.NombreSucursal;
+                suscripcion.CodigoSucursal = dto.CodigoSucursal?.ToUpper();
+                suscripcion.NombreSucursal = dto.NombreSucursal?.ToUpper();
                 //conversion de DATETIME a DATEONLY
-                suscripcion.Direccion = dto.Direccion;
-                suscripcion.Ciudad =dto.Ciudad;
+                suscripcion.Direccion = dto.Direccion?.ToUpper();
+                suscripcion.Ciudad =dto.Ciudad?.ToUpper();
                 suscripcion.Telefono = dto.Telefono;
                 suscripcion.Email = dto.Email;
                 suscripcion.Responsable = dto.Responsable;

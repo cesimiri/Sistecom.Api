@@ -46,5 +46,11 @@ namespace Identity.Api.Services
         {
             return _dataRepository.GetSuscripcionPaginados(pagina, pageSize, filtro, estado);
         }
+
+        //usario de cargo 1 it 
+        public IEnumerable<UsuarioDTO> GetUsuarioCargo1()
+        {
+            return _dataRepository.GetUsuarioCargo1();
+        }
     }
 }

@@ -146,8 +146,8 @@ namespace identity.api.datarepository
                     IdDepartamento = dto.IdDepartamento,
                     IdCargo = dto.IdCargo,
                     Cedula = dto.Cedula,
-                    Nombres = dto.Nombres,
-                    Apellidos = dto.Apellidos,
+                    Nombres = dto.Nombres?.ToUpper(),
+                    Apellidos = dto.Apellidos?.ToUpper(),
                     Email = dto.Email,
                     Telefono = dto.Telefono,
                     Extension = dto.Extension,
@@ -180,8 +180,8 @@ namespace identity.api.datarepository
                 usuario.IdDepartamento = dto.IdDepartamento;
                 usuario.IdCargo = dto.IdCargo;
                 usuario.Cedula = dto.Cedula;
-                usuario.Nombres = dto.Nombres;
-                usuario.Apellidos = dto.Apellidos;
+                usuario.Nombres = dto.Nombres?.ToUpper();
+                usuario.Apellidos = dto.Apellidos?.ToUpper();
                 usuario.Email = dto.Email;
                 usuario.Telefono = dto.Telefono;
                 usuario.Extension = dto.Extension;

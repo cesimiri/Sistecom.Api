@@ -16,5 +16,8 @@ namespace Identity.Api.Interfaces
 
         // Nuevo método para paginado:
         PagedResult<SuscripcionDto> GetSuscripcionPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
+
+        //traer solo los usuarios de cargo IT 
+        IEnumerable<UsuarioDTO> GetUsuarioCargo1();
     }
 }

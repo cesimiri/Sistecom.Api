@@ -1,4 +1,5 @@
 ﻿using Identity.Api.DTO;
+using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
@@ -30,7 +31,23 @@ namespace Identity.Api.DataRepository
         // Insertar un nuevo proveedor
         public void InsertProveedor(Proveedore newProveedor)
         {
-            _context.Proveedores.Add(newProveedor);
+            var nuevo = new Proveedore
+            {
+                
+                Ruc = newProveedor.Ruc,
+                RazonSocial = newProveedor.RazonSocial?.ToUpper(),
+                NombreComercial = newProveedor.NombreComercial?.ToUpper(),
+                DireccionMatriz = newProveedor.DireccionMatriz?.ToUpper(),
+                Telefono = newProveedor.Telefono,
+                CorreoElectronico = newProveedor.CorreoElectronico,
+                ObligadoContabilidad = newProveedor.ObligadoContabilidad,
+                ContribuyenteEspecial = newProveedor.ContribuyenteEspecial,
+                AgenteRetencion = newProveedor.AgenteRetencion,
+                Estado = newProveedor.Estado,
+                
+
+            };
+            _context.Proveedores.Add(nuevo);
             _context.SaveChanges();
         }
 
@@ -43,9 +60,9 @@ namespace Identity.Api.DataRepository
             if (proveedor != null)
             {
                 proveedor.Ruc = updatedProveedor.Ruc;
-                proveedor.RazonSocial = updatedProveedor.RazonSocial;
-                proveedor.NombreComercial = updatedProveedor.NombreComercial;
-                proveedor.DireccionMatriz = updatedProveedor.DireccionMatriz;
+                proveedor.RazonSocial = updatedProveedor.RazonSocial?.ToUpper();
+                proveedor.NombreComercial = updatedProveedor.NombreComercial?.ToUpper();
+                proveedor.DireccionMatriz = updatedProveedor.DireccionMatriz?.ToUpper();
                 proveedor.Telefono = updatedProveedor.Telefono;
                 proveedor.CorreoElectronico = updatedProveedor.CorreoElectronico;
                 proveedor.ObligadoContabilidad = updatedProveedor.ObligadoContabilidad;

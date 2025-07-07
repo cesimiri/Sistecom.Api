@@ -102,9 +102,9 @@ namespace Identity.Api.DataRepository
                     IdDepartamento = dto.IdDepartamento,
                     IdSucursal = dto.IdSucursal,
                     CodigoDepartamento = nuevoCodigoDepartamento,
-                    NombreDepartamento = dto.NombreDepartamento,
-                    Descripcion = dto.Descripcion,
-                    Responsable = dto.Responsable,
+                    NombreDepartamento = dto.NombreDepartamento?.ToUpper(),
+                    Descripcion = dto.Descripcion?.ToUpper(),
+                    Responsable = dto.Responsable?.ToUpper(),
                     EmailDepartamento = dto.EmailDepartamento,
                     Extension = dto.Extension,
                     CentroCosto = dto.CentroCosto,
@@ -134,9 +134,9 @@ namespace Identity.Api.DataRepository
             {
                 departamento.IdSucursal = dto.IdSucursal;
                 departamento.CodigoDepartamento = dto.CodigoDepartamento;
-                departamento.NombreDepartamento = dto.NombreDepartamento;
-                departamento.Descripcion = dto.Descripcion;
-                departamento.Responsable = dto.Responsable;
+                departamento.NombreDepartamento = dto.NombreDepartamento?.ToUpper();
+                departamento.Descripcion = dto.Descripcion?.ToUpper();
+                departamento.Responsable = dto.Responsable?.ToUpper();
                 departamento.EmailDepartamento = dto.EmailDepartamento;
                 departamento.Extension = dto.Extension;
                 departamento.CentroCosto = dto.CentroCosto;
