@@ -1,10 +1,7 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Paginado;
-using Identity.Api.Persistence.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Identity.Api.DataRepository
 {
@@ -47,7 +44,7 @@ namespace Identity.Api.DataRepository
                     throw new Exception("Esa bodega o producto no existe en la base de datos.");
                 }
 
-               
+
 
                 var nueva = new StockBodega
                 {
@@ -58,7 +55,7 @@ namespace Identity.Api.DataRepository
                     CantidadReservada = item.CantidadReservada,
                     CantidadEnsamblaje = item.CantidadEnsamblaje,
                     ValorPromedio = item.ValorPromedio,
-                   
+
 
                 };
 
@@ -132,7 +129,7 @@ namespace Identity.Api.DataRepository
                 filtro = filtro.ToLower();
                 query = query.Where(u =>
                     u.IdBodegaNavigation.Nombre.ToLower().Contains(filtro) ||
-                    u.IdProductoNavigation.Nombre.ToLower().Contains(filtro) );
+                    u.IdProductoNavigation.Nombre.ToLower().Contains(filtro));
             }
 
             // Aplicar filtro por estado
@@ -176,5 +173,128 @@ namespace Identity.Api.DataRepository
                 PageSize = pageSize
             };
         }
+
+
+        //paginado por bodegga
+        public PagedResult<stockBodegaDTO> GetPaginadosPorBodega(int idBodega, int pagina, int pageSize, string? filtro = null)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.StockBodegas
+                .Where(sb => sb.IdBodega == idBodega)
+                .Include(sb => sb.IdBodegaNavigation)
+                .Include(sb => sb.IdProductoNavigation)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filtro))
+            {
+                // Usar EF.Functions.Like para un filtro más eficiente (SQL LIKE)
+                var filtroFormateado = $"%{filtro.Trim()}%";
+                query = query.Where(x => EF.Functions.Like(x.IdProductoNavigation.Nombre, filtroFormateado));
+            }
+
+            var totalItems = query.Count();
+
+            var items = query
+                .OrderBy(x => x.IdStock)
+                .Skip((pagina - 1) * pageSize)
+                .Take(pageSize)
+                .Select(sb => new stockBodegaDTO
+                {
+                    IdStock = sb.IdStock,
+                    IdBodega = sb.IdBodega,
+                    IdProducto = sb.IdProducto,
+                    NombreBodega = sb.IdBodegaNavigation.Nombre,
+                    NombreProducto = sb.IdProductoNavigation.Nombre,
+                    CantidadDisponible = sb.CantidadDisponible,
+                    CantidadReservada = sb.CantidadReservada,
+                    CantidadEnsamblaje = sb.CantidadEnsamblaje,
+                    ValorPromedio = sb.ValorPromedio,
+                    UltimaEntrada = sb.UltimaEntrada,
+                    UltimaSalida = sb.UltimaSalida,
+                    FechaActualizacion = sb.FechaActualizacion
+                })
+                .ToList();
+
+            return new PagedResult<stockBodegaDTO>
+            {
+                Items = items,
+                TotalItems = totalItems,
+                Page = pagina,
+                PageSize = pageSize
+            };
+        }
+
+
+        //actualizar stocks
+        public bool ProcesarMovimientoStock(List<MovimientosInventarioDTO> movimientos, out string error)
+        {
+            error = "";
+            try
+            {
+                using var context = new InvensisContext();
+
+                foreach (var movimiento in movimientos)
+                {
+                    var stock = context.StockBodegas
+                        .FirstOrDefault(s => s.IdBodega == movimiento.IdBodega && s.IdProducto == movimiento.IdProducto);
+
+                    if (stock == null)
+                    {
+                        stock = new StockBodega
+                        {
+                            IdBodega = movimiento.IdBodega,
+                            IdProducto = movimiento.IdProducto,
+                            CantidadDisponible = 0,
+                            FechaActualizacion = DateTime.Now
+                        };
+                        context.StockBodegas.Add(stock);
+                    }
+
+                    movimiento.StockAnterior = stock.CantidadDisponible;
+
+                    switch (movimiento.TipoMovimiento.ToUpper())
+                    {
+                        case "ENTRADA":
+                            stock.CantidadDisponible += movimiento.Cantidad;
+                            stock.UltimaEntrada = DateOnly.FromDateTime(movimiento.FechaMovimiento ?? DateTime.Now);
+                            break;
+
+                        case "SALIDA":
+                        case "TRANSFERENCIA":
+                            if (stock.CantidadDisponible < movimiento.Cantidad)
+                            {
+                                error = $"Stock insuficiente para el producto {movimiento.IdProducto}.";
+                                return false;
+                            }
+                            stock.CantidadDisponible -= movimiento.Cantidad;
+                            stock.UltimaSalida = DateOnly.FromDateTime(movimiento.FechaMovimiento ?? DateTime.Now);
+                            break;
+
+                        case "AJUSTE":
+                            stock.CantidadDisponible += movimiento.Cantidad;
+                            break;
+
+                        default:
+                            error = $"Tipo de movimiento '{movimiento.TipoMovimiento}' no reconocido.";
+                            return false;
+                    }
+
+                    movimiento.StockActual = stock.CantidadDisponible;
+                    stock.FechaActualizacion = DateTime.Now;
+                }
+
+                context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                error = "Error procesando el stock: " + ex.Message;
+                return false;
+            }
+        }
+
+
+
     }
 }

@@ -3,7 +3,6 @@ using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
 using Modelo.Sistecom.Modelo.Database;
-using System.Collections.Generic;
 
 namespace Identity.Api.Services
 {
@@ -45,6 +44,18 @@ namespace Identity.Api.Services
         public PagedResult<stockBodegaDTO> GetStockBodegaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
         {
             return _dataRepository.GetStockBodegaPaginados(pagina, pageSize, filtro, estado);
+        }
+
+        //paginado por bodega
+        public PagedResult<stockBodegaDTO> GetPaginadosPorBodega(int idBodega, int pagina, int pageSize, string? filtro = null)
+        {
+            return _dataRepository.GetPaginadosPorBodega(idBodega, pagina, pageSize, filtro);
+        }
+
+        //ingreso masivo: acepta lista de movimientos
+        public bool ProcesarMovimientoStock(List<MovimientosInventarioDTO> movimientos, out string error)
+        {
+            return _dataRepository.ProcesarMovimientoStock(movimientos, out error);
         }
     }
 }

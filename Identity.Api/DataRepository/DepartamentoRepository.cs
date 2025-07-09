@@ -105,7 +105,7 @@ namespace Identity.Api.DataRepository
                     NombreDepartamento = dto.NombreDepartamento?.ToUpper(),
                     Descripcion = dto.Descripcion?.ToUpper(),
                     Responsable = dto.Responsable?.ToUpper(),
-                    EmailDepartamento = dto.EmailDepartamento,
+                    EmailDepartamento = dto.EmailDepartamento?.Trim().ToLower(),
                     Extension = dto.Extension,
                     CentroCosto = dto.CentroCosto,
                     Estado = dto.Estado
@@ -137,7 +137,7 @@ namespace Identity.Api.DataRepository
                 departamento.NombreDepartamento = dto.NombreDepartamento?.ToUpper();
                 departamento.Descripcion = dto.Descripcion?.ToUpper();
                 departamento.Responsable = dto.Responsable?.ToUpper();
-                departamento.EmailDepartamento = dto.EmailDepartamento;
+                departamento.EmailDepartamento = dto.EmailDepartamento?.Trim().ToLower();
                 departamento.Extension = dto.Extension;
                 departamento.CentroCosto = dto.CentroCosto;
                 departamento.Estado = dto.Estado;
@@ -193,7 +193,10 @@ namespace Identity.Api.DataRepository
             {
                 filtro = filtro.ToLower();
                 query = query.Where(u =>
-                    u.NombreDepartamento.ToLower().Contains(filtro)
+                    u.NombreDepartamento.ToLower().Contains(filtro) ||
+                    u.IdSucursalNavigation.NombreSucursal.ToLower().Contains(filtro)
+
+
                 );
             }
 

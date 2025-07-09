@@ -1,7 +1,6 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Paginado;
 using Modelo.Sistecom.Modelo.Database;
-using System.Collections.Generic;
 
 namespace Identity.Api.Interfaces
 {
@@ -15,7 +14,14 @@ namespace Identity.Api.Interfaces
         void DeleteStockBodegaById(int idStock);
 
 
+
         // Nuevo método para paginado:
         PagedResult<stockBodegaDTO> GetStockBodegaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
+
+        //paginado
+        PagedResult<stockBodegaDTO> GetPaginadosPorBodega(int idBodega, int pagina, int pageSize, string? filtro = null);
+
+        //actualiza el stock de la bodega 
+        bool ProcesarMovimientoStock(List<MovimientosInventarioDTO> movimientos, out string error);
     }
 }

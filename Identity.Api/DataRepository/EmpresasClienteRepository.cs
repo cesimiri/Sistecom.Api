@@ -15,7 +15,9 @@ namespace Identity.Api.DataRepository
         {
             using (var context = new InvensisContext())
             {
-                return context.EmpresasClientes.ToList();
+                return context.EmpresasClientes
+                              .OrderBy(e => e.RazonSocial) // o el campo que corresponda
+                              .ToList();
             }
         }
 

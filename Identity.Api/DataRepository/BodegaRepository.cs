@@ -182,5 +182,69 @@ namespace Identity.Api.DataRepository
                 PageSize = pageSize
             };
         }
+
+        public List<UsuarioDTO> GetUsuarioSistecom()
+        {
+            using var context = new InvensisContext();
+
+            var lista = context.Usuarios
+            .Where(u => u.Estado == "ACTIVO"
+            && u.IdDepartamentoNavigation.IdSucursalNavigation.RucEmpresaNavigation.Ruc == "0990574766001")
+            .Select(u => new UsuarioDTO
+            {
+                IdUsuario = u.IdUsuario,
+                IdDepartamento = u.IdDepartamento,
+                IdCargo = u.IdCargo,
+                Cedula = u.Cedula,
+                Nombres = u.Nombres,
+                Apellidos = u.Apellidos,
+                Email = u.Email,
+                Telefono = u.Telefono,
+                Extension = u.Extension,
+                Estado = u.Estado,
+                RazonSocial = u.IdDepartamentoNavigation.IdSucursalNavigation.RucEmpresaNavigation.RazonSocial
+            })
+             .ToList();
+
+
+            return lista;
+        }
+
+        //bodegas por responsable
+        public List<BodegaDTO> GetBodegasPorResponsable(string correo)
+        {
+            using var context = new InvensisContext();
+
+            var usuario = context.Usuarios
+                .Where(u => u.Email == correo)
+                .Select(u => new { u.Nombres, u.Apellidos })
+                .FirstOrDefault();
+
+            if (usuario == null)
+            {
+                return new List<BodegaDTO>();
+            }
+
+            var nombreCompleto = (usuario.Nombres + " " + usuario.Apellidos).ToUpper();
+
+            var bodegas = context.Bodegas
+                .Where(b => b.Responsable == nombreCompleto)
+                .Select(b => new BodegaDTO
+                {
+                    IdBodega = b.IdBodega,
+                    Codigo = b.Codigo,
+                    Nombre = b.Nombre,
+                    Direccion = b.Direccion,
+                    Telefono = b.Telefono,
+                    Responsable = b.Responsable,
+                    Tipo = b.Tipo,
+                    PermiteVentas = b.PermiteVentas ?? false,
+                    PermiteEnsamblaje = b.PermiteEnsamblaje ?? false,
+                    Estado = b.Estado
+                })
+                .ToList();
+
+            return bodegas;
+        }
     }
 }

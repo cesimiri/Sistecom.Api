@@ -85,7 +85,7 @@ namespace Identity.Api.DataRepository
                     Direccion = dto.Direccion?.ToUpper(),
                     Ciudad = dto.Ciudad?.ToUpper(),
                     Telefono = dto.Telefono,
-                    Email = dto.Email,
+                    Email = dto.Email?.Trim().ToLower(),
                     Responsable = dto.Responsable?.ToUpper(),
                     TelefonoResponsable = dto.TelefonoResponsable,
                     EsMatriz = dto.EsMatriz,
@@ -120,7 +120,7 @@ namespace Identity.Api.DataRepository
                 suscripcion.Direccion = dto.Direccion?.ToUpper();
                 suscripcion.Ciudad =dto.Ciudad?.ToUpper();
                 suscripcion.Telefono = dto.Telefono;
-                suscripcion.Email = dto.Email;
+                suscripcion.Email = dto.Email?.Trim().ToLower();
                 suscripcion.Responsable = dto.Responsable;
                 suscripcion.TelefonoResponsable = dto.TelefonoResponsable;
                 suscripcion.EsMatriz = dto.EsMatriz;

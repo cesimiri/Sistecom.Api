@@ -39,7 +39,7 @@ namespace Identity.Api.DataRepository
                 NombreComercial = newProveedor.NombreComercial?.ToUpper(),
                 DireccionMatriz = newProveedor.DireccionMatriz?.ToUpper(),
                 Telefono = newProveedor.Telefono,
-                CorreoElectronico = newProveedor.CorreoElectronico,
+                CorreoElectronico = newProveedor.CorreoElectronico?.Trim().ToLower(),
                 ObligadoContabilidad = newProveedor.ObligadoContabilidad,
                 ContribuyenteEspecial = newProveedor.ContribuyenteEspecial,
                 AgenteRetencion = newProveedor.AgenteRetencion,
@@ -64,7 +64,7 @@ namespace Identity.Api.DataRepository
                 proveedor.NombreComercial = updatedProveedor.NombreComercial?.ToUpper();
                 proveedor.DireccionMatriz = updatedProveedor.DireccionMatriz?.ToUpper();
                 proveedor.Telefono = updatedProveedor.Telefono;
-                proveedor.CorreoElectronico = updatedProveedor.CorreoElectronico;
+                proveedor.CorreoElectronico = updatedProveedor.CorreoElectronico?.Trim().ToLower();
                 proveedor.ObligadoContabilidad = updatedProveedor.ObligadoContabilidad;
                 proveedor.ContribuyenteEspecial = updatedProveedor.ContribuyenteEspecial;
                 proveedor.AgenteRetencion = updatedProveedor.AgenteRetencion;

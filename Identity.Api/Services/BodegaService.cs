@@ -45,5 +45,17 @@ namespace Identity.Api.Services
         {
             return _dataRepository.GetBodegaPaginados(pagina, pageSize, filtro, estado);
         }
+
+        // usuario de sistecom
+        public IEnumerable<UsuarioDTO> GetUsuarioSistecom()
+        {
+            return _dataRepository.GetUsuarioSistecom();
+        }
+
+        // trae bodegas por responsable logueado 
+        public IEnumerable<BodegaDTO> GetBodegasPorResponsable(string correo)
+        {
+            return _dataRepository.GetBodegasPorResponsable(correo);
+        }
     }
 }

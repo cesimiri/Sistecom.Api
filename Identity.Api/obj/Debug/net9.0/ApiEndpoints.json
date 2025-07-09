@@ -416,6 +416,32 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.BodegaController",
+    "Method": "GetBodegasPorResponsable",
+    "RelativePath": "api/Bodega/GetBodegasPorResponsable/{correo}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "correo",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.BodegaController",
+    "Method": "GetUsuariosSistecom",
+    "RelativePath": "api/Bodega/GetUsuarioSistecom",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.BodegaController",
     "Method": "Create",
     "RelativePath": "api/Bodega/InsertBodega",
     "HttpMethod": "POST",
@@ -2961,6 +2987,37 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.StockBodegaController",
+    "Method": "GetPaginadosPorBodega",
+    "RelativePath": "api/StockBodega/GetPaginadosPorBodega",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idBodega",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

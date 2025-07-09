@@ -95,5 +95,31 @@ namespace Identity.Api.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
+
+        // paginado por bodega
+        [HttpGet("GetPaginadosPorBodega")]
+        public IActionResult GetPaginadosPorBodega(int idBodega, int pagina = 1, int pageSize = 8, string? filtro = null)
+        {
+            try
+            {
+                var resultado = _service.GetPaginadosPorBodega(idBodega, pagina, pageSize, filtro);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = "Error al obtener el stock por bodega", detalle = ex.Message });
+            }
+        }
+
+        //Actualizar stock
+        [HttpPost("ProcesarMovimientoStock")]
+        public IActionResult ProcesarMovimientoStock([FromBody] List<MovimientosInventarioDTO> movimientos)
+        {
+            if (!_service.ProcesarMovimientoStock(movimientos, out string error))
+                return BadRequest(new { mensaje = "No se pudo procesar el stock", detalle = error });
+
+            return Ok(new { mensaje = "Stock actualizado correctamente" });
+        }
+
     }
 }

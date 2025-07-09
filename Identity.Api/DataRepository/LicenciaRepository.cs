@@ -172,43 +172,6 @@ namespace Identity.Api.DataRepository
         }
 
 
-        //public List<FacturasCompraDTO> GetFacturasConCategoria6()
-        //{
-        //    using var context = new InvensisContext();
-
-        //    var facturas = context.FacturasCompras
-        //        .Include(f => f.IdProveedorNavigation)
-        //        .Include(f => f.IdBodegaNavigation)
-        //        .Include(f => f.DetalleFacturaCompras!)
-        //            .ThenInclude(d => d.IdProductoNavigation)
-        //        .Where(f => f.DetalleFacturaCompras!
-        //            .Any(d => d.IdProductoNavigation != null && d.IdProductoNavigation.IdCategoria == 6))
-        //        .Select(s => new FacturasCompraDTO
-        //        {
-        //            IdFactura = s.IdFactura,
-        //            NumeroFactura = s.NumeroFactura,
-        //            NumeroAutorizacion = s.NumeroAutorizacion,
-        //            ClaveAcceso = s.ClaveAcceso,
-        //            IdProveedor = s.IdProveedor,
-        //            IdBodega = s.IdBodega,
-        //            FechaEmision = s.FechaEmision,
-        //            SubtotalSinImpuestos = s.SubtotalSinImpuestos,
-        //            DescuentoTotal = s.DescuentoTotal,
-        //            Ice = s.Ice,
-        //            Iva = s.Iva,
-        //            ValorTotal = s.ValorTotal,
-        //            FormaPago = s.FormaPago,
-        //            Estado = s.Estado,
-        //            Observaciones = s.Observaciones,
-
-        //            // Datos relacionados
-        //            RazonSocial = s.IdProveedorNavigation.RazonSocial,
-        //            NombreBodega = s.IdBodegaNavigation.Nombre
-        //        })
-        //        .ToList();
-
-        //    return facturas;
-        //}
 
         public List<FacturasCompraDTO> GetFacturasConCategoria6()
         {

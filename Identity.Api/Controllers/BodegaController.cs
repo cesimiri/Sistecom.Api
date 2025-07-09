@@ -140,5 +140,38 @@ namespace Identity.Api.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
+
+        //USUARIOS SISTECOM
+        [HttpGet("GetUsuarioSistecom")]
+        public IActionResult GetUsuariosSistecom()
+        {
+            try
+            {
+                var usuarios = _bodega.GetUsuarioSistecom();
+                return Ok(usuarios);
+            }
+            catch (Exception ex)
+            {
+                // Para desarrollo, devuelve el detalle completo
+                return BadRequest(new { error = "Error en GetUsuarioSistecom", detalle = ex.ToString() });
+            }
+        }
+
+        //trae bodegas por usuario logueado (correo)
+        [HttpGet("GetBodegasPorResponsable/{correo}")]
+        public IActionResult GetBodegasPorResponsable(string correo)
+        {
+            try
+            {
+                var bodegas = _bodega.GetBodegasPorResponsable(correo);
+                return Ok(bodegas);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = "Error al obtener bodegas por responsable", detalle = ex.Message });
+            }
+        }
+
+
     }
 }

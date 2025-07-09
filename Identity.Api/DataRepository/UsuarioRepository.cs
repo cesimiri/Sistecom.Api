@@ -148,7 +148,7 @@ namespace identity.api.datarepository
                     Cedula = dto.Cedula,
                     Nombres = dto.Nombres?.ToUpper(),
                     Apellidos = dto.Apellidos?.ToUpper(),
-                    Email = dto.Email,
+                    Email = dto.Email?.Trim().ToLower(),
                     Telefono = dto.Telefono,
                     Extension = dto.Extension,
                     Estado = dto.Estado,
@@ -182,7 +182,7 @@ namespace identity.api.datarepository
                 usuario.Cedula = dto.Cedula;
                 usuario.Nombres = dto.Nombres?.ToUpper();
                 usuario.Apellidos = dto.Apellidos?.ToUpper();
-                usuario.Email = dto.Email;
+                usuario.Email = dto.Email?.Trim().ToLower();
                 usuario.Telefono = dto.Telefono;
                 usuario.Extension = dto.Extension;
                 usuario.Estado = dto.Estado;
@@ -231,54 +231,58 @@ namespace identity.api.datarepository
 
         }
 
-        //PAGINADA 
+
+
         public PagedResult<UsuarioDTO> GetUsuariosPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
         {
             using var context = new InvensisContext();
 
             var query = context.Usuarios
-                .Include(s => s.IdDepartamentoNavigation)
-                .Include(s => s.IdCargoNavigation)
+                .Include(u => u.IdDepartamentoNavigation)
+                    .ThenInclude(d => d.IdSucursalNavigation)
+                        .ThenInclude(s => s.RucEmpresaNavigation)
+                .Include(u => u.IdCargoNavigation)
                 .AsQueryable();
 
-            // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
+            // Aplicar filtro por texto
             if (!string.IsNullOrEmpty(filtro))
             {
                 filtro = filtro.ToLower();
                 query = query.Where(u =>
                     u.Cedula.ToLower().Contains(filtro) ||
                     u.Nombres.ToLower().Contains(filtro) ||
-                    u.Apellidos.ToLower().Contains(filtro));
+                    u.Apellidos.ToLower().Contains(filtro) ||
+                    u.Email.ToLower().Contains(filtro) ||
+                    u.IdDepartamentoNavigation.IdSucursalNavigation.RucEmpresaNavigation.RazonSocial.ToLower().Contains(filtro));
             }
 
-            // Aplicar filtro por estado
+            // Filtro por estado
             if (!string.IsNullOrEmpty(estado))
             {
                 query = query.Where(u => u.Estado == estado);
             }
 
-            // Total de registros filtrados
             var totalItems = query.Count();
 
-            // Obtener página solicitada con paginado
             var usuarios = query
-                .OrderBy(u => u.IdUsuario) // importante ordenar antes de Skip/Take
+                .OrderBy(u => u.IdUsuario)
                 .Skip((pagina - 1) * pageSize)
                 .Take(pageSize)
-                .Select(s => new UsuarioDTO
+                .Select(u => new UsuarioDTO
                 {
-                    IdUsuario = s.IdUsuario,
-                    IdDepartamento = s.IdDepartamento,
-                    IdCargo = s.IdCargo,
-                    Cedula = s.Cedula,
-                    Nombres = s.Nombres,
-                    Apellidos = s.Apellidos,
-                    Email = s.Email,
-                    Telefono = s.Telefono,
-                    Extension = s.Extension,
-                    Estado = s.Estado,
-                    NombreDepartamento = s.IdDepartamentoNavigation.NombreDepartamento,
-                    NombreCargo = s.IdCargoNavigation.NombreCargo
+                    IdUsuario = u.IdUsuario,
+                    IdDepartamento = u.IdDepartamento,
+                    IdCargo = u.IdCargo,
+                    Cedula = u.Cedula,
+                    Nombres = u.Nombres,
+                    Apellidos = u.Apellidos,
+                    Email = u.Email,
+                    Telefono = u.Telefono,
+                    Extension = u.Extension,
+                    Estado = u.Estado,
+                    NombreDepartamento = u.IdDepartamentoNavigation.NombreDepartamento,
+                    NombreCargo = u.IdCargoNavigation.NombreCargo,
+                    RazonSocial = u.IdDepartamentoNavigation.IdSucursalNavigation.RucEmpresaNavigation.RazonSocial
                 })
                 .ToList();
 
@@ -290,7 +294,6 @@ namespace identity.api.datarepository
                 PageSize = pageSize
             };
         }
-
 
     }
 }

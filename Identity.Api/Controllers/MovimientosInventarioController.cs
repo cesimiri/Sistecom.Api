@@ -1,5 +1,5 @@
-﻿using Identity.Api.Interfaces;
-using Identity.Api.Services;
+﻿using Identity.Api.DTO;
+using Identity.Api.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,100 +22,152 @@ namespace Identity.Api.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("MovimientosInventarioInfoAll")]
-        public IActionResult GetAll()
-        {
-            return Ok(_bodega.MovimientosInventarioInfoAll);
-        }
+        //[HttpGet("MovimientosInventarioInfoAll")]
+        //public IActionResult GetAll()
+        //{
+        //    return Ok(_bodega.MovimientosInventarioInfoAll);
+        //}
 
 
-        [HttpGet("GetMovimientosInventarioById/{idMovimientosInventario}")]
-        public IActionResult GetMovimientosInventarioById(int idMovimientosInventario)
-        {
+        //[HttpGet("GetMovimientosInventarioById/{idMovimientosInventario}")]
+        //public IActionResult GetMovimientosInventarioById(int idMovimientosInventario)
+        //{
 
-            var bodega = _bodega.GetMovimientosInventarioById(idMovimientosInventario);
+        //    var bodega = _bodega.GetMovimientosInventarioById(idMovimientosInventario);
 
-            if (bodega == null)
-            {
-                return NotFound($"No existe esa Asignaciones Activo con el ID: {idMovimientosInventario} no encontrado.");
-            }
+        //    if (bodega == null)
+        //    {
+        //        return NotFound($"No existe esa Asignaciones Activo con el ID: {idMovimientosInventario} no encontrado.");
+        //    }
 
-            return Ok(bodega);
-        }
+        //    return Ok(bodega);
+        //}
 
-        [HttpPost("InsertMovimientosInventario")]
-        public IActionResult Create([FromBody] MovimientosInventario NewItem)
+        //[HttpPost("InsertMovimientosInventario")]
+        //public IActionResult Create([FromBody] MovimientosInventario NewItem)
+        //{
+        //    try
+        //    {
+        //        if (NewItem == null || !ModelState.IsValid)
+        //        {
+        //            return BadRequest("Error: Envio de datos");
+        //        }
+
+        //        _bodega.InsertMovimientosInventario(NewItem);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest("Error:" + ex.Message);
+        //    }
+
+        //    return Ok(NewItem);
+        //}
+
+        //[HttpPut("UpdateMovimientosInventario")]
+        //public IActionResult Update([FromBody] MovimientosInventario UpdItem)
+        //{
+        //    try
+        //    {
+        //        if (UpdItem == null || !ModelState.IsValid)
+        //        {
+        //            return BadRequest("Error: Envio de datos");
+        //        }
+
+        //        _bodega.UpdateMovimientosInventario(UpdItem);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest("Error:" + ex.Message);
+        //    }
+
+        //    return NoContent();
+        //}
+
+        //[HttpDelete("DeleteMovimientosInventario")]
+        //public IActionResult Delete([FromBody] MovimientosInventario DelItem)
+        //{
+        //    try
+        //    {
+        //        if (DelItem == null || !ModelState.IsValid)
+        //        {
+        //            return BadRequest("Error: Envio de datos");
+        //        }
+
+        //        _bodega.DeleteMovimientosInventario(DelItem);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest("Error:" + ex.Message);
+        //    }
+
+        //    return NoContent();
+        //}
+
+        //[HttpDelete("DeleteMovimientosInventarioById/{IdMovimientosInventario}")]
+        //public IActionResult DeleteMovimientosInventarioById(int IdMovimientosInventario)
+        //{
+        //    try
+        //    {
+        //        _bodega.DeleteMovimientosInventarioById(IdMovimientosInventario);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest("Error:" + ex.Message);
+        //    }
+
+        //    return NoContent();
+        //}
+
+
+
+        ///----------------//////////////////////-------------------------////////////////--------------//
+        [HttpPost("RegistrarMovimientos")]
+        public IActionResult Registrar([FromBody] List<MovimientosInventarioDTO> movimientos)
         {
             try
             {
-                if (NewItem == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Error: Envio de datos");
-                }
+                var exito = _bodega.RegistrarMovimientos(movimientos, out string error);
 
-                _bodega.InsertMovimientosInventario(NewItem);
+                if (!exito)
+                    return BadRequest(new { error });
+
+                return Ok(new { mensaje = "Movimientos registrados correctamente." });
             }
             catch (Exception ex)
             {
-                return BadRequest("Error:" + ex.Message);
+                return BadRequest(new { error = ex.Message });
             }
-
-            return Ok(NewItem);
         }
 
-        [HttpPut("UpdateMovimientosInventario")]
-        public IActionResult Update([FromBody] MovimientosInventario UpdItem)
+
+
+
+
+
+
+        [HttpGet("ObtenerPorId/{id}")]
+        public ActionResult<MovimientosInventario> ObtenerPorId(int id)
         {
-            try
-            {
-                if (UpdItem == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Error: Envio de datos");
-                }
+            var movimiento = _bodega.ObtenerPorId(id);
+            if (movimiento == null)
+                return NotFound($"No se encontró movimiento con ID {id}");
 
-                _bodega.UpdateMovimientosInventario(UpdItem);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Error:" + ex.Message);
-            }
-
-            return NoContent();
+            return Ok(movimiento);
         }
 
-        [HttpDelete("DeleteMovimientosInventario")]
-        public IActionResult Delete([FromBody] MovimientosInventario DelItem)
+        //lista paginada de movimientos de inventario, con filtro por nombre del producto, tipo de movimiento, bodega y rango de fechas.
+        [HttpGet("GetPaginados")]
+        public IActionResult GetPaginados(
+            int pagina = 1,
+            int pageSize = 10,
+            string? tipoMovimiento = null,
+            int? idBodega = null,
+            string? nombreProducto = null,
+            DateTime? desde = null,
+            DateTime? hasta = null)
         {
-            try
-            {
-                if (DelItem == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Error: Envio de datos");
-                }
-
-                _bodega.DeleteMovimientosInventario(DelItem);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Error:" + ex.Message);
-            }
-
-            return NoContent();
-        }
-
-        [HttpDelete("DeleteMovimientosInventarioById/{IdMovimientosInventario}")]
-        public IActionResult DeleteMovimientosInventarioById(int IdMovimientosInventario)
-        {
-            try
-            {
-                _bodega.DeleteMovimientosInventarioById(IdMovimientosInventario);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Error:" + ex.Message);
-            }
-
-            return NoContent();
+            var resultado = _bodega.GetPaginados(pagina, pageSize, tipoMovimiento, idBodega, nombreProducto, desde, hasta);
+            return Ok(resultado);
         }
     }
 }

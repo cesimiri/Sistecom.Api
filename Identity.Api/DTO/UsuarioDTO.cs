@@ -41,6 +41,7 @@ namespace Identity.Api.DTO
 
         public string? NombreCargo { get; set; }
 
+        public string? RazonSocial { get; set; }
 
 
     }
