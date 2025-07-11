@@ -4,10 +4,10 @@
     {
         public int IdStock { get; set; }
         public int IdBodega { get; set; }
-        public string NombreBodega { get; set; } = string.Empty;
+        //public string NombreBodega { get; set; } = string.Empty;
 
         public int IdProducto { get; set; }
-        public string NombreProducto { get; set; } = string.Empty;
+        //public string NombreProducto { get; set; } = string.Empty;
 
         public decimal CantidadDisponible { get; set; }
         public decimal? CantidadReservada { get; set; }

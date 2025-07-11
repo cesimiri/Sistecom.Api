@@ -6,17 +6,6 @@ namespace Identity.Api.Interfaces
 {
     public interface IMovimientosInventario
     {
-        // Nuevo método para paginado:
-        //PagedResult<MovimientosInventarioDTO> GetMovimientoInventarioPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
-        //IEnumerable<MovimientosInventario> MovimientosInventarioInfoAll { get; }
-        //MovimientosInventario GetMovimientosInventarioById(int IdMovimientosInventario);
-
-        ////ingreso masivo de items 
-        ////void InsertarMovimientoInventarioMasivo(List<MovimientosInventarioDTO> lista);
-        //void InsertMovimientosInventario(MovimientosInventario New);
-        //void UpdateMovimientosInventario(MovimientosInventario UpdItem);
-        //void DeleteMovimientosInventario(MovimientosInventario DelItem);
-        //void DeleteMovimientosInventarioById(int IdMovimientosInventario);
 
 
         // Registrar uno o varios movimientos de inventario a la vez (entradas, salidas, transferencias, ajustes). 
@@ -36,7 +25,21 @@ namespace Identity.Api.Interfaces
             DateTime? desde,
             DateTime? hasta);
 
-        ///en n futuri hacer un tipo resuemn 
+        //obtener las solicitudes de compras que aun no esten ingresadas
+        Task<List<SolicitudesCompraDTO>> ObtenerSolicitudesNoUsadasAsync();
+
+        //traer detalles de la solicitud de compra
+        Task<List<DetalleSolicitudDTO>> ObtenerDetalleSolicitudAsync(int idFactura);
+
+
+        //para traer las facturas que no esten en MovimientoInventario
+        Task<List<FacturasCompraDTO>> ObtenerFacturasNoUsadasAsync();
+
+        //obtiene todo los detalles del idFactura que se le pase 
+        Task<List<DetalleFacturaCompraDTO>> ObtenerDetalleFacturaAsync(int idFactura);
+
+
+        ///en n futuro hacer un tipo resuemen
         /*
          * 
          * "Quiero que me ayudes a crear un método en el backend que me devuelva un resumen estadístico de los movimientos de 

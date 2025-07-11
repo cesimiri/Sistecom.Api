@@ -10,47 +10,6 @@ namespace Identity.Api.Services
     {
         private MovimientosInventarioRepository _dataRepository = new MovimientosInventarioRepository();
 
-        //public IEnumerable<MovimientosInventario> MovimientosInventarioInfoAll
-        //{
-        //    get { return _dataRepository.MovimientosInventarioInfoAll(); }
-        //}
-
-        //public MovimientosInventario GetMovimientosInventarioById(int idMovimientosInventario)
-        //{
-        //    return _dataRepository.GetMovimientosInventarioById(idMovimientosInventario);
-        //}
-
-        //public void InsertMovimientosInventario(MovimientosInventario New)
-        //{
-        //    _dataRepository.InsertMovimientosInventario(New);
-        //}
-
-        ////ingreso masivo
-        ////public void InsertarMovimientoInventarioMasivo(List<MovimientosInventarioDTO> lista)
-        ////{
-        ////    _dataRepository.InsertarMovimientoInventarioMasivo(lista);
-        ////}
-
-        //public void UpdateMovimientosInventario(MovimientosInventario UpdItem)
-        //{
-        //    _dataRepository.UpdateMovimientosInventario(UpdItem);
-        //}
-
-        //public void DeleteMovimientosInventario(MovimientosInventario DelItem)
-        //{
-        //    _dataRepository.DeleteMovimientosInventario(DelItem);
-        //}
-
-        //public void DeleteMovimientosInventarioById(int idMovimientosInventario)
-        //{
-        //    _dataRepository.DeleteMovimientosInventarioById(idMovimientosInventario);
-        //}
-
-        //paginado
-        //public PagedResult<MovimientosInventarioDTO> GetMovimientoInventarioPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
-        //{
-        //    return _dataRepository.GetMovimientoInventarioPaginados(pagina, pageSize, filtro, estado);
-        //}
 
         //---/---/-/--/-/-/-/-/-/
         public bool RegistrarMovimientos(List<MovimientosInventarioDTO> movimientos, out string error)
@@ -78,6 +37,29 @@ namespace Identity.Api.Services
             return _dataRepository.GetPaginados(pagina, pageSize, tipoMovimiento, idBodega, nombreProducto, desde, hasta);
         }
 
+        //obtener las solicitudes de compras que aun no esten ingresadas
+        public Task<List<SolicitudesCompraDTO>> ObtenerSolicitudesNoUsadasAsync()
+        {
+            return _dataRepository.ObtenerSolicitudesNoUsadasAsync();
+        }
+
+        //trae todos los detalles de la idSolcitud que se le pase para ser mostrada en el lista
+        public Task<List<DetalleSolicitudDTO>> ObtenerDetalleSolicitudAsync(int idSolicitud)
+        {
+            return _dataRepository.ObtenerDetalleSolicitudAsync(idSolicitud);
+        }
+
+        //obtiene las facturas que no esten aun ingresadas
+        public Task<List<FacturasCompraDTO>> ObtenerFacturasNoUsadasAsync()
+        {
+            return _dataRepository.ObtenerFacturasNoUsadasAsync();
+        }
+
+        //trae todos los detalles de la idFctura que se le pase para ser mostrada en el lista
+        public Task<List<DetalleFacturaCompraDTO>> ObtenerDetalleFacturaAsync(int idFactura)
+        {
+            return _dataRepository.ObtenerDetalleFacturaAsync(idFactura);
+        }
 
     }
 }

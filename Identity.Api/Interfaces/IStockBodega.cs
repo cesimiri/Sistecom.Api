@@ -15,11 +15,11 @@ namespace Identity.Api.Interfaces
 
 
 
-        // Nuevo método para paginado:
-        PagedResult<stockBodegaDTO> GetStockBodegaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
+
 
         //paginado
         PagedResult<stockBodegaDTO> GetPaginadosPorBodega(int idBodega, int pagina, int pageSize, string? filtro = null);
+
 
         //actualiza el stock de la bodega 
         bool ProcesarMovimientoStock(List<MovimientosInventarioDTO> movimientos, out string error);

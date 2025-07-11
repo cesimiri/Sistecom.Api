@@ -7,147 +7,119 @@ namespace Identity.Api.DataRepository
 {
     public class MovimientosInventarioRepository
     {
-        //public List<MovimientosInventario> MovimientosInventarioInfoAll()
-        //{
-        //    using (var context = new InvensisContext())
-        //    {
-        //        return context.MovimientosInventarios.ToList();
-        //    }
-        //}
 
-        //public MovimientosInventario GetMovimientosInventarioById(int IdMovimientosInventario)
-        //{
-        //    using (var context = new InvensisContext())
-        //    {
-        //        return context.MovimientosInventarios.FirstOrDefault(m => m.IdMovimiento == IdMovimientosInventario);
-        //    }
-        //}
-
-        //public void InsertMovimientosInventario(MovimientosInventario nuevoMovimiento)
-        //{
-        //    using (var context = new InvensisContext())
-        //    {
-        //        context.MovimientosInventarios.Add(nuevoMovimiento);
-        //        context.SaveChanges();
-        //    }
-        //}
-
-        ////ingreso masivo
-        ////public void InsertarMovimientoInventarioMasivo(List<MovimientosInventarioDTO> lista)
-        ////{
-        ////    using var context = new InvensisContext();
-
-        ////    if (lista == null || lista.Count == 0)
-        ////        throw new Exception("La lista de productos está vacía.");
-
-        ////    int idFactura = lista[0].IdFactura; // ❗ Usa IdFactura, no IdDetalle
-
-        ////    foreach (var item in lista)
-        ////    {
-        ////        var facturaEntity = context.FacturasCompras.Find(item.IdFactura);
-        ////        var producto = context.Productos.Find(item.IdProducto);
-
-        ////        if (facturaEntity == null || producto == null)
-        ////        {
-        ////            throw new Exception("Error: Factura o Producto no válido.");
-        ////        }
-
-        ////        var nuevoDetalle = new MovimientosInventarioDTO
-        ////        {
-        ////            IdBodega = item.IdBodega,
-        ////            IdProducto = item.IdProducto,
-        ////            TipoMovimiento = item.TipoMovimiento,
-        ////            Origen = item.Origen,
-        ////            IdDocumentoOrigen = item.IdDocumentoOrigen,
-        ////            IdBodegaOrigen = item.IdBodegaOrigen,
-        ////            IdBodegaDestino = item.IdBodegaDestino,
-        ////            Cantidad = item.Cantidad,
-        ////            PrecioUnitario = item.PrecioUnitario,
-        ////            NumeroSerie = item.NumeroSerie,
-        ////            StockAnterior = item.StockAnterior,
-        ////            StockActual = item.StockActual,
-        ////            Observaciones = item.Observaciones,
-        ////            UsuarioRegistro = item.UsuarioRegistro,
-        ////            FechaMovimiento = item.FechaMovimiento,
-
-        ////        };
-
-
-        ////        context.MovimientosInventarios.Add(nuevoDetalle);
-        ////    }
-
-        ////    // Guardar los detalles nuevos primero
-        ////    context.SaveChanges();
-
-        ////}
-
-
-        //public void UpdateMovimientosInventario(MovimientosInventario movimientoActualizado)
-        //{
-        //    using (var context = new InvensisContext())
-        //    {
-        //        var existente = context.MovimientosInventarios.FirstOrDefault(a => a.IdMovimiento == movimientoActualizado.IdMovimiento);
-        //        if (existente != null)
-        //        {
-        //            existente.IdBodega = movimientoActualizado.IdBodega;
-        //            existente.IdProducto = movimientoActualizado.IdProducto;
-        //            existente.TipoMovimiento = movimientoActualizado.TipoMovimiento;
-        //            existente.Origen = movimientoActualizado.Origen;
-        //            existente.IdDocumentoOrigen = movimientoActualizado.IdDocumentoOrigen;
-        //            existente.IdBodegaOrigen = movimientoActualizado.IdBodegaOrigen;
-        //            existente.IdBodegaDestino = movimientoActualizado.IdBodegaDestino;
-        //            existente.Cantidad = movimientoActualizado.Cantidad;
-        //            existente.PrecioUnitario = movimientoActualizado.PrecioUnitario;
-        //            existente.NumeroSerie = movimientoActualizado.NumeroSerie;
-        //            existente.StockAnterior = movimientoActualizado.StockAnterior;
-        //            existente.StockActual = movimientoActualizado.StockActual;
-        //            existente.Observaciones = movimientoActualizado.Observaciones;
-        //            existente.UsuarioRegistro = movimientoActualizado.UsuarioRegistro;
-        //            existente.FechaMovimiento = movimientoActualizado.FechaMovimiento;
-
-        //            context.SaveChanges();
-        //        }
-        //    }
-        //}
-
-        //public void DeleteMovimientosInventario(MovimientosInventario activoToDelete)
-        //{
-        //    using (var context = new InvensisContext())
-        //    {
-        //        context.MovimientosInventarios.Remove(activoToDelete);
-        //        context.SaveChanges();
-        //    }
-        //}
-
-        //public void DeleteMovimientosInventarioById(int idMovimientosInventario)
-        //{
-        //    using (var context = new InvensisContext())
-        //    {
-        //        var existente = context.MovimientosInventarios.FirstOrDefault(a => a.IdMovimiento == idMovimientosInventario);
-        //        if (existente != null)
-        //        {
-        //            context.MovimientosInventarios.Remove(existente);
-        //            context.SaveChanges();
-        //        }
-        //    }
-        //}
 
         // ------------------ primero actualiza el stock de la bodega  luego registra el movimiento--------------------------------//
         public bool RegistrarMovimientos(List<MovimientosInventarioDTO> movimientos, out string error)
         {
             error = null;
 
+            var movimientosProcesados = new List<MovimientosInventarioDTO>();
+
+            foreach (var movimiento in movimientos)
+            {
+                var tipo = movimiento.TipoMovimiento?.ToUpperInvariant();
+                movimiento.FechaMovimiento ??= DateTime.Now;
+
+                switch (tipo)
+                {
+                    case "TRANSFERENCIA":
+                        if (movimiento.IdBodegaOrigen == null || movimiento.IdBodegaDestino == null)
+                        {
+                            error = "Para una transferencia, debe especificar la bodega origen y destino.";
+                            return false;
+                        }
+
+                        // SALIDA desde la bodega origen
+                        movimientosProcesados.Add(new MovimientosInventarioDTO
+                        {
+                            IdBodega = movimiento.IdBodegaOrigen.Value,
+                            IdProducto = movimiento.IdProducto,
+                            TipoMovimiento = "SALIDA",
+                            Cantidad = movimiento.Cantidad,
+                            PrecioUnitario = movimiento.PrecioUnitario,
+                            NumeroSerie = movimiento.NumeroSerie,
+                            Observaciones = movimiento.Observaciones,
+                            UsuarioRegistro = movimiento.UsuarioRegistro,
+                            FechaMovimiento = movimiento.FechaMovimiento.Value,
+                            Origen = "TRANSFERENCIA",
+                            IdDocumentoOrigen = movimiento.IdDocumentoOrigen,
+                            IdBodegaOrigen = movimiento.IdBodegaOrigen,
+                            IdBodegaDestino = movimiento.IdBodegaDestino
+                        });
+
+                        // ENTRADA hacia la bodega destino
+                        movimientosProcesados.Add(new MovimientosInventarioDTO
+                        {
+                            IdBodega = movimiento.IdBodegaDestino.Value,
+                            IdProducto = movimiento.IdProducto,
+                            TipoMovimiento = "ENTRADA",
+                            Cantidad = movimiento.Cantidad,
+                            PrecioUnitario = movimiento.PrecioUnitario,
+                            NumeroSerie = movimiento.NumeroSerie,
+                            Observaciones = movimiento.Observaciones,
+                            UsuarioRegistro = movimiento.UsuarioRegistro,
+                            FechaMovimiento = movimiento.FechaMovimiento.Value,
+                            Origen = "TRANSFERENCIA",
+                            IdDocumentoOrigen = movimiento.IdDocumentoOrigen,
+                            IdBodegaOrigen = movimiento.IdBodegaOrigen,
+                            IdBodegaDestino = movimiento.IdBodegaDestino
+                        });
+                        break;
+
+                    case "ENTRADA":
+                        if (movimiento.IdBodega == null || movimiento.IdBodega <= 0)
+                        {
+                            error = "Debe indicar la bodega de entrada (IdBodega).";
+                            return false;
+                        }
+                        if (movimiento.IdDocumentoOrigen == null)
+                        {
+                            error = "Debe indicar el documento origen para la entrada.";
+                            return false;
+                        }
+
+                        movimientosProcesados.Add(movimiento);
+                        break;
+
+                    case "SALIDA":
+                        if (movimiento.IdBodega == null || movimiento.IdBodega <= 0)
+                        {
+                            error = "Debe indicar la bodega de salida (IdBodega).";
+                            return false;
+                        }
+
+                        movimientosProcesados.Add(movimiento);
+                        break;
+
+                    case "AJUSTE":
+                        if (movimiento.IdBodega == null || movimiento.IdBodega <= 0)
+                        {
+                            error = "Debe indicar la bodega para el ajuste.";
+                            return false;
+                        }
+
+                        movimientosProcesados.Add(movimiento);
+                        break;
+
+                    default:
+                        error = "Tipo de movimiento no reconocido.";
+                        return false;
+                }
+            }
+
+            // Procesar stock según la lógica establecida
             var stockRepo = new StockBodegaDataRepository();
-            if (!stockRepo.ProcesarMovimientoStock(movimientos, out error))
+            if (!stockRepo.ProcesarMovimientoStock(movimientosProcesados, out error))
             {
                 return false;
             }
 
+            // Guardar en base de datos
             using var context = new InvensisContext();
-
-            foreach (var movimiento in movimientos)
+            foreach (var movimiento in movimientosProcesados)
             {
-                var entidad = new MovimientosInventario
+                context.MovimientosInventarios.Add(new MovimientosInventario
                 {
                     IdBodega = movimiento.IdBodega,
                     IdProducto = movimiento.IdProducto,
@@ -159,21 +131,17 @@ namespace Identity.Api.DataRepository
                     StockActual = movimiento.StockActual,
                     Observaciones = movimiento.Observaciones,
                     UsuarioRegistro = movimiento.UsuarioRegistro,
-                    FechaMovimiento = movimiento.FechaMovimiento ?? DateTime.Now,
+                    FechaMovimiento = movimiento.FechaMovimiento,
                     Origen = movimiento.Origen,
                     IdDocumentoOrigen = movimiento.IdDocumentoOrigen,
                     IdBodegaOrigen = movimiento.IdBodegaOrigen,
                     IdBodegaDestino = movimiento.IdBodegaDestino
-                };
-
-                context.MovimientosInventarios.Add(entidad);
+                });
             }
 
             context.SaveChanges();
-
             return true;
         }
-
 
 
 
@@ -184,15 +152,15 @@ namespace Identity.Api.DataRepository
             return context.MovimientosInventarios.FirstOrDefault(m => m.IdMovimiento == id);
         }
 
-        //paginado
+        //paginado que te busco por bodega, tipo de movimiento, nomnbre producto, fechas 
         public PagedResult<MovimientosInventarioDTO> GetPaginados(
-    int pagina,
-    int pageSize,
-    string? tipoMovimiento,
-    int? idBodega,
-    string? nombreProducto,
-    DateTime? desde,
-    DateTime? hasta)
+                int pagina,
+                int pageSize,
+                string? tipoMovimiento,
+                int? idBodega,
+                string? nombreProducto,
+                DateTime? desde,
+                DateTime? hasta)
         {
             using var context = new InvensisContext();
             var query = context.MovimientosInventarios
@@ -200,11 +168,26 @@ namespace Identity.Api.DataRepository
                 .Include(x => x.IdBodegaNavigation)
                 .AsQueryable();
 
+            // Validación de rango de fechas
+            if (desde.HasValue && hasta.HasValue && desde > hasta)
+            {
+                return new PagedResult<MovimientosInventarioDTO>
+                {
+                    Items = new List<MovimientosInventarioDTO>(),
+                    TotalItems = 0,
+                    Page = pagina,
+                    PageSize = pageSize
+                };
+            }
+
             if (!string.IsNullOrWhiteSpace(tipoMovimiento))
                 query = query.Where(x => x.TipoMovimiento.ToUpper() == tipoMovimiento.ToUpper());
 
             if (idBodega.HasValue)
-                query = query.Where(x => x.IdBodega == idBodega.Value || x.IdBodegaOrigen == idBodega || x.IdBodegaDestino == idBodega);
+                query = query.Where(x =>
+                    x.IdBodega == idBodega.Value ||
+                    x.IdBodegaOrigen == idBodega.Value ||
+                    x.IdBodegaDestino == idBodega.Value);
 
             if (!string.IsNullOrWhiteSpace(nombreProducto))
             {
@@ -236,7 +219,11 @@ namespace Identity.Api.DataRepository
                     StockActual = x.StockActual,
                     FechaMovimiento = x.FechaMovimiento,
                     Origen = x.Origen,
-                    Observaciones = x.Observaciones
+                    Observaciones = x.Observaciones,
+
+                    // NUEVOS CAMPOS
+                    NombreProducto = x.IdProductoNavigation.Nombre,
+                    NombreBodega = x.IdBodegaNavigation.Nombre
                 })
                 .ToList();
 
@@ -247,6 +234,95 @@ namespace Identity.Api.DataRepository
                 Page = pagina,
                 PageSize = pageSize
             };
+        }
+
+
+
+        //traer todas las solicitudes que no hayan sido ingresadas en MovimientosInventario
+        public async Task<List<SolicitudesCompraDTO>> ObtenerSolicitudesNoUsadasAsync()
+        {
+            // Obtener lista de solicitudes que NO han sido usadas como documento origen
+            using var context = new InvensisContext();
+            var usadas = await context.MovimientosInventarios
+                .Where(m => m.IdDocumentoOrigen != null)
+                .Select(m => m.IdDocumentoOrigen!.ToString())
+                .Distinct()
+                .ToListAsync();
+
+            return await context.SolicitudesCompras
+                .Where(f => !usadas.Contains(f.NumeroSolicitud))
+                .Select(f => new SolicitudesCompraDTO
+                {
+                    IdSolicitud = f.IdSolicitud,
+                    NumeroSolicitud = f.NumeroSolicitud,
+                    IdUsuarioAutoriza = f.IdUsuarioAutoriza,
+                    IdUsuarioDestino = f.IdUsuarioDestino,
+                    IdDepartamento = f.IdDepartamento
+                })
+                .ToListAsync();
+        }
+
+        //trae todos los productos por el idSolicitud que se le pase 
+        public async Task<List<DetalleSolicitudDTO>> ObtenerDetalleSolicitudAsync(int idSolicitud)
+        {
+            using var context = new InvensisContext();
+            return await context.DetalleSolicituds
+                .Where(d => d.IdSolicitud == idSolicitud)
+                .Select(d => new DetalleSolicitudDTO
+                {
+
+                    IdDetalle = d.IdDetalle,
+                    IdSolicitud = d.IdSolicitud,
+                    IdProducto = d.IdProducto,
+                    Cantidad = d.Cantidad,
+                    PrecioUnitario = d.PrecioUnitario,
+                    Subtotal = d.Subtotal,
+
+                })
+                .ToListAsync();
+        }
+
+
+
+        //traer todas las facturas que no hayan sido ingresadas en MovimientosInventario
+        public async Task<List<FacturasCompraDTO>> ObtenerFacturasNoUsadasAsync()
+        {
+            // Obtener lista de facturas que NO han sido usadas como documento origen
+            using var context = new InvensisContext();
+            var usadas = await context.MovimientosInventarios
+                .Where(m => m.IdDocumentoOrigen != null)
+                .Select(m => m.IdDocumentoOrigen!.ToString())
+                .Distinct()
+                .ToListAsync();
+
+            return await context.FacturasCompras
+                .Where(f => !usadas.Contains(f.NumeroFactura))
+                .Select(f => new FacturasCompraDTO
+                {
+                    IdFactura = f.IdFactura,
+                    NumeroFactura = f.NumeroFactura,
+                    IdProveedor = f.IdProveedor,
+                    IdBodega = f.IdBodega
+                })
+                .ToListAsync();
+        }
+
+        //trae todos los productos por el idfactura que se le pase 
+        public async Task<List<DetalleFacturaCompraDTO>> ObtenerDetalleFacturaAsync(int idFactura)
+        {
+            using var context = new InvensisContext();
+            return await context.DetalleFacturaCompras
+                .Where(d => d.IdFactura == idFactura)
+                .Select(d => new DetalleFacturaCompraDTO
+                {
+                    IdDetalle = d.IdDetalle,
+                    IdFactura = d.IdFactura,
+                    IdProducto = d.IdProducto,
+                    Cantidad = d.Cantidad,
+                    PrecioUnitario = d.PrecioUnitario,
+                    Subtotal = d.Subtotal
+                })
+                .ToListAsync();
         }
 
     }

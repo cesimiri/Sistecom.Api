@@ -2064,63 +2064,159 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.MovimientosInventarioController",
-    "Method": "Delete",
-    "RelativePath": "api/MovimientosInventario/DeleteMovimientosInventario",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "DelItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.MovimientosInventario",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.MovimientosInventarioController",
-    "Method": "DeleteMovimientosInventarioById",
-    "RelativePath": "api/MovimientosInventario/DeleteMovimientosInventarioById/{IdMovimientosInventario}",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "IdMovimientosInventario",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.MovimientosInventarioController",
-    "Method": "GetMovimientosInventarioById",
-    "RelativePath": "api/MovimientosInventario/GetMovimientosInventarioById/{idMovimientosInventario}",
+    "Method": "GetDetalleFactura",
+    "RelativePath": "api/MovimientosInventario/detalle/{idFactura}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "idMovimientosInventario",
+        "Name": "idFactura",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Identity.Api.DTO.DetalleFacturaCompraDTO, Identity.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.MovimientosInventarioController",
+    "Method": "GetFacturasNoUsadas",
+    "RelativePath": "api/MovimientosInventario/disponibles",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Identity.Api.DTO.FacturasCompraDTO, Identity.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.MovimientosInventarioController",
+    "Method": "GetPaginados",
+    "RelativePath": "api/MovimientosInventario/GetPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "tipoMovimiento",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "idBodega",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "nombreProducto",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "desde",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "hasta",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
   },
   {
     "ContainingType": "Identity.Api.Controllers.MovimientosInventarioController",
-    "Method": "Create",
-    "RelativePath": "api/MovimientosInventario/InsertMovimientosInventario",
+    "Method": "ObtenerDetalleSolicitudAsync",
+    "RelativePath": "api/MovimientosInventario/ObtenerDetalleSolicitudAsync/{idSolicitud}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idSolicitud",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Identity.Api.DTO.DetalleSolicitudDTO, Identity.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.MovimientosInventarioController",
+    "Method": "ObtenerPorId",
+    "RelativePath": "api/MovimientosInventario/ObtenerPorId/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Modelo.Sistecom.Modelo.Database.MovimientosInventario",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.MovimientosInventarioController",
+    "Method": "Registrar",
+    "RelativePath": "api/MovimientosInventario/RegistrarMovimientos",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "NewItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.MovimientosInventario",
+        "Name": "movimientos",
+        "Type": "System.Collections.Generic.List\u00601[[Identity.Api.DTO.MovimientosInventarioDTO, Identity.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
       }
     ],
@@ -2128,29 +2224,23 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.MovimientosInventarioController",
-    "Method": "GetAll",
-    "RelativePath": "api/MovimientosInventario/MovimientosInventarioInfoAll",
+    "Method": "ObtenerSolicitudesNoUsadasAsync",
+    "RelativePath": "api/MovimientosInventario/SolicitudesDeSalida",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.MovimientosInventarioController",
-    "Method": "Update",
-    "RelativePath": "api/MovimientosInventario/UpdateMovimientosInventario",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
+    "ReturnTypes": [
       {
-        "Name": "UpdItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.MovimientosInventario",
-        "IsRequired": true
+        "Type": "System.Collections.Generic.List\u00601[[Identity.Api.DTO.SolicitudesCompraDTO, Identity.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
       }
-    ],
-    "ReturnTypes": []
+    ]
   },
   {
     "ContainingType": "Identity.Api.Controllers.OrdenesEnsamblajeController",
@@ -2994,7 +3084,7 @@
   {
     "ContainingType": "Identity.Api.Controllers.StockBodegaController",
     "Method": "GetPaginadosPorBodega",
-    "RelativePath": "api/StockBodega/GetPaginadosPorBodega",
+    "RelativePath": "api/StockBodega/GetPaginadosPorBodega/{idBodega}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -3002,7 +3092,7 @@
       {
         "Name": "idBodega",
         "Type": "System.Int32",
-        "IsRequired": false
+        "IsRequired": true
       },
       {
         "Name": "pagina",
@@ -3024,31 +3114,16 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.StockBodegaController",
-    "Method": "GetStockBodegaPaginados",
-    "RelativePath": "api/StockBodega/GetStockBodegaPaginados",
-    "HttpMethod": "GET",
+    "Method": "ProcesarMovimientoStock",
+    "RelativePath": "api/StockBodega/ProcesarMovimientoStock",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "pagina",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "pageSize",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "filtro",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "estado",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "movimientos",
+        "Type": "System.Collections.Generic.List\u00601[[Identity.Api.DTO.MovimientosInventarioDTO, Identity.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

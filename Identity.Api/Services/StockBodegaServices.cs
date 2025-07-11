@@ -40,17 +40,13 @@ namespace Identity.Api.Services
             _dataRepository.DeleteStockBodegaById(idStock);
         }
 
-        //paginado
-        public PagedResult<stockBodegaDTO> GetStockBodegaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
-        {
-            return _dataRepository.GetStockBodegaPaginados(pagina, pageSize, filtro, estado);
-        }
 
         //paginado por bodega
         public PagedResult<stockBodegaDTO> GetPaginadosPorBodega(int idBodega, int pagina, int pageSize, string? filtro = null)
         {
             return _dataRepository.GetPaginadosPorBodega(idBodega, pagina, pageSize, filtro);
         }
+
 
         //ingreso masivo: acepta lista de movimientos
         public bool ProcesarMovimientoStock(List<MovimientosInventarioDTO> movimientos, out string error)

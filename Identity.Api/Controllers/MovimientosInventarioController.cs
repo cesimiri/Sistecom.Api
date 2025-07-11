@@ -22,101 +22,7 @@ namespace Identity.Api.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        //[HttpGet("MovimientosInventarioInfoAll")]
-        //public IActionResult GetAll()
-        //{
-        //    return Ok(_bodega.MovimientosInventarioInfoAll);
-        //}
 
-
-        //[HttpGet("GetMovimientosInventarioById/{idMovimientosInventario}")]
-        //public IActionResult GetMovimientosInventarioById(int idMovimientosInventario)
-        //{
-
-        //    var bodega = _bodega.GetMovimientosInventarioById(idMovimientosInventario);
-
-        //    if (bodega == null)
-        //    {
-        //        return NotFound($"No existe esa Asignaciones Activo con el ID: {idMovimientosInventario} no encontrado.");
-        //    }
-
-        //    return Ok(bodega);
-        //}
-
-        //[HttpPost("InsertMovimientosInventario")]
-        //public IActionResult Create([FromBody] MovimientosInventario NewItem)
-        //{
-        //    try
-        //    {
-        //        if (NewItem == null || !ModelState.IsValid)
-        //        {
-        //            return BadRequest("Error: Envio de datos");
-        //        }
-
-        //        _bodega.InsertMovimientosInventario(NewItem);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest("Error:" + ex.Message);
-        //    }
-
-        //    return Ok(NewItem);
-        //}
-
-        //[HttpPut("UpdateMovimientosInventario")]
-        //public IActionResult Update([FromBody] MovimientosInventario UpdItem)
-        //{
-        //    try
-        //    {
-        //        if (UpdItem == null || !ModelState.IsValid)
-        //        {
-        //            return BadRequest("Error: Envio de datos");
-        //        }
-
-        //        _bodega.UpdateMovimientosInventario(UpdItem);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest("Error:" + ex.Message);
-        //    }
-
-        //    return NoContent();
-        //}
-
-        //[HttpDelete("DeleteMovimientosInventario")]
-        //public IActionResult Delete([FromBody] MovimientosInventario DelItem)
-        //{
-        //    try
-        //    {
-        //        if (DelItem == null || !ModelState.IsValid)
-        //        {
-        //            return BadRequest("Error: Envio de datos");
-        //        }
-
-        //        _bodega.DeleteMovimientosInventario(DelItem);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest("Error:" + ex.Message);
-        //    }
-
-        //    return NoContent();
-        //}
-
-        //[HttpDelete("DeleteMovimientosInventarioById/{IdMovimientosInventario}")]
-        //public IActionResult DeleteMovimientosInventarioById(int IdMovimientosInventario)
-        //{
-        //    try
-        //    {
-        //        _bodega.DeleteMovimientosInventarioById(IdMovimientosInventario);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest("Error:" + ex.Message);
-        //    }
-
-        //    return NoContent();
-        //}
 
 
 
@@ -168,6 +74,38 @@ namespace Identity.Api.Controllers
         {
             var resultado = _bodega.GetPaginados(pagina, pageSize, tipoMovimiento, idBodega, nombreProducto, desde, hasta);
             return Ok(resultado);
+        }
+
+        // Endpoint para traer las solicitudes para dar de baja en salidas, NO usadas en movimientos
+        [HttpGet("SolicitudesDeSalida")]
+        public async Task<ActionResult<List<SolicitudesCompraDTO>>> ObtenerSolicitudesNoUsadasAsync()
+        {
+            var solicitudes = await _bodega.ObtenerSolicitudesNoUsadasAsync();
+            return Ok(solicitudes);
+        }
+
+        [HttpGet("ObtenerDetalleSolicitudAsync/{idSolicitud}")]
+        public async Task<ActionResult<List<DetalleSolicitudDTO>>> ObtenerDetalleSolicitudAsync(int idSolicitud)
+        {
+            var detalles = await _bodega.ObtenerDetalleSolicitudAsync(idSolicitud);
+            return Ok(detalles);
+        }
+
+
+        // Endpoint para traer facturas NO usadas en movimientos
+        [HttpGet("disponibles")]
+        public async Task<ActionResult<List<FacturasCompraDTO>>> GetFacturasNoUsadas()
+        {
+            var facturas = await _bodega.ObtenerFacturasNoUsadasAsync();
+            return Ok(facturas);
+        }
+
+        // Endpoint para traer detalles de factura seleccionada
+        [HttpGet("detalle/{idFactura}")]
+        public async Task<ActionResult<List<DetalleFacturaCompraDTO>>> GetDetalleFactura(int idFactura)
+        {
+            var detalles = await _bodega.ObtenerDetalleFacturaAsync(idFactura);
+            return Ok(detalles);
         }
     }
 }

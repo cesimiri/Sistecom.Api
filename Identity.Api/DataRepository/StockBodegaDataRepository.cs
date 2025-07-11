@@ -113,66 +113,7 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        //PAGINADA 
-        public PagedResult<stockBodegaDTO> GetStockBodegaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
-        {
-            using var context = new InvensisContext();
 
-            var query = context.StockBodegas
-                .Include(s => s.IdBodegaNavigation)
-                .Include(s => s.IdProductoNavigation)
-                .AsQueryable();
-
-            // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
-            if (!string.IsNullOrEmpty(filtro))
-            {
-                filtro = filtro.ToLower();
-                query = query.Where(u =>
-                    u.IdBodegaNavigation.Nombre.ToLower().Contains(filtro) ||
-                    u.IdProductoNavigation.Nombre.ToLower().Contains(filtro));
-            }
-
-            // Aplicar filtro por estado
-            //if (!string.IsNullOrEmpty(estado))
-            //{
-            //    query = query.Where(u => u.Estado == estado);
-            //}
-
-            // Total de registros filtrados
-            var totalItems = query.Count();
-
-            // Obtener página solicitada con paginado
-            var usuarios = query
-                .OrderBy(u => u.IdStock) // importante ordenar antes de Skip/Take
-                .Skip((pagina - 1) * pageSize)
-                .Take(pageSize)
-                .Select(s => new stockBodegaDTO
-                {
-                    IdStock = s.IdStock,
-                    IdBodega = s.IdBodega,
-                    IdProducto = s.IdProducto,
-                    CantidadDisponible = s.CantidadDisponible,
-                    CantidadReservada = s.CantidadReservada,
-                    CantidadEnsamblaje = s.CantidadEnsamblaje,
-                    ValorPromedio = s.ValorPromedio,
-                    UltimaEntrada = s.UltimaEntrada,
-                    UltimaSalida = s.UltimaSalida,
-                    FechaActualizacion = s.FechaActualizacion,
-
-
-                    nombreBodega = s.IdBodegaNavigation.Nombre,
-                    nombreProducto = s.IdProductoNavigation.Nombre
-                })
-                .ToList();
-
-            return new PagedResult<stockBodegaDTO>
-            {
-                Items = usuarios,
-                TotalItems = totalItems,
-                Page = pagina,
-                PageSize = pageSize
-            };
-        }
 
 
         //paginado por bodegga
@@ -188,15 +129,16 @@ namespace Identity.Api.DataRepository
 
             if (!string.IsNullOrWhiteSpace(filtro))
             {
-                // Usar EF.Functions.Like para un filtro más eficiente (SQL LIKE)
-                var filtroFormateado = $"%{filtro.Trim()}%";
-                query = query.Where(x => EF.Functions.Like(x.IdProductoNavigation.Nombre, filtroFormateado));
+                var filtroFormateado = filtro.Trim().ToLower();
+                query = query.Where(sb =>
+                    sb.IdProductoNavigation.Nombre.ToLower().Contains(filtroFormateado)
+                );
             }
 
             var totalItems = query.Count();
 
             var items = query
-                .OrderBy(x => x.IdStock)
+                .OrderBy(sb => sb.IdStock)
                 .Skip((pagina - 1) * pageSize)
                 .Take(pageSize)
                 .Select(sb => new stockBodegaDTO
@@ -204,8 +146,8 @@ namespace Identity.Api.DataRepository
                     IdStock = sb.IdStock,
                     IdBodega = sb.IdBodega,
                     IdProducto = sb.IdProducto,
-                    NombreBodega = sb.IdBodegaNavigation.Nombre,
-                    NombreProducto = sb.IdProductoNavigation.Nombre,
+                    nombreBodega = sb.IdBodegaNavigation.Nombre,
+                    nombreProducto = sb.IdProductoNavigation.Nombre,
                     CantidadDisponible = sb.CantidadDisponible,
                     CantidadReservada = sb.CantidadReservada,
                     CantidadEnsamblaje = sb.CantidadEnsamblaje,
@@ -224,6 +166,8 @@ namespace Identity.Api.DataRepository
                 PageSize = pageSize
             };
         }
+
+
 
 
         //actualizar stocks
@@ -261,7 +205,6 @@ namespace Identity.Api.DataRepository
                             break;
 
                         case "SALIDA":
-                        case "TRANSFERENCIA":
                             if (stock.CantidadDisponible < movimiento.Cantidad)
                             {
                                 error = $"Stock insuficiente para el producto {movimiento.IdProducto}.";
@@ -271,8 +214,19 @@ namespace Identity.Api.DataRepository
                             stock.UltimaSalida = DateOnly.FromDateTime(movimiento.FechaMovimiento ?? DateTime.Now);
                             break;
 
+                        case "TRANSFERENCIA":
+                            error = "No debería llegar un movimiento tipo TRANSFERENCIA aquí.";
+                            return false;
+
                         case "AJUSTE":
-                            stock.CantidadDisponible += movimiento.Cantidad;
+                            // Validar que no quede stock negativo con ajustes negativos
+                            decimal nuevoStock = stock.CantidadDisponible + movimiento.Cantidad;
+                            if (nuevoStock < 0)
+                            {
+                                error = $"El ajuste dejaría stock negativo para el producto {movimiento.IdProducto}.";
+                                return false;
+                            }
+                            stock.CantidadDisponible = nuevoStock;
                             break;
 
                         default:
@@ -293,6 +247,7 @@ namespace Identity.Api.DataRepository
                 return false;
             }
         }
+
 
 
 

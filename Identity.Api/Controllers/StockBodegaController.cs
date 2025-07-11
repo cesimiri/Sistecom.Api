@@ -1,6 +1,5 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
-using Identity.Api.Paginado;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -76,29 +75,9 @@ namespace Identity.Api.Controllers
         }
 
 
-        [HttpGet("GetStockBodegaPaginados")]
-        public IActionResult GetStockBodegaPaginados(
-        int pagina = 1,
-        int pageSize = PaginadorHelper.NumeroDeDatosPorPagina,
-        string? filtro = null,
-        string? estado = null)
-        {
-            try
-            {
-                // Llamamos al método que devuelve el paginado (en el servicio)
-                var resultado = _service.GetStockBodegaPaginados(pagina, pageSize, filtro, estado);
-
-                return Ok(resultado);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { error = ex.Message });
-            }
-        }
-
         // paginado por bodega
-        [HttpGet("GetPaginadosPorBodega")]
-        public IActionResult GetPaginadosPorBodega(int idBodega, int pagina = 1, int pageSize = 8, string? filtro = null)
+        [HttpGet("GetPaginadosPorBodega/{idBodega}")]
+        public IActionResult GetPaginadosPorBodega(int idBodega, [FromQuery] int pagina = 1, [FromQuery] int pageSize = 8, [FromQuery] string? filtro = null)
         {
             try
             {
@@ -110,6 +89,7 @@ namespace Identity.Api.Controllers
                 return BadRequest(new { error = "Error al obtener el stock por bodega", detalle = ex.Message });
             }
         }
+
 
         //Actualizar stock
         [HttpPost("ProcesarMovimientoStock")]

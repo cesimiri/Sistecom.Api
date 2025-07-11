@@ -33,5 +33,10 @@
         public string? UsuarioRegistro { get; set; }
 
         public DateTime? FechaMovimiento { get; set; }
+
+        //relacion
+        public string? NombreProducto { get; set; }
+        public string? NombreBodega { get; set; }
+
     }
 }
