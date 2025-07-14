@@ -20,10 +20,7 @@ namespace Identity.Api.Services
             return _dataRepository.GetStockBodegaById(idStock);
         }
 
-        public void InsertStockBodega(stockBodegaDTO item)
-        {
-            _dataRepository.InsertStockBodega(item);
-        }
+
 
         public void UpdateStockBodega(StockBodega item)
         {
@@ -49,9 +46,9 @@ namespace Identity.Api.Services
 
 
         //ingreso masivo: acepta lista de movimientos
-        public bool ProcesarMovimientoStock(List<MovimientosInventarioDTO> movimientos, out string error)
-        {
-            return _dataRepository.ProcesarMovimientoStock(movimientos, out error);
-        }
+        //public bool ProcesarMovimientoStock(List<MovimientosInventarioDTO> movimientos, out string error)
+        //{
+        //    return _dataRepository.ProcesarMovimientoStock(movimientos, out error);
+        //}
     }
 }

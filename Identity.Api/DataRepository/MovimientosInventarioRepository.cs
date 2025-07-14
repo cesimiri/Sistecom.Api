@@ -3,6 +3,7 @@ using Identity.Api.Paginado;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
 
+
 namespace Identity.Api.DataRepository
 {
     public class MovimientosInventarioRepository
@@ -10,16 +11,28 @@ namespace Identity.Api.DataRepository
 
 
         // ------------------ primero actualiza el stock de la bodega  luego registra el movimiento--------------------------------//
+        private int contadorInvocacionesRegistrarMovimientos = 0;
+
         public bool RegistrarMovimientos(List<MovimientosInventarioDTO> movimientos, out string error)
         {
+            contadorInvocacionesRegistrarMovimientos++;
             error = null;
-
             var movimientosProcesados = new List<MovimientosInventarioDTO>();
 
+            Console.WriteLine($"\n🟡 [INICIO] Recibidos desde el frontend - Invocación #{contadorInvocacionesRegistrarMovimientos}:");
+            Console.WriteLine($"Cantidad de movimientos recibidos: {movimientos.Count}");
+            foreach (var m in movimientos)
+            {
+                Console.WriteLine($"  - Producto: {m.IdProducto}, Cantidad: {m.Cantidad}, Tipo: {m.TipoMovimiento}, Bodega: {m.IdBodega}");
+            }
+
+            // 🔄 Procesamiento de movimientos (desglosar transferencia si aplica)
             foreach (var movimiento in movimientos)
             {
                 var tipo = movimiento.TipoMovimiento?.ToUpperInvariant();
                 movimiento.FechaMovimiento ??= DateTime.Now;
+
+                Console.WriteLine($"\n🔄 Procesando movimiento: Producto {movimiento.IdProducto}, Tipo {tipo}, Cantidad {movimiento.Cantidad}, Bodega {movimiento.IdBodega}");
 
                 switch (tipo)
                 {
@@ -27,10 +40,12 @@ namespace Identity.Api.DataRepository
                         if (movimiento.IdBodegaOrigen == null || movimiento.IdBodegaDestino == null)
                         {
                             error = "Para una transferencia, debe especificar la bodega origen y destino.";
+                            Console.WriteLine($"❌ Error: {error}");
                             return false;
                         }
 
-                        // SALIDA desde la bodega origen
+                        Console.WriteLine("🔁 Generando movimientos de transferencia...");
+
                         movimientosProcesados.Add(new MovimientosInventarioDTO
                         {
                             IdBodega = movimiento.IdBodegaOrigen.Value,
@@ -48,7 +63,6 @@ namespace Identity.Api.DataRepository
                             IdBodegaDestino = movimiento.IdBodegaDestino
                         });
 
-                        // ENTRADA hacia la bodega destino
                         movimientosProcesados.Add(new MovimientosInventarioDTO
                         {
                             IdBodega = movimiento.IdBodegaDestino.Value,
@@ -68,57 +82,75 @@ namespace Identity.Api.DataRepository
                         break;
 
                     case "ENTRADA":
-                        if (movimiento.IdBodega == null || movimiento.IdBodega <= 0)
-                        {
-                            error = "Debe indicar la bodega de entrada (IdBodega).";
-                            return false;
-                        }
-                        if (movimiento.IdDocumentoOrigen == null)
-                        {
-                            error = "Debe indicar el documento origen para la entrada.";
-                            return false;
-                        }
-
-                        movimientosProcesados.Add(movimiento);
-                        break;
-
                     case "SALIDA":
-                        if (movimiento.IdBodega == null || movimiento.IdBodega <= 0)
-                        {
-                            error = "Debe indicar la bodega de salida (IdBodega).";
-                            return false;
-                        }
-
-                        movimientosProcesados.Add(movimiento);
-                        break;
-
                     case "AJUSTE":
                         if (movimiento.IdBodega == null || movimiento.IdBodega <= 0)
                         {
-                            error = "Debe indicar la bodega para el ajuste.";
+                            error = $"Debe indicar la bodega para el movimiento tipo {tipo}.";
+                            Console.WriteLine($"❌ Error: {error}");
                             return false;
                         }
 
+                        if (tipo == "ENTRADA" && movimiento.IdDocumentoOrigen == null)
+                        {
+                            error = "Debe indicar el documento origen para la entrada.";
+                            Console.WriteLine($"❌ Error: {error}");
+                            return false;
+                        }
+
+                        Console.WriteLine($"✅ Movimiento de tipo {tipo} procesado.");
                         movimientosProcesados.Add(movimiento);
                         break;
 
                     default:
                         error = "Tipo de movimiento no reconocido.";
+                        Console.WriteLine($"❌ Error: {error}");
                         return false;
                 }
             }
 
-            // Procesar stock según la lógica establecida
-            var stockRepo = new StockBodegaDataRepository();
-            if (!stockRepo.ProcesarMovimientoStock(movimientosProcesados, out error))
+            Console.WriteLine($"\n✅ Movimientos listos para guardar en BD. Total: {movimientosProcesados.Count}");
+            foreach (var m in movimientosProcesados)
             {
+                Console.WriteLine($"  -> Producto: {m.IdProducto}, Cantidad: {m.Cantidad}, Tipo: {m.TipoMovimiento}, Bodega: {m.IdBodega}");
+            }
+
+            using var context = new InvensisContext();
+            var movimientosFiltrados = new List<MovimientosInventarioDTO>();
+
+            Console.WriteLine("\n🔎 Verificando duplicados en BD...");
+            foreach (var m in movimientosProcesados)
+            {
+                bool yaExiste = context.MovimientosInventarios.Any(mi =>
+                    mi.IdDocumentoOrigen == m.IdDocumentoOrigen &&
+                    mi.TipoMovimiento == m.TipoMovimiento &&
+                    mi.IdProducto == m.IdProducto &&
+                    mi.IdBodega == m.IdBodega &&
+                    mi.Cantidad == m.Cantidad
+                );
+
+                if (yaExiste)
+                {
+                    Console.WriteLine($"⚠️ Movimiento duplicado detectado y omitido: Producto {m.IdProducto}, Doc {m.IdDocumentoOrigen}, Bodega {m.IdBodega}, Cantidad {m.Cantidad}");
+                }
+                else
+                {
+                    movimientosFiltrados.Add(m);
+                }
+            }
+
+            if (!movimientosFiltrados.Any())
+            {
+                error = "Todos los movimientos ya fueron registrados anteriormente. No se realizaron cambios.";
+                Console.WriteLine($"⚠️ {error}");
                 return false;
             }
 
-            // Guardar en base de datos
-            using var context = new InvensisContext();
-            foreach (var movimiento in movimientosProcesados)
+            // 💾 Insertar en la tabla movimientos_inventario (el trigger se encargará del stock)
+            Console.WriteLine("\n💾 Guardando movimientos válidos en base de datos...");
+            foreach (var movimiento in movimientosFiltrados)
             {
+                Console.WriteLine($"  Guardando: Producto {movimiento.IdProducto}, Tipo {movimiento.TipoMovimiento}, Cantidad {movimiento.Cantidad}, Bodega: {movimiento.IdBodega}");
                 context.MovimientosInventarios.Add(new MovimientosInventario
                 {
                     IdBodega = movimiento.IdBodega,
@@ -127,8 +159,6 @@ namespace Identity.Api.DataRepository
                     Cantidad = movimiento.Cantidad,
                     PrecioUnitario = movimiento.PrecioUnitario,
                     NumeroSerie = movimiento.NumeroSerie,
-                    StockAnterior = movimiento.StockAnterior,
-                    StockActual = movimiento.StockActual,
                     Observaciones = movimiento.Observaciones,
                     UsuarioRegistro = movimiento.UsuarioRegistro,
                     FechaMovimiento = movimiento.FechaMovimiento,
@@ -140,27 +170,60 @@ namespace Identity.Api.DataRepository
             }
 
             context.SaveChanges();
+            Console.WriteLine("✅ Guardado finalizado sin duplicados.");
+
+            // 📋 Mostrar resumen final del stock (ya actualizado por el trigger)
+            Console.WriteLine("\n📋 RESUMEN FINAL DE STOCK EN BD:");
+            using var contextoResumen = new InvensisContext();
+            foreach (var m in movimientosFiltrados)
+            {
+                var stock = contextoResumen.StockBodegas
+                    .AsNoTracking()
+                    .FirstOrDefault(s => s.IdBodega == m.IdBodega && s.IdProducto == m.IdProducto);
+
+                if (stock != null)
+                {
+                    Console.WriteLine($"  🧾 Producto {m.IdProducto}, Bodega {m.IdBodega}, CantidadDisponible: {stock.CantidadDisponible}");
+                }
+                else
+                {
+                    Console.WriteLine($"  ⚠️ Producto {m.IdProducto}, Bodega {m.IdBodega} aún no tiene stock registrado.");
+                }
+            }
+
+            Console.WriteLine($"🟡 [FIN] RegistrarMovimientos - Invocación #{contadorInvocacionesRegistrarMovimientos}\n");
             return true;
         }
 
 
 
 
-        public MovimientosInventario? ObtenerPorId(int id)
-        {
-            using var context = new InvensisContext();
-            return context.MovimientosInventarios.FirstOrDefault(m => m.IdMovimiento == id);
-        }
 
-        //paginado que te busco por bodega, tipo de movimiento, nomnbre producto, fechas 
+
+
+
+
+
+
+
+
+
+
+
+
+        //paginado
         public PagedResult<MovimientosInventarioDTO> GetPaginados(
-                int pagina,
-                int pageSize,
-                string? tipoMovimiento,
-                int? idBodega,
-                string? nombreProducto,
-                DateTime? desde,
-                DateTime? hasta)
+            int pagina,
+            int pageSize,
+            string? tipoMovimiento,
+            int? idBodega,
+            string? nombreProducto,
+            DateTime? desde,
+            DateTime? hasta,
+            string? ordenColumna = null,
+            bool ordenAscendente = true,
+            int? idProducto = null // nuevo parámetro
+        )
         {
             using var context = new InvensisContext();
             var query = context.MovimientosInventarios
@@ -168,7 +231,7 @@ namespace Identity.Api.DataRepository
                 .Include(x => x.IdBodegaNavigation)
                 .AsQueryable();
 
-            // Validación de rango de fechas
+            // Validación de fechas inválidas
             if (desde.HasValue && hasta.HasValue && desde > hasta)
             {
                 return new PagedResult<MovimientosInventarioDTO>
@@ -180,6 +243,7 @@ namespace Identity.Api.DataRepository
                 };
             }
 
+            // Aplicar filtros
             if (!string.IsNullOrWhiteSpace(tipoMovimiento))
                 query = query.Where(x => x.TipoMovimiento.ToUpper() == tipoMovimiento.ToUpper());
 
@@ -189,7 +253,12 @@ namespace Identity.Api.DataRepository
                     x.IdBodegaOrigen == idBodega.Value ||
                     x.IdBodegaDestino == idBodega.Value);
 
-            if (!string.IsNullOrWhiteSpace(nombreProducto))
+            // Priorizar filtro por IdProducto si se envía
+            if (idProducto.HasValue)
+            {
+                query = query.Where(x => x.IdProducto == idProducto.Value);
+            }
+            else if (!string.IsNullOrWhiteSpace(nombreProducto))
             {
                 var nombre = nombreProducto.Trim().ToUpper();
                 query = query.Where(x => x.IdProductoNavigation.Nombre.ToUpper().Contains(nombre));
@@ -203,8 +272,18 @@ namespace Identity.Api.DataRepository
 
             var totalItems = query.Count();
 
+            // Ordenamiento
+            if (!string.IsNullOrEmpty(ordenColumna))
+            {
+                query = ApplyOrdering(query, ordenColumna, ordenAscendente);
+            }
+            else
+            {
+                query = query.OrderByDescending(x => x.FechaMovimiento);
+            }
+
+            // Proyección DTO
             var items = query
-                .OrderByDescending(x => x.FechaMovimiento)
                 .Skip((pagina - 1) * pageSize)
                 .Take(pageSize)
                 .Select(x => new MovimientosInventarioDTO
@@ -220,8 +299,6 @@ namespace Identity.Api.DataRepository
                     FechaMovimiento = x.FechaMovimiento,
                     Origen = x.Origen,
                     Observaciones = x.Observaciones,
-
-                    // NUEVOS CAMPOS
                     NombreProducto = x.IdProductoNavigation.Nombre,
                     NombreBodega = x.IdBodegaNavigation.Nombre
                 })
@@ -234,6 +311,44 @@ namespace Identity.Api.DataRepository
                 Page = pagina,
                 PageSize = pageSize
             };
+        }
+
+
+        private IQueryable<MovimientosInventario> ApplyOrdering(
+            IQueryable<MovimientosInventario> source,
+            string columnName,
+            bool ascending)
+        {
+            switch (columnName)
+            {
+                case "FechaMovimiento":
+                    return ascending ?
+                        source.OrderBy(x => x.FechaMovimiento) :
+                        source.OrderByDescending(x => x.FechaMovimiento);
+                case "TipoMovimiento":
+                    return ascending ?
+                        source.OrderBy(x => x.TipoMovimiento) :
+                        source.OrderByDescending(x => x.TipoMovimiento);
+                case "NombreProducto":
+                    return ascending ?
+                        source.OrderBy(x => x.IdProductoNavigation.Nombre) :
+                        source.OrderByDescending(x => x.IdProductoNavigation.Nombre);
+                case "NombreBodega":
+                    return ascending ?
+                        source.OrderBy(x => x.IdBodegaNavigation.Nombre) :
+                        source.OrderByDescending(x => x.IdBodegaNavigation.Nombre);
+                case "Cantidad":
+                    return ascending ?
+                        source.OrderBy(x => x.Cantidad) :
+                        source.OrderByDescending(x => x.Cantidad);
+                case "PrecioUnitario":
+                    return ascending ?
+                        source.OrderBy(x => x.PrecioUnitario) :
+                        source.OrderByDescending(x => x.PrecioUnitario);
+                // Agrega otros casos si tienes más columnas para ordenar
+                default:
+                    return source.OrderByDescending(x => x.FechaMovimiento);
+            }
         }
 
 
@@ -287,16 +402,18 @@ namespace Identity.Api.DataRepository
         //traer todas las facturas que no hayan sido ingresadas en MovimientosInventario
         public async Task<List<FacturasCompraDTO>> ObtenerFacturasNoUsadasAsync()
         {
-            // Obtener lista de facturas que NO han sido usadas como documento origen
             using var context = new InvensisContext();
-            var usadas = await context.MovimientosInventarios
+
+            // 1. Obtener los IdFactura que ya han sido usados en movimientos
+            var usados = await context.MovimientosInventarios
                 .Where(m => m.IdDocumentoOrigen != null)
-                .Select(m => m.IdDocumentoOrigen!.ToString())
+                .Select(m => m.IdDocumentoOrigen.Value) // <- como int
                 .Distinct()
                 .ToListAsync();
 
+            // 2. Devolver las facturas que NO están en la lista de usados
             return await context.FacturasCompras
-                .Where(f => !usadas.Contains(f.NumeroFactura))
+                .Where(f => !usados.Contains(f.IdFactura)) // <- correcto
                 .Select(f => new FacturasCompraDTO
                 {
                     IdFactura = f.IdFactura,
@@ -306,6 +423,7 @@ namespace Identity.Api.DataRepository
                 })
                 .ToListAsync();
         }
+
 
         //trae todos los productos por el idfactura que se le pase 
         public async Task<List<DetalleFacturaCompraDTO>> ObtenerDetalleFacturaAsync(int idFactura)

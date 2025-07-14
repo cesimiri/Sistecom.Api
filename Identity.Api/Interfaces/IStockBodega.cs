@@ -8,7 +8,7 @@ namespace Identity.Api.Interfaces
     {
         IEnumerable<StockBodega> GetAllStockBodega();
         StockBodega GetStockBodegaById(int idStock);
-        void InsertStockBodega(stockBodegaDTO item);
+
         void UpdateStockBodega(StockBodega item);
         //void DeleteStockBodega(StockBodega item);
         void DeleteStockBodegaById(int idStock);
@@ -22,6 +22,6 @@ namespace Identity.Api.Interfaces
 
 
         //actualiza el stock de la bodega 
-        bool ProcesarMovimientoStock(List<MovimientosInventarioDTO> movimientos, out string error);
+        //bool ProcesarMovimientoStock(List<MovimientosInventarioDTO> movimientos, out string error);
     }
 }

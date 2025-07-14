@@ -343,3 +343,4 @@ C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\refint\Identit
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\Identity.Api.pdb
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\Identity.Api.genruntimeconfig.cache
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\ref\Identity.Api.dll
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Release\net9.0\System.Linq.Dynamic.Core.dll

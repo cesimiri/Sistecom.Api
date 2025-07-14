@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "tPWE/PkUOjY=",
+  "dgSpecHash": "e0tbBFJzhmM=",
   "success": true,
   "projectFilePath": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Identity.Api.csproj",
   "expectedPackageFiles": [
@@ -76,6 +76,7 @@
     "C:\\Users\\cmiranda\\.nuget\\packages\\system.formats.asn1\\9.0.5\\system.formats.asn1.9.0.5.nupkg.sha512",
     "C:\\Users\\cmiranda\\.nuget\\packages\\system.identitymodel.tokens.jwt\\8.0.1\\system.identitymodel.tokens.jwt.8.0.1.nupkg.sha512",
     "C:\\Users\\cmiranda\\.nuget\\packages\\system.io.pipelines\\7.0.0\\system.io.pipelines.7.0.0.nupkg.sha512",
+    "C:\\Users\\cmiranda\\.nuget\\packages\\system.linq.dynamic.core\\1.6.6\\system.linq.dynamic.core.1.6.6.nupkg.sha512",
     "C:\\Users\\cmiranda\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
     "C:\\Users\\cmiranda\\.nuget\\packages\\system.memory.data\\1.0.2\\system.memory.data.1.0.2.nupkg.sha512",
     "C:\\Users\\cmiranda\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",

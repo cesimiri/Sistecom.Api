@@ -29,44 +29,7 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        public void InsertStockBodega(stockBodegaDTO item)
-        {
-            try
-            {
-                using var context = new InvensisContext();
 
-
-                var bodega = context.Bodegas.Find(item.IdBodega);
-                var producto = context.Productos.Find(item.IdProducto);
-
-                if (bodega == null || producto == null)
-                {
-                    throw new Exception("Esa bodega o producto no existe en la base de datos.");
-                }
-
-
-
-                var nueva = new StockBodega
-                {
-
-                    IdBodega = item.IdBodega,
-                    IdProducto = item.IdProducto,
-                    CantidadDisponible = item.CantidadDisponible,
-                    CantidadReservada = item.CantidadReservada,
-                    CantidadEnsamblaje = item.CantidadEnsamblaje,
-                    ValorPromedio = item.ValorPromedio,
-
-
-                };
-
-                context.StockBodegas.Add(nueva);
-                context.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error al insertar el stock Bodegas: " + ex.InnerException?.Message ?? ex.Message);
-            }
-        }
 
         public void UpdateStockBodega(StockBodega item)
         {
@@ -170,83 +133,193 @@ namespace Identity.Api.DataRepository
 
 
 
-        //actualizar stocks
-        public bool ProcesarMovimientoStock(List<MovimientosInventarioDTO> movimientos, out string error)
-        {
-            error = "";
-            try
-            {
-                using var context = new InvensisContext();
+        ////actualizar stocks recordar que un trigger 
+        //private int contadorInvocacionesRegistrarMovimientos = 0;
 
-                foreach (var movimiento in movimientos)
-                {
-                    var stock = context.StockBodegas
-                        .FirstOrDefault(s => s.IdBodega == movimiento.IdBodega && s.IdProducto == movimiento.IdProducto);
+        //public bool RegistrarMovimientos(List<MovimientosInventarioDTO> movimientos, out string error)
+        //{
+        //    contadorInvocacionesRegistrarMovimientos++;
+        //    error = null;
+        //    var movimientosProcesados = new List<MovimientosInventarioDTO>();
 
-                    if (stock == null)
-                    {
-                        stock = new StockBodega
-                        {
-                            IdBodega = movimiento.IdBodega,
-                            IdProducto = movimiento.IdProducto,
-                            CantidadDisponible = 0,
-                            FechaActualizacion = DateTime.Now
-                        };
-                        context.StockBodegas.Add(stock);
-                    }
+        //    Console.WriteLine($"\n🟡 [INICIO] Recibidos desde el frontend - Invocación #{contadorInvocacionesRegistrarMovimientos}:");
+        //    Console.WriteLine($"Cantidad de movimientos recibidos: {movimientos.Count}");
+        //    foreach (var m in movimientos)
+        //    {
+        //        Console.WriteLine($"  - Producto: {m.IdProducto}, Cantidad: {m.Cantidad}, Tipo: {m.TipoMovimiento}, Bodega: {m.IdBodega}");
+        //    }
 
-                    movimiento.StockAnterior = stock.CantidadDisponible;
+        //    // Procesamiento de movimientos (desglosar transferencia si aplica)
+        //    foreach (var movimiento in movimientos)
+        //    {
+        //        var tipo = movimiento.TipoMovimiento?.ToUpperInvariant();
+        //        movimiento.FechaMovimiento ??= DateTime.Now;
 
-                    switch (movimiento.TipoMovimiento.ToUpper())
-                    {
-                        case "ENTRADA":
-                            stock.CantidadDisponible += movimiento.Cantidad;
-                            stock.UltimaEntrada = DateOnly.FromDateTime(movimiento.FechaMovimiento ?? DateTime.Now);
-                            break;
+        //        Console.WriteLine($"\n🔄 Procesando movimiento: Producto {movimiento.IdProducto}, Tipo {tipo}, Cantidad {movimiento.Cantidad}, Bodega {movimiento.IdBodega}");
 
-                        case "SALIDA":
-                            if (stock.CantidadDisponible < movimiento.Cantidad)
-                            {
-                                error = $"Stock insuficiente para el producto {movimiento.IdProducto}.";
-                                return false;
-                            }
-                            stock.CantidadDisponible -= movimiento.Cantidad;
-                            stock.UltimaSalida = DateOnly.FromDateTime(movimiento.FechaMovimiento ?? DateTime.Now);
-                            break;
+        //        switch (tipo)
+        //        {
+        //            case "TRANSFERENCIA":
+        //                if (movimiento.IdBodegaOrigen == null || movimiento.IdBodegaDestino == null)
+        //                {
+        //                    error = "Para una transferencia, debe especificar la bodega origen y destino.";
+        //                    Console.WriteLine($"❌ Error: {error}");
+        //                    return false;
+        //                }
 
-                        case "TRANSFERENCIA":
-                            error = "No debería llegar un movimiento tipo TRANSFERENCIA aquí.";
-                            return false;
+        //                Console.WriteLine("🔁 Generando movimientos de transferencia...");
 
-                        case "AJUSTE":
-                            // Validar que no quede stock negativo con ajustes negativos
-                            decimal nuevoStock = stock.CantidadDisponible + movimiento.Cantidad;
-                            if (nuevoStock < 0)
-                            {
-                                error = $"El ajuste dejaría stock negativo para el producto {movimiento.IdProducto}.";
-                                return false;
-                            }
-                            stock.CantidadDisponible = nuevoStock;
-                            break;
+        //                movimientosProcesados.Add(new MovimientosInventarioDTO
+        //                {
+        //                    IdBodega = movimiento.IdBodegaOrigen.Value,
+        //                    IdProducto = movimiento.IdProducto,
+        //                    TipoMovimiento = "SALIDA",
+        //                    Cantidad = movimiento.Cantidad,
+        //                    PrecioUnitario = movimiento.PrecioUnitario,
+        //                    NumeroSerie = movimiento.NumeroSerie,
+        //                    Observaciones = movimiento.Observaciones,
+        //                    UsuarioRegistro = movimiento.UsuarioRegistro,
+        //                    FechaMovimiento = movimiento.FechaMovimiento.Value,
+        //                    Origen = "TRANSFERENCIA",
+        //                    IdDocumentoOrigen = movimiento.IdDocumentoOrigen,
+        //                    IdBodegaOrigen = movimiento.IdBodegaOrigen,
+        //                    IdBodegaDestino = movimiento.IdBodegaDestino
+        //                });
 
-                        default:
-                            error = $"Tipo de movimiento '{movimiento.TipoMovimiento}' no reconocido.";
-                            return false;
-                    }
+        //                movimientosProcesados.Add(new MovimientosInventarioDTO
+        //                {
+        //                    IdBodega = movimiento.IdBodegaDestino.Value,
+        //                    IdProducto = movimiento.IdProducto,
+        //                    TipoMovimiento = "ENTRADA",
+        //                    Cantidad = movimiento.Cantidad,
+        //                    PrecioUnitario = movimiento.PrecioUnitario,
+        //                    NumeroSerie = movimiento.NumeroSerie,
+        //                    Observaciones = movimiento.Observaciones,
+        //                    UsuarioRegistro = movimiento.UsuarioRegistro,
+        //                    FechaMovimiento = movimiento.FechaMovimiento.Value,
+        //                    Origen = "TRANSFERENCIA",
+        //                    IdDocumentoOrigen = movimiento.IdDocumentoOrigen,
+        //                    IdBodegaOrigen = movimiento.IdBodegaOrigen,
+        //                    IdBodegaDestino = movimiento.IdBodegaDestino
+        //                });
+        //                break;
 
-                    movimiento.StockActual = stock.CantidadDisponible;
-                    stock.FechaActualizacion = DateTime.Now;
-                }
+        //            case "ENTRADA":
+        //            case "SALIDA":
+        //            case "AJUSTE":
+        //                if (movimiento.IdBodega == null || movimiento.IdBodega <= 0)
+        //                {
+        //                    error = $"Debe indicar la bodega para el movimiento tipo {tipo}.";
+        //                    Console.WriteLine($"❌ Error: {error}");
+        //                    return false;
+        //                }
 
-                context.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                error = "Error procesando el stock: " + ex.Message;
-                return false;
-            }
-        }
+        //                if (tipo == "ENTRADA" && movimiento.IdDocumentoOrigen == null)
+        //                {
+        //                    error = "Debe indicar el documento origen para la entrada.";
+        //                    Console.WriteLine($"❌ Error: {error}");
+        //                    return false;
+        //                }
+
+        //                Console.WriteLine($"✅ Movimiento de tipo {tipo} procesado.");
+        //                movimientosProcesados.Add(movimiento);
+        //                break;
+
+        //            default:
+        //                error = "Tipo de movimiento no reconocido.";
+        //                Console.WriteLine($"❌ Error: {error}");
+        //                return false;
+        //        }
+        //    }
+
+        //    Console.WriteLine($"\n✅ Movimientos listos para guardar en BD. Total: {movimientosProcesados.Count}");
+        //    foreach (var m in movimientosProcesados)
+        //    {
+        //        Console.WriteLine($"  -> Producto: {m.IdProducto}, Cantidad: {m.Cantidad}, Tipo: {m.TipoMovimiento}, Bodega: {m.IdBodega}");
+        //    }
+
+        //    using var context = new InvensisContext();
+        //    var movimientosFiltrados = new List<MovimientosInventarioDTO>();
+
+        //    Console.WriteLine("\n🔎 Verificando duplicados en BD...");
+        //    foreach (var m in movimientosProcesados)
+        //    {
+        //        bool yaExiste = context.MovimientosInventarios.Any(mi =>
+        //            mi.IdDocumentoOrigen == m.IdDocumentoOrigen &&
+        //            mi.TipoMovimiento == m.TipoMovimiento &&
+        //            mi.IdProducto == m.IdProducto &&
+        //            mi.IdBodega == m.IdBodega &&
+        //            mi.Cantidad == m.Cantidad
+        //        );
+
+        //        if (yaExiste)
+        //        {
+        //            Console.WriteLine($"⚠️ Movimiento duplicado detectado y omitido: Producto {m.IdProducto}, Doc {m.IdDocumentoOrigen}, Bodega {m.IdBodega}, Cantidad {m.Cantidad}");
+        //        }
+        //        else
+        //        {
+        //            movimientosFiltrados.Add(m);
+        //        }
+        //    }
+
+        //    if (!movimientosFiltrados.Any())
+        //    {
+        //        error = "Todos los movimientos ya fueron registrados anteriormente. No se realizaron cambios.";
+        //        Console.WriteLine($"⚠️ {error}");
+        //        return false;
+        //    }
+
+        //    // Ya no llamamos a ProcesarMovimientoStock porque el trigger actualiza stock automáticamente
+        //    Console.WriteLine("\n💾 Guardando movimientos válidos en base de datos...");
+        //    foreach (var movimiento in movimientosFiltrados)
+        //    {
+        //        Console.WriteLine($"  Guardando: Producto {movimiento.IdProducto}, Tipo {movimiento.TipoMovimiento}, Cantidad {movimiento.Cantidad}, Bodega: {movimiento.IdBodega}");
+        //        context.MovimientosInventarios.Add(new MovimientosInventario
+        //        {
+        //            IdBodega = movimiento.IdBodega,
+        //            IdProducto = movimiento.IdProducto,
+        //            TipoMovimiento = movimiento.TipoMovimiento,
+        //            Cantidad = movimiento.Cantidad,
+        //            PrecioUnitario = movimiento.PrecioUnitario,
+        //            NumeroSerie = movimiento.NumeroSerie,
+        //            Observaciones = movimiento.Observaciones,
+        //            UsuarioRegistro = movimiento.UsuarioRegistro,
+        //            FechaMovimiento = movimiento.FechaMovimiento,
+        //            Origen = movimiento.Origen,
+        //            IdDocumentoOrigen = movimiento.IdDocumentoOrigen,
+        //            IdBodegaOrigen = movimiento.IdBodegaOrigen,
+        //            IdBodegaDestino = movimiento.IdBodegaDestino
+        //        });
+        //    }
+
+        //    context.SaveChanges();
+        //    Console.WriteLine("✅ Guardado finalizado sin duplicados.");
+
+        //    // Mostrar resumen final de stock (solo lectura)
+        //    Console.WriteLine("\n📋 RESUMEN FINAL DE STOCK EN BD:");
+        //    using var contextoResumen = new InvensisContext();
+        //    foreach (var m in movimientosFiltrados)
+        //    {
+        //        var stock = contextoResumen.StockBodegas
+        //            .AsNoTracking()
+        //            .FirstOrDefault(s => s.IdBodega == m.IdBodega && s.IdProducto == m.IdProducto);
+        //        if (stock != null)
+        //        {
+        //            Console.WriteLine($"  🧾 Producto {m.IdProducto}, Bodega {m.IdBodega}, CantidadDisponible: {stock.CantidadDisponible}");
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine($"  ⚠️ Producto {m.IdProducto}, Bodega {m.IdBodega} aún no tiene stock registrado.");
+        //        }
+        //    }
+
+        //    Console.WriteLine($"🟡 [FIN] RegistrarMovimientos - Invocación #{contadorInvocacionesRegistrarMovimientos}\n");
+        //    return true;
+        //}
+
+
+
+
 
 
 

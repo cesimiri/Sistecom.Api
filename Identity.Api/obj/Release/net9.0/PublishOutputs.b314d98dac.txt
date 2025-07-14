@@ -50,6 +50,7 @@ C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\Sys
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\System.Configuration.ConfigurationManager.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\System.Drawing.Common.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\System.IdentityModel.Tokens.Jwt.dll
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\System.Linq.Dynamic.Core.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\System.Memory.Data.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\System.Runtime.Caching.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\System.Security.Cryptography.ProtectedData.dll

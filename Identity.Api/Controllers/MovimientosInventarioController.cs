@@ -3,7 +3,6 @@ using Identity.Api.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Controllers
 {
@@ -47,34 +46,25 @@ namespace Identity.Api.Controllers
 
 
 
-
-
-
-
-        [HttpGet("ObtenerPorId/{id}")]
-        public ActionResult<MovimientosInventario> ObtenerPorId(int id)
-        {
-            var movimiento = _bodega.ObtenerPorId(id);
-            if (movimiento == null)
-                return NotFound($"No se encontró movimiento con ID {id}");
-
-            return Ok(movimiento);
-        }
-
-        //lista paginada de movimientos de inventario, con filtro por nombre del producto, tipo de movimiento, bodega y rango de fechas.
         [HttpGet("GetPaginados")]
         public IActionResult GetPaginados(
-            int pagina = 1,
-            int pageSize = 10,
-            string? tipoMovimiento = null,
-            int? idBodega = null,
-            string? nombreProducto = null,
-            DateTime? desde = null,
-            DateTime? hasta = null)
+        int pagina = 1,
+        int pageSize = 10,
+        string? tipoMovimiento = null,
+        int? idBodega = null,
+        string? nombreProducto = null,
+        DateTime? desde = null,
+        DateTime? hasta = null,
+        string? ordenColumna = null,
+        bool ordenAscendente = true,
+        int? idProducto = null) // nuevo
         {
-            var resultado = _bodega.GetPaginados(pagina, pageSize, tipoMovimiento, idBodega, nombreProducto, desde, hasta);
+            var resultado = _bodega.GetPaginados(pagina, pageSize, tipoMovimiento, idBodega, nombreProducto, desde, hasta, ordenColumna, ordenAscendente, idProducto);
             return Ok(resultado);
         }
+
+
+
 
         // Endpoint para traer las solicitudes para dar de baja en salidas, NO usadas en movimientos
         [HttpGet("SolicitudesDeSalida")]

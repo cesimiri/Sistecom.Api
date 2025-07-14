@@ -1,5 +1,4 @@
-﻿using Identity.Api.DTO;
-using Identity.Api.Interfaces;
+﻿using Identity.Api.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -37,15 +36,7 @@ namespace Identity.Api.Controllers
             return Ok(item);
         }
 
-        [HttpPost("Create")]
-        public IActionResult Create([FromBody] stockBodegaDTO item)
-        {
-            if (item == null || !ModelState.IsValid)
-                return BadRequest("Datos inválidos.");
 
-            _service.InsertStockBodega(item);
-            return Ok(item);
-        }
 
         [HttpPut("Update")]
         public IActionResult Update([FromBody] StockBodega item)
@@ -92,14 +83,14 @@ namespace Identity.Api.Controllers
 
 
         //Actualizar stock
-        [HttpPost("ProcesarMovimientoStock")]
-        public IActionResult ProcesarMovimientoStock([FromBody] List<MovimientosInventarioDTO> movimientos)
-        {
-            if (!_service.ProcesarMovimientoStock(movimientos, out string error))
-                return BadRequest(new { mensaje = "No se pudo procesar el stock", detalle = error });
+        //[HttpPost("ProcesarMovimientoStock")]
+        //public IActionResult ProcesarMovimientoStock([FromBody] List<MovimientosInventarioDTO> movimientos)
+        //{
+        //    if (!_service.ProcesarMovimientoStock(movimientos, out string error))
+        //        return BadRequest(new { mensaje = "No se pudo procesar el stock", detalle = error });
 
-            return Ok(new { mensaje = "Stock actualizado correctamente" });
-        }
+        //    return Ok(new { mensaje = "Stock actualizado correctamente" });
+        //}
 
     }
 }

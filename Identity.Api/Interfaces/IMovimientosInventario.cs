@@ -1,6 +1,5 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Paginado;
-using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Interfaces
 {
@@ -13,7 +12,6 @@ namespace Identity.Api.Interfaces
 
 
 
-        MovimientosInventario? ObtenerPorId(int id);
 
         //paginado con busqueda
         PagedResult<MovimientosInventarioDTO> GetPaginados(
@@ -23,7 +21,14 @@ namespace Identity.Api.Interfaces
             int? idBodega,
             string? nombreProducto,
             DateTime? desde,
-            DateTime? hasta);
+            DateTime? hasta,
+            string? ordenColumna = null,
+            bool ordenAscendente = true,
+            int? idProducto = null); // <- NUEVO
+
+
+
+
 
         //obtener las solicitudes de compras que aun no esten ingresadas
         Task<List<SolicitudesCompraDTO>> ObtenerSolicitudesNoUsadasAsync();
