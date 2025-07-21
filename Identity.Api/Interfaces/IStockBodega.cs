@@ -13,15 +13,12 @@ namespace Identity.Api.Interfaces
         //void DeleteStockBodega(StockBodega item);
         void DeleteStockBodegaById(int idStock);
 
-
-
-
-
         //paginado
         PagedResult<stockBodegaDTO> GetPaginadosPorBodega(int idBodega, int pagina, int pageSize, string? filtro = null);
 
 
-        //actualiza el stock de la bodega 
-        //bool ProcesarMovimientoStock(List<MovimientosInventarioDTO> movimientos, out string error);
+        //exportar
+        List<stockBodegaDTO> ObtenerParaExportar(int idBodega, string? filtro = null, string? correo = null);
+
     }
 }

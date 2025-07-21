@@ -46,5 +46,11 @@ namespace Identity.Api.Services
         {
             return _dataRepository.GetProductoPaginados(pagina, pageSize, filtro, estado);
         }
+
+        //exportar
+        public List<ProductoDTO> ObtenerProductoFiltradas(string? filtro, string? estado)
+        {
+            return _dataRepository.ObtenerProductoFiltradas(filtro, estado);
+        }
     }
 }

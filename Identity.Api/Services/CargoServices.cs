@@ -1,8 +1,9 @@
 ﻿using Identity.Api.DataRepository;
-using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
 using Modelo.Sistecom.Modelo.Database;
+
+
 namespace Identity.Api.Services
 {
     public class CargoServices : ICargo

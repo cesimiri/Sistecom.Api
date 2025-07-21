@@ -1,11 +1,5 @@
-﻿using Identity.Api.DTO;
-using Identity.Api.Paginado;
-using Identity.Api.Persistence.DataBase;
-using Microsoft.EntityFrameworkCore;
+﻿using Identity.Api.Paginado;
 using Modelo.Sistecom.Modelo.Database;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Identity.Api.Paginado;
 
 namespace Identity.Api.DataRepository
 {
@@ -27,7 +21,7 @@ namespace Identity.Api.DataRepository
             {
                 return context.EmpresasClientes.FirstOrDefault(p => p.Ruc == ruc); ;
             }
-           
+
         }
 
         //public void InsertEmpresaCliente(EmpresasCliente NewItem)
@@ -94,7 +88,7 @@ namespace Identity.Api.DataRepository
 
         public void DeleteEmpresaCliente(EmpresasCliente NewItem)
         {
-            
+
             using (var context = new InvensisContext())
             {
                 context.EmpresasClientes.Remove(NewItem);
@@ -124,7 +118,7 @@ namespace Identity.Api.DataRepository
             using var context = new InvensisContext();
 
             var query = context.EmpresasClientes
-                
+
                 .AsQueryable();
 
             // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
@@ -132,11 +126,11 @@ namespace Identity.Api.DataRepository
             {
                 filtro = filtro.ToLower();
                 query = query.Where(u =>
-                    u.NombreComercial.ToLower().Contains(filtro) 
+                    u.NombreComercial.ToLower().Contains(filtro)
                     );
             }
 
-            // Aplicar filtro por estado
+            // Aplicar filtro por estado y ordenado por razón social
             if (!string.IsNullOrEmpty(estado))
             {
                 query = query.Where(u => u.Estado == estado);
@@ -147,7 +141,8 @@ namespace Identity.Api.DataRepository
 
             // Obtener página solicitada con paginado
             var usuarios = query
-                .OrderBy(u => u.Ruc) // importante ordenar antes de Skip/Take
+                //.OrderBy(u => u.Ruc) // importante ordenar antes de Skip/Take  
+                .OrderBy(u => u.RazonSocial) // importante ordenar antes de Skip/Take
                 .Skip((pagina - 1) * pageSize)
                 .Take(pageSize)
                 .Select(s => new EmpresasCliente
@@ -178,6 +173,43 @@ namespace Identity.Api.DataRepository
                 PageSize = pageSize
             };
         }
+
+
+        //exportar PDF
+        public List<EmpresasCliente> ObtenerEmpresasFiltradas(string? filtro, string? estado)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.EmpresasClientes.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filtro))
+            {
+                var lowerFiltro = filtro.ToLower();
+                query = query.Where(e =>
+                    e.RazonSocial.ToLower().Contains(lowerFiltro) ||
+                    e.NombreComercial.ToLower().Contains(lowerFiltro));
+            }
+
+            if (!string.IsNullOrWhiteSpace(estado))
+            {
+                query = query.Where(e => e.Estado == estado);
+            }
+
+            return query
+                .Select(e => new EmpresasCliente
+                {
+                    Ruc = e.Ruc,
+                    RazonSocial = e.RazonSocial,
+                    TipoCliente = e.TipoCliente,
+                    Telefono = e.Telefono,
+                    DireccionMatriz = e.DireccionMatriz,
+                    Ciudad = e.Ciudad,
+                    Estado = e.Estado
+                })
+                .ToList();
+        }
+
+
     }
 }
 

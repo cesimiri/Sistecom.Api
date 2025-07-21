@@ -1,11 +1,7 @@
 ﻿using Identity.Api.DTO;
-using Identity.Api.Interfaces;
-using Identity.Api.Model;
 using Identity.Api.Paginado;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
-using System.Collections.Generic;
-using System.Linq;
 
 
 namespace Identity.Api.DataRepository
@@ -154,7 +150,7 @@ namespace Identity.Api.DataRepository
                 suscripcion.Estado = dto.Estado;
                 suscripcion.NotificarDiasAntes = dto.NotificarDiasAntes;
                 suscripcion.Observaciones = dto.Observaciones;
-               
+
 
                 // Actualizar navegación (opcional)
                 suscripcion.RucEmpresaNavigation = context.EmpresasClientes
@@ -211,7 +207,7 @@ namespace Identity.Api.DataRepository
             {
                 filtro = filtro.ToLower();
                 query = query.Where(u =>
-                    u.NombreServicio.ToLower().Contains(filtro) );
+                    u.NombreServicio.ToLower().Contains(filtro));
             }
 
             // Aplicar filtro por estado
@@ -286,6 +282,57 @@ namespace Identity.Api.DataRepository
 
             return usuarios;
         }
+
+        //exportar
+        public List<SuscripcionDto> ObtenerSuscripcioneFiltradas(string? filtro, string? estado)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.Suscripciones
+                .Include(e => e.RucEmpresaNavigation)
+                .Include(e => e.IdProveedorNavigation)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filtro))
+            {
+                var lowerFiltro = filtro.ToLower();
+                query = query.Where(e =>
+                    e.NombreServicio.ToLower().Contains(lowerFiltro) ||
+                    e.IdProveedorNavigation.NombreComercial.ToLower().Contains(lowerFiltro));
+            }
+
+            if (!string.IsNullOrWhiteSpace(estado))
+            {
+                query = query.Where(e => e.Estado == estado);
+            }
+
+            return query
+                .Select(e => new SuscripcionDto
+                {
+                    IdSuscripcion = e.IdSuscripcion,
+                    RucEmpresa = e.RucEmpresa,
+                    IdProveedor = e.IdProveedor,
+                    NombreServicio = e.NombreServicio,
+                    TipoSuscripcion = e.TipoSuscripcion,
+                    FechaInicio = e.FechaInicio.ToDateTime(new TimeOnly(0, 0)),
+                    FechaRenovacion = e.FechaRenovacion.ToDateTime(new TimeOnly(0, 0)),
+                    PeriodoFacturacion = e.PeriodoFacturacion,
+                    CostoPeriodo = e.CostoPeriodo,
+                    UsuariosIncluidos = e.UsuariosIncluidos,
+                    AlmacenamientoGb = e.AlmacenamientoGb,
+                    UrlAcceso = e.UrlAcceso,
+                    Administrador = e.Administrador,
+                    Estado = e.Estado,
+                    NotificarDiasAntes = e.NotificarDiasAntes,
+                    Observaciones = e.Observaciones,
+                    // Campos relacionados:
+                    RazonSocialEmpresa = e.RucEmpresaNavigation.RazonSocial,
+                    RazonSocialProveedor = e.IdProveedorNavigation.RazonSocial
+                })
+                .ToList();
+        }
+
+
 
     }
 }

@@ -1,10 +1,11 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
+using Identity.Api.Reporteria;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Modelo.Sistecom.Modelo.Database;
+using QuestPDF.Infrastructure;
 
 namespace Identity.Api.Controllers
 {
@@ -128,6 +129,25 @@ namespace Identity.Api.Controllers
             {
                 return BadRequest(new { error = ex.Message });
             }
+        }
+
+
+        //EXPORTAR PDF
+        [HttpGet("exportarPDF")]
+        public IActionResult ExportarEmpresasPdf(string? filtro = null, string? estado = null, string? correo = null)
+        {
+            QuestPDF.Settings.License = LicenseType.Community;
+
+            var datos = _iSucursale.ObtenerSucursalesFiltradas(filtro, estado);
+
+            if (datos == null || !datos.Any())
+                return NotFound("No hay datos para exportar.");
+
+            //nombre del pdfGenerator
+
+            var pdfBytes = SucursalePdfGenerator.GenerarPdf(datos, correo);
+
+            return File(pdfBytes, "application/pdf", "SucursalesListado.pdf");
         }
     }
 }

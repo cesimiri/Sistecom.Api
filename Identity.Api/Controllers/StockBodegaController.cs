@@ -1,8 +1,11 @@
 ﻿using Identity.Api.Interfaces;
+using Identity.Api.Reporteria;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Modelo.Sistecom.Modelo.Database;
+using QuestPDF.Infrastructure;
+
 
 namespace Identity.Api.Controllers
 {
@@ -81,16 +84,40 @@ namespace Identity.Api.Controllers
             }
         }
 
+        //exportar
+        [HttpGet("exportarPDF")]
+        public IActionResult ExportarPdf(int idBodega, string? filtro = null, string? correo = null)
+        {
 
-        //Actualizar stock
-        //[HttpPost("ProcesarMovimientoStock")]
-        //public IActionResult ProcesarMovimientoStock([FromBody] List<MovimientosInventarioDTO> movimientos)
-        //{
-        //    if (!_service.ProcesarMovimientoStock(movimientos, out string error))
-        //        return BadRequest(new { mensaje = "No se pudo procesar el stock", detalle = error });
 
-        //    return Ok(new { mensaje = "Stock actualizado correctamente" });
-        //}
+            QuestPDF.Settings.License = LicenseType.Community;
+
+            var datos = _service.ObtenerParaExportar(idBodega, filtro);
+            if (datos == null || !datos.Any())
+                return NotFound("No hay datos para exportar.");
+
+            var pdfBytes = StockBodegaPdfGenerator.Generate(datos, correo);
+
+
+            if (pdfBytes == null || pdfBytes.Length == 0)
+                return BadRequest("El PDF generado está vacío.");
+
+            Response.Headers["Content-Disposition"] = "attachment; filename=\"StockBodega.pdf\"";
+            Response.Headers["Access-Control-Expose-Headers"] = "Content-Disposition";
+            Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+            Response.Headers["Pragma"] = "no-cache";
+            Response.Headers["Expires"] = "0";
+
+            return File(pdfBytes, "application/pdf");
+        }
+
+
+
+
+
+
+
+
 
     }
 }

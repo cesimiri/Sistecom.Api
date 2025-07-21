@@ -19,6 +19,7 @@ namespace Identity.Api.DataRepository
             error = null;
             var movimientosProcesados = new List<MovimientosInventarioDTO>();
 
+            // 🟡 Mostrar los movimientos recibidos
             Console.WriteLine($"\n🟡 [INICIO] Recibidos desde el frontend - Invocación #{contadorInvocacionesRegistrarMovimientos}:");
             Console.WriteLine($"Cantidad de movimientos recibidos: {movimientos.Count}");
             foreach (var m in movimientos)
@@ -26,7 +27,7 @@ namespace Identity.Api.DataRepository
                 Console.WriteLine($"  - Producto: {m.IdProducto}, Cantidad: {m.Cantidad}, Tipo: {m.TipoMovimiento}, Bodega: {m.IdBodega}");
             }
 
-            // 🔄 Procesamiento de movimientos (desglosar transferencia si aplica)
+            // 🔄 Procesamiento de movimientos: desglosar transferencia si aplica
             foreach (var movimiento in movimientos)
             {
                 var tipo = movimiento.TipoMovimiento?.ToUpperInvariant();
@@ -109,6 +110,7 @@ namespace Identity.Api.DataRepository
                 }
             }
 
+            // ✅ Mostrar resumen de movimientos a guardar
             Console.WriteLine($"\n✅ Movimientos listos para guardar en BD. Total: {movimientosProcesados.Count}");
             foreach (var m in movimientosProcesados)
             {
@@ -118,6 +120,7 @@ namespace Identity.Api.DataRepository
             using var context = new InvensisContext();
             var movimientosFiltrados = new List<MovimientosInventarioDTO>();
 
+            // 🔎 Verificar duplicados en base de datos
             Console.WriteLine("\n🔎 Verificando duplicados en BD...");
             foreach (var m in movimientosProcesados)
             {
@@ -146,11 +149,31 @@ namespace Identity.Api.DataRepository
                 return false;
             }
 
-            // 💾 Insertar en la tabla movimientos_inventario (el trigger se encargará del stock)
+            // 💾 Insertar movimientos con cálculo de stock anterior y actual
             Console.WriteLine("\n💾 Guardando movimientos válidos en base de datos...");
             foreach (var movimiento in movimientosFiltrados)
             {
-                Console.WriteLine($"  Guardando: Producto {movimiento.IdProducto}, Tipo {movimiento.TipoMovimiento}, Cantidad {movimiento.Cantidad}, Bodega: {movimiento.IdBodega}");
+                var stockActualBodega = context.StockBodegas
+                    .AsNoTracking()
+                    .FirstOrDefault(s => s.IdBodega == movimiento.IdBodega && s.IdProducto == movimiento.IdProducto);
+
+                // 🧮 Calcular stock anterior y nuevo
+                decimal stockAnterior = stockActualBodega?.CantidadDisponible ?? 0;
+                decimal stockActual = movimiento.TipoMovimiento.ToUpper() switch
+                {
+                    "ENTRADA" => stockAnterior + movimiento.Cantidad,
+                    "SALIDA" => stockAnterior - movimiento.Cantidad,
+                    "AJUSTE" => movimiento.Cantidad, // el ajuste se asume como nuevo valor
+                    _ => stockAnterior
+                };
+
+                // Guardar en DTO (opcional, por si lo necesitas después)
+                movimiento.StockAnterior = stockAnterior;
+                movimiento.StockActual = stockActual;
+
+                Console.WriteLine($"  Guardando: Producto {movimiento.IdProducto}, Tipo {movimiento.TipoMovimiento}, Cantidad {movimiento.Cantidad}, Bodega: {movimiento.IdBodega}, StockAnterior: {stockAnterior}, StockActual: {stockActual}");
+
+                // Guardar en BD
                 context.MovimientosInventarios.Add(new MovimientosInventario
                 {
                     IdBodega = movimiento.IdBodega,
@@ -165,14 +188,16 @@ namespace Identity.Api.DataRepository
                     Origen = movimiento.Origen,
                     IdDocumentoOrigen = movimiento.IdDocumentoOrigen,
                     IdBodegaOrigen = movimiento.IdBodegaOrigen,
-                    IdBodegaDestino = movimiento.IdBodegaDestino
+                    IdBodegaDestino = movimiento.IdBodegaDestino,
+                    StockAnterior = stockAnterior,
+                    StockActual = stockActual
                 });
             }
 
             context.SaveChanges();
             Console.WriteLine("✅ Guardado finalizado sin duplicados.");
 
-            // 📋 Mostrar resumen final del stock (ya actualizado por el trigger)
+            // 📋 Mostrar resumen final de stock actualizado
             Console.WriteLine("\n📋 RESUMEN FINAL DE STOCK EN BD:");
             using var contextoResumen = new InvensisContext();
             foreach (var m in movimientosFiltrados)
@@ -194,15 +219,6 @@ namespace Identity.Api.DataRepository
             Console.WriteLine($"🟡 [FIN] RegistrarMovimientos - Invocación #{contadorInvocacionesRegistrarMovimientos}\n");
             return true;
         }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -356,26 +372,29 @@ namespace Identity.Api.DataRepository
         //traer todas las solicitudes que no hayan sido ingresadas en MovimientosInventario
         public async Task<List<SolicitudesCompraDTO>> ObtenerSolicitudesNoUsadasAsync()
         {
-            // Obtener lista de solicitudes que NO han sido usadas como documento origen
             using var context = new InvensisContext();
+
+            // 1. Obtener los IdSolicitud que ya han sido usados como documento origen
             var usadas = await context.MovimientosInventarios
                 .Where(m => m.IdDocumentoOrigen != null)
-                .Select(m => m.IdDocumentoOrigen!.ToString())
+                .Select(m => m.IdDocumentoOrigen.Value) // <- int
                 .Distinct()
                 .ToListAsync();
 
+            // 2. Devolver las solicitudes que NO estén en esa lista
             return await context.SolicitudesCompras
-                .Where(f => !usadas.Contains(f.NumeroSolicitud))
-                .Select(f => new SolicitudesCompraDTO
+                .Where(s => !usadas.Contains(s.IdSolicitud)) // <- correcto
+                .Select(s => new SolicitudesCompraDTO
                 {
-                    IdSolicitud = f.IdSolicitud,
-                    NumeroSolicitud = f.NumeroSolicitud,
-                    IdUsuarioAutoriza = f.IdUsuarioAutoriza,
-                    IdUsuarioDestino = f.IdUsuarioDestino,
-                    IdDepartamento = f.IdDepartamento
+                    IdSolicitud = s.IdSolicitud,
+                    NumeroSolicitud = s.NumeroSolicitud,
+                    IdUsuarioAutoriza = s.IdUsuarioAutoriza,
+                    IdUsuarioDestino = s.IdUsuarioDestino,
+                    IdDepartamento = s.IdDepartamento
                 })
                 .ToListAsync();
         }
+
 
         //trae todos los productos por el idSolicitud que se le pase 
         public async Task<List<DetalleSolicitudDTO>> ObtenerDetalleSolicitudAsync(int idSolicitud)

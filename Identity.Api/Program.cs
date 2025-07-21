@@ -5,9 +5,7 @@ using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Modelo.Sistecom.Modelo.Database;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -138,13 +136,14 @@ builder.Services.AddScoped<ISolicitudesCompra, SolicitudesCompraService>();
 builder.Services.AddScoped<IFacturasCompra, FacturasCompraServices>();
 
 // Servicios de Bodegas
-builder.Services.AddScoped<IBodega,  BodegaService>();
+builder.Services.AddScoped<IBodega, BodegaService>();
 
 // Servicios de Stock Bodega
 builder.Services.AddScoped<IStockBodega, StockBodegaServices>();
 
 //DetalleSolicitud
 builder.Services.AddScoped<IDetalleSolicitud, DetalleSolicitudService>();
+
 
 //Servicio OrdenesEtrega
 builder.Services.AddScoped<IOrdenesEntrega, OrdenesEntregaServices>();

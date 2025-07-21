@@ -1,7 +1,7 @@
 ﻿using Identity.Api.DTO;
+using Identity.Api.Paginado;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
-using Identity.Api.Paginado;
 
 namespace identity.api.datarepository
 {
@@ -46,6 +46,7 @@ namespace identity.api.datarepository
 
             return context.Sucursales
                 .Where(m => m.RucEmpresa == RucEmpresa)
+                .OrderBy(s => s.NombreSucursal)
         .Select(m => new SucursaleDTO
         {
             IdSucursal = m.IdSucursal,
@@ -74,6 +75,7 @@ namespace identity.api.datarepository
 
             return context.Departamentos
                 .Where(m => m.IdSucursal == idSucursal)
+                .OrderBy(s => s.NombreDepartamento)
         .Select(m => new DepartamentoDTO
         {
             IdDepartamento = m.IdDepartamento,
@@ -129,7 +131,8 @@ namespace identity.api.datarepository
         //insertar un nuevo usuario
         public void InsertUsuario(UsuarioDTO dto)
         {
-            try {
+            try
+            {
                 using var context = new InvensisContext();
 
                 var departamento = context.Departamentos.Find(dto.IdDepartamento);

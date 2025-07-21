@@ -1,11 +1,11 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
-using Identity.Api.Services;
+using Identity.Api.Reporteria;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Modelo.Sistecom.Modelo.Database;
+using QuestPDF.Infrastructure;
 
 namespace Identity.Api.Controllers
 {
@@ -143,5 +143,63 @@ namespace Identity.Api.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
+
+
+        //exportar PDF
+        [HttpGet("exportarPDF")]
+        public IActionResult ExportarEmpresasPdf(string? filtro = null, string? estado = null, string? correo = null)
+        {
+            QuestPDF.Settings.License = LicenseType.Community;
+
+            var datos = _facturasCompra.ObtenerFacturaCompraFiltradas(filtro, estado);
+
+            if (datos == null || !datos.Any())
+                return NotFound("No hay datos para exportar.");
+
+            var pdfBytes = FacturaCompraPdfGenerator.GenerarPdf(datos, correo);
+
+            return File(pdfBytes, "application/pdf", "EmpresasListado.pdf");
+        }
+
+
+
+        //aqui 
+        [HttpGet("ExportarFacturaCompraPdfById/{idFactura}")]
+        public async Task<IActionResult> DescargarFacturaPdf(int idFactura)
+        {
+            QuestPDF.Settings.License = LicenseType.Community;
+            // 1. Obtener factura y sus detalles desde el servicio de manera asíncrona
+            var (factura, detalles) = await _facturasCompra.ObtenerFacturaConDetallesAsync(idFactura);
+
+            // 2. Validar que la factura exista
+            if (factura == null)
+                return NotFound("Factura no encontrada.");
+
+            // 3. Obtener correo del usuario autenticado para incluir en el PDF (o correo default)
+            string correoUsuario = User.Identity?.Name ?? "correo@ejemplo.com";
+
+            // 4. Generar el PDF (debe devolver un arreglo de bytes)
+            var pdfBytes = FacturaPdfGenerator.GenerarPdf(factura, detalles, correoUsuario);
+
+            // 5. Validar que el PDF se generó correctamente
+            if (pdfBytes == null || pdfBytes.Length == 0)
+                return StatusCode(500, "Error al generar el PDF.");
+
+            // 6. Crear un nombre de archivo para el PDF
+            var fileName = $"Factura_{factura.NumeroFactura}_{DateTime.Now:yyyyMMdd}.pdf";
+
+            // 7. Retornar el archivo PDF para descarga
+            return File(pdfBytes, "application/pdf", fileName);
+        }
+
+
+
+
+
+
+
+
+
+
     }
 }

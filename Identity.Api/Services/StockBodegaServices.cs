@@ -27,11 +27,6 @@ namespace Identity.Api.Services
             _dataRepository.UpdateStockBodega(item);
         }
 
-        //public void DeleteStockBodega(StockBodega item)
-        //{
-        //    _dataRepository.DeleteStockBodega(item);
-        //}
-
         public void DeleteStockBodegaById(int idStock)
         {
             _dataRepository.DeleteStockBodegaById(idStock);
@@ -45,10 +40,11 @@ namespace Identity.Api.Services
         }
 
 
-        //ingreso masivo: acepta lista de movimientos
-        //public bool ProcesarMovimientoStock(List<MovimientosInventarioDTO> movimientos, out string error)
-        //{
-        //    return _dataRepository.ProcesarMovimientoStock(movimientos, out error);
-        //}
+        //exportar
+        public List<stockBodegaDTO> ObtenerParaExportar(int idBodega, string? filtro = null, string? correo = null)
+        {
+            return _dataRepository.ObtenerParaExportar(idBodega, filtro, correo);
+        }
+
     }
 }

@@ -15,5 +15,8 @@ namespace Identity.Api.Interfaces
 
         // Nuevo método para paginado:
         PagedResult<SucursaleDTO> GetSucursalePaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
+
+        //exportar
+        List<SucursaleDTO> ObtenerSucursalesFiltradas(string? filtro, string? estado);
     }
 }

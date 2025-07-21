@@ -1,8 +1,8 @@
 ﻿using Identity.Api.DataRepository;
-using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
 using Modelo.Sistecom.Modelo.Database;
+
 
 namespace Identity.Api.Services
 {
@@ -44,5 +44,12 @@ namespace Identity.Api.Services
         {
             return _dataRepository.GetEmpresasPaginados(pagina, pageSize, filtro, estado);
         }
+
+        //exportar
+        public List<EmpresasCliente> ObtenerEmpresasFiltradas(string? filtro, string? estado)
+        {
+            return _dataRepository.ObtenerEmpresasFiltradas(filtro, estado);
+        }
+
     }
 }

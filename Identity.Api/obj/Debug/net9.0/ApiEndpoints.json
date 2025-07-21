@@ -131,6 +131,67 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.ActivoController",
+    "Method": "GetPaginados",
+    "RelativePath": "api/Activo/GetPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "codigoActivo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "idProducto",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "desde",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "hasta",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "idFacturaCompra",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "estadoActivo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ordenColumna",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "ordenAscendente",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ActivoController",
     "Method": "Create",
     "RelativePath": "api/Activo/InsertActivo",
     "HttpMethod": "POST",
@@ -1365,6 +1426,32 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.EmpresaClienteController",
+    "Method": "ExportarEmpresasPdf",
+    "RelativePath": "api/EmpresaCliente/exportarPDF",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "correo",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.EmpresaClienteController",
     "Method": "GetEmpresaClienteById",
     "RelativePath": "api/EmpresaCliente/GetEmpresaClienteById/{ruc}",
     "HttpMethod": "GET",
@@ -1454,6 +1541,48 @@
         "Name": "IdFacturasCompra",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.FacturasCompraController",
+    "Method": "DescargarFacturaPdf",
+    "RelativePath": "api/FacturasCompra/ExportarFacturaCompraPdfById/{idFactura}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idFactura",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.FacturasCompraController",
+    "Method": "ExportarEmpresasPdf",
+    "RelativePath": "api/FacturasCompra/exportarPDF",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "correo",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -1655,6 +1784,32 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.LicenciaController",
+    "Method": "ExportarEmpresasPdf",
+    "RelativePath": "api/Licencia/exportarPDF",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "correo",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.LicenciaController",
     "Method": "GetFacturasConCategoria6",
     "RelativePath": "api/Licencia/GetFacturasConCategoria6",
     "HttpMethod": "GET",
@@ -1756,7 +1911,7 @@
     "Parameters": [
       {
         "Name": "UpdItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.Licencia",
+        "Type": "Identity.Api.DTO.LicenciaDTO",
         "IsRequired": true
       }
     ],
@@ -2429,6 +2584,32 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.ProductoController",
+    "Method": "ExportarEmpresasPdf",
+    "RelativePath": "api/Producto/exportarPDF",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "correo",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ProductoController",
     "Method": "GetModelosByIdMarca",
     "RelativePath": "api/Producto/GetModelosByIdMarca/{idMarca}",
     "HttpMethod": "GET",
@@ -3030,6 +3211,32 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.StockBodegaController",
+    "Method": "ExportarPdf",
+    "RelativePath": "api/StockBodega/exportarPDF",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idBodega",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "correo",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.StockBodegaController",
     "Method": "GetAll",
     "RelativePath": "api/StockBodega/GetAll",
     "HttpMethod": "GET",
@@ -3113,6 +3320,32 @@
         "Name": "idSucursal",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SucursaleController",
+    "Method": "ExportarEmpresasPdf",
+    "RelativePath": "api/Sucursale/exportarPDF",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "correo",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
@@ -3234,6 +3467,32 @@
         "Name": "idSuscripcion",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SuscripcioneController",
+    "Method": "ObtenerSuscripcioneFiltradas",
+    "RelativePath": "api/Suscripcione/exportarPDF",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "correo",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

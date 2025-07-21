@@ -1,5 +1,4 @@
 ﻿using Identity.Api.Interfaces;
-using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -117,5 +116,32 @@ namespace Identity.Api.Controllers
 
             return NoContent();
         }
+
+
+        //PAGINADO
+        [HttpGet("GetPaginados")]
+        public IActionResult GetPaginados(
+            int pagina = 1,
+            int pageSize = 8,
+            string? codigoActivo = null,
+            int? idProducto = null,
+            DateTime? desde = null,
+            DateTime? hasta = null,
+            int? idFacturaCompra = null,
+            string? estadoActivo = null,
+            string? ordenColumna = null,
+            bool ordenAscendente = true)
+        {
+            var resultado = _empresaCliente.GetPaginados(
+                pagina, pageSize,
+                codigoActivo, idProducto,
+                desde, hasta,
+                idFacturaCompra, estadoActivo,
+                ordenColumna, ordenAscendente);
+
+            return Ok(resultado);
+        }
+
+
     }
 }

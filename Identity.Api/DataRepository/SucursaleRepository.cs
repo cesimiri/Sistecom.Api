@@ -12,7 +12,9 @@ namespace Identity.Api.DataRepository
             using var context = new InvensisContext();
 
             return context.Sucursales
+                .Where(s => s.Estado == "ACTIVO") // ✅ Filtrar solo las sucursales activas
                 .Include(s => s.RucEmpresaNavigation)
+                .OrderBy(s => s.NombreSucursal) // ✅ Ordenar por NombreSucursal
                 .Select(s => new SucursaleDTO
                 {
                     IdSucursal = s.IdSucursal,
@@ -27,10 +29,10 @@ namespace Identity.Api.DataRepository
                     TelefonoResponsable = s.TelefonoResponsable,
                     EsMatriz = s.EsMatriz,
                     Estado = s.Estado,
-                    
+
                     // Campos relacionados:
                     RazonSocialEmpresa = s.RucEmpresaNavigation.RazonSocial,
-                    
+
                 })
                 .ToList();
         }
@@ -69,16 +71,16 @@ namespace Identity.Api.DataRepository
                 using var context = new InvensisContext();
 
                 var empresa = context.EmpresasClientes.Find(dto.RucEmpresa);
-                
 
-                if (empresa == null )
+
+                if (empresa == null)
                 {
                     throw new Exception("La empresa no existen en la base de datos.");
                 }
 
                 var nueva = new Sucursale
                 {
-                    
+
                     RucEmpresa = dto.RucEmpresa,
                     CodigoSucursal = dto.CodigoSucursal?.ToUpper(),
                     NombreSucursal = dto.NombreSucursal?.ToUpper(),
@@ -112,13 +114,13 @@ namespace Identity.Api.DataRepository
 
             if (suscripcion != null)
             {
-                
+
                 suscripcion.RucEmpresa = dto.RucEmpresa;
                 suscripcion.CodigoSucursal = dto.CodigoSucursal?.ToUpper();
                 suscripcion.NombreSucursal = dto.NombreSucursal?.ToUpper();
                 //conversion de DATETIME a DATEONLY
                 suscripcion.Direccion = dto.Direccion?.ToUpper();
-                suscripcion.Ciudad =dto.Ciudad?.ToUpper();
+                suscripcion.Ciudad = dto.Ciudad?.ToUpper();
                 suscripcion.Telefono = dto.Telefono;
                 suscripcion.Email = dto.Email?.Trim().ToLower();
                 suscripcion.Responsable = dto.Responsable;
@@ -130,7 +132,7 @@ namespace Identity.Api.DataRepository
                 // Actualizar navegación (opcional)
                 suscripcion.RucEmpresaNavigation = context.EmpresasClientes
                     .FirstOrDefault(e => e.Ruc == dto.RucEmpresa);
-                
+
 
                 context.SaveChanges();
             }
@@ -173,7 +175,7 @@ namespace Identity.Api.DataRepository
 
             var query = context.Sucursales
                 .Include(s => s.RucEmpresaNavigation)
-                
+
                 .AsQueryable();
 
             // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
@@ -181,7 +183,7 @@ namespace Identity.Api.DataRepository
             {
                 filtro = filtro.ToLower();
                 query = query.Where(u =>
-                    u.NombreSucursal.ToLower().Contains(filtro) );
+                    u.NombreSucursal.ToLower().Contains(filtro));
             }
 
             // Aplicar filtro por estado
@@ -195,7 +197,7 @@ namespace Identity.Api.DataRepository
 
             // Obtener página solicitada con paginado
             var usuarios = query
-                .OrderBy(u => u.IdSucursal) // importante ordenar antes de Skip/Take
+                .OrderBy(u => u.NombreSucursal) // importante ordenar antes de Skip/Take
                 .Skip((pagina - 1) * pageSize)
                 .Take(pageSize)
                 .Select(s => new SucursaleDTO
@@ -223,6 +225,47 @@ namespace Identity.Api.DataRepository
                 Page = pagina,
                 PageSize = pageSize
             };
+        }
+
+
+
+
+        //EXPORTAR
+        public List<SucursaleDTO> ObtenerSucursalesFiltradas(string? filtro, string? estado)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.Sucursales.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filtro))
+            {
+                var lowerFiltro = filtro.ToLower();
+                query = query.Where(e =>
+                    e.NombreSucursal.ToLower().Contains(lowerFiltro) ||
+                    e.RucEmpresa.ToLower().Contains(lowerFiltro));
+            }
+
+            if (!string.IsNullOrWhiteSpace(estado))
+            {
+                query = query.Where(e => e.Estado == estado);
+            }
+
+            return query
+                .Select(e => new SucursaleDTO
+                {
+                    RucEmpresa = e.RucEmpresa,
+                    CodigoSucursal = e.CodigoSucursal,
+                    NombreSucursal = e.NombreSucursal,
+                    Direccion = e.Direccion,
+                    Ciudad = e.Ciudad,
+                    Telefono = e.Telefono,
+                    Email = e.Email,
+                    Responsable = e.Responsable,
+                    TelefonoResponsable = e.TelefonoResponsable,
+                    EsMatriz = e.EsMatriz,
+                    Estado = e.Estado,
+                })
+                .ToList();
         }
     }
 }

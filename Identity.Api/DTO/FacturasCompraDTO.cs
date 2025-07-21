@@ -35,5 +35,7 @@
         //relacion 
         public string? RazonSocial { get; set; }
         public string? NombreBodega { get; set; }
+        public string? NombreProveedor { get; set; }
+
     }
 }

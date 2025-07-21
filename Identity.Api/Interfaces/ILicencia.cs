@@ -9,7 +9,7 @@ namespace Identity.Api.Interfaces
         IEnumerable<LicenciaDTO> LicenciaInfoAll { get; }
         Licencia GetLicenciaById(int IdLicencia);
         void InsertLicencia(LicenciaDTO New);
-        void UpdateLicencia(Licencia UpdItem);
+        void UpdateLicencia(LicenciaDTO UpdItem);
         //void DeleteLicencia(Licencia DelItem);
         void DeleteLicenciaById(int IdLicencia);
 
@@ -19,5 +19,8 @@ namespace Identity.Api.Interfaces
 
         // Nuevo método para paginado:
         PagedResult<LicenciaDTO> GetLicenciaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
+
+        //exportar
+        List<LicenciaDTO> ObtenerLicenciaFiltradas(string? filtro, string? estado);
     }
 }

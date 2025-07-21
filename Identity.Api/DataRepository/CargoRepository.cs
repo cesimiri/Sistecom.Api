@@ -1,8 +1,5 @@
-﻿using Identity.Api.DTO;
-using Identity.Api.Paginado;
-using Microsoft.EntityFrameworkCore;
+﻿using Identity.Api.Paginado;
 using Modelo.Sistecom.Modelo.Database;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 namespace Identity.Api.DataRepository
 {
     public class CargoRepository
@@ -15,7 +12,7 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        public Cargo GetCargoById(int  id)
+        public Cargo GetCargoById(int id)
         {
             using (var context = new InvensisContext())
             {
@@ -62,7 +59,7 @@ namespace Identity.Api.DataRepository
                     registrado.NivelJerarquico = UpdItem.NivelJerarquico;
                     registrado.PuedeAutorizarCompras = UpdItem.PuedeAutorizarCompras;
                     registrado.LimiteAutorizacion = UpdItem.LimiteAutorizacion;
-                    
+
                     registrado.Estado = UpdItem.Estado;
 
                     context.SaveChanges();
@@ -103,7 +100,7 @@ namespace Identity.Api.DataRepository
             using var context = new InvensisContext();
 
             var query = context.Cargos
-                
+
                 .AsQueryable();
 
             // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
@@ -111,7 +108,7 @@ namespace Identity.Api.DataRepository
             {
                 filtro = filtro.ToLower();
                 query = query.Where(u =>
-                    u.NombreCargo.ToLower().Contains(filtro) 
+                    u.NombreCargo.ToLower().Contains(filtro)
                    );
             }
 
@@ -126,7 +123,7 @@ namespace Identity.Api.DataRepository
 
             // Obtener página solicitada con paginado
             var usuarios = query
-                .OrderBy(u => u.IdCargo) // importante ordenar antes de Skip/Take
+                .OrderBy(u => u.NombreCargo) // importante ordenar antes de Skip/Take
                 .Skip((pagina - 1) * pageSize)
                 .Take(pageSize)
                 .Select(s => new Cargo
@@ -140,7 +137,7 @@ namespace Identity.Api.DataRepository
                     LimiteAutorizacion = s.LimiteAutorizacion,
 
                     Estado = s.Estado
-                   
+
                 })
                 .ToList();
 

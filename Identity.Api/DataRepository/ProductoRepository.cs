@@ -1,9 +1,7 @@
 ﻿using Identity.Api.DTO;
-using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 namespace Identity.Api.DataRepository
 {
     public class ProductoRepository
@@ -97,7 +95,7 @@ namespace Identity.Api.DataRepository
             ImagenUrl = m.ImagenUrl,
             Estado = m.Estado
         })
-        .ToList();  
+        .ToList();
         }
 
         public ProductoDTO GetProductoById(int idProducto)
@@ -161,7 +159,7 @@ namespace Identity.Api.DataRepository
                 var modelo = context.Modelos.Find(dto.IdModelo);
                 var nombreUnidadesMedidas = context.UnidadesMedida.Find(dto.IdUnidadMedida);
 
-                if (categoria == null|| marca == null || modelo == null || nombreUnidadesMedidas == null)
+                if (categoria == null || marca == null || modelo == null || nombreUnidadesMedidas == null)
                 {
                     throw new Exception("Esa Categoria , marca, modelo, unidadesmedidas no existe en la base de datos.");
                 }
@@ -263,7 +261,7 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        
+
 
         public void DeleteProductoById(int idProducto)
         {
@@ -298,7 +296,7 @@ namespace Identity.Api.DataRepository
             {
                 filtro = filtro.ToLower();
                 query = query.Where(u =>
-                    u.Nombre.ToLower().Contains(filtro) );
+                    u.Nombre.ToLower().Contains(filtro));
             }
 
             // Aplicar filtro por estado
@@ -356,6 +354,69 @@ namespace Identity.Api.DataRepository
                 Page = pagina,
                 PageSize = pageSize
             };
+        }
+
+
+        //EXPORTAR
+        public List<ProductoDTO> ObtenerProductoFiltradas(string? filtro, string? estado)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.Productos
+                .Include(e => e.IdMarcaNavigation)
+                .Include(e => e.IdModeloNavigation)
+
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filtro))
+            {
+                var lowerFiltro = filtro.ToLower();
+                query = query.Where(e =>
+                    e.Nombre.ToLower().Contains(lowerFiltro) ||
+                    e.CodigoPrincipal.ToLower().Contains(lowerFiltro));
+            }
+
+            if (!string.IsNullOrWhiteSpace(estado))
+            {
+                query = query.Where(e => e.Estado == estado);
+            }
+
+            return query
+                .Select(s => new ProductoDTO
+                {
+                    IdProducto = s.IdProducto,
+                    CodigoPrincipal = s.CodigoPrincipal,
+                    CodigoAuxiliar = s.CodigoAuxiliar,
+                    Nombre = s.Nombre,
+                    Descripcion = s.Descripcion,
+                    IdCategoria = s.IdCategoria,
+                    TipoProducto = s.TipoProducto,
+                    EsComponente = s.EsComponente,
+                    EsEnsamblable = s.EsEnsamblable,
+                    RequiereSerial = s.RequiereSerial,
+                    IdMarca = s.IdMarca,
+                    IdModelo = s.IdModelo,
+                    IdUnidadMedida = s.IdUnidadMedida,
+                    PrecioUnitario = s.PrecioUnitario,
+                    PrecioVentaSugerido = s.PrecioVentaSugerido,
+                    CostoEnsamblaje = s.CostoEnsamblaje,
+                    TiempoEnsamblajeMinutos = s.TiempoEnsamblajeMinutos,
+                    AplicaIva = s.AplicaIva,
+                    PorcentajeIva = s.PorcentajeIva,
+                    StockMinimo = s.StockMinimo,
+                    StockMaximo = s.StockMaximo,
+                    GarantiaMeses = s.GarantiaMeses,
+                    EspecificacionesTecnicas = s.EspecificacionesTecnicas,
+                    ImagenUrl = s.ImagenUrl,
+                    Estado = s.Estado,
+
+                    // campos relacionados:
+                    NombreCategoria = s.IdCategoriaNavigation.Nombre,
+                    NombreMarca = s.IdMarcaNavigation.Nombre,
+                    NombreModelo = s.IdModeloNavigation.Nombre,
+                    NombreUnidadesMedidas = s.IdUnidadMedidaNavigation.Nombre
+                })
+                .ToList();
         }
     }
 }

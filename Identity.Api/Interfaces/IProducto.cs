@@ -1,6 +1,5 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Paginado;
-using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Interfaces
 {
@@ -17,5 +16,8 @@ namespace Identity.Api.Interfaces
 
         // Nuevo método para paginado:
         PagedResult<ProductoDTO> GetProductoPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
+
+        //exportar
+        List<ProductoDTO> ObtenerProductoFiltradas(string? filtro, string? estado);
     }
 }

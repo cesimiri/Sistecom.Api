@@ -12,8 +12,9 @@ namespace Identity.Api.DataRepository
             using var context = new InvensisContext();
 
             return context.Departamentos
-
+                .Where(s => s.Estado == "ACTIVO") // ✅ Filtrar solo las sucursales activas
                 .Include(s => s.IdSucursalNavigation)
+                .OrderBy(s => s.NombreDepartamento)
                 .Select(s => new DepartamentoDTO
                 {
                     IdDepartamento = s.IdDepartamento,
@@ -67,7 +68,7 @@ namespace Identity.Api.DataRepository
                 using var context = new InvensisContext();
 
                 // Generar el NumeroSolicitud automático
-                
+
                 // Obtener la última solicitud para este año para sacar el siguiente número
                 var lastNumero = context.Departamentos
                     .Where(s => s.CodigoDepartamento.StartsWith($"DP-"))
@@ -89,9 +90,9 @@ namespace Identity.Api.DataRepository
 
 
                 var sucursal = context.Sucursales.Find(dto.IdSucursal);
-                
 
-                if (sucursal == null )
+
+                if (sucursal == null)
                 {
                     throw new Exception("no existe el dato en la tabla relacionada");
                 }
@@ -104,9 +105,9 @@ namespace Identity.Api.DataRepository
                     CodigoDepartamento = nuevoCodigoDepartamento,
                     NombreDepartamento = dto.NombreDepartamento?.ToUpper(),
                     Descripcion = dto.Descripcion?.ToUpper(),
-                    Responsable = dto.Responsable?.ToUpper(),
-                    EmailDepartamento = dto.EmailDepartamento?.Trim().ToLower(),
-                    Extension = dto.Extension,
+                    Responsable = "ya no se usa",
+                    EmailDepartamento = /*dto.EmailDepartamento?.Trim().ToLower()*/ "ya no se usa",
+                    Extension = "",
                     CentroCosto = dto.CentroCosto,
                     Estado = dto.Estado
                 };
@@ -211,7 +212,7 @@ namespace Identity.Api.DataRepository
 
             // Obtener página solicitada con paginado
             var usuarios = query
-                .OrderBy(u => u.IdDepartamento) // importante ordenar antes de Skip/Take
+                .OrderBy(u => u.NombreDepartamento) // importante ordenar antes de Skip/Take
                 .Skip((pagina - 1) * pageSize)
                 .Take(pageSize)
                 .Select(s => new DepartamentoDTO

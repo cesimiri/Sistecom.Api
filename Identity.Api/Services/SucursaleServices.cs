@@ -45,5 +45,11 @@ namespace Identity.Api.Services
         {
             return _dataRepository.GetSucursalePaginados(pagina, pageSize, filtro, estado);
         }
+
+        //exportar
+        public List<SucursaleDTO> ObtenerSucursalesFiltradas(string? filtro, string? estado)
+        {
+            return _dataRepository.ObtenerSucursalesFiltradas(filtro, estado);
+        }
     }
 }

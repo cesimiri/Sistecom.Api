@@ -1,7 +1,5 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Paginado;
-using Modelo.Sistecom.Modelo.Database;
-using System.Collections.Generic;
 
 namespace Identity.Api.Interfaces
 {
@@ -19,5 +17,8 @@ namespace Identity.Api.Interfaces
 
         //traer solo los usuarios de cargo IT 
         IEnumerable<UsuarioDTO> GetUsuarioCargo1();
+
+        //exportar
+        List<SuscripcionDto> ObtenerSuscripcioneFiltradas(string? filtro, string? estado);
     }
 }

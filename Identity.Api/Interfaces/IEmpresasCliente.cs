@@ -1,8 +1,5 @@
-﻿using Identity.Api.DTO;
-using Identity.Api.Paginado;
+﻿using Identity.Api.Paginado;
 using Modelo.Sistecom.Modelo.Database;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Identity.Api.Interfaces
 {
@@ -16,6 +13,10 @@ namespace Identity.Api.Interfaces
         void DeleteEmpresaClienteById(string ruc);
 
         PagedResult<EmpresasCliente> GetEmpresasPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
+
+        //exportar
+        List<EmpresasCliente> ObtenerEmpresasFiltradas(string? filtro, string? estado);
+
     }
 }
 

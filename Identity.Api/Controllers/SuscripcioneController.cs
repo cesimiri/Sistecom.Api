@@ -1,11 +1,11 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
-using Identity.Api.Services;
+using Identity.Api.Reporteria;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Modelo.Sistecom.Modelo.Database;
+using QuestPDF.Infrastructure;
 
 namespace Identity.Api.Controllers
 {
@@ -136,6 +136,23 @@ namespace Identity.Api.Controllers
         {
             var usuarios = _suscripcioneService.GetUsuarioCargo1();
             return Ok(usuarios);
+        }
+
+
+        //exportar
+        [HttpGet("exportarPDF")]
+        public IActionResult ObtenerSuscripcioneFiltradas(string? filtro = null, string? estado = null, string? correo = null)
+        {
+            QuestPDF.Settings.License = LicenseType.Community;
+
+            var datos = _suscripcioneService.ObtenerSuscripcioneFiltradas(filtro, estado);
+
+            if (datos == null || !datos.Any())
+                return NotFound("No hay datos para exportar.");
+
+            var pdfBytes = SuscripcionePdfGenerator.GenerarPdf(datos, correo);
+
+            return File(pdfBytes, "application/pdf", "suscripcioneListado.pdf");
         }
     }
 }

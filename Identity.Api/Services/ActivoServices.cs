@@ -1,5 +1,7 @@
-﻿using Identity.Api.Interfaces;
-using Identity.Api.DataRepository;
+﻿using Identity.Api.DataRepository;
+using Identity.Api.DTO;
+using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 using Modelo.Sistecom.Modelo.Database;
 namespace Identity.Api.Services
 {
@@ -36,5 +38,29 @@ namespace Identity.Api.Services
         {
             _dataRepository.DeleteActivoById(IdActivo);
         }
+
+
+        //paginado
+        public PagedResult<ActivoDTO> GetPaginados(
+        int pagina,
+        int pageSize,
+        string? codigoActivo,
+        int? idProducto,
+        DateTime? desde,
+        DateTime? hasta,
+        int? idFacturaCompra,
+        string? estadoActivo,
+        string? ordenColumna = null,
+        bool ordenAscendente = true)
+        {
+            return _dataRepository.GetPaginados(
+                pagina, pageSize,
+                codigoActivo, idProducto,
+                desde, hasta,
+                idFacturaCompra, estadoActivo,
+                ordenColumna, ordenAscendente
+            );
+        }
+
     }
 }

@@ -2,20 +2,26 @@
 using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
-using Modelo.Sistecom.Modelo.Database;
 namespace Identity.Api.Services
 {
 
     public class FacturasCompraServices : IFacturasCompra
     {
         private FacturasCompraRepository _dataRepository = new FacturasCompraRepository();
+        //private readonly IDetalleFacturaCompra _detalleFacturaCompraRepository;
+
+        //public FacturasCompraServices(IDetalleFacturaCompra detalleFacturaCompraRepository)
+        //{
+        //    _detalleFacturaCompraRepository = detalleFacturaCompraRepository ?? throw new ArgumentNullException(nameof(detalleFacturaCompraRepository));
+        //}
+
 
         public IEnumerable<FacturasCompraDTO> FacturasCompraInfoAll
         {
             get { return _dataRepository.GetAllFacturasCompra(); }
         }
 
-        public FacturasCompra GetFacturasCompraById(int idFacturasCompra)
+        public FacturasCompraDTO GetFacturasCompraById(int idFacturasCompra)
         {
             return _dataRepository.GetFacturasCompraById(idFacturasCompra);
         }
@@ -46,5 +52,24 @@ namespace Identity.Api.Services
         {
             return _dataRepository.GetFacturasCompraPaginados(pagina, pageSize, filtro, estado);
         }
+
+        //exportar
+        public List<FacturasCompraDTO> ObtenerFacturaCompraFiltradas(string? filtro, string? estado)
+        {
+            return _dataRepository.ObtenerFacturaCompraFiltradas(filtro, estado);
+        }
+
+
+
+
+        //generarFactura atomaticamente
+        public async Task<(FacturasCompraDTO factura, List<DetalleFacturaCompraDTO> detalles)> ObtenerFacturaConDetallesAsync(int idFactura)
+        {
+            return await _dataRepository.ObtenerFacturaConDetallesAsync(idFactura);
+        }
+
+
+
+
     }
 }

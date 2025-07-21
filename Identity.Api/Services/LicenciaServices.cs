@@ -25,7 +25,7 @@ namespace Identity.Api.Services
             _dataRepository.InsertLicencia(dto);
         }
 
-        public void UpdateLicencia(Licencia UpdItem)
+        public void UpdateLicencia(LicenciaDTO UpdItem)
         {
             _dataRepository.UpdateLicencia(UpdItem);
         }
@@ -55,6 +55,12 @@ namespace Identity.Api.Services
         public PagedResult<LicenciaDTO> GetLicenciaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
         {
             return _dataRepository.GetLicenciaPaginados(pagina, pageSize, filtro, estado);
+        }
+
+        //exportar
+        public List<LicenciaDTO> ObtenerLicenciaFiltradas(string? filtro, string? estado)
+        {
+            return _dataRepository.ObtenerLicenciaFiltradas(filtro, estado);
         }
     }
 }

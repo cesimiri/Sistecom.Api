@@ -19,5 +19,9 @@
         public string? NumerosSerie { get; set; }
 
         public string? DetallesAdicionales { get; set; }
+
+        //relacion 
+        public string? NombreProducto { get; set; }
+
     }
 }

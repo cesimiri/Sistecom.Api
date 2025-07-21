@@ -2,7 +2,6 @@
 using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
-using System.Collections.Generic;
 
 namespace Identity.Api.Services
 {
@@ -51,6 +50,12 @@ namespace Identity.Api.Services
         public IEnumerable<UsuarioDTO> GetUsuarioCargo1()
         {
             return _dataRepository.GetUsuarioCargo1();
+        }
+
+        //exportar
+        public List<SuscripcionDto> ObtenerSuscripcioneFiltradas(string? filtro, string? estado)
+        {
+            return _dataRepository.ObtenerSuscripcioneFiltradas(filtro, estado);
         }
     }
 }

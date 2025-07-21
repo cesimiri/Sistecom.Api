@@ -35,7 +35,7 @@ namespace Identity.Api.DataRepository
                     RenovacionAutomatica = s.RenovacionAutomatica,
                     Observaciones = s.Observaciones,
                     Estado = s.Estado,
-                    
+
 
                     // campos relacionados:
                     nombreLicencia = s.IdTipoLicenciaNavigation.Nombre,
@@ -57,7 +57,7 @@ namespace Identity.Api.DataRepository
 
         public void InsertLicencia(LicenciaDTO dto)
         {
-            try 
+            try
             {
                 using var context = new InvensisContext();
                 //validación para el ingreso de los id relacionados.
@@ -65,7 +65,7 @@ namespace Identity.Api.DataRepository
                 var idProducto = context.Productos.Find(dto.IdProducto);
                 var idFactura = context.FacturasCompras.Find(dto.IdFacturaCompra);
 
-                if (idTiposLicencia == null || idProducto == null || idFactura == null )
+                if (idTiposLicencia == null || idProducto == null || idFactura == null)
                 {
                     throw new Exception("Esa idTiposLicencia, idProducto, idFactura no existe en la base de datos.");
                 }
@@ -116,11 +116,11 @@ namespace Identity.Api.DataRepository
             {
                 throw new Exception("Error al insertar el Producto: " + ex.InnerException?.Message ?? ex.Message);
             }
-            
+
         }
 
 
-        public void UpdateLicencia(Licencia licenciaActualizada)
+        public void UpdateLicencia(LicenciaDTO licenciaActualizada)
         {
             using (var context = new InvensisContext())
             {
@@ -141,7 +141,7 @@ namespace Identity.Api.DataRepository
                     existente.RenovacionAutomatica = licenciaActualizada.RenovacionAutomatica;
                     existente.Observaciones = licenciaActualizada.Observaciones?.ToUpper();
                     existente.Estado = licenciaActualizada.Estado;
-                    existente.FechaRegistro = licenciaActualizada.FechaRegistro;
+
 
 
                     context.SaveChanges();
@@ -252,7 +252,7 @@ namespace Identity.Api.DataRepository
         {
             using var context = new InvensisContext();
             var productos = context.Productos
-                .Where(s=> s.IdCategoria ==6)
+                .Where(s => s.IdCategoria == 6)
                 .Select(s => new ProductoDTO
                 {
                     IdProducto = s.IdProducto,
@@ -302,7 +302,7 @@ namespace Identity.Api.DataRepository
             {
                 filtro = filtro.ToLower();
                 query = query.Where(u =>
-                    u.NumeroLicencia.ToLower().Contains(filtro) );
+                    u.NumeroLicencia.ToLower().Contains(filtro));
             }
 
             // Aplicar filtro por estado
@@ -356,5 +356,53 @@ namespace Identity.Api.DataRepository
 
         }
         // fin paginada
+
+
+        //exportar PDF
+        public List<LicenciaDTO> ObtenerLicenciaFiltradas(string? filtro, string? estado)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.Licencias.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filtro))
+            {
+                var lowerFiltro = filtro.ToLower();
+                query = query.Where(e =>
+                    e.NumeroLicencia.ToLower().Contains(lowerFiltro));
+            }
+
+            if (!string.IsNullOrWhiteSpace(estado))
+            {
+                query = query.Where(e => e.Estado == estado);
+            }
+
+            return query
+                .Select(s => new LicenciaDTO
+                {
+                    IdLicencia = s.IdLicencia,
+                    IdTipoLicencia = s.IdTipoLicencia,
+                    IdProducto = s.IdProducto,
+                    IdFacturaCompra = s.IdFacturaCompra,
+                    NumeroLicencia = s.NumeroLicencia,
+                    ClaveProducto = s.ClaveProducto,
+                    FechaAdquisicion = s.FechaAdquisicion,
+                    FechaInicioVigencia = s.FechaInicioVigencia,
+                    FechaFinVigencia = s.FechaFinVigencia,
+                    TipoSuscripcion = s.TipoSuscripcion,
+                    CantidadUsuarios = s.CantidadUsuarios,
+                    CostoLicencia = s.CostoLicencia,
+                    RenovacionAutomatica = s.RenovacionAutomatica,
+                    Observaciones = s.Observaciones,
+                    Estado = s.Estado,
+
+
+                    // campos relacionados:
+                    nombreLicencia = s.IdTipoLicenciaNavigation.Nombre,
+                    nombreProducto = s.IdProductoNavigation.Nombre,
+                    numeroFactura = s.IdFacturaCompraNavigation.NumeroFactura
+                })
+                .ToList();
+        }
     }
 }
