@@ -2355,6 +2355,26 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.SuscripcioneController",
+    "Method": "GetEmpresas",
+    "RelativePath": "api/Suscripcione/GetEmpresas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SuscripcioneController",
+    "Method": "GetProveedores",
+    "RelativePath": "api/Suscripcione/GetProveedores",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.SuscripcioneController",
     "Method": "GetById",
     "RelativePath": "api/Suscripcione/GetSuscripcionById/{idSuscripcion}",
     "HttpMethod": "GET",

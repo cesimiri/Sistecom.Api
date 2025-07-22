@@ -656,10 +656,10 @@ C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\staticwebassets.
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\staticwebassets.build.json.cache
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\staticwebassets.development.json
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\staticwebassets.build.endpoints.json
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.416A3443.Up2Date
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\refint\Identity.Api.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.pdb
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.genruntimeconfig.cache
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\ref\Identity.Api.dll
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
