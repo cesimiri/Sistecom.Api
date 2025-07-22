@@ -1,0 +1,39 @@
+﻿<!-- Pages/EmpresasCliente.razor -->
+@page "/empresas"
+@using Identity.Api.Services
+@using Identity.Api.DTO
+
+@inject EmpresaClienteService EmpresaService
+
+<h3>Empresas Clientes</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>RUC</th>
+            <th>Razón Social</th>
+            <th>Ciudad</th>
+            <th>Teléfono</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var empresa in listaEmpresas)
+        {
+            <tr>
+                <td>@empresa.Ruc</td>
+                <td>@empresa.RazonSocial</td>
+                <td>@empresa.Ciudad</td>
+                <td>@empresa.Telefono</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private List<EmpresasClienteDTO> listaEmpresas = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        listaEmpresas = await EmpresaService.GetEmpresasClientesAsync();
+    }
+}

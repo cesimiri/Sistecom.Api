@@ -1,34 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Identity.Api.csproj": {}
+    "D:\\Molinera\\Sistecom.Api\\Identity.Api\\Identity.Api.csproj": {}
   },
   "projects": {
-    "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Identity.Api.csproj": {
+    "D:\\Molinera\\Sistecom.Api\\Identity.Api\\Identity.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Identity.Api.csproj",
+        "projectUniqueName": "D:\\Molinera\\Sistecom.Api\\Identity.Api\\Identity.Api.csproj",
         "projectName": "Identity.Api",
-        "projectPath": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Identity.Api.csproj",
-        "packagesPath": "C:\\Users\\cmiranda\\.nuget\\packages\\",
-        "outputPath": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\obj\\",
+        "projectPath": "D:\\Molinera\\Sistecom.Api\\Identity.Api\\Identity.Api.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "D:\\Molinera\\Sistecom.Api\\Identity.Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\cmiranda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -47,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -109,7 +106,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
