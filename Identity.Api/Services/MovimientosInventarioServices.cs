@@ -63,5 +63,19 @@ namespace Identity.Api.Services
             return _dataRepository.ObtenerDetalleFacturaAsync(idFactura);
         }
 
+        //exportar
+        public List<MovimientosInventarioDTO> ExportarHistorialMovimientoPDFAsync(
+            string? tipoMovimiento,
+            int? idBodega,
+            string? nombreProducto,
+            DateTime? desde,
+            DateTime? hasta)
+        {
+            return _dataRepository.ExportarHistorialMovimientoPDFAsync(tipoMovimiento, idBodega, nombreProducto, desde, hasta);
+        }
+
+
+
+
     }
 }

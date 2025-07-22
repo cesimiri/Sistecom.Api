@@ -2265,6 +2265,47 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.MovimientosInventarioController",
+    "Method": "ExportarEmpresasPdf",
+    "RelativePath": "api/MovimientosInventario/exportarPDF",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tipoMovimiento",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "idBodega",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "nombreProducto",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "desde",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "hasta",
+        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "correo",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.MovimientosInventarioController",
     "Method": "GetPaginados",
     "RelativePath": "api/MovimientosInventario/GetPaginados",
     "HttpMethod": "GET",

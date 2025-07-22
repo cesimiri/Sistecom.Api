@@ -521,7 +521,6 @@ C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Identity.Api.pdb
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Azure.Core.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Azure.Identity.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\EPPlus.dll
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\EPPlus.Interfaces.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Humanizer.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.Internal.dll
@@ -548,16 +547,10 @@ C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.Entity
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.SqlServer.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.Extensions.Caching.Abstractions.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.Extensions.Caching.Memory.dll
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.Extensions.Configuration.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.Extensions.Configuration.FileExtensions.dll
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Json.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.Extensions.DependencyModel.dll
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.Extensions.FileProviders.Abstractions.dll
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.Extensions.FileProviders.Physical.dll
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.Extensions.FileSystemGlobbing.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.Extensions.Identity.Core.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.Extensions.Identity.Stores.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.Extensions.Logging.dll
@@ -572,7 +565,6 @@ C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.Identi
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.IO.RecyclableMemoryStream.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.SqlServer.Server.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Microsoft.Win32.SystemEvents.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Mono.TextTemplating.dll
@@ -593,9 +585,7 @@ C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\System.IdentityM
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\System.Linq.Dynamic.Core.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\System.Memory.Data.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\System.Runtime.Caching.dll
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\System.Security.Cryptography.Pkcs.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\System.Security.Cryptography.ProtectedData.dll
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\System.Security.Cryptography.Xml.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\System.Security.Permissions.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\System.Windows.Extensions.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.resources.dll
@@ -703,7 +693,6 @@ C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\runtimes\win-x86
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\runtimes\win\lib\net9.0\System.Security.Cryptography.Pkcs.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\Modelo.Sistecom.dll
@@ -719,10 +708,11 @@ C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\staticwebassets.
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\staticwebassets.build.json.cache
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\staticwebassets.development.json
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.416A3443.Up2Date
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\refint\Identity.Api.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.pdb
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.genruntimeconfig.cache
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\ref\Identity.Api.dll
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\System.Xml.XPath.XmlDocument.dll

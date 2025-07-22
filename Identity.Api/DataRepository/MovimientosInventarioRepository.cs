@@ -224,9 +224,6 @@ namespace Identity.Api.DataRepository
 
 
 
-
-
-
         //paginado
         public PagedResult<MovimientosInventarioDTO> GetPaginados(
             int pagina,
@@ -460,6 +457,64 @@ namespace Identity.Api.DataRepository
                     Subtotal = d.Subtotal
                 })
                 .ToListAsync();
+        }
+
+
+        //reporteria
+        public List<MovimientosInventarioDTO> ExportarHistorialMovimientoPDFAsync(
+    string? tipoMovimiento,
+    int? idBodega,
+    string? nombreProducto,
+    DateTime? desde,
+    DateTime? hasta)
+        {
+            using var context = new InvensisContext();
+
+            var query = context.MovimientosInventarios
+                .Include(x => x.IdProductoNavigation)
+                .Include(x => x.IdBodegaNavigation)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(tipoMovimiento))
+                query = query.Where(x => x.TipoMovimiento.ToUpper() == tipoMovimiento.ToUpper());
+
+            if (idBodega.HasValue)
+                query = query.Where(x =>
+                    x.IdBodega == idBodega.Value ||
+                    x.IdBodegaOrigen == idBodega.Value ||
+                    x.IdBodegaDestino == idBodega.Value);
+
+            if (!string.IsNullOrWhiteSpace(nombreProducto))
+            {
+                var nombre = nombreProducto.Trim().ToUpper();
+                query = query.Where(x => x.IdProductoNavigation.Nombre.ToUpper().Contains(nombre));
+            }
+
+            if (desde.HasValue)
+                query = query.Where(x => x.FechaMovimiento >= desde.Value);
+
+            if (hasta.HasValue)
+                query = query.Where(x => x.FechaMovimiento <= hasta.Value);
+
+            var result = query.Select(x => new MovimientosInventarioDTO
+            {
+                IdMovimiento = x.IdMovimiento,
+                IdBodega = x.IdBodega,
+                IdProducto = x.IdProducto,
+                TipoMovimiento = x.TipoMovimiento,
+                Cantidad = x.Cantidad,
+                PrecioUnitario = x.PrecioUnitario,
+                StockAnterior = x.StockAnterior,
+                StockActual = x.StockActual,
+                FechaMovimiento = x.FechaMovimiento,
+                Origen = x.Origen,
+                Observaciones = x.Observaciones,
+                NombreProducto = x.IdProductoNavigation.Nombre,
+                NombreBodega = x.IdBodegaNavigation.Nombre,
+                UsuarioRegistro = x.UsuarioRegistro // si lo quieres mostrar en reporte
+            }).ToList();
+
+            return result;
         }
 
     }

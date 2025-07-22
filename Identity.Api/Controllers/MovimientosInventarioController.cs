@@ -1,8 +1,10 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
+using Identity.Api.Reporteria;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using QuestPDF.Infrastructure;
 
 namespace Identity.Api.Controllers
 {
@@ -97,5 +99,29 @@ namespace Identity.Api.Controllers
             var detalles = await _bodega.ObtenerDetalleFacturaAsync(idFactura);
             return Ok(detalles);
         }
+
+
+        //exportar 
+        [HttpGet("exportarPDF")]
+        public IActionResult ExportarEmpresasPdf(
+            string? tipoMovimiento = null,
+            int? idBodega = null,
+            string? nombreProducto = null,
+            DateTime? desde = null,
+            DateTime? hasta = null,
+            string? correo = null)
+        {
+            QuestPDF.Settings.License = LicenseType.Community;
+
+            var datos = _bodega.ExportarHistorialMovimientoPDFAsync(tipoMovimiento, idBodega, nombreProducto, desde, hasta);
+
+            if (datos == null || !datos.Any())
+                return NotFound("No hay datos para exportar.");
+
+            var pdfBytes = MovimientoInventarioPdfGenerator.GenerarPdf(datos, correo, desde, hasta, tipoMovimiento, idBodega, nombreProducto);
+
+            return File(pdfBytes, "application/pdf", "MovimientosInventarioReporte.pdf");
+        }
+
     }
 }
