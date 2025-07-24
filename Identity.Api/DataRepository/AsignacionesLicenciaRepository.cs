@@ -39,7 +39,7 @@ namespace Identity.Api.DataRepository
                 {
                     existente.IdLicencia = asignacionActualizada.IdLicencia;
                     existente.IdActivo = asignacionActualizada.IdActivo;
-                    existente.IdUsuario = asignacionActualizada.IdUsuario;
+                    //existente.IdUsuario = asignacionActualizada.IdUsuario;
                     existente.IdServidor = asignacionActualizada.IdServidor;
                     existente.FechaAsignacion = asignacionActualizada.FechaAsignacion;
                     existente.FechaDesasignacion = asignacionActualizada.FechaDesasignacion;

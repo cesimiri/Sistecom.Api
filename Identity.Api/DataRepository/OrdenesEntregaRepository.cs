@@ -1,8 +1,4 @@
 ﻿using Modelo.Sistecom.Modelo.Database;
-using Identity.Api.Persistence.DataBase;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Identity.Api.DataRepository
 {
@@ -46,7 +42,7 @@ namespace Identity.Api.DataRepository
                 {
                     registrado.NumeroOrden = UpdItem.NumeroOrden;
                     registrado.IdSolicitud = UpdItem.IdSolicitud;
-                    registrado.IdUsuarioRecibe = UpdItem.IdUsuarioRecibe;
+                    //registrado.IdUsuarioRecibe = UpdItem.IdUsuarioRecibe;
                     registrado.FechaProgramada = UpdItem.FechaProgramada;
                     registrado.HoraProgramada = UpdItem.HoraProgramada;
                     registrado.FechaEntrega = UpdItem.FechaEntrega;

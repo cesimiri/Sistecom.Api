@@ -1,9 +1,6 @@
 ﻿using Identity.Api.DTO;
-using Identity.Api.Persistence.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Identity.Api.DataRepository
 {
@@ -16,7 +13,7 @@ namespace Identity.Api.DataRepository
 
                 .Include(s => s.IdSolicitudNavigation)
                 .Include(s => s.IdProductoNavigation)
-                
+
                 .Select(s => new DetalleSolicitudDTO
                 {
                     IdDetalle = s.IdDetalle,
@@ -26,13 +23,13 @@ namespace Identity.Api.DataRepository
                     PrecioUnitario = s.PrecioUnitario,
                     Descuento = s.Descuento,
                     Subtotal = s.Subtotal,
-              
+
                     Observaciones = s.Observaciones,
 
                     // campos relacionados:
-                    
+
                     NumeroSolicitud = s.IdSolicitudNavigation.NumeroSolicitud,
-                    
+
                 })
                 .ToList();
         }
@@ -49,7 +46,7 @@ namespace Identity.Api.DataRepository
                 .Where(s => s.IdSolicitud == idDetalle)
                 .Select(s => new DetalleSolicitudDTO
                 {
-                   
+
                     IdDetalle = s.IdDetalle,
                     IdSolicitud = s.IdSolicitud,
                     IdProducto = s.IdProducto,
@@ -57,12 +54,12 @@ namespace Identity.Api.DataRepository
                     PrecioUnitario = s.PrecioUnitario,
                     Descuento = s.Descuento,
                     Subtotal = s.Subtotal,
-               
+
                     Observaciones = s.Observaciones,
                     // campos relacionados:
-                    
+
                     NumeroSolicitud = s.IdSolicitudNavigation.NumeroSolicitud,
-                    
+
 
                 })
                 .FirstOrDefault();
@@ -74,7 +71,7 @@ namespace Identity.Api.DataRepository
             using var context = new InvensisContext();
             return context.SolicitudesCompras
 
-  
+
                 .Where(s => s.Estado != "RECHAZADA"
                 && s.Estado != "COMPLETADA"
                 && s.Estado != "CANCELADA")
@@ -85,8 +82,8 @@ namespace Identity.Api.DataRepository
                     NumeroSolicitud = s.NumeroSolicitud,
                     RucEmpresa = s.RucEmpresa,
                     IdDepartamento = s.IdDepartamento,
-                    IdUsuarioSolicita = s.IdUsuarioSolicita,
-                    IdUsuarioAutoriza = s.IdUsuarioAutoriza,
+                    //IdUsuarioSolicita = s.IdUsuarioSolicita,
+                    //IdUsuarioAutoriza = s.IdUsuarioAutoriza,
                     FechaSolicitud = s.FechaSolicitud,
                     FechaAprobacion = s.FechaAprobacion,
                     //FechaRequerida = s.FechaRequerida,
@@ -97,7 +94,7 @@ namespace Identity.Api.DataRepository
 
                     // campos relacionados:
 
-                    
+
 
                 })
                 .ToList();
@@ -115,12 +112,12 @@ namespace Identity.Api.DataRepository
                 var idproducto = context.Productos.Find(newItem.IdProducto);
 
 
-                if (idSolicitud == null || idproducto == null )
+                if (idSolicitud == null || idproducto == null)
                 {
                     throw new Exception("Esa categoria no existe en la base de datos.");
                 }
 
-                
+
 
                 var nueva = new DetalleSolicitud
                 {
@@ -253,14 +250,14 @@ namespace Identity.Api.DataRepository
                     registrado.PrecioUnitario = updItem.PrecioUnitario;
                     registrado.Descuento = updItem.Descuento;
                     registrado.Subtotal = updItem.Subtotal;
-    
+
                     registrado.Observaciones = updItem.Observaciones;
 
                     context.SaveChanges();
                 }
             }
         }
-        
+
 
         // borra por todas las solicitudes 
         public void DeleteDetalleSolicitudById(int idDetalle)

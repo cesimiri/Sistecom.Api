@@ -1,7 +1,6 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
-using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -142,20 +141,20 @@ namespace Identity.Api.Controllers
         }
 
         //USUARIOS SISTECOM
-        [HttpGet("GetUsuarioSistecom")]
-        public IActionResult GetUsuariosSistecom()
-        {
-            try
-            {
-                var usuarios = _bodega.GetUsuarioSistecom();
-                return Ok(usuarios);
-            }
-            catch (Exception ex)
-            {
-                // Para desarrollo, devuelve el detalle completo
-                return BadRequest(new { error = "Error en GetUsuarioSistecom", detalle = ex.ToString() });
-            }
-        }
+        //[HttpGet("GetUsuarioSistecom")]
+        //public IActionResult GetUsuariosSistecom()
+        //{
+        //    try
+        //    {
+        //        var usuarios = _bodega.GetUsuarioSistecom();
+        //        return Ok(usuarios);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Para desarrollo, devuelve el detalle completo
+        //        return BadRequest(new { error = "Error en GetUsuarioSistecom", detalle = ex.ToString() });
+        //    }
+        //}
 
         //trae bodegas por usuario logueado (correo)
         [HttpGet("GetBodegasPorResponsable/{correo}")]

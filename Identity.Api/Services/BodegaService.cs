@@ -47,10 +47,10 @@ namespace Identity.Api.Services
         }
 
         // usuario de sistecom
-        public IEnumerable<UsuarioDTO> GetUsuarioSistecom()
-        {
-            return _dataRepository.GetUsuarioSistecom();
-        }
+        //public IEnumerable<UsuarioDTO> GetUsuarioSistecom()
+        //{
+        //    return _dataRepository.GetUsuarioSistecom();
+        //}
 
         // trae bodegas por responsable logueado 
         public IEnumerable<BodegaDTO> GetBodegasPorResponsable(string correo)

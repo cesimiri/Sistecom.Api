@@ -208,5 +208,19 @@ namespace Identity.Api.Controllers
             return File(pdfBytes, "application/pdf", "EmpresasListado.pdf");
         }
 
+
+        // Exporar Excel
+        [HttpGet("exportarExcel")]
+        public IActionResult ExportarEmpresasExcel(string? filtro = null, string? estado = null)
+        {
+            var datos = _empresaCliente.ObtenerEmpresasFiltradas(filtro, estado);
+
+            if (datos == null || !datos.Any())
+                return NotFound("No hay datos para exportar.");
+
+            var excelBytes = EmpresaExcelGenerator.GenerarExcel(datos);
+
+            return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "EmpresasListado.xlsx");
+        }
     }
 }

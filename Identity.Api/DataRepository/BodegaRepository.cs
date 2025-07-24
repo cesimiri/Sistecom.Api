@@ -1,10 +1,6 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Paginado;
-using Identity.Api.Persistence.DataBase;
-using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Identity.Api.DataRepository
 {
@@ -134,7 +130,7 @@ namespace Identity.Api.DataRepository
             using var context = new InvensisContext();
 
             var query = context.Bodegas
-                
+
                 .AsQueryable();
 
             // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
@@ -142,7 +138,7 @@ namespace Identity.Api.DataRepository
             {
                 filtro = filtro.ToLower();
                 query = query.Where(u =>
-                    u.Nombre.ToLower().Contains(filtro) );
+                    u.Nombre.ToLower().Contains(filtro));
             }
 
             // Aplicar filtro por estado
@@ -183,32 +179,34 @@ namespace Identity.Api.DataRepository
             };
         }
 
-        public List<UsuarioDTO> GetUsuarioSistecom()
-        {
-            using var context = new InvensisContext();
+        //public List<UsuarioDTO> GetUsuarioSistecom()
+        //{
+        //    using var context = new InvensisContext();
 
-            var lista = context.Usuarios
-            .Where(u => u.Estado == "ACTIVO"
-            && u.IdDepartamentoNavigation.IdSucursalNavigation.RucEmpresaNavigation.Ruc == "0990574766001")
-            .Select(u => new UsuarioDTO
-            {
-                IdUsuario = u.IdUsuario,
-                IdDepartamento = u.IdDepartamento,
-                IdCargo = u.IdCargo,
-                Cedula = u.Cedula,
-                Nombres = u.Nombres,
-                Apellidos = u.Apellidos,
-                Email = u.Email,
-                Telefono = u.Telefono,
-                Extension = u.Extension,
-                Estado = u.Estado,
-                RazonSocial = u.IdDepartamentoNavigation.IdSucursalNavigation.RucEmpresaNavigation.RazonSocial
-            })
-             .ToList();
+        //    var lista = context.Usuarios
+        //    .Where(u => u.Estado == "ACTIVO"
+
+        //    //reviar
+        //    && u.IdDepartamentoNavigation.IdSucursalNavigation.RucEmpresaNavigation.Ruc == "0990574766001")
+        //    .Select(u => new UsuarioDTO
+        //    {
+        //        IdUsuario = u.IdUsuario,
+        //        IdDepartamento = u.IdDepartamento,
+        //        IdCargo = u.IdCargo,
+        //        Cedula = u.Cedula,
+        //        Nombres = u.Nombres,
+        //        Apellidos = u.Apellidos,
+        //        Email = u.Email,
+        //        Telefono = u.Telefono,
+        //        Extension = u.Extension,
+        //        Estado = u.Estado,
+        //        RazonSocial = u.IdDepartamentoNavigation.IdSucursalNavigation.RucEmpresaNavigation.RazonSocial
+        //    })
+        //     .ToList();
 
 
-            return lista;
-        }
+        //    return lista;
+        //}
 
         //bodegas por responsable
         public List<BodegaDTO> GetBodegasPorResponsable(string correo)

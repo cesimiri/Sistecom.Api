@@ -588,6 +588,7 @@ C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\System.Runtime.C
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\System.Security.Cryptography.ProtectedData.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\System.Security.Permissions.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\System.Windows.Extensions.dll
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\System.Xml.XPath.XmlDocument.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\cs\Microsoft.CodeAnalysis.resources.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\de\Microsoft.CodeAnalysis.resources.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\es\Microsoft.CodeAnalysis.resources.dll
@@ -715,4 +716,3 @@ C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\refint\Identity.
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.pdb
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\Identity.Api.genruntimeconfig.cache
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Debug\net9.0\ref\Identity.Api.dll
-C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Debug\net9.0\System.Xml.XPath.XmlDocument.dll

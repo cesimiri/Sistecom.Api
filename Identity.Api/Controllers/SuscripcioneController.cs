@@ -131,12 +131,12 @@ namespace Identity.Api.Controllers
             }
         }
 
-        [HttpGet("GetUsuarioCargo1")]
-        public ActionResult<IEnumerable<UsuarioDTO>> GetUsuarioCargo1()
-        {
-            var usuarios = _suscripcioneService.GetUsuarioCargo1();
-            return Ok(usuarios);
-        }
+        //[HttpGet("GetUsuarioCargo1")]
+        //public ActionResult<IEnumerable<UsuarioDTO>> GetUsuarioCargo1()
+        //{
+        //    var usuarios = _suscripcioneService.GetUsuarioCargo1();
+        //    return Ok(usuarios);
+        //}
 
 
         //exportar
@@ -153,6 +153,20 @@ namespace Identity.Api.Controllers
             var pdfBytes = SuscripcionePdfGenerator.GenerarPdf(datos, correo);
 
             return File(pdfBytes, "application/pdf", "suscripcioneListado.pdf");
+        }
+
+        // Exporar Excel
+        [HttpGet("exportarExcel")]
+        public IActionResult ExportarEmpresasExcel(string? filtro = null, string? estado = null)
+        {
+            var datos = _suscripcioneService.ObtenerSuscripcioneFiltradas(filtro, estado);
+
+            if (datos == null || !datos.Any())
+                return NotFound("No hay datos para exportar.");
+
+            var excelBytes = SuscripcioneExcelGenerator.GenerarExcel(datos);
+
+            return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "EmpresasListado.xlsx");
         }
     }
 }

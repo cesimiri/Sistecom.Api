@@ -1,9 +1,7 @@
 ﻿using identity.api.datarepository;
-using Identity.Api.DataRepository;
 using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
-using Modelo.Sistecom.Modelo.Database;
 namespace Identity.Api.Services
 {
     public class UsuarioService : IUsuario
@@ -15,9 +13,9 @@ namespace Identity.Api.Services
             get { return _dataRepository.GetAllUsuarios(); }
         }
 
-        public UsuarioDTO GetUsuarioById(int idUsuario)
+        public UsuarioDTO GetUsuarioById(string cedula)
         {
-            return _dataRepository.GetUsuarioById(idUsuario);
+            return _dataRepository.GetUsuarioById(cedula);
         }
 
         public void InsertUsuario(UsuarioDTO usuario)
@@ -35,22 +33,22 @@ namespace Identity.Api.Services
         //    _dataRepository.DeleteUsuario(usuario);
         //}
 
-        public void DeleteUsuarioById(int IdUsuario)
+        public void DeleteUsuarioById(string cedula)
         {
-            _dataRepository.DeleteUsuarioById(IdUsuario);
+            _dataRepository.DeleteUsuarioById(cedula);
         }
 
         //traer datos por la empresa seleccionada
-        public IEnumerable<SucursaleDTO> ObtenerSucursalesByRuc(string RucEmpresa)
-        {
-            return _dataRepository.ObtenerSucursalesByRuc(RucEmpresa);
-        }
+        //public IEnumerable<SucursaleDTO> ObtenerSucursalesByRuc(string RucEmpresa)
+        //{
+        //    return _dataRepository.ObtenerSucursalesByRuc(RucEmpresa);
+        //}
 
         //traer departamentos por la sucursal
-        public IEnumerable<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal)
-        {
-            return _dataRepository.ObtenerDepartamentosBySucursal(idSucursal);
-        }
+        //public IEnumerable<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal)
+        //{
+        //    return _dataRepository.ObtenerDepartamentosBySucursal(idSucursal);
+        //}
 
         //paginado
         public PagedResult<UsuarioDTO> GetUsuariosPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)

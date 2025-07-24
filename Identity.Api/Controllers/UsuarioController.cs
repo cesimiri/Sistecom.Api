@@ -1,16 +1,15 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
-using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Modelo.Sistecom.Modelo.Database;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Identity.Api.Controllers
 {
-    
+
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -34,41 +33,41 @@ namespace Identity.Api.Controllers
 
 
         //Obtener las sucursales por empresa
-        [HttpGet("ObtenerSucursalesByRuc/{RucEmpresa}")]
-        public IActionResult ObtenerSucursalesByRuc(string RucEmpresa)
-        {
-            var modelos = _usuario.ObtenerSucursalesByRuc(RucEmpresa);
+        //[HttpGet("ObtenerSucursalesByRuc/{RucEmpresa}")]
+        //public IActionResult ObtenerSucursalesByRuc(string RucEmpresa)
+        //{
+        //    var modelos = _usuario.ObtenerSucursalesByRuc(RucEmpresa);
 
-            if (modelos == null || !modelos.Any())
-            {
-                return NotFound($"No se encontraron Sucursales con esa Ruc de empresa {RucEmpresa}.");
-            }
+        //    if (modelos == null || !modelos.Any())
+        //    {
+        //        return NotFound($"No se encontraron Sucursales con esa Ruc de empresa {RucEmpresa}.");
+        //    }
 
-            return Ok(modelos);
-        }
+        //    return Ok(modelos);
+        //}
 
         //Obtener las departamentos por sucursal
-        [HttpGet("ObtenerDepartamentosBySucursal/{idSucursal}")]
-        public IActionResult ObtenerDepartamentosBySucursal(int idSucursal)
+        //[HttpGet("ObtenerDepartamentosBySucursal/{idSucursal}")]
+        //public IActionResult ObtenerDepartamentosBySucursal(int idSucursal)
+        //{
+        //    var modelos = _usuario.ObtenerDepartamentosBySucursal(idSucursal);
+
+        //    if (modelos == null || !modelos.Any())
+        //    {
+        //        return NotFound($"No se encontraron los departamentos por esa id de sucursal: {idSucursal}.");
+        //    }
+
+        //    return Ok(modelos);
+        //}
+
+        [HttpGet("GetUsuarioById/{cedula}")]
+        public IActionResult GetById(string cedula)
         {
-            var modelos = _usuario.ObtenerDepartamentosBySucursal(idSucursal);
 
-            if (modelos == null || !modelos.Any())
-            {
-                return NotFound($"No se encontraron los departamentos por esa id de sucursal: {idSucursal}.");
-            }
-
-            return Ok(modelos);
-        }
-
-        [HttpGet("GetUsuarioById/{id}")]
-        public IActionResult GetById(int id)
-        {
-
-            var usuario = _usuario.GetUsuarioById(id);
+            var usuario = _usuario.GetUsuarioById(cedula);
             if (usuario == null)
             {
-                return NotFound($"Suscripción con ID {id} no encontrada.");
+                return NotFound($"Suscripción con ID {cedula} no encontrada.");
             }
             return Ok(usuario);
         }
@@ -105,7 +104,7 @@ namespace Identity.Api.Controllers
             try
             {
                 _usuario.UpdateUsuario(dto);
-                return NoContent();
+                return Ok(new { message = "Usuario actualizado exitosamente." });
             }
             catch (Exception ex)
             {
@@ -132,17 +131,26 @@ namespace Identity.Api.Controllers
         //    }
         //}
 
-        [HttpDelete("DeleteUsuarioById/{idUsuario}")]
-        public IActionResult DeleteById(int idUsuario)
+        [HttpDelete("DeleteUsuarioById/{cedula}")]
+        public IActionResult DeleteById(string cedula)
         {
             try
             {
-                _usuario.DeleteUsuarioById(idUsuario);
-                return NoContent();
+                _usuario.DeleteUsuarioById(cedula);
+                return Ok(new { message = "Usuario borrado exitosamente." });
+            }
+            catch (DbUpdateException ex)
+            {
+                var mensaje = ex.InnerException?.Message ?? ex.Message;
+                return Conflict(new
+                {
+                    error = $"No se puede eliminar el usuario porque está referenciado por otra tabla.",
+                    detalles = mensaje
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest($"Error: {ex.Message}");
+                return BadRequest(new { error = ex.Message });
             }
         }
 

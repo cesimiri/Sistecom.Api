@@ -259,29 +259,29 @@ namespace Identity.Api.DataRepository
 
 
         //
-        public IEnumerable<UsuarioDTO> GetUsuarioCargo1()
-        {
-            using var context = new InvensisContext();
+        //public IEnumerable<UsuarioDTO> GetUsuarioCargo1()
+        //{
+        //    using var context = new InvensisContext();
 
-            var usuarios = context.Usuarios
-                .Include(u => u.IdCargoNavigation)
-                .Where(u => u.IdCargo == 1 && u.Estado == "ACTIVO") // o el filtro que necesites
-                .Select(u => new UsuarioDTO
-                {
-                    IdUsuario = u.IdUsuario,
-                    IdDepartamento = u.IdDepartamento,
-                    IdCargo = u.IdCargo,
-                    Cedula = u.Cedula,
-                    Nombres = u.Nombres,
-                    Apellidos = u.Apellidos,
-                    Email = u.Email,
-                    Estado = u.Estado,
-                    NombreCargo = u.IdCargoNavigation.NombreCargo
-                })
-                .ToList();
+        //    var usuarios = context.Usuarios
+        //        //.Include(u => u.IdCargoNavigation)
+        //        .Where(u => u.IdCargo == 1 && u.Estado == "ACTIVO") // o el filtro que necesites
+        //        .Select(u => new UsuarioDTO
+        //        {
+        //            //IdUsuario = u.IdUsuario,
+        //            //IdDepartamento = u.IdDepartamento,
+        //            //IdCargo = u.IdCargo,
+        //            Cedula = u.Cedula,
+        //            Nombres = u.Nombres,
+        //            Apellidos = u.Apellidos,
+        //            Email = u.Email,
+        //            Estado = u.Estado,
+        //            NombreCargo = u.IdCargoNavigation.NombreCargo
+        //        })
+        //        .ToList();
 
-            return usuarios;
-        }
+        //    return usuarios;
+        //}
 
         //exportar
         public List<SuscripcionDto> ObtenerSuscripcioneFiltradas(string? filtro, string? estado)

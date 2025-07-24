@@ -1,0 +1,7 @@
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\win-x64\Identity.Api.csproj.AssemblyReference.cache
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\win-x64\Identity.Api.GeneratedMSBuildEditorConfig.editorconfig
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\win-x64\Identity.Api.AssemblyInfoInputs.cache
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\win-x64\Identity.Api.AssemblyInfo.cs
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\win-x64\Identity.Api.csproj.CoreCompileInputs.cache
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\win-x64\Identity.Api.MvcApplicationPartsAssemblyInfo.cache
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\win-x64\Identity.Api.sourcelink.json

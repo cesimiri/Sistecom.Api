@@ -1,5 +1,4 @@
 ﻿using Modelo.Sistecom.Modelo.Database;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Identity.Api.DataRepository
 {
@@ -39,7 +38,7 @@ namespace Identity.Api.DataRepository
                 if (existente != null)
                 {
                     existente.IdActivo = historial.IdActivo;
-                    existente.IdUsuario = historial.IdUsuario;
+                    //existente.IdUsuario = historial.IdUsuario;
                     existente.IdOrdenEntrega = historial.IdOrdenEntrega;
                     existente.FechaAsignacion = historial.FechaAsignacion;
                     existente.FechaDevolucion = historial.FechaDevolucion;

@@ -47,10 +47,10 @@ namespace Identity.Api.Services
         }
 
         //usario de cargo 1 it 
-        public IEnumerable<UsuarioDTO> GetUsuarioCargo1()
-        {
-            return _dataRepository.GetUsuarioCargo1();
-        }
+        //public IEnumerable<UsuarioDTO> GetUsuarioCargo1()
+        //{
+        //    return _dataRepository.GetUsuarioCargo1();
+        //}
 
         //exportar
         public List<SuscripcionDto> ObtenerSuscripcioneFiltradas(string? filtro, string? estado)

@@ -12,9 +12,10 @@ namespace Identity.Api.Interfaces
         void DeleteEmpresaCliente(EmpresasCliente DelItem);
         void DeleteEmpresaClienteById(string ruc);
 
+        //paginados
         PagedResult<EmpresasCliente> GetEmpresasPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
 
-        //exportar
+        //exportar excel
         List<EmpresasCliente> ObtenerEmpresasFiltradas(string? filtro, string? estado);
 
     }

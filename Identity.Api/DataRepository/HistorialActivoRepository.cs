@@ -42,7 +42,7 @@ namespace Identity.Api.DataRepository
                     existente.TipoEvento = historial.TipoEvento;
                     existente.FechaEvento = historial.FechaEvento;
                     existente.Descripcion = historial.Descripcion;
-                    existente.IdUsuarioResponsable = historial.IdUsuarioResponsable;
+                    //existente.IdUsuarioResponsable = historial.IdUsuarioResponsable;
                     existente.IdDocumentoReferencia = historial.IdDocumentoReferencia;
                     existente.CostoAsociado = historial.CostoAsociado;
 

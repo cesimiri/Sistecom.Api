@@ -34,13 +34,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Modelo.Sistecom">
-      <HintPath>Model\DLL\Modelo.Sistecom.dll</HintPath>
-    </Reference>
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="NewFolder\" />
+    <Reference Include="Modelo.Sistecom">
+      <HintPath>Model\DLL\Modelo.Sistecom.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

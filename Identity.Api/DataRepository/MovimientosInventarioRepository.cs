@@ -385,8 +385,8 @@ namespace Identity.Api.DataRepository
                 {
                     IdSolicitud = s.IdSolicitud,
                     NumeroSolicitud = s.NumeroSolicitud,
-                    IdUsuarioAutoriza = s.IdUsuarioAutoriza,
-                    IdUsuarioDestino = s.IdUsuarioDestino,
+                    //IdUsuarioAutoriza = s.IdUsuarioAutoriza,
+                    //IdUsuarioDestino = s.IdUsuarioDestino,
                     IdDepartamento = s.IdDepartamento
                 })
                 .ToListAsync();
