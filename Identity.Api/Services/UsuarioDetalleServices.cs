@@ -56,5 +56,11 @@ namespace Identity.Api.Services
         {
             return _dataRepository.GetUsuarioDetallePaginados(pagina, pageSize, filtro, estado);
         }
+
+        //exportar
+        public List<UsuarioDetalleDTO> ObtenerUsuarioDetalleFiltradas(string? filtro, string? estado)
+        {
+            return _dataRepository.ObtenerUsuarioDetalleFiltradas(filtro, estado);
+        }
     }
 }

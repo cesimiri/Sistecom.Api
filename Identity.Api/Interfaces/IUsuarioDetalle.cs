@@ -18,5 +18,8 @@ namespace Identity.Api.Interfaces
 
         // Nuevo método para paginado:
         PagedResult<UsuarioDetalleDTO> GetUsuarioDetallePaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
+
+        //exportar excel
+        List<UsuarioDetalleDTO> ObtenerUsuarioDetalleFiltradas(string? filtro, string? estado);
     }
 }

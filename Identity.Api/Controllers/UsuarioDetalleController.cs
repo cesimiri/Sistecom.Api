@@ -1,9 +1,11 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
+using Identity.Api.Reporteria;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using QuestPDF.Infrastructure;
 
 namespace Identity.Api.Controllers
 {
@@ -111,5 +113,37 @@ namespace Identity.Api.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
+
+        //exportar PDF
+        [HttpGet("exportarPDF")]
+        public IActionResult ExportarUsuarioDetallePdf(string? filtro = null, string? estado = null, string? correo = null)
+        {
+            QuestPDF.Settings.License = LicenseType.Community;
+
+            var datos = _usuarioDetalle.ObtenerUsuarioDetalleFiltradas(filtro, estado);
+
+            if (datos == null || !datos.Any())
+                return NotFound("No hay datos para exportar.");
+
+            var pdfBytes = UsuarioDetallePdfGenerator.GenerarPdf(datos, correo);
+
+            return File(pdfBytes, "application/pdf", "ListadoUsuario.pdf");
+        }
+
+
+        // Exporar Excel
+        [HttpGet("exportarExcel")]
+        public IActionResult ExportarUsuarioDetalleExcel(string? filtro = null, string? estado = null)
+        {
+            var datos = _usuarioDetalle.ObtenerUsuarioDetalleFiltradas(filtro, estado);
+
+            if (datos == null || !datos.Any())
+                return NotFound("No hay datos para exportar.");
+
+            var excelBytes = UsuarioDetalleExcelGenerator.GenerarExcel(datos);
+
+            return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ListadoUsuario.xlsx");
+        }
+
     }
 }

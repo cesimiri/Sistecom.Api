@@ -212,7 +212,7 @@ namespace Identity.Api.DataRepository
 
             // Obtener página solicitada con paginado
             var usuarios = query
-                .OrderBy(u => u.NombreDepartamento) // importante ordenar antes de Skip/Take
+                .OrderBy(u => u.IdSucursalNavigation.NombreSucursal) // importante ordenar antes de Skip/Take
                 .Skip((pagina - 1) * pageSize)
                 .Take(pageSize)
                 .Select(s => new DepartamentoDTO

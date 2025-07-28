@@ -3912,6 +3912,53 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.UsuarioDetalleController",
+    "Method": "ExportarUsuarioDetalleExcel",
+    "RelativePath": "api/UsuarioDetalle/exportarExcel",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UsuarioDetalleController",
+    "Method": "ExportarUsuarioDetallePdf",
+    "RelativePath": "api/UsuarioDetalle/exportarPDF",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "correo",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.UsuarioDetalleController",
     "Method": "GetAll",
     "RelativePath": "api/UsuarioDetalle/GetAllUsuarioDetalle",
     "HttpMethod": "GET",

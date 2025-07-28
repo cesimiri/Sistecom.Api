@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="Data Repositorio\**" />
+    <Compile Remove="NewFolder\**" />
     <Content Remove="Data Repositorio\**" />
+    <Content Remove="NewFolder\**" />
     <EmbeddedResource Remove="Data Repositorio\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
     <None Remove="Data Repositorio\**" />
+    <None Remove="NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,10 +35,6 @@
     </PackageReference>
     <PackageReference Include="QuestPDF" Version="2025.7.0" />
     <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.6" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>

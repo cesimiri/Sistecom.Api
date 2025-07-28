@@ -122,6 +122,10 @@ builder.Services.AddScoped<IEmpresaCliente, EmpresaClienteService>();
 // Servicios de Usuarios
 builder.Services.AddScoped<IUsuario, UsuarioService>();
 
+// Servicios de Usuariodetalle
+builder.Services.AddScoped<IUsuarioDetalle, UsuarioDetalleServices>();
+
+
 ////// Servicios de Suscripciones
 builder.Services.AddScoped<ISuscripcione, SuscripcioneService>();
 
