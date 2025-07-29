@@ -62,31 +62,31 @@ namespace identity.api.datarepository
         //}
 
         //obtener los departamentos despues de seleccionar la sucursal  pendiente
-        //public List<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal)
-        //{
-        //    using var context = new InvensisContext();
+        public List<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal)
+        {
+            using var context = new InvensisContext();
 
-        //    return context.Departamentos
-        //        .Where(m => m.IdSucursal == idSucursal)
-        //        .OrderBy(s => s.NombreDepartamento)
-        //.Select(m => new DepartamentoDTO
-        //{
-        //    IdDepartamento = m.IdDepartamento,
-        //    IdSucursal = m.IdSucursal,
-        //    CodigoDepartamento = m.CodigoDepartamento,
-        //    NombreDepartamento = m.NombreDepartamento!,
-        //    Descripcion = m.Descripcion,
-        //    Responsable = m.Responsable,
-        //    EmailDepartamento = m.EmailDepartamento,
-        //    Extension = m.Extension,
-        //    CentroCosto = m.CentroCosto,
-        //    //FechaDescontinuacion = m.FechaDescontinuacion.HasValue
-        //    //    ? m.FechaDescontinuacion.Value.ToDateTime(TimeOnly.MinValue)
-        //    //: null,
-        //    Estado = m.Estado
-        //})
-        //.ToList();
-        //}
+            return context.Departamentos
+                .Where(m => m.IdSucursal == idSucursal && m.Estado == "ACTIVO")
+                .OrderBy(s => s.NombreDepartamento)
+        .Select(m => new DepartamentoDTO
+        {
+            IdDepartamento = m.IdDepartamento,
+            IdSucursal = m.IdSucursal,
+            CodigoDepartamento = m.CodigoDepartamento,
+            NombreDepartamento = m.NombreDepartamento!,
+            Descripcion = m.Descripcion,
+            Responsable = m.Responsable,
+            EmailDepartamento = m.EmailDepartamento,
+            Extension = m.Extension,
+            CentroCosto = m.CentroCosto,
+            //FechaDescontinuacion = m.FechaDescontinuacion.HasValue
+            //    ? m.FechaDescontinuacion.Value.ToDateTime(TimeOnly.MinValue)
+            //: null,
+            Estado = m.Estado
+        })
+        .ToList();
+        }
 
 
         //obtener un usuario por su id

@@ -31,14 +31,16 @@ namespace Identity.Api.Controllers
         [HttpGet("GetUsuarioDetalleById/{cedula}")]
         public IActionResult GetById(string cedula)
         {
+            var detalles = _usuarioDetalle.GetUsuarioDetalleById(cedula);
 
-            var usuario = _usuarioDetalle.GetUsuarioDetalleById(cedula);
-            if (usuario == null)
+            if (detalles == null || !detalles.Any())
             {
-                return NotFound($"Suscripción con ID {cedula} no encontrada.");
+                return NotFound($"No se encontraron asignaciones para la cédula {cedula}");
             }
-            return Ok(usuario);
+
+            return Ok(detalles);
         }
+
 
         [HttpPost("InsertUsuarioDetalle")]
         public IActionResult InsertUsuario([FromBody] UsuarioDetalleDTO dto)
@@ -86,6 +88,21 @@ namespace Identity.Api.Controllers
             try
             {
                 _usuarioDetalle.DeleteUsuarioDetalleById(cedula);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
+        }
+
+        //eliminar por cedula, idCargo y idDepartamento
+        [HttpDelete("DeleteUsuarioDetalle/{cedula}/{idDepartamento}/{idCargo}")]
+        public IActionResult DeleteUsuarioDetalle(string cedula, int idDepartamento, int idCargo)
+        {
+            try
+            {
+                _usuarioDetalle.DeleteUsuarioDetalle(cedula, idDepartamento, idCargo);
                 return NoContent();
             }
             catch (Exception ex)

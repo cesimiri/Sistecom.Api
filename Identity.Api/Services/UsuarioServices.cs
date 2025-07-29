@@ -45,10 +45,10 @@ namespace Identity.Api.Services
         //}
 
         //traer departamentos por la sucursal
-        //public IEnumerable<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal)
-        //{
-        //    return _dataRepository.ObtenerDepartamentosBySucursal(idSucursal);
-        //}
+        public IEnumerable<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal)
+        {
+            return _dataRepository.ObtenerDepartamentosBySucursal(idSucursal);
+        }
 
         //paginado
         public PagedResult<UsuarioDTO> GetUsuariosPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)

@@ -14,7 +14,7 @@ namespace Identity.Api.Services
             get { return _dataRepository.GetAllUsuarioDetalle(); }
         }
 
-        public UsuarioDetalleDTO GetUsuarioDetalleById(string cedula)
+        public List<UsuarioDetalleDTO> GetUsuarioDetalleById(string cedula)
         {
             return _dataRepository.GetUsuarioDetalleById(cedula);
         }
@@ -38,6 +38,13 @@ namespace Identity.Api.Services
         {
             _dataRepository.DeleteUsuarioDetalleById(cedula);
         }
+
+        //eliminar por cedula idDepartamento idCargo
+        public void DeleteUsuarioDetalle(string cedula, int idDepartamento, int idCargo)
+        {
+            _dataRepository.DeleteUsuarioDetalle(cedula, idDepartamento, idCargo);
+        }
+
 
         //traer datos por la empresa seleccionada
         //public IEnumerable<SucursaleDTO> ObtenerSucursalesByRuc(string RucEmpresa)

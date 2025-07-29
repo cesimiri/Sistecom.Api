@@ -47,15 +47,14 @@ namespace Identity.Api.DataRepository
 
 
         //obtener un usuario por su id
-        public UsuarioDetalleDTO GetUsuarioDetalleById(string cedula)
+        public List<UsuarioDetalleDTO> GetUsuarioDetalleById(string cedula)
         {
             using var context = new InvensisContext();
 
             return context.UsuarioDetalles
                 .Include(s => s.IdDepartamentoNavigation)
                 .Include(s => s.IdCargoNavigation)
-                .Include(s => s.CedulaNavigation) // Asegúrate de que esta relación exista
-
+                .Include(s => s.CedulaNavigation)
                 .Where(s => s.Cedula == cedula)
                 .Select(s => new UsuarioDetalleDTO
                 {
@@ -75,14 +74,14 @@ namespace Identity.Api.DataRepository
                     Observaciones = s.Observaciones,
                     Estado = s.Estado,
 
-                    // campos relacionados:
+                    // relacionados
                     NombreDepartamento = s.IdDepartamentoNavigation.NombreDepartamento,
                     NombreCargo = s.IdCargoNavigation.NombreCargo,
                     NombreCedula = s.CedulaNavigation.Apellidos + " " + s.CedulaNavigation.Nombres
                 })
-                .FirstOrDefault();
-
+                .ToList();
         }
+
 
         //insertar un nuevo usuario
         public void InsertUsuarioDetalle(UsuarioDetalleDTO dto)
@@ -171,9 +170,23 @@ namespace Identity.Api.DataRepository
                     context.SaveChanges();
                 }
             }
-
         }
 
+        //eliminar por cedula idDepartamento idCargo
+        public void DeleteUsuarioDetalle(string cedula, int idDepartamento, int idCargo)
+        {
+            using (var context = new InvensisContext())
+            {
+                var usuario = context.UsuarioDetalles
+                    .FirstOrDefault(s => s.Cedula == cedula && s.IdCargo == idCargo && s.IdDepartamento == idDepartamento);
+
+                if (usuario != null)
+                {
+                    context.UsuarioDetalles.Remove(usuario);
+                    context.SaveChanges();
+                }
+            }
+        }
 
 
         public PagedResult<UsuarioDetalleDTO> GetUsuarioDetallePaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)

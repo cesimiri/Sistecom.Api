@@ -15,7 +15,7 @@ namespace Identity.Api.Interfaces
 
         //IEnumerable<SucursaleDTO> ObtenerSucursalesByRuc(string RucEmpresa);
 
-        //IEnumerable<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal);
+        IEnumerable<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal);
 
         // Nuevo método para paginado:
         PagedResult<UsuarioDTO> GetUsuariosPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);

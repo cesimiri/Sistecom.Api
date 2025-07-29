@@ -47,18 +47,18 @@ namespace Identity.Api.Controllers
         //}
 
         //Obtener las departamentos por sucursal
-        //[HttpGet("ObtenerDepartamentosBySucursal/{idSucursal}")]
-        //public IActionResult ObtenerDepartamentosBySucursal(int idSucursal)
-        //{
-        //    var modelos = _usuario.ObtenerDepartamentosBySucursal(idSucursal);
+        [HttpGet("ObtenerDepartamentosBySucursal/{idSucursal}")]
+        public IActionResult ObtenerDepartamentosBySucursal(int idSucursal)
+        {
+            var modelos = _usuario.ObtenerDepartamentosBySucursal(idSucursal);
 
-        //    if (modelos == null || !modelos.Any())
-        //    {
-        //        return NotFound($"No se encontraron los departamentos por esa id de sucursal: {idSucursal}.");
-        //    }
+            if (modelos == null || !modelos.Any())
+            {
+                return NotFound($"No se encontraron los departamentos por esa id de sucursal: {idSucursal}.");
+            }
 
-        //    return Ok(modelos);
-        //}
+            return Ok(modelos);
+        }
 
         [HttpGet("GetUsuarioById/{cedula}")]
         public IActionResult GetById(string cedula)
