@@ -23,5 +23,10 @@ namespace Identity.Api.Interfaces
         //Paginados por usuarios sin Departamento
         PagedResult<UsuarioDTO> GetUsuariosSinEmpresaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
 
+        //exportar 
+        List<UsuarioDTO> ObtenerUsuarioFiltradas(string? filtro, string? estado);
+
+        //exportar UsuarioSinEmpresa
+        List<UsuarioDTO> ObtenerUsuarioSinEmpresaFiltradas(string? filtro, string? estado);
     }
 }

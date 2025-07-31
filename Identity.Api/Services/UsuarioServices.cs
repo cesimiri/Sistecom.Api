@@ -55,5 +55,17 @@ namespace Identity.Api.Services
         {
             return _dataRepository.GetUsuariosSinEmpresaPaginados(pagina, pageSize, filtro, estado);
         }
+
+        //exportar
+        public List<UsuarioDTO> ObtenerUsuarioFiltradas(string? filtro, string? estado)
+        {
+            return _dataRepository.ObtenerUsuarioFiltradas(filtro, estado);
+        }
+
+        //exportar
+        public List<UsuarioDTO> ObtenerUsuarioSinEmpresaFiltradas(string? filtro, string? estado)
+        {
+            return _dataRepository.ObtenerUsuarioSinEmpresaFiltradas(filtro, estado);
+        }
     }
 }

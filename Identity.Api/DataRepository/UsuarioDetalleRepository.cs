@@ -215,11 +215,15 @@ namespace Identity.Api.DataRepository
                 );
             }
 
-            // Filtro por estado (si aplica)
-            if (!string.IsNullOrEmpty(estado))
+            // Si estado no viene, forzar "ACTIVO"
+            if (string.IsNullOrWhiteSpace(estado))
             {
-                query = query.Where(u => u.Estado == estado);
+                estado = "ACTIVO";
             }
+
+            // Filtro por estado (siempre aplica, ya está garantizado que tiene valor)
+            query = query.Where(u => u.Estado == estado);
+
 
             var totalItems = query.Count();
 
@@ -278,10 +282,15 @@ namespace Identity.Api.DataRepository
                 );
             }
 
-            if (!string.IsNullOrWhiteSpace(estado))
+            // Si estado no viene, forzar "ACTIVO"
+            if (string.IsNullOrWhiteSpace(estado))
             {
-                query = query.Where(u => u.Estado == estado);
+                estado = "ACTIVO";
             }
+
+            // Filtro por estado (siempre aplica, ya está garantizado que tiene valor)
+            query = query.Where(u => u.Estado == estado);
+
 
             return query
                 .OrderBy(u => u.Cedula)

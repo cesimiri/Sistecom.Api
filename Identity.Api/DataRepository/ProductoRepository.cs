@@ -299,11 +299,15 @@ namespace Identity.Api.DataRepository
                     u.Nombre.ToLower().Contains(filtro));
             }
 
-            // Aplicar filtro por estado
-            if (!string.IsNullOrEmpty(estado))
+            // Si estado no viene, forzar "ACTIVO"
+            if (string.IsNullOrWhiteSpace(estado))
             {
-                query = query.Where(u => u.Estado == estado);
+                estado = "ACTIVO";
             }
+
+            // Filtro por estado (siempre aplica, ya está garantizado que tiene valor)
+            query = query.Where(u => u.Estado == estado);
+
 
             // Total de registros filtrados
             var totalItems = query.Count();
@@ -376,10 +380,15 @@ namespace Identity.Api.DataRepository
                     e.CodigoPrincipal.ToLower().Contains(lowerFiltro));
             }
 
-            if (!string.IsNullOrWhiteSpace(estado))
+            // Si estado no viene, forzar "ACTIVO"
+            if (string.IsNullOrWhiteSpace(estado))
             {
-                query = query.Where(e => e.Estado == estado);
+                estado = "ACTIVO";
             }
+
+            // Filtro por estado (siempre aplica, ya está garantizado que tiene valor)
+            query = query.Where(e => e.Estado == estado);
+
 
             return query
                 .Select(s => new ProductoDTO

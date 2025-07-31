@@ -151,19 +151,6 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        //public void DeleteSuscripcion(SuscripcionDto dto)
-        //{
-        //    using var context = new InvensisContext();
-
-        //    var suscripcion = context.Suscripciones
-        //        .FirstOrDefault(s => s.IdSuscripcion == dto.IdSuscripcion);
-
-        //    if (suscripcion != null)
-        //    {
-        //        context.Suscripciones.Remove(suscripcion);
-        //        context.SaveChanges();
-        //    }
-        //}
         public void DeleteDepartamentoById(int idDepartamento)
         {
             using (var context = new InvensisContext())
@@ -178,7 +165,6 @@ namespace Identity.Api.DataRepository
                 }
             }
         }
-
 
         //PAGINADA 
         public PagedResult<DepartamentoDTO> GetDepartamentosPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
@@ -201,11 +187,16 @@ namespace Identity.Api.DataRepository
                 );
             }
 
-            // Aplicar filtro por estado
-            if (!string.IsNullOrEmpty(estado))
+            // Si estado no viene, forzar "ACTIVO"
+            if (string.IsNullOrWhiteSpace(estado))
             {
-                query = query.Where(u => u.Estado == estado);
+                estado = "ACTIVO";
             }
+
+            // Filtro por estado (siempre aplica, ya está garantizado que tiene valor)
+
+            query = query.Where(u => u.Estado == estado);
+
 
             // Total de registros filtrados
             var totalItems = query.Count();

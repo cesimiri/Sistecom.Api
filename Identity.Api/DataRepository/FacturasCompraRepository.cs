@@ -161,14 +161,6 @@ namespace Identity.Api.DataRepository
         }
 
 
-        //public void DeleteFacturasCompra(FacturasCompra NewItem)
-        //{
-        //    using (var context = new InvensisContext())
-        //    {
-        //        context.FacturasCompras.Remove(NewItem);
-        //        context.SaveChanges();
-        //    }
-        //}
 
         public void DeleteFacturasCompraById(int IdFacturasCompra)
         {
@@ -206,11 +198,15 @@ namespace Identity.Api.DataRepository
                 );
             }
 
-            // Aplicar filtro por estado
-            if (!string.IsNullOrEmpty(estado))
+            // Si estado no viene, forzar "ACTIVO"
+            if (string.IsNullOrWhiteSpace(estado))
             {
-                query = query.Where(u => u.Estado == estado);
+                estado = "PENDIENTE";
             }
+
+            // Filtro por estado (siempre aplica, ya está garantizado que tiene valor)
+            query = query.Where(u => u.Estado == estado);
+
 
             // Total de registros filtrados
             var totalItems = query.Count();

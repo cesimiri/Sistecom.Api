@@ -117,9 +117,7 @@ namespace Identity.Api.DataRepository
         {
             using var context = new InvensisContext();
 
-            var query = context.EmpresasClientes
-
-                .AsQueryable();
+            var query = context.EmpresasClientes.AsQueryable();
 
             // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
             if (!string.IsNullOrEmpty(filtro))
@@ -130,11 +128,15 @@ namespace Identity.Api.DataRepository
                     );
             }
 
-            // Aplicar filtro por estado y ordenado por razón social
-            if (!string.IsNullOrEmpty(estado))
+            // Si estado no viene, forzar "ACTIVO"
+            if (string.IsNullOrWhiteSpace(estado))
             {
-                query = query.Where(u => u.Estado == estado);
+                estado = "ACTIVO";
             }
+
+            // Filtro por estado (siempre aplica, ya está garantizado que tiene valor)
+            query = query.Where(u => u.Estado == estado);
+
 
             // Total de registros filtrados
             var totalItems = query.Count();
@@ -190,10 +192,15 @@ namespace Identity.Api.DataRepository
                     e.NombreComercial.ToLower().Contains(lowerFiltro));
             }
 
-            if (!string.IsNullOrWhiteSpace(estado))
+            // Si estado no viene, forzar "ACTIVO"
+            if (string.IsNullOrWhiteSpace(estado))
             {
-                query = query.Where(e => e.Estado == estado);
+                estado = "ACTIVO";
             }
+
+            // Filtro por estado (siempre aplica, ya está garantizado que tiene valor)
+            query = query.Where(e => e.Estado == estado);
+
 
             return query
                 .Select(e => new EmpresasCliente

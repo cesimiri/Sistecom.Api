@@ -1,10 +1,12 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
+using Identity.Api.Reporteria;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using QuestPDF.Infrastructure;
 
 
 namespace Identity.Api.Controllers
@@ -161,6 +163,66 @@ namespace Identity.Api.Controllers
             {
                 return BadRequest(new { error = ex.Message });
             }
+        }
+
+        //exportar PDF
+        [HttpGet("ExportarUsuarioPdf")]
+        public IActionResult ExportarUsuarioPdf(string? filtro = null, string? estado = null, string? correo = null)
+        {
+            QuestPDF.Settings.License = LicenseType.Community;
+
+            var datos = _usuario.ObtenerUsuarioFiltradas(filtro, estado);
+
+            if (datos == null || !datos.Any())
+                return NotFound("No hay datos para exportar.");
+
+            var pdfBytes = UsuarioPdfGenerator.GenerarPdf(datos, correo);
+
+            return File(pdfBytes, "application/pdf", "UsuarioListado.pdf");
+        }
+
+        //exportar PDF sin empresa asignada
+        [HttpGet("ExportarUsurioSinEmpresaPdf")]
+        public IActionResult ExportarUsurioSinEmpresaPdf(string? filtro = null, string? estado = null, string? correo = null)
+        {
+            QuestPDF.Settings.License = LicenseType.Community;
+
+            var datos = _usuario.ObtenerUsuarioSinEmpresaFiltradas(filtro, estado);
+
+            if (datos == null || !datos.Any())
+                return NotFound("No hay datos para exportar.");
+
+            var pdfBytes = UsuarioSinEmpresaPdfGenerator.GenerarPdf(datos, correo);
+
+            return File(pdfBytes, "application/pdf", "UsuarioSinEmpresa.pdf");
+        }
+
+        // Exporar Excel 
+        [HttpGet("exportarExcelUsuario")]
+        public IActionResult ExportarUsuarioExcel(string? filtro = null, string? estado = null)
+        {
+            var datos = _usuario.ObtenerUsuarioFiltradas(filtro, estado);
+
+            if (datos == null || !datos.Any())
+                return NotFound("No hay datos para exportar.");
+
+            var excelBytes = UsuarioExcelGenerator.GenerarExcel(datos);
+
+            return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "EmpresasListado.xlsx");
+        }
+
+        // Exporar Excel usuario sin empresa
+        [HttpGet("exportarExcelUsurioSinEmpresa")]
+        public IActionResult ExportarUsuarioSinEmpresaExcel(string? filtro = null, string? estado = null)
+        {
+            var datos = _usuario.ObtenerUsuarioSinEmpresaFiltradas(filtro, estado);
+
+            if (datos == null || !datos.Any())
+                return NotFound("No hay datos para exportar.");
+
+            var excelBytes = UsuarioSinEmpresaExcelGenerator.GenerarExcel(datos);
+
+            return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "EmpresasListado.xlsx");
         }
     }
 }

@@ -182,11 +182,15 @@ namespace identity.api.datarepository
                     );
             }
 
-            // Filtro por estado
-            if (!string.IsNullOrEmpty(estado))
+            // Si estado no viene, forzar "ACTIVO"
+            if (string.IsNullOrWhiteSpace(estado))
             {
-                query = query.Where(u => u.Estado == estado);
+                estado = "ACTIVO";
             }
+
+            // Filtro por estado (siempre aplica, ya está garantizado que tiene valor)
+
+            query = query.Where(u => u.Estado == estado);
 
             var totalItems = query.Count();
 
@@ -215,6 +219,7 @@ namespace identity.api.datarepository
             };
         }
 
+        //paginado usuario sin empresa asignada
         public PagedResult<UsuarioDTO> GetUsuariosSinEmpresaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
         {
             using var context = new InvensisContext();
@@ -236,11 +241,16 @@ namespace identity.api.datarepository
                 );
             }
 
-            // 3. Filtro por estado
-            if (!string.IsNullOrEmpty(estado))
+            // 3. Si estado no viene, forzar "ACTIVO"
+            if (string.IsNullOrWhiteSpace(estado))
             {
-                query = query.Where(u => u.Estado == estado);
+                estado = "ACTIVO";
             }
+
+            // 3.1 Filtro por estado (siempre aplica, ya está garantizado que tiene valor)
+
+            query = query.Where(u => u.Estado == estado);
+
 
             // 4. Total antes de paginar
             var totalItems = query.Count();
@@ -272,6 +282,93 @@ namespace identity.api.datarepository
             };
         }
 
+        //exportar PDF 
+        public List<UsuarioDTO> ObtenerUsuarioFiltradas(string? filtro, string? estado)
+        {
+            using var context = new InvensisContext();
 
+            var query = context.Usuarios.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filtro))
+            {
+                var lowerFiltro = filtro.ToLower();
+                query = query.Where(u =>
+                    u.Cedula.ToLower().Contains(filtro) ||
+                    u.Nombres.ToLower().Contains(filtro) ||
+                    u.Apellidos.ToLower().Contains(filtro) ||
+                    u.Email.ToLower().Contains(filtro)
+
+                    );
+            }
+
+            // Si estado no viene, forzar "ACTIVO"
+            if (string.IsNullOrWhiteSpace(estado))
+            {
+                estado = "ACTIVO";
+            }
+
+            // Filtro por estado (siempre aplica, ya está garantizado que tiene valor)
+
+            query = query.Where(e => e.Estado == estado);
+
+
+            return query
+                .Select(s => new UsuarioDTO
+                {
+                    Cedula = s.Cedula,
+                    Nombres = s.Nombres,
+                    Apellidos = s.Apellidos,
+                    Telefono = s.Telefono,
+                    Email = s.Email,
+                    Extension = s.Extension,
+                    Estado = s.Estado
+                })
+                .ToList();
+        }
+
+        //exportar PDF usuario sin empresa
+        public List<UsuarioDTO> ObtenerUsuarioSinEmpresaFiltradas(string? filtro, string? estado)
+        {
+            using var context = new InvensisContext();
+
+            // 1. Base query: usuarios que NO estén en UsuarioDetalle
+            var query = context.Usuarios
+                .Where(u => !context.UsuarioDetalles.Any(ud => ud.Cedula == u.Cedula))
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(filtro))
+            {
+                var lowerFiltro = filtro.ToLower();
+                query = query.Where(u =>
+                    u.Cedula.ToLower().Contains(filtro) ||
+                    u.Nombres.ToLower().Contains(filtro) ||
+                    u.Apellidos.ToLower().Contains(filtro) ||
+                    u.Email.ToLower().Contains(filtro)
+                );
+            }
+
+            // Si estado no viene, forzar "ACTIVO"
+            if (string.IsNullOrWhiteSpace(estado))
+            {
+                estado = "ACTIVO";
+            }
+
+            // Filtro por estado (siempre aplica, ya está garantizado que tiene valor)
+            query = query.Where(e => e.Estado == estado);
+
+
+            return query
+                .Select(u => new UsuarioDTO
+                {
+                    Cedula = u.Cedula,
+                    Nombres = u.Nombres,
+                    Apellidos = u.Apellidos,
+                    Telefono = u.Telefono,
+                    Email = u.Email,
+                    Extension = u.Extension,
+                    Estado = u.Estado
+                })
+                .ToList();
+        }
     }
 }

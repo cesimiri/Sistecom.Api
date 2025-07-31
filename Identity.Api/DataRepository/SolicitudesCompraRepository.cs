@@ -353,6 +353,11 @@ namespace Identity.Api.DataRepository
             {
                 query = query.Where(u => u.Estado == estado);
             }
+            else
+            {
+                // Estado no proporcionado → excluir "COMPLETADA"
+                query = query.Where(u => u.Estado != "COMPLETADA");
+            }
 
             var totalItems = query.Count();
 
