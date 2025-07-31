@@ -32,20 +32,6 @@ namespace Identity.Api.Controllers
         }
 
 
-        //Obtener las sucursales por empresa
-        //[HttpGet("ObtenerSucursalesByRuc/{RucEmpresa}")]
-        //public IActionResult ObtenerSucursalesByRuc(string RucEmpresa)
-        //{
-        //    var modelos = _usuario.ObtenerSucursalesByRuc(RucEmpresa);
-
-        //    if (modelos == null || !modelos.Any())
-        //    {
-        //        return NotFound($"No se encontraron Sucursales con esa Ruc de empresa {RucEmpresa}.");
-        //    }
-
-        //    return Ok(modelos);
-        //}
-
         //Obtener las departamentos por sucursal
         [HttpGet("ObtenerDepartamentosBySucursal/{idSucursal}")]
         public IActionResult ObtenerDepartamentosBySucursal(int idSucursal)
@@ -112,25 +98,6 @@ namespace Identity.Api.Controllers
             }
         }
 
-        //[HttpDelete("DeleteUsuario")]
-        //public IActionResult Delete([FromBody] UsuarioDTO dto)
-        //{
-        //    if (dto == null || !ModelState.IsValid)
-        //    {
-        //        return BadRequest("Datos inválidos.");
-        //    }
-
-        //    try
-        //    {
-        //        _usuario.DeleteUsuario(dto);
-        //        return NoContent();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(new { error = ex.Message });
-        //    }
-        //}
-
         [HttpDelete("DeleteUsuarioById/{cedula}")]
         public IActionResult DeleteById(string cedula)
         {
@@ -175,5 +142,25 @@ namespace Identity.Api.Controllers
             }
         }
 
+
+        [HttpGet("GetUsuariosSinEmpresaPaginados")]
+        public IActionResult GetUsuariosSinEmpresaPaginados(
+        int pagina = 1,
+        int pageSize = PaginadorHelper.NumeroDeDatosPorPagina,
+        string? filtro = null,
+        string? estado = null)
+        {
+            try
+            {
+                // Llamamos al método que devuelve el paginado (en el servicio)
+                var resultado = _usuario.GetUsuariosSinEmpresaPaginados(pagina, pageSize, filtro, estado);
+
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+        }
     }
 }

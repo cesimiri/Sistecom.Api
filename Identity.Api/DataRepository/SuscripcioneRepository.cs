@@ -258,30 +258,31 @@ namespace Identity.Api.DataRepository
         }
 
 
-        //
-        //public IEnumerable<UsuarioDTO> GetUsuarioCargo1()
-        //{
-        //    using var context = new InvensisContext();
+        //trae con cargo 1
+        public IEnumerable<UsuarioDetalleDTO> GetUsuarioCargo1()
+        {
+            using var context = new InvensisContext();
 
-        //    var usuarios = context.Usuarios
-        //        //.Include(u => u.IdCargoNavigation)
-        //        .Where(u => u.IdCargo == 1 && u.Estado == "ACTIVO") // o el filtro que necesites
-        //        .Select(u => new UsuarioDTO
-        //        {
-        //            //IdUsuario = u.IdUsuario,
-        //            //IdDepartamento = u.IdDepartamento,
-        //            //IdCargo = u.IdCargo,
-        //            Cedula = u.Cedula,
-        //            Nombres = u.Nombres,
-        //            Apellidos = u.Apellidos,
-        //            Email = u.Email,
-        //            Estado = u.Estado,
-        //            NombreCargo = u.IdCargoNavigation.NombreCargo
-        //        })
-        //        .ToList();
+            var usuarios = context.UsuarioDetalles
+                .Include(u => u.IdCargoNavigation)
+                .Include(u => u.IdDepartamentoNavigation)
+                .Include(u => u.CedulaNavigation)
+                .Where(u => u.IdCargo == 1 && u.Estado == "ACTIVO")
+                .Select(u => new UsuarioDetalleDTO
+                {
+                    Cedula = u.Cedula,
+                    NombreCedula = u.CedulaNavigation.Apellidos + " " + u.CedulaNavigation.Nombres,
+                    IdDepartamento = u.IdDepartamento,
+                    NombreDepartamento = u.IdDepartamentoNavigation.NombreDepartamento,
+                    IdCargo = u.IdCargo,
+                    NombreCargo = u.IdCargoNavigation.NombreCargo,
+                    Estado = u.Estado,
+                })
+                .ToList();
 
-        //    return usuarios;
-        //}
+            return usuarios;
+        }
+
 
         //exportar
         public List<SuscripcionDto> ObtenerSuscripcioneFiltradas(string? filtro, string? estado)

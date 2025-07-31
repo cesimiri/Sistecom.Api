@@ -45,19 +45,6 @@ namespace Identity.Api.Services
             _dataRepository.DeleteUsuarioDetalle(cedula, idDepartamento, idCargo);
         }
 
-
-        //traer datos por la empresa seleccionada
-        //public IEnumerable<SucursaleDTO> ObtenerSucursalesByRuc(string RucEmpresa)
-        //{
-        //    return _dataRepository.ObtenerSucursalesByRuc(RucEmpresa);
-        //}
-
-        //traer departamentos por la sucursal
-        //public IEnumerable<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal)
-        //{
-        //    return _dataRepository.ObtenerDepartamentosBySucursal(idSucursal);
-        //}
-
         //paginado
         public PagedResult<UsuarioDetalleDTO> GetUsuarioDetallePaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
         {

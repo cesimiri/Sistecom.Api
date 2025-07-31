@@ -19,10 +19,6 @@ namespace Identity.Api.Interfaces
         void DeleteUsuarioDetalle(string cedula, int idDepartamento, int idCargo);
 
 
-        //IEnumerable<SucursaleDTO> ObtenerSucursalesByRuc(string RucEmpresa);
-
-        //IEnumerable<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal);
-
         // Nuevo método para paginado:
         PagedResult<UsuarioDetalleDTO> GetUsuarioDetallePaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
 

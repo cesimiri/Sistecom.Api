@@ -38,12 +38,6 @@ namespace Identity.Api.Services
             _dataRepository.DeleteUsuarioById(cedula);
         }
 
-        //traer datos por la empresa seleccionada
-        //public IEnumerable<SucursaleDTO> ObtenerSucursalesByRuc(string RucEmpresa)
-        //{
-        //    return _dataRepository.ObtenerSucursalesByRuc(RucEmpresa);
-        //}
-
         //traer departamentos por la sucursal
         public IEnumerable<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal)
         {
@@ -54,6 +48,12 @@ namespace Identity.Api.Services
         public PagedResult<UsuarioDTO> GetUsuariosPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
         {
             return _dataRepository.GetUsuariosPaginados(pagina, pageSize, filtro, estado);
+        }
+
+        //paginado usuario sin Emprea
+        public PagedResult<UsuarioDTO> GetUsuariosSinEmpresaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            return _dataRepository.GetUsuariosSinEmpresaPaginados(pagina, pageSize, filtro, estado);
         }
     }
 }

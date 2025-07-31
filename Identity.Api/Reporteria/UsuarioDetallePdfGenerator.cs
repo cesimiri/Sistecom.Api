@@ -49,12 +49,6 @@ namespace Identity.Api.Reporteria
                         });
                     });
 
-                    //    page.Header().Column(col =>
-                    //{
-                    //    col.Item().AlignCenter().Text("Listado de Empresas").FontSize(14).Bold();
-                    //    col.Item().AlignRight().Text($"Fecha: {DateTime.Now:dd/MM/yyyy HH:mm:ss}").FontSize(9);
-                    //    col.Item().AlignRight().Text($"Usuario: {correo}").FontSize(9);
-                    //});
 
                     page.Content().Table(table =>
                     {
@@ -64,7 +58,7 @@ namespace Identity.Api.Reporteria
                             columns.RelativeColumn(3); // 
                             columns.RelativeColumn(3); // 
                             columns.RelativeColumn(4); //nombres
-                            //columns.RelativeColumn(2); // Ciudad
+                            columns.RelativeColumn(2); // Sucursal
                             columns.RelativeColumn(3); // Estado
                         });
 
@@ -74,7 +68,7 @@ namespace Identity.Api.Reporteria
                             header.Cell().Text("Departamento").Bold();
                             header.Cell().Text("Cargo").Bold();
                             header.Cell().Text("Nombres").Bold();
-                            //header.Cell().Text("Ciudad").Bold();
+                            header.Cell().Text("Sucursal").Bold();
                             header.Cell().Text("Estado").Bold();
                         });
 
@@ -84,7 +78,7 @@ namespace Identity.Api.Reporteria
                             table.Cell().Text(emp.NombreDepartamento);
                             table.Cell().Text(emp.NombreCargo);
                             table.Cell().Text(emp.NombreCedula);
-                            //table.Cell().Text(emp.Ciudad);
+                            table.Cell().Text(emp.NombreSucursal);
                             table.Cell().Text(emp.Estado);
                         }
                     });

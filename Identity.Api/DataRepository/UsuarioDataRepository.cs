@@ -32,35 +32,6 @@ namespace identity.api.datarepository
 
         }
 
-        //obtener las sucursales despues de seleccionar la empresa pendiente
-        //public List<SucursaleDTO> ObtenerSucursalesByRuc(string RucEmpresa)
-        //{
-        //    using var context = new InvensisContext();
-
-        //    return context.Sucursales
-        //        .Where(m => m.RucEmpresa == RucEmpresa)
-        //        .OrderBy(s => s.NombreSucursal)
-        //.Select(m => new SucursaleDTO
-        //{
-        //    IdSucursal = m.IdSucursal,
-        //    RucEmpresa = m.RucEmpresa,
-        //    CodigoSucursal = m.CodigoSucursal!,
-        //    NombreSucursal = m.NombreSucursal,
-        //    Direccion = m.Direccion,
-        //    Ciudad = m.Ciudad,
-        //    Telefono = m.Telefono,
-        //    Email = m.Email,
-        //    //FechaDescontinuacion = m.FechaDescontinuacion.HasValue
-        //    //    ? m.FechaDescontinuacion.Value.ToDateTime(TimeOnly.MinValue)
-        //    //: null,
-        //    Responsable = m.Responsable,
-        //    TelefonoResponsable = m.TelefonoResponsable,
-        //    EsMatriz = m.EsMatriz,
-        //    Estado = m.Estado
-        //})
-        //.ToList();
-        //}
-
         //obtener los departamentos despues de seleccionar la sucursal  pendiente
         public List<DepartamentoDTO> ObtenerDepartamentosBySucursal(int idSucursal)
         {
@@ -190,8 +161,6 @@ namespace identity.api.datarepository
 
         }
 
-
-
         public PagedResult<UsuarioDTO> GetUsuariosPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
         {
             using var context = new InvensisContext();
@@ -245,6 +214,64 @@ namespace identity.api.datarepository
                 PageSize = pageSize
             };
         }
+
+        public PagedResult<UsuarioDTO> GetUsuariosSinEmpresaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        {
+            using var context = new InvensisContext();
+
+            // 1. Base query: usuarios que NO estén en UsuarioDetalle
+            var query = context.Usuarios
+                .Where(u => !context.UsuarioDetalles.Any(ud => ud.Cedula == u.Cedula))
+                .AsQueryable();
+
+            // 2. Filtro por texto (cedula, nombres, apellidos, email)
+            if (!string.IsNullOrEmpty(filtro))
+            {
+                filtro = filtro.ToLower();
+                query = query.Where(u =>
+                    u.Cedula.ToLower().Contains(filtro) ||
+                    u.Nombres.ToLower().Contains(filtro) ||
+                    u.Apellidos.ToLower().Contains(filtro) ||
+                    u.Email.ToLower().Contains(filtro)
+                );
+            }
+
+            // 3. Filtro por estado
+            if (!string.IsNullOrEmpty(estado))
+            {
+                query = query.Where(u => u.Estado == estado);
+            }
+
+            // 4. Total antes de paginar
+            var totalItems = query.Count();
+
+            // 5. Aplicar orden, paginación y proyección al DTO
+            var usuarios = query
+                .OrderBy(u => u.Apellidos)
+                .Skip((pagina - 1) * pageSize)
+                .Take(pageSize)
+                .Select(u => new UsuarioDTO
+                {
+                    Cedula = u.Cedula,
+                    Nombres = u.Nombres,
+                    Apellidos = u.Apellidos,
+                    Telefono = u.Telefono,
+                    Email = u.Email,
+                    Extension = u.Extension,
+                    Estado = u.Estado
+                })
+                .ToList();
+
+            // 6. Retornar resultado paginado
+            return new PagedResult<UsuarioDTO>
+            {
+                Items = usuarios,
+                TotalItems = totalItems,
+                Page = pagina,
+                PageSize = pageSize
+            };
+        }
+
 
     }
 }

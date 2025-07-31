@@ -131,12 +131,14 @@ namespace Identity.Api.Controllers
             }
         }
 
-        //[HttpGet("GetUsuarioCargo1")]
-        //public ActionResult<IEnumerable<UsuarioDTO>> GetUsuarioCargo1()
-        //{
-        //    var usuarios = _suscripcioneService.GetUsuarioCargo1();
-        //    return Ok(usuarios);
-        //}
+
+        //UsuarioDetalle con cargo1
+        [HttpGet("GetUsuarioCargo1")]
+        public ActionResult<IEnumerable<UsuarioDetalleDTO>> GetUsuarioCargo1()
+        {
+            var usuarios = _suscripcioneService.GetUsuarioCargo1();
+            return Ok(usuarios);
+        }
 
 
         //exportar

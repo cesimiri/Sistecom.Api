@@ -19,5 +19,9 @@ namespace Identity.Api.Interfaces
 
         // Nuevo método para paginado:
         PagedResult<UsuarioDTO> GetUsuariosPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
+
+        //Paginados por usuarios sin Departamento
+        PagedResult<UsuarioDTO> GetUsuariosSinEmpresaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
+
     }
 }

@@ -134,7 +134,7 @@ builder.Services.AddScoped<IProveedor, ProveedorService>();
 
 
 // Servicios de Solicitudes de Compra
-//builder.Services.AddScoped<ISolicitudesCompra, SolicitudesCompraService>();
+builder.Services.AddScoped<ISolicitudesCompra, SolicitudesCompraService>();
 
 //FacturCompra
 builder.Services.AddScoped<IFacturasCompra, FacturasCompraServices>();

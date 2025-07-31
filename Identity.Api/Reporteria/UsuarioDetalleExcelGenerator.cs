@@ -16,7 +16,8 @@ namespace Identity.Api.Reporteria
                 worksheet.Cells[1, 2].Value = "Departamento";
                 worksheet.Cells[1, 3].Value = "Cargo";
                 worksheet.Cells[1, 4].Value = "Nombres";
-                worksheet.Cells[1, 5].Value = "Estado";
+                worksheet.Cells[1, 5].Value = "Sucursal";
+                worksheet.Cells[1, 6].Value = "Estado";
 
                 int row = 2;
                 foreach (var emp in datos)
@@ -25,8 +26,8 @@ namespace Identity.Api.Reporteria
                     worksheet.Cells[row, 2].Value = emp.NombreDepartamento;
                     worksheet.Cells[row, 3].Value = emp.NombreCargo;
                     worksheet.Cells[row, 4].Value = emp.NombreCedula;
-                    worksheet.Cells[row, 5].Value = emp.Estado;
-                    //worksheet.Cells[row, 5].Value = emp.Telefono;
+                    worksheet.Cells[row, 5].Value = emp.NombreSucursal;
+                    worksheet.Cells[row, 6].Value = emp.Estado;
                     row++;
                 }
 

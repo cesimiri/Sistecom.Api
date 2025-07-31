@@ -21,14 +21,14 @@ namespace Identity.Api.DataRepository
                 Cedula = s.Cedula,
                 IdDepartamento = s.IdDepartamento,
                 IdCargo = s.IdCargo,
-                PuedeSolicitar = s.PuedeSolicitar,
-                LimiteSolicitud = s.LimiteSolicitud,
-                RequiereAutorizacion = s.RequiereAutorizacion,
-                UsuarioSistema = s.UsuarioSistema,
-                PasswordHash = s.PasswordHash,
-                UltimoAcceso = s.UltimoAcceso,
-                IntentosFallidos = s.IntentosFallidos,
-                Bloqueado = s.Bloqueado,
+                //PuedeSolicitar = s.PuedeSolicitar,
+                //LimiteSolicitud = s.LimiteSolicitud,
+                //RequiereAutorizacion = s.RequiereAutorizacion,
+                //UsuarioSistema = s.UsuarioSistema,
+                //PasswordHash = s.PasswordHash,
+                //UltimoAcceso = s.UltimoAcceso,
+                //IntentosFallidos = s.IntentosFallidos,
+                //Bloqueado = s.Bloqueado,
                 FechaAsignacion = s.FechaAsignacion,
                 FechaBaja = s.FechaBaja,
                 Observaciones = s.Observaciones,
@@ -61,14 +61,14 @@ namespace Identity.Api.DataRepository
                     Cedula = s.Cedula,
                     IdDepartamento = s.IdDepartamento,
                     IdCargo = s.IdCargo,
-                    PuedeSolicitar = s.PuedeSolicitar,
-                    LimiteSolicitud = s.LimiteSolicitud,
-                    RequiereAutorizacion = s.RequiereAutorizacion,
-                    UsuarioSistema = s.UsuarioSistema,
-                    PasswordHash = s.PasswordHash,
-                    UltimoAcceso = s.UltimoAcceso,
-                    IntentosFallidos = s.IntentosFallidos,
-                    Bloqueado = s.Bloqueado,
+                    //PuedeSolicitar = s.PuedeSolicitar,
+                    //LimiteSolicitud = s.LimiteSolicitud,
+                    //RequiereAutorizacion = s.RequiereAutorizacion,
+                    //UsuarioSistema = s.UsuarioSistema,
+                    //PasswordHash = s.PasswordHash,
+                    //UltimoAcceso = s.UltimoAcceso,
+                    //IntentosFallidos = s.IntentosFallidos,
+                    //Bloqueado = s.Bloqueado,
                     FechaAsignacion = s.FechaAsignacion,
                     FechaBaja = s.FechaBaja,
                     Observaciones = s.Observaciones,
@@ -97,14 +97,14 @@ namespace Identity.Api.DataRepository
                     Cedula = dto.Cedula,
                     IdDepartamento = dto.IdDepartamento,
                     IdCargo = dto.IdCargo,
-                    PuedeSolicitar = dto.PuedeSolicitar,
-                    LimiteSolicitud = dto.LimiteSolicitud,
-                    RequiereAutorizacion = dto.RequiereAutorizacion,
-                    UsuarioSistema = dto.UsuarioSistema,
-                    PasswordHash = dto.PasswordHash,
-                    UltimoAcceso = dto.UltimoAcceso,
-                    IntentosFallidos = dto.IntentosFallidos,
-                    Bloqueado = dto.Bloqueado,
+                    //PuedeSolicitar = dto.PuedeSolicitar,
+                    //LimiteSolicitud = dto.LimiteSolicitud,
+                    //RequiereAutorizacion = dto.RequiereAutorizacion,
+                    //UsuarioSistema = dto.UsuarioSistema,
+                    //PasswordHash = dto.PasswordHash,
+                    //UltimoAcceso = dto.UltimoAcceso,
+                    //IntentosFallidos = dto.IntentosFallidos,
+                    //Bloqueado = dto.Bloqueado,
                     FechaAsignacion = dto.FechaAsignacion,
                     FechaBaja = dto.FechaBaja,
                     Observaciones = dto.Observaciones,
@@ -137,14 +137,14 @@ namespace Identity.Api.DataRepository
                 usuario.Cedula = dto.Cedula;
                 usuario.IdDepartamento = dto.IdDepartamento;
                 usuario.IdCargo = dto.IdCargo;
-                usuario.PuedeSolicitar = dto.PuedeSolicitar;
-                usuario.LimiteSolicitud = dto.LimiteSolicitud;
-                usuario.RequiereAutorizacion = dto.RequiereAutorizacion;
-                usuario.UsuarioSistema = dto.UsuarioSistema;
-                usuario.PasswordHash = dto.PasswordHash;
-                usuario.UltimoAcceso = dto.UltimoAcceso;
-                usuario.IntentosFallidos = dto.IntentosFallidos;
-                usuario.Bloqueado = dto.Bloqueado;
+                //usuario.PuedeSolicitar = dto.PuedeSolicitar;
+                //usuario.LimiteSolicitud = dto.LimiteSolicitud;
+                //usuario.RequiereAutorizacion = dto.RequiereAutorizacion;
+                //usuario.UsuarioSistema = dto.UsuarioSistema;
+                //usuario.PasswordHash = dto.PasswordHash;
+                //usuario.UltimoAcceso = dto.UltimoAcceso;
+                //usuario.IntentosFallidos = dto.IntentosFallidos;
+                //usuario.Bloqueado = dto.Bloqueado;
                 usuario.FechaAsignacion = dto.FechaAsignacion;
                 usuario.FechaBaja = dto.FechaBaja;
                 usuario.Observaciones = dto.Observaciones;
@@ -188,29 +188,34 @@ namespace Identity.Api.DataRepository
             }
         }
 
-
+        //paginado
         public PagedResult<UsuarioDetalleDTO> GetUsuarioDetallePaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
         {
             using var context = new InvensisContext();
 
+            // Incluimos relaciones necesarias desde el inicio
             var query = context.UsuarioDetalles
-
+                .Include(u => u.IdDepartamentoNavigation)
+                    .ThenInclude(d => d.IdSucursalNavigation)
+                .Include(u => u.IdCargoNavigation)
+                .Include(u => u.CedulaNavigation)
                 .AsQueryable();
 
-            // Aplicar filtro por texto
+            // Filtro por texto en múltiples campos
             if (!string.IsNullOrEmpty(filtro))
             {
                 filtro = filtro.ToLower();
-                query = query.Where(u =>
-                    u.Cedula.ToLower().Contains(filtro)
-                    //u.Nombres.ToLower().Contains(filtro) ||
-                    //u.Apellidos.ToLower().Contains(filtro) ||
-                    //u.Email.ToLower().Contains(filtro)
 
-                    );
+                query = query.Where(u =>
+                    u.Cedula.ToLower().Contains(filtro) ||
+                    u.IdDepartamentoNavigation.NombreDepartamento.ToLower().Contains(filtro) ||
+                    u.IdDepartamentoNavigation.IdSucursalNavigation.NombreSucursal.ToLower().Contains(filtro) ||
+                    u.IdCargoNavigation.NombreCargo.ToLower().Contains(filtro) ||
+                    (u.CedulaNavigation.Apellidos + " " + u.CedulaNavigation.Nombres).ToLower().Contains(filtro)
+                );
             }
 
-            // Filtro por estado
+            // Filtro por estado (si aplica)
             if (!string.IsNullOrEmpty(estado))
             {
                 query = query.Where(u => u.Estado == estado);
@@ -218,32 +223,22 @@ namespace Identity.Api.DataRepository
 
             var totalItems = query.Count();
 
+            // Aplicar paginación y proyectar al DTO
             var usuarios = query
                 .OrderBy(u => u.Cedula)
                 .Skip((pagina - 1) * pageSize)
                 .Take(pageSize)
-                .Include(s => s.IdDepartamentoNavigation)
-                .Include(s => s.IdCargoNavigation)
-                .Include(s => s.CedulaNavigation)
                 .Select(s => new UsuarioDetalleDTO
                 {
                     Cedula = s.Cedula,
                     IdDepartamento = s.IdDepartamento,
                     IdCargo = s.IdCargo,
-                    PuedeSolicitar = s.PuedeSolicitar,
-                    LimiteSolicitud = s.LimiteSolicitud,
-                    RequiereAutorizacion = s.RequiereAutorizacion,
-                    UsuarioSistema = s.UsuarioSistema,
-                    PasswordHash = s.PasswordHash,
-                    UltimoAcceso = s.UltimoAcceso,
-                    IntentosFallidos = s.IntentosFallidos,
-                    Bloqueado = s.Bloqueado,
                     FechaAsignacion = s.FechaAsignacion,
                     FechaBaja = s.FechaBaja,
                     Observaciones = s.Observaciones,
                     Estado = s.Estado,
-                    //relacion
                     NombreDepartamento = s.IdDepartamentoNavigation.NombreDepartamento,
+                    NombreSucursal = s.IdDepartamentoNavigation.IdSucursalNavigation.NombreSucursal,
                     NombreCargo = s.IdCargoNavigation.NombreCargo,
                     NombreCedula = s.CedulaNavigation.Apellidos + " " + s.CedulaNavigation.Nombres
                 })
@@ -258,36 +253,54 @@ namespace Identity.Api.DataRepository
             };
         }
 
+
         //exportar PDF
         public List<UsuarioDetalleDTO> ObtenerUsuarioDetalleFiltradas(string? filtro, string? estado)
         {
             using var context = new InvensisContext();
 
-            var query = context.UsuarioDetalles.AsQueryable();
+            var query = context.UsuarioDetalles
+                .Include(u => u.IdDepartamentoNavigation)
+                    .ThenInclude(d => d.IdSucursalNavigation)
+                .Include(u => u.IdCargoNavigation)
+                .Include(u => u.CedulaNavigation)
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(filtro))
             {
                 var lowerFiltro = filtro.ToLower();
-                query = query.Where(e =>
-                    e.Cedula.ToLower().Contains(lowerFiltro) ||
-                    e.CedulaNavigation.Apellidos.ToLower().Contains(lowerFiltro) ||
-                    e.CedulaNavigation.Nombres.ToLower().Contains(lowerFiltro));
+                query = query.Where(u =>
+                    u.Cedula.ToLower().Contains(lowerFiltro) ||
+                    u.IdDepartamentoNavigation.NombreDepartamento.ToLower().Contains(lowerFiltro) ||
+                    u.IdDepartamentoNavigation.IdSucursalNavigation.NombreSucursal.ToLower().Contains(lowerFiltro) ||
+                    u.IdCargoNavigation.NombreCargo.ToLower().Contains(lowerFiltro) ||
+                    (u.CedulaNavigation.Apellidos + " " + u.CedulaNavigation.Nombres).ToLower().Contains(lowerFiltro)
+                );
             }
 
             if (!string.IsNullOrWhiteSpace(estado))
             {
-                query = query.Where(e => e.Estado == estado);
+                query = query.Where(u => u.Estado == estado);
             }
 
             return query
-                .Select(e => new UsuarioDetalleDTO
+                .OrderBy(u => u.Cedula)
+                .Select(u => new UsuarioDetalleDTO
                 {
-                    Cedula = e.Cedula,
-                    NombreDepartamento = e.IdDepartamentoNavigation.NombreDepartamento,
-                    NombreCargo = e.IdCargoNavigation.NombreCargo,
-                    NombreCedula = e.CedulaNavigation.Apellidos + " " + e.CedulaNavigation.Nombres
+                    Cedula = u.Cedula,
+                    IdDepartamento = u.IdDepartamento,
+                    IdCargo = u.IdCargo,
+                    FechaAsignacion = u.FechaAsignacion,
+                    FechaBaja = u.FechaBaja,
+                    Observaciones = u.Observaciones,
+                    Estado = u.Estado,
+                    NombreDepartamento = u.IdDepartamentoNavigation.NombreDepartamento,
+                    NombreSucursal = u.IdDepartamentoNavigation.IdSucursalNavigation.NombreSucursal,
+                    NombreCargo = u.IdCargoNavigation.NombreCargo,
+                    NombreCedula = u.CedulaNavigation.Apellidos + " " + u.CedulaNavigation.Nombres
                 })
                 .ToList();
         }
+
     }
 }

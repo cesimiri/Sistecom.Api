@@ -16,7 +16,7 @@ namespace Identity.Api.Interfaces
         PagedResult<SuscripcionDto> GetSuscripcionPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
 
         //traer solo los usuarios de cargo IT 
-        //IEnumerable<UsuarioDTO> GetUsuarioCargo1();
+        IEnumerable<UsuarioDetalleDTO> GetUsuarioCargo1();
 
         //exportar
         List<SuscripcionDto> ObtenerSuscripcioneFiltradas(string? filtro, string? estado);
