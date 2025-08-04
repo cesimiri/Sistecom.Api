@@ -1,6 +1,5 @@
 ﻿using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
-using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -84,25 +83,6 @@ namespace Identity.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("DeleteCategoriasProducto")]
-        public IActionResult Delete([FromBody] CategoriasProducto DelItem)
-        {
-            try
-            {
-                if (DelItem == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Error: Envio de datos");
-                }
-
-                _empresaCliente.DeleteCategoriasProducto(DelItem);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Error:" + ex.Message);
-            }
-
-            return NoContent();
-        }
 
         [HttpDelete("DeleteCategoriasProductoById/{IdCategoriasProducto}")]
         public IActionResult DeleteById(int IdCategoriasProducto)

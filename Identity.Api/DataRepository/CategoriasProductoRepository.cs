@@ -1,8 +1,5 @@
-﻿using Identity.Api.DTO;
-using Identity.Api.Paginado;
-using Microsoft.EntityFrameworkCore;
+﻿using Identity.Api.Paginado;
 using Modelo.Sistecom.Modelo.Database;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Identity.Api.DataRepository
 {
@@ -40,9 +37,9 @@ namespace Identity.Api.DataRepository
                 context.CategoriasProductos.Add(nuevo);
                 context.SaveChanges();
             }
-           
+
         }
-        
+
 
         public void UpdateCategoriasProducto(CategoriasProducto UpdItem)
         {
@@ -59,21 +56,13 @@ namespace Identity.Api.DataRepository
                     registrado.RequiereSerial = UpdItem.RequiereSerial;
                     registrado.VidaUtilMeses = UpdItem.VidaUtilMeses;
                     registrado.Estado = UpdItem.Estado;
-                    
+
 
                     context.SaveChanges();
                 }
             }
         }
 
-        public void DeleteCategoriasProducto(CategoriasProducto NewItem)
-        {
-            using (var context = new InvensisContext())
-            {
-                context.CategoriasProductos.Remove(NewItem);
-                context.SaveChanges();
-            }
-        }
 
         public void DeleteCategoriasProductoById(int IdCategoriaProducto)
         {
@@ -98,7 +87,7 @@ namespace Identity.Api.DataRepository
             using var context = new InvensisContext();
 
             var query = context.CategoriasProductos
-               
+
                 .AsQueryable();
 
             // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
@@ -106,7 +95,7 @@ namespace Identity.Api.DataRepository
             {
                 filtro = filtro.ToLower();
                 query = query.Where(u =>
-                    u.Nombre.ToLower().Contains(filtro) );
+                    u.Nombre.ToLower().Contains(filtro));
             }
 
             // Aplicar filtro por estado

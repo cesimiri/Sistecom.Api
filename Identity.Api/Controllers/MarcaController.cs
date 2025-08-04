@@ -83,26 +83,6 @@ namespace Identity.Api.Controllers
             return NoContent();
         }
 
-        //[HttpDelete("DeleteBodega")]
-        //public IActionResult Delete([FromBody] Bodega DelItem)
-        //{
-        //    try
-        //    {
-        //        if (DelItem == null || !ModelState.IsValid)
-        //        {
-        //            return BadRequest("Error: Envio de datos");
-        //        }
-
-        //        _bodega.DeleteBodega(DelItem);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest("Error:" + ex.Message);
-        //    }
-
-        //    return NoContent();
-        //}
-
         [HttpDelete("DeleteMarcaById/{idMarca}")]
         public IActionResult DeleteMarcaById(int idMarca)
         {

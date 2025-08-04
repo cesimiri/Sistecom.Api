@@ -656,22 +656,6 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.CategoriasProductoController",
-    "Method": "Delete",
-    "RelativePath": "api/CategoriasProducto/DeleteCategoriasProducto",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "DelItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.CategoriasProducto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.CategoriasProductoController",
     "Method": "DeleteById",
     "RelativePath": "api/CategoriasProducto/DeleteCategoriasProductoById/{IdCategoriasProducto}",
     "HttpMethod": "DELETE",

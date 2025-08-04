@@ -15,7 +15,7 @@ namespace Identity.Api.Services
             get { return _dataRepository.GetAllMarca(); }
         }
 
-        public Marca GetMarcaById(int idMarca)
+        public MarcaDTO GetMarcaById(int idMarca)
         {
             return _dataRepository.GetMarcaById(idMarca);
         }

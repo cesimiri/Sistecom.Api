@@ -1,10 +1,7 @@
 ﻿using Identity.Api.DTO;
-using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Modelo.Sistecom.Modelo.Database;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Identity.Api.DataRepository
 {
@@ -124,7 +121,7 @@ namespace Identity.Api.DataRepository
                 ? DateOnly.FromDateTime(dto.FechaDescontinuacion.Value)
                 : null,
                     EspecificacionesGenerales = dto.EspecificacionesGenerales?.ToUpper(),
-                    ImagenUrl = dto.ImagenUrl,      
+                    ImagenUrl = dto.ImagenUrl,
                     Estado = dto.Estado,
 
                 };
@@ -151,12 +148,12 @@ namespace Identity.Api.DataRepository
                     existente.IdMarca = updItem.IdMarca;
                     existente.Codigo = updItem.Codigo;
                     existente.Descripcion = updItem.Descripcion?.ToUpper();
-                    existente.Nombre = updItem.Nombre?.ToUpper();
+                    existente.Nombre = updItem.Nombre.ToUpper();
                     existente.AñoLanzamiento = updItem.AñoLanzamiento;
                     existente.Descontinuado = updItem.Descontinuado;
                     //covertir de datetime a dateonly 
                     existente.FechaDescontinuacion = updItem.FechaDescontinuacion.HasValue
-                    ? DateOnly.FromDateTime(updItem.FechaDescontinuacion.Value): null;
+                    ? DateOnly.FromDateTime(updItem.FechaDescontinuacion.Value) : null;
                     existente.EspecificacionesGenerales = updItem.EspecificacionesGenerales?.ToUpper();
                     existente.ImagenUrl = updItem.ImagenUrl;
                     existente.Estado = updItem.Estado;
@@ -205,7 +202,7 @@ namespace Identity.Api.DataRepository
             {
                 filtro = filtro.ToLower();
                 query = query.Where(u =>
-                    u.Nombre.ToLower().Contains(filtro) );
+                    u.Nombre.ToLower().Contains(filtro));
             }
 
             // Aplicar filtro por estado

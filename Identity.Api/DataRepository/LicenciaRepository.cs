@@ -179,7 +179,9 @@ namespace Identity.Api.DataRepository
 
             // Paso 1: Agrupar detalle de facturas por producto (solo productos categoría 6)
             var detalleFacturas = context.DetalleFacturaCompras
-                .Where(d => d.IdProductoNavigation.IdCategoria == 6)
+                //.Where(d => d.IdProductoNavigation.IdCategoria == 6)
+                .Where(d => d.IdProductoNavigation.IdModeloNavigation.IdMarcaNavigation.IdCategoria == 6)
+
                 .GroupBy(d => new { d.IdFactura, d.IdProducto })
                 .Select(g => new
                 {
@@ -252,39 +254,50 @@ namespace Identity.Api.DataRepository
         {
             using var context = new InvensisContext();
             var productos = context.Productos
-                .Where(s => s.IdCategoria == 6)
-                .Select(s => new ProductoDTO
+                .Include(p => p.IdModeloNavigation)
+                    .ThenInclude(m => m.IdMarcaNavigation)
+                        .ThenInclude(ma => ma.IdCategoriaNavigation)
+                .Include(p => p.IdUnidadMedidaNavigation)
+                .Where(p => p.IdModeloNavigation.IdMarcaNavigation.IdCategoria == 6)
+                .Select(p => new ProductoDTO
                 {
-                    IdProducto = s.IdProducto,
-                    CodigoPrincipal = s.CodigoPrincipal,
-                    CodigoAuxiliar = s.CodigoAuxiliar,
-                    Nombre = s.Nombre,
-                    Descripcion = s.Descripcion,
-                    IdCategoria = s.IdCategoria,
-                    TipoProducto = s.TipoProducto,
-                    EsComponente = s.EsComponente,
-                    EsEnsamblable = s.EsEnsamblable,
-                    RequiereSerial = s.RequiereSerial,
-                    IdMarca = s.IdMarca,
-                    IdModelo = s.IdModelo,
-                    IdUnidadMedida = s.IdUnidadMedida,
-                    PrecioUnitario = s.PrecioUnitario,
-                    PrecioVentaSugerido = s.PrecioVentaSugerido,
-                    CostoEnsamblaje = s.CostoEnsamblaje,
-                    TiempoEnsamblajeMinutos = s.TiempoEnsamblajeMinutos,
-                    AplicaIva = s.AplicaIva,
-                    PorcentajeIva = s.PorcentajeIva,
-                    StockMinimo = s.StockMinimo,
-                    StockMaximo = s.StockMaximo,
-                    GarantiaMeses = s.GarantiaMeses,
-                    EspecificacionesTecnicas = s.EspecificacionesTecnicas,
-                    ImagenUrl = s.ImagenUrl,
-                    Estado = s.Estado
+                    IdProducto = p.IdProducto,
+                    CodigoPrincipal = p.CodigoPrincipal,
+                    CodigoAuxiliar = p.CodigoAuxiliar,
+                    Nombre = p.Nombre,
+                    Descripcion = p.Descripcion,
+                    //IdCategoria = p.IdModeloNavigation.IdMarcaNavigation.IdCategoria,
+                    TipoProducto = p.TipoProducto,
+                    EsComponente = p.EsComponente,
+                    EsEnsamblable = p.EsEnsamblable,
+                    RequiereSerial = p.RequiereSerial,
+                    IdMarca = p.IdModeloNavigation.IdMarca,
+                    IdModelo = p.IdModelo,
+                    IdUnidadMedida = p.IdUnidadMedida,
+                    PrecioUnitario = p.PrecioUnitario,
+                    PrecioVentaSugerido = p.PrecioVentaSugerido,
+                    CostoEnsamblaje = p.CostoEnsamblaje,
+                    TiempoEnsamblajeMinutos = p.TiempoEnsamblajeMinutos,
+                    AplicaIva = p.AplicaIva,
+                    PorcentajeIva = p.PorcentajeIva,
+                    StockMinimo = p.StockMinimo,
+                    StockMaximo = p.StockMaximo,
+                    GarantiaMeses = p.GarantiaMeses,
+                    EspecificacionesTecnicas = p.EspecificacionesTecnicas,
+                    ImagenUrl = p.ImagenUrl,
+                    Estado = p.Estado,
 
+                    // Opcionales: para mostrar nombres en frontend
+                    NombreCategoria = p.IdModeloNavigation.IdMarcaNavigation.IdCategoriaNavigation.Nombre,
+                    NombreMarca = p.IdModeloNavigation.IdMarcaNavigation.Nombre,
+                    NombreModelo = p.IdModeloNavigation.Nombre,
+                    NombreUnidadesMedidas = p.IdUnidadMedidaNavigation.Nombre
                 })
                 .ToList();
+
             return productos;
         }
+
 
         //PAGINADA 
         public PagedResult<LicenciaDTO> GetLicenciaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)

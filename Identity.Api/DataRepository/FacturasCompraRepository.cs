@@ -91,8 +91,6 @@ namespace Identity.Api.DataRepository
                     throw new Exception("Esa proveedor , bodega no existe en la base de datos.");
                 }
 
-
-
                 var nueva = new FacturasCompra
                 {
 
@@ -110,7 +108,6 @@ namespace Identity.Api.DataRepository
                     FormaPago = dto.FormaPago,
                     Estado = dto.Estado,
                     Observaciones = dto.Observaciones?.ToUpper()
-
 
                 };
 

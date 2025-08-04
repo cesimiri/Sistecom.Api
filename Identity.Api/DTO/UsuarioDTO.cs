@@ -20,6 +20,7 @@ namespace Identity.Api.DTO
         //('ACTIVO', 'INACTIVO')
         public string? Estado { get; set; }
 
+        public string? NombreSucursal { get; set; }
 
     }
 }

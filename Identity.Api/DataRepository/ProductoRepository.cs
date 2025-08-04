@@ -10,67 +10,47 @@ namespace Identity.Api.DataRepository
         {
             using var context = new InvensisContext();
             return context.Productos
-                .Include(s => s.IdCategoriaNavigation)
-                .Include(s => s.IdMarcaNavigation)
-                .Include(s => s.IdModeloNavigation)
-                .Include(s => s.IdUnidadMedidaNavigation)
-
-
-                .Select(s => new ProductoDTO
+                .Include(p => p.IdModeloNavigation)
+                    .ThenInclude(m => m.IdMarcaNavigation)
+                        .ThenInclude(ma => ma.IdCategoriaNavigation)
+                .Include(p => p.IdUnidadMedidaNavigation)
+                .Select(p => new ProductoDTO
                 {
+                    IdProducto = p.IdProducto,
+                    CodigoPrincipal = p.CodigoPrincipal,
+                    CodigoAuxiliar = p.CodigoAuxiliar,
+                    Nombre = p.Nombre,
+                    Descripcion = p.Descripcion,
+                    //IdCategoria = p.IdModeloNavigation.IdMarcaNavigation.IdCategoria,
+                    TipoProducto = p.TipoProducto,
+                    EsComponente = p.EsComponente,
+                    EsEnsamblable = p.EsEnsamblable,
+                    RequiereSerial = p.RequiereSerial,
+                    IdMarca = p.IdModeloNavigation.IdMarca,
+                    IdModelo = p.IdModelo,
+                    IdUnidadMedida = p.IdUnidadMedida,
+                    PrecioUnitario = p.PrecioUnitario,
+                    PrecioVentaSugerido = p.PrecioVentaSugerido,
+                    CostoEnsamblaje = p.CostoEnsamblaje,
+                    TiempoEnsamblajeMinutos = p.TiempoEnsamblajeMinutos,
+                    AplicaIva = p.AplicaIva,
+                    PorcentajeIva = p.PorcentajeIva,
+                    StockMinimo = p.StockMinimo,
+                    StockMaximo = p.StockMaximo,
+                    GarantiaMeses = p.GarantiaMeses,
+                    EspecificacionesTecnicas = p.EspecificacionesTecnicas,
+                    ImagenUrl = p.ImagenUrl,
+                    Estado = p.Estado,
 
-                    IdProducto = s.IdProducto,
-                    CodigoPrincipal = s.CodigoPrincipal,
-                    CodigoAuxiliar = s.CodigoAuxiliar,
-                    Nombre = s.Nombre,
-                    Descripcion = s.Descripcion,
-                    IdCategoria = s.IdCategoria,
-                    TipoProducto = s.TipoProducto,
-                    EsComponente = s.EsComponente,
-                    EsEnsamblable = s.EsEnsamblable,
-                    RequiereSerial = s.RequiereSerial,
-                    IdMarca = s.IdMarca,
-                    IdModelo = s.IdModelo,
-                    IdUnidadMedida = s.IdUnidadMedida,
-                    PrecioUnitario = s.PrecioUnitario,
-                    PrecioVentaSugerido = s.PrecioVentaSugerido,
-                    CostoEnsamblaje = s.CostoEnsamblaje,
-                    TiempoEnsamblajeMinutos = s.TiempoEnsamblajeMinutos,
-                    AplicaIva = s.AplicaIva,
-                    PorcentajeIva = s.PorcentajeIva,
-                    StockMinimo = s.StockMinimo,
-                    StockMaximo = s.StockMaximo,
-                    GarantiaMeses = s.GarantiaMeses,
-                    EspecificacionesTecnicas = s.EspecificacionesTecnicas,
-                    ImagenUrl = s.ImagenUrl,
-                    Estado = s.Estado,
-
-                    // campos relacionados:
-                    NombreCategoria = s.IdCategoriaNavigation.Nombre,
-                    NombreMarca = s.IdMarcaNavigation.Nombre,
-                    NombreModelo = s.IdModeloNavigation.Nombre,
-                    NombreUnidadesMedidas = s.IdUnidadMedidaNavigation.Nombre
-
+                    NombreCategoria = p.IdModeloNavigation.IdMarcaNavigation.IdCategoriaNavigation.Nombre,
+                    NombreMarca = p.IdModeloNavigation.IdMarcaNavigation.Nombre,
+                    NombreModelo = p.IdModeloNavigation.Nombre,
+                    NombreUnidadesMedidas = p.IdUnidadMedidaNavigation.Nombre
                 })
                 .ToList();
         }
 
 
-
-        // para traer los modelo 
-        //public List<ModeloDTO> GetModelosByIdMarca(int idMarca)
-        //{
-        //    using var context = new InvensisContext();
-
-        //    return context.Modelos
-        //        .Where(m => m.IdMarca == idMarca)
-        //        .Select(m => new ModeloDTO
-        //        {
-        //            IdModelo = m.IdModelo,
-        //            Nombre = m.Nombre
-        //        })
-        //        .ToList();
-        //}
 
         //obtener los modelso luego de seleccionar la marca
         public List<ModeloDTO> GetModelosByIdMarca(int idMarca)
@@ -103,45 +83,45 @@ namespace Identity.Api.DataRepository
             using var context = new InvensisContext();
 
             return context.Productos
-                .Include(s => s.IdCategoriaNavigation)
-                .Include(s => s.IdMarcaNavigation)
-                .Include(s => s.IdModeloNavigation)
-                .Include(s => s.IdUnidadMedidaNavigation)
+
+                .Include(p => p.IdModeloNavigation)
+                .ThenInclude(m => m.IdMarcaNavigation)
+                .ThenInclude(ma => ma.IdCategoriaNavigation)
+                .Include(p => p.IdUnidadMedidaNavigation)
 
                 .Where(s => s.IdProducto == idProducto)
-                .Select(s => new ProductoDTO
+                .Select(p => new ProductoDTO
                 {
-                    IdProducto = s.IdProducto,
-                    CodigoPrincipal = s.CodigoPrincipal,
-                    CodigoAuxiliar = s.CodigoAuxiliar,
-                    Nombre = s.Nombre,
-                    Descripcion = s.Descripcion,
-                    IdCategoria = s.IdCategoria,
-                    TipoProducto = s.TipoProducto,
-                    EsComponente = s.EsComponente,
-                    EsEnsamblable = s.EsEnsamblable,
-                    RequiereSerial = s.RequiereSerial,
-                    IdMarca = s.IdMarca,
-                    IdModelo = s.IdModelo,
-                    IdUnidadMedida = s.IdUnidadMedida,
-                    PrecioUnitario = s.PrecioUnitario,
-                    PrecioVentaSugerido = s.PrecioVentaSugerido,
-                    CostoEnsamblaje = s.CostoEnsamblaje,
-                    TiempoEnsamblajeMinutos = s.TiempoEnsamblajeMinutos,
-                    AplicaIva = s.AplicaIva,
-                    PorcentajeIva = s.PorcentajeIva,
-                    StockMinimo = s.StockMinimo,
-                    StockMaximo = s.StockMaximo,
-                    GarantiaMeses = s.GarantiaMeses,
-                    EspecificacionesTecnicas = s.EspecificacionesTecnicas,
-                    ImagenUrl = s.ImagenUrl,
-                    Estado = s.Estado,
+                    IdProducto = p.IdProducto,
+                    CodigoPrincipal = p.CodigoPrincipal,
+                    CodigoAuxiliar = p.CodigoAuxiliar,
+                    Nombre = p.Nombre,
+                    Descripcion = p.Descripcion,
+                    //IdCategoria = p.IdModeloNavigation.IdMarcaNavigation.IdCategoria,
+                    TipoProducto = p.TipoProducto,
+                    EsComponente = p.EsComponente,
+                    EsEnsamblable = p.EsEnsamblable,
+                    RequiereSerial = p.RequiereSerial,
+                    IdMarca = p.IdModeloNavigation.IdMarca,
+                    IdModelo = p.IdModelo,
+                    IdUnidadMedida = p.IdUnidadMedida,
+                    PrecioUnitario = p.PrecioUnitario,
+                    PrecioVentaSugerido = p.PrecioVentaSugerido,
+                    CostoEnsamblaje = p.CostoEnsamblaje,
+                    TiempoEnsamblajeMinutos = p.TiempoEnsamblajeMinutos,
+                    AplicaIva = p.AplicaIva,
+                    PorcentajeIva = p.PorcentajeIva,
+                    StockMinimo = p.StockMinimo,
+                    StockMaximo = p.StockMaximo,
+                    GarantiaMeses = p.GarantiaMeses,
+                    EspecificacionesTecnicas = p.EspecificacionesTecnicas,
+                    ImagenUrl = p.ImagenUrl,
+                    Estado = p.Estado,
 
-                    // campos relacionados:
-                    NombreCategoria = s.IdCategoriaNavigation.Nombre,
-                    NombreMarca = s.IdMarcaNavigation.Nombre,
-                    NombreModelo = s.IdModeloNavigation.Nombre,
-                    NombreUnidadesMedidas = s.IdUnidadMedidaNavigation.Nombre
+                    NombreCategoria = p.IdModeloNavigation.IdMarcaNavigation.IdCategoriaNavigation.Nombre,
+                    NombreMarca = p.IdModeloNavigation.IdMarcaNavigation.Nombre,
+                    NombreModelo = p.IdModeloNavigation.Nombre,
+                    NombreUnidadesMedidas = p.IdUnidadMedidaNavigation.Nombre
                 })
                 .FirstOrDefault();
 
@@ -154,12 +134,12 @@ namespace Identity.Api.DataRepository
                 using var context = new InvensisContext();
 
                 //validación para el ingreso de los id relacionados.
-                var categoria = context.CategoriasProductos.Find(dto.IdCategoria);
+                //var categoria = context.CategoriasProductos.Find(dto.IdCategoria);
                 var marca = context.Marcas.Find(dto.IdMarca);
                 var modelo = context.Modelos.Find(dto.IdModelo);
                 var nombreUnidadesMedidas = context.UnidadesMedida.Find(dto.IdUnidadMedida);
 
-                if (categoria == null || marca == null || modelo == null || nombreUnidadesMedidas == null)
+                if (/*categoria == null ||*/ marca == null || modelo == null || nombreUnidadesMedidas == null)
                 {
                     throw new Exception("Esa Categoria , marca, modelo, unidadesmedidas no existe en la base de datos.");
                 }
@@ -190,7 +170,7 @@ namespace Identity.Api.DataRepository
                     CodigoAuxiliar = dto.CodigoAuxiliar,
                     Nombre = dto.Nombre?.ToUpper(),
                     Descripcion = dto.Descripcion?.ToUpper(),
-                    IdCategoria = dto.IdCategoria,
+                    //IdCategoria = dto.IdCategoria,
                     TipoProducto = "PRODUCTO_FINAL",
                     EsComponente = dto.EsComponente,
                     EsEnsamblable = dto.EsEnsamblable,
@@ -236,7 +216,7 @@ namespace Identity.Api.DataRepository
                     existente.CodigoAuxiliar = updItem.CodigoAuxiliar;
                     existente.Nombre = updItem.Nombre?.ToUpper();
                     existente.Descripcion = updItem.Descripcion?.ToUpper();
-                    existente.IdCategoria = updItem.IdCategoria;
+                    //existente.IdCategoria = updItem.IdCategoria;
                     existente.TipoProducto = updItem.TipoProducto;
                     existente.EsComponente = updItem.EsComponente;
                     existente.EsEnsamblable = updItem.EsEnsamblable;
@@ -285,10 +265,10 @@ namespace Identity.Api.DataRepository
             using var context = new InvensisContext();
 
             var query = context.Productos
-                .Include(s => s.IdCategoriaNavigation)
-                .Include(s => s.IdMarcaNavigation)
-                .Include(s => s.IdModeloNavigation)
-                .Include(s => s.IdUnidadMedidaNavigation)
+                .Include(p => p.IdModeloNavigation)
+                .ThenInclude(m => m.IdMarcaNavigation)
+                .ThenInclude(ma => ma.IdCategoriaNavigation)
+                .Include(p => p.IdUnidadMedidaNavigation)
                 .AsQueryable();
 
             // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
@@ -317,37 +297,33 @@ namespace Identity.Api.DataRepository
                 .OrderBy(u => u.IdProducto) // importante ordenar antes de Skip/Take
                 .Skip((pagina - 1) * pageSize)
                 .Take(pageSize)
-                .Select(s => new ProductoDTO
+                .Select(p => new ProductoDTO
                 {
-                    IdProducto = s.IdProducto,
-                    CodigoPrincipal = s.CodigoPrincipal,
-                    CodigoAuxiliar = s.CodigoAuxiliar,
-                    Nombre = s.Nombre,
-                    Descripcion = s.Descripcion,
-                    IdCategoria = s.IdCategoria,
-                    EsComponente = s.EsComponente,
-                    EsEnsamblable = s.EsEnsamblable,
-                    RequiereSerial = s.RequiereSerial,
-                    IdMarca = s.IdMarca,
-                    IdModelo = s.IdModelo,
-                    IdUnidadMedida = s.IdUnidadMedida,
-                    PrecioUnitario = s.PrecioUnitario,
-                    PrecioVentaSugerido = s.PrecioVentaSugerido,
-                    CostoEnsamblaje = s.CostoEnsamblaje,
-                    TiempoEnsamblajeMinutos = s.TiempoEnsamblajeMinutos,
-                    AplicaIva = s.AplicaIva,
-                    PorcentajeIva = s.PorcentajeIva,
-                    StockMinimo = s.StockMinimo,
-                    StockMaximo = s.StockMaximo,
-                    GarantiaMeses = s.GarantiaMeses,
-                    EspecificacionesTecnicas = s.EspecificacionesTecnicas,
-                    ImagenUrl = s.ImagenUrl,
-                    Estado = s.Estado,
-                    // campos relacionados:
-                    NombreCategoria = s.IdCategoriaNavigation.Nombre,
-                    NombreMarca = s.IdMarcaNavigation.Nombre,
-                    NombreModelo = s.IdModeloNavigation.Nombre,
-                    NombreUnidadesMedidas = s.IdUnidadMedidaNavigation.Nombre
+                    IdProducto = p.IdProducto,
+                    CodigoPrincipal = p.CodigoPrincipal,
+                    CodigoAuxiliar = p.CodigoAuxiliar,
+                    Nombre = p.Nombre,
+                    Descripcion = p.Descripcion,
+                    //IdCategoria = p.IdModeloNavigation.IdMarcaNavigation.IdCategoria,
+                    TipoProducto = p.TipoProducto,
+                    EsComponente = p.EsComponente,
+                    EsEnsamblable = p.EsEnsamblable,
+                    RequiereSerial = p.RequiereSerial,
+                    IdMarca = p.IdModeloNavigation.IdMarca,
+                    IdModelo = p.IdModelo,
+                    IdUnidadMedida = p.IdUnidadMedida,
+                    PrecioUnitario = p.PrecioUnitario,
+                    PrecioVentaSugerido = p.PrecioVentaSugerido,
+                    CostoEnsamblaje = p.CostoEnsamblaje,
+                    TiempoEnsamblajeMinutos = p.TiempoEnsamblajeMinutos,
+                    AplicaIva = p.AplicaIva,
+                    PorcentajeIva = p.PorcentajeIva,
+                    StockMinimo = p.StockMinimo,
+                    StockMaximo = p.StockMaximo,
+                    GarantiaMeses = p.GarantiaMeses,
+                    EspecificacionesTecnicas = p.EspecificacionesTecnicas,
+                    ImagenUrl = p.ImagenUrl,
+                    Estado = p.Estado,
                 })
                 .ToList();
 
@@ -367,8 +343,10 @@ namespace Identity.Api.DataRepository
             using var context = new InvensisContext();
 
             var query = context.Productos
-                .Include(e => e.IdMarcaNavigation)
-                .Include(e => e.IdModeloNavigation)
+                .Include(p => p.IdModeloNavigation)
+                .ThenInclude(m => m.IdMarcaNavigation)
+                .ThenInclude(ma => ma.IdCategoriaNavigation)
+                .Include(p => p.IdUnidadMedidaNavigation)
 
                 .AsQueryable();
 
@@ -391,39 +369,33 @@ namespace Identity.Api.DataRepository
 
 
             return query
-                .Select(s => new ProductoDTO
+                .Select(p => new ProductoDTO
                 {
-                    IdProducto = s.IdProducto,
-                    CodigoPrincipal = s.CodigoPrincipal,
-                    CodigoAuxiliar = s.CodigoAuxiliar,
-                    Nombre = s.Nombre,
-                    Descripcion = s.Descripcion,
-                    IdCategoria = s.IdCategoria,
-                    TipoProducto = s.TipoProducto,
-                    EsComponente = s.EsComponente,
-                    EsEnsamblable = s.EsEnsamblable,
-                    RequiereSerial = s.RequiereSerial,
-                    IdMarca = s.IdMarca,
-                    IdModelo = s.IdModelo,
-                    IdUnidadMedida = s.IdUnidadMedida,
-                    PrecioUnitario = s.PrecioUnitario,
-                    PrecioVentaSugerido = s.PrecioVentaSugerido,
-                    CostoEnsamblaje = s.CostoEnsamblaje,
-                    TiempoEnsamblajeMinutos = s.TiempoEnsamblajeMinutos,
-                    AplicaIva = s.AplicaIva,
-                    PorcentajeIva = s.PorcentajeIva,
-                    StockMinimo = s.StockMinimo,
-                    StockMaximo = s.StockMaximo,
-                    GarantiaMeses = s.GarantiaMeses,
-                    EspecificacionesTecnicas = s.EspecificacionesTecnicas,
-                    ImagenUrl = s.ImagenUrl,
-                    Estado = s.Estado,
-
-                    // campos relacionados:
-                    NombreCategoria = s.IdCategoriaNavigation.Nombre,
-                    NombreMarca = s.IdMarcaNavigation.Nombre,
-                    NombreModelo = s.IdModeloNavigation.Nombre,
-                    NombreUnidadesMedidas = s.IdUnidadMedidaNavigation.Nombre
+                    IdProducto = p.IdProducto,
+                    CodigoPrincipal = p.CodigoPrincipal,
+                    CodigoAuxiliar = p.CodigoAuxiliar,
+                    Nombre = p.Nombre,
+                    Descripcion = p.Descripcion,
+                    //IdCategoria = p.IdModeloNavigation.IdMarcaNavigation.IdCategoria,
+                    TipoProducto = p.TipoProducto,
+                    EsComponente = p.EsComponente,
+                    EsEnsamblable = p.EsEnsamblable,
+                    RequiereSerial = p.RequiereSerial,
+                    IdMarca = p.IdModeloNavigation.IdMarca,
+                    IdModelo = p.IdModelo,
+                    IdUnidadMedida = p.IdUnidadMedida,
+                    PrecioUnitario = p.PrecioUnitario,
+                    PrecioVentaSugerido = p.PrecioVentaSugerido,
+                    CostoEnsamblaje = p.CostoEnsamblaje,
+                    TiempoEnsamblajeMinutos = p.TiempoEnsamblajeMinutos,
+                    AplicaIva = p.AplicaIva,
+                    PorcentajeIva = p.PorcentajeIva,
+                    StockMinimo = p.StockMinimo,
+                    StockMaximo = p.StockMaximo,
+                    GarantiaMeses = p.GarantiaMeses,
+                    EspecificacionesTecnicas = p.EspecificacionesTecnicas,
+                    ImagenUrl = p.ImagenUrl,
+                    Estado = p.Estado,
                 })
                 .ToList();
         }

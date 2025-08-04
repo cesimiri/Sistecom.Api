@@ -1,5 +1,4 @@
-﻿using Identity.Api.DTO;
-using Identity.Api.Paginado;
+﻿using Identity.Api.Paginado;
 using Modelo.Sistecom.Modelo.Database;
 
 
@@ -11,7 +10,6 @@ namespace Identity.Api.Interfaces
         CategoriasProducto GetCategoriasProductoById(int IdCategoriasProducto);
         void InsertCategoriasProducto(CategoriasProducto New);
         void UpdateCategoriasProducto(CategoriasProducto UpdItem);
-        void DeleteCategoriasProducto(CategoriasProducto DelItem);
         void DeleteCategoriasProductoById(int IdCategoriasProducto);
 
         // Nuevo método para paginado:

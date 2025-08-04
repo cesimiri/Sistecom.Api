@@ -15,14 +15,34 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        public Marca GetMarcaById(int idMarca)
+        public MarcaDTO GetMarcaById(int idMarca)
         {
             using (var context = new InvensisContext())
             {
-                return context.Marcas.FirstOrDefault(p => p.IdMarca == idMarca); ;
-            }
+                var marca = context.Marcas
+                    .Include(p => p.IdCategoriaNavigation) // Trae los datos de la categoría
+                    .FirstOrDefault(p => p.IdMarca == idMarca);
 
+                if (marca == null)
+                    return null;
+
+                return new MarcaDTO
+                {
+                    IdMarca = marca.IdMarca,
+                    Codigo = marca.Codigo,
+                    Nombre = marca.Nombre,
+                    Descripcion = marca.Descripcion,
+                    PaisOrigen = marca.PaisOrigen,
+                    SitioWeb = marca.SitioWeb,
+                    LogoUrl = marca.LogoUrl,
+                    EsMarcaPropia = marca.EsMarcaPropia,
+                    Estado = marca.Estado,
+                    IdCategoria = marca.IdCategoria,
+                    CategoriaNombre = marca.IdCategoriaNavigation?.Nombre // 👈 trae el nombre de la categoría
+                };
+            }
         }
+
 
         public void InsertMarca(MarcaDTO NewItem)
         {
@@ -46,7 +66,6 @@ namespace Identity.Api.DataRepository
                         nextNumber = parsedNumber + 1;
                     }
                 }
-
                 var NuevoCodigoPrincipal = $"MARCA-{nextNumber:D4}";
 
                 var nueva = new Marca
@@ -59,9 +78,8 @@ namespace Identity.Api.DataRepository
                     SitioWeb = NewItem.SitioWeb,
                     LogoUrl = NewItem.LogoUrl,
                     EsMarcaPropia = NewItem.EsMarcaPropia,
-                    
                     Estado = NewItem.Estado,
-
+                    IdCategoria = NewItem.IdCategoria // ✅ nuevo campo
                 };
 
                 context.Marcas.Add(nueva);
@@ -91,6 +109,7 @@ namespace Identity.Api.DataRepository
                     registrado.LogoUrl = UpdItem.LogoUrl;
                     registrado.EsMarcaPropia = UpdItem.EsMarcaPropia;
                     registrado.Estado = UpdItem.Estado;
+                    registrado.IdCategoria = UpdItem.IdCategoria;
 
                     context.SaveChanges();
                 }
@@ -107,7 +126,7 @@ namespace Identity.Api.DataRepository
         //    }
         //}
 
-        public void DeleteMarcaById(int  idMarca)
+        public void DeleteMarcaById(int idMarca)
         {
             using (var context = new InvensisContext())
             {
@@ -130,7 +149,7 @@ namespace Identity.Api.DataRepository
             using var context = new InvensisContext();
 
             var query = context.Marcas
-                
+
                 .AsQueryable();
 
             // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
@@ -138,7 +157,7 @@ namespace Identity.Api.DataRepository
             {
                 filtro = filtro.ToLower();
                 query = query.Where(u =>
-                    u.Nombre.ToLower().Contains(filtro) );
+                    u.Nombre.ToLower().Contains(filtro));
             }
 
             // Aplicar filtro por estado
@@ -165,7 +184,9 @@ namespace Identity.Api.DataRepository
                     SitioWeb = s.SitioWeb,
                     LogoUrl = s.LogoUrl,
                     EsMarcaPropia = s.EsMarcaPropia,
-                    Estado = s.Estado
+                    Estado = s.Estado,
+                    IdCategoria = s.IdCategoria, // ✅ nuevo campo
+                    CategoriaNombre = s.IdCategoriaNavigation.Nombre
                 })
                 .ToList();
 

@@ -1,5 +1,6 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Paginado;
+using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
 
 namespace identity.api.datarepository
@@ -25,7 +26,6 @@ namespace identity.api.datarepository
                     Estado = s.Estado,
 
                     // campos relacionados:
-
 
                 })
                 .ToList();
@@ -115,8 +115,6 @@ namespace identity.api.datarepository
             {
                 throw new Exception("Error al insertar al usuario: " + ex.InnerException?.Message ?? ex.Message);
             }
-
-
         }
 
         //actualizar un usuario existente
@@ -161,15 +159,76 @@ namespace identity.api.datarepository
 
         }
 
+        //public PagedResult<UsuarioDTO> GetUsuariosPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        //{
+        //    using var context = new InvensisContext();
+
+        //    var query = context.Usuarios
+
+        //        .AsQueryable();
+
+        //    // Aplicar filtro por texto
+        //    if (!string.IsNullOrEmpty(filtro))
+        //    {
+        //        filtro = filtro.ToLower();
+        //        query = query.Where(u =>
+        //            u.Cedula.ToLower().Contains(filtro) ||
+        //            u.Nombres.ToLower().Contains(filtro) ||
+        //            u.Apellidos.ToLower().Contains(filtro) ||
+        //            u.Email.ToLower().Contains(filtro)
+
+        //            );
+        //    }
+
+        //    // Si estado no viene, forzar "ACTIVO"
+        //    if (string.IsNullOrWhiteSpace(estado))
+        //    {
+        //        estado = "ACTIVO";
+        //    }
+
+        //    // Filtro por estado (siempre aplica, ya está garantizado que tiene valor)
+
+        //    query = query.Where(u => u.Estado == estado);
+
+        //    var totalItems = query.Count();
+
+        //    var usuarios = query
+        //        .OrderBy(u => u.Apellidos)
+        //        .Skip((pagina - 1) * pageSize)
+        //        .Take(pageSize)
+        //        .Select(s => new UsuarioDTO
+        //        {
+        //            Cedula = s.Cedula,
+        //            Nombres = s.Nombres,
+        //            Apellidos = s.Apellidos,
+        //            Telefono = s.Telefono,
+        //            Email = s.Email,
+        //            Extension = s.Extension,
+        //            Estado = s.Estado
+        //        })
+        //        .ToList();
+
+        //    return new PagedResult<UsuarioDTO>
+        //    {
+        //        Items = usuarios,
+        //        TotalItems = totalItems,
+        //        Page = pagina,
+        //        PageSize = pageSize
+        //    };
+        //}
+
         public PagedResult<UsuarioDTO> GetUsuariosPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
         {
             using var context = new InvensisContext();
 
+            // Incluir las relaciones necesarias para acceder a NombreSucursal
             var query = context.Usuarios
-
+                .Include(u => u.UsuarioDetalles)
+                    .ThenInclude(ud => ud.IdDepartamentoNavigation)
+                        .ThenInclude(d => d.IdSucursalNavigation)
                 .AsQueryable();
 
-            // Aplicar filtro por texto
+            // Aplicar filtro de texto
             if (!string.IsNullOrEmpty(filtro))
             {
                 filtro = filtro.ToLower();
@@ -177,18 +236,17 @@ namespace identity.api.datarepository
                     u.Cedula.ToLower().Contains(filtro) ||
                     u.Nombres.ToLower().Contains(filtro) ||
                     u.Apellidos.ToLower().Contains(filtro) ||
-                    u.Email.ToLower().Contains(filtro)
-
-                    );
+                    u.Email.ToLower().Contains(filtro) ||
+                    u.UsuarioDetalles.Any(ud =>
+                        ud.IdDepartamentoNavigation.IdSucursalNavigation.NombreSucursal.ToLower().Contains(filtro))
+                );
             }
 
-            // Si estado no viene, forzar "ACTIVO"
+            // Filtro por estado
             if (string.IsNullOrWhiteSpace(estado))
             {
                 estado = "ACTIVO";
             }
-
-            // Filtro por estado (siempre aplica, ya está garantizado que tiene valor)
 
             query = query.Where(u => u.Estado == estado);
 
@@ -198,15 +256,21 @@ namespace identity.api.datarepository
                 .OrderBy(u => u.Apellidos)
                 .Skip((pagina - 1) * pageSize)
                 .Take(pageSize)
-                .Select(s => new UsuarioDTO
+                .Select(u => new UsuarioDTO
                 {
-                    Cedula = s.Cedula,
-                    Nombres = s.Nombres,
-                    Apellidos = s.Apellidos,
-                    Telefono = s.Telefono,
-                    Email = s.Email,
-                    Extension = s.Extension,
-                    Estado = s.Estado
+                    Cedula = u.Cedula,
+                    Nombres = u.Nombres,
+                    Apellidos = u.Apellidos,
+                    Telefono = u.Telefono,
+                    Email = u.Email,
+                    Extension = u.Extension,
+                    Estado = u.Estado,
+
+                    // Tomamos el primer NombreSucursal disponible (si hay)
+                    NombreSucursal = u.UsuarioDetalles
+                        .Where(ud => ud.Estado == estado)
+                        .Select(ud => ud.IdDepartamentoNavigation.IdSucursalNavigation.NombreSucursal)
+                        .FirstOrDefault()
                 })
                 .ToList();
 
@@ -218,6 +282,7 @@ namespace identity.api.datarepository
                 PageSize = pageSize
             };
         }
+
 
         //paginado usuario sin empresa asignada
         public PagedResult<UsuarioDTO> GetUsuariosSinEmpresaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)

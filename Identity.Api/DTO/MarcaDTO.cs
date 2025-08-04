@@ -5,6 +5,7 @@
         public int IdMarca { get; set; }
 
         public string? Codigo { get; set; }
+        //public string Codigo { get; set; } = null!;
 
         public string Nombre { get; set; } = null!;
 
@@ -19,5 +20,10 @@
         public bool? EsMarcaPropia { get; set; }
 
         public string? Estado { get; set; }
+
+        public int? IdCategoria { get; set; }
+
+        //relacion
+        public string? CategoriaNombre { get; set; }
     }
 }

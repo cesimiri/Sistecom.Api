@@ -7,7 +7,7 @@ namespace Identity.Api.Interfaces
     public interface IMarca
     {
         IEnumerable<Marca> GetAllMarca { get; }
-        Marca GetMarcaById(int idMarca);
+        MarcaDTO GetMarcaById(int idMarca);
         void InsertMarca(MarcaDTO item);
         void UpdateMarca(Marca item);
         //void DeleteStockBodega(StockBodega item);

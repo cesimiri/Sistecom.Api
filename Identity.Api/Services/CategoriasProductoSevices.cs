@@ -1,5 +1,4 @@
 ﻿using Identity.Api.DataRepository;
-using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
 using Modelo.Sistecom.Modelo.Database;
@@ -28,11 +27,6 @@ namespace Identity.Api.Services
         public void UpdateCategoriasProducto(CategoriasProducto UpdItem)
         {
             _dataRepository.UpdateCategoriasProducto(UpdItem);
-        }
-
-        public void DeleteCategoriasProducto(CategoriasProducto DelItem)
-        {
-            _dataRepository.DeleteCategoriasProducto(DelItem);
         }
 
         public void DeleteCategoriasProductoById(int IdCategoriasProducto)
