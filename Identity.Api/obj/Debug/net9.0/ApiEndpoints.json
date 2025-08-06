@@ -493,6 +493,16 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.BodegaController",
+    "Method": "GetUsuariosSistecom",
+    "RelativePath": "api/Bodega/GetUsuarioSistecom",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.BodegaController",
     "Method": "Create",
     "RelativePath": "api/Bodega/InsertBodega",
     "HttpMethod": "POST",

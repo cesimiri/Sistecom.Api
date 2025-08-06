@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -8,13 +8,9 @@
 
   <ItemGroup>
     <Compile Remove="Data Repositorio\**" />
-    <Compile Remove="NewFolder\**" />
     <Content Remove="Data Repositorio\**" />
-    <Content Remove="NewFolder\**" />
     <EmbeddedResource Remove="Data Repositorio\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
     <None Remove="Data Repositorio\**" />
-    <None Remove="NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,6 +37,10 @@
     <Reference Include="Modelo.Sistecom">
       <HintPath>Model\DLL\Modelo.Sistecom.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Uploads\" />
   </ItemGroup>
 
 </Project>

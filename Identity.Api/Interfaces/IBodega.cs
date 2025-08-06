@@ -16,7 +16,7 @@ namespace Identity.Api.Interfaces
         // Nuevo método para paginado:
         PagedResult<BodegaDTO> GetBodegaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
         // solo trae personal de sistecom por ruc de sistecom
-        //IEnumerable<UsuarioDTO> GetUsuarioSistecom();
+        IEnumerable<UsuarioDetalleDTO> GetUsuarioSistecom();
 
         //traer todas las bodegas por responsable 
         IEnumerable<BodegaDTO> GetBodegasPorResponsable(string correo);

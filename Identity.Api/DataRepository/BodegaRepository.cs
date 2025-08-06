@@ -179,34 +179,33 @@ namespace Identity.Api.DataRepository
             };
         }
 
-        //public List<UsuarioDTO> GetUsuarioSistecom()
-        //{
-        //    using var context = new InvensisContext();
+        public List<UsuarioDetalleDTO> GetUsuarioSistecom()
+        {
+            using var context = new InvensisContext();
 
-        //    var lista = context.Usuarios
-        //    .Where(u => u.Estado == "ACTIVO"
+            var lista = context.UsuarioDetalles
+                .Where(u => u.Estado == "ACTIVO" &&
+                            u.IdDepartamentoNavigation.IdSucursalNavigation.RucEmpresaNavigation.Ruc == "0990574766001")
+                .Select(u => new UsuarioDetalleDTO
+                {
+                    Cedula = u.Cedula,
+                    IdDepartamento = u.IdDepartamento,
+                    IdCargo = u.IdCargo,
+                    FechaAsignacion = null, // Ajusta si tienes el campo
+                    FechaBaja = null,       // Ajusta si tienes el campo
+                    Estado = u.Estado,
+                    Observaciones = null,   // Ajusta si tienes el campo
 
-        //    //reviar
-        //    && u.IdDepartamentoNavigation.IdSucursalNavigation.RucEmpresaNavigation.Ruc == "0990574766001")
-        //    .Select(u => new UsuarioDTO
-        //    {
-        //        IdUsuario = u.IdUsuario,
-        //        IdDepartamento = u.IdDepartamento,
-        //        IdCargo = u.IdCargo,
-        //        Cedula = u.Cedula,
-        //        Nombres = u.Nombres,
-        //        Apellidos = u.Apellidos,
-        //        Email = u.Email,
-        //        Telefono = u.Telefono,
-        //        Extension = u.Extension,
-        //        Estado = u.Estado,
-        //        RazonSocial = u.IdDepartamentoNavigation.IdSucursalNavigation.RucEmpresaNavigation.RazonSocial
-        //    })
-        //     .ToList();
+                    NombreSucursal = u.IdDepartamentoNavigation.IdSucursalNavigation.NombreSucursal,
+                    NombreCargo = u.IdCargoNavigation.Descripcion,
+                    NombreDepartamento = u.IdDepartamentoNavigation.Descripcion,
+                    NombreCedula = (u.CedulaNavigation.Apellidos + " " + u.CedulaNavigation.Apellidos).ToUpper()
+                })
+                .ToList();
 
+            return lista;
+        }
 
-        //    return lista;
-        //}
 
         //bodegas por responsable
         public List<BodegaDTO> GetBodegasPorResponsable(string correo)
