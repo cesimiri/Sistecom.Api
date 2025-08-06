@@ -45,5 +45,12 @@ namespace Identity.Api.Services
         {
             return _dataRepository.GetMarcaPaginados(pagina, pageSize, filtro, estado);
         }
+
+        //busqueda las marcas por idCategoria
+        public List<MarcaDTO> GetMarcasByIdCategoria(int idCategoria)
+        {
+            return _dataRepository.GetMarcasByIdCategoria(idCategoria);
+        }
+
     }
 }

@@ -13,7 +13,7 @@ namespace Identity.Api.DataRepository
             return context.Modelos
                 .Include(s => s.IdMarcaNavigation)
 
-
+                .Where(s => s.Estado == "ACTIVO")
                 .Select(s => new ModeloDTO
                 {
 

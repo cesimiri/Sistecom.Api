@@ -14,12 +14,12 @@ namespace Identity.Api.DTO
         public string? TipoSuscripcion { get; set; }
         public DateTime FechaInicio { get; set; }
         public DateTime FechaRenovacion { get; set; }
-        
-        
+
+
         //agregados
-        public string Certificado { get; set; }
-        public string Dominio { get; set; }
-        public string Soporte { get;set; }
+        public string? Certificado { get; set; }
+        public string? Dominio { get; set; }
+        public string? Soporte { get; set; }
         //
 
 

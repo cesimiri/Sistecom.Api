@@ -21,7 +21,7 @@
 
         public string? Estado { get; set; }
 
-        public int? IdCategoria { get; set; }
+        public int IdCategoria { get; set; }
 
         //relacion
         public string? CategoriaNombre { get; set; }

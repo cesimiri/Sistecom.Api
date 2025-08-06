@@ -118,5 +118,21 @@ namespace Identity.Api.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
+
+
+        //busqueda las marcas por idCategoria
+
+        [HttpGet("GetMarcaByIdCategoria/{idCategoria}")]
+        public IActionResult GetMarcasByIdCategoria(int idCategoria)
+        {
+            var marcas = _marca.GetMarcasByIdCategoria(idCategoria);
+
+            if (marcas == null || !marcas.Any())
+            {
+                return NotFound($"No existen marcas para la categoría con ID: {idCategoria}.");
+            }
+
+            return Ok(marcas);
+        }
     }
 }

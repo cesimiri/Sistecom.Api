@@ -2046,6 +2046,22 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.MarcaController",
+    "Method": "GetMarcasByIdCategoria",
+    "RelativePath": "api/Marca/GetMarcaByIdCategoria/{idCategoria}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idCategoria",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.MarcaController",
     "Method": "GetMarcaPaginados",
     "RelativePath": "api/Marca/GetMarcaPaginados",
     "HttpMethod": "GET",

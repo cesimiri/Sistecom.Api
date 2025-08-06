@@ -15,5 +15,10 @@ namespace Identity.Api.Interfaces
 
         // Nuevo método para paginado:
         PagedResult<MarcaDTO> GetMarcaPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
+
+        //busqueda las marcas por idCategoria
+        List<MarcaDTO> GetMarcasByIdCategoria(int idCategoria);
+
+
     }
 }

@@ -7,7 +7,7 @@ namespace Identity.Api.DTO
 
         public int IdProducto { get; set; }
 
-        public string CodigoPrincipal { get; set; } = null!;
+        public string? CodigoPrincipal { get; set; }
 
         [Required(ErrorMessage = "El campo obligatorio")]
         public string? CodigoAuxiliar { get; set; }
@@ -17,8 +17,8 @@ namespace Identity.Api.DTO
 
         public string? Descripcion { get; set; }
 
-        [Required(ErrorMessage = "El campo obligatorio")]
-        public string TipoProducto { get; set; } = null!;
+
+        public string? TipoProducto { get; set; }
 
         public bool? EsComponente { get; set; }
 

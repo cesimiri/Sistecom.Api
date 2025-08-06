@@ -76,24 +76,80 @@ namespace Identity.Api.DataRepository
         }
 
 
+        //public int InsertFacturasCompra(FacturasCompraDTO dto)
+        //{
+        //    try
+        //    {
+        //        using var context = new InvensisContext();
+
+        //        //validación para el ingreso de los id relacionados.
+        //        var proveedor = context.Proveedores.Find(dto.IdProveedor);
+        //        var bodega = context.Bodegas.Find(dto.IdBodega);
+
+        //        if (proveedor == null || bodega == null)
+        //        {
+        //            throw new Exception("Esa proveedor , bodega no existe en la base de datos.");
+        //        }
+
+        //        var nueva = new FacturasCompra
+        //        {
+
+        //            NumeroFactura = dto.NumeroFactura,
+        //            NumeroAutorizacion = dto.NumeroAutorizacion,
+        //            ClaveAcceso = "0",
+        //            IdProveedor = dto.IdProveedor,
+        //            IdBodega = dto.IdBodega,
+        //            FechaEmision = dto.FechaEmision,
+        //            SubtotalSinImpuestos = dto.SubtotalSinImpuestos,
+        //            DescuentoTotal = 0,
+        //            Ice = 0,
+        //            Iva = 0,
+        //            ValorTotal = 0,
+        //            FormaPago = dto.FormaPago,
+        //            Estado = dto.Estado,
+        //            Observaciones = dto.Observaciones?.ToUpper()
+
+        //        };
+
+        //        context.FacturasCompras.Add(nueva);
+        //        context.SaveChanges();
+
+        //        //devuelve el valor IdFactura nuevo
+        //        return nueva.IdFactura;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("Error al insertar el Producto: " + ex.InnerException?.Message ?? ex.Message);
+        //    }
+        //}
+
         public int InsertFacturasCompra(FacturasCompraDTO dto)
         {
             try
             {
                 using var context = new InvensisContext();
 
-                //validación para el ingreso de los id relacionados.
+                // Validar existencia de proveedor y bodega
                 var proveedor = context.Proveedores.Find(dto.IdProveedor);
                 var bodega = context.Bodegas.Find(dto.IdBodega);
 
                 if (proveedor == null || bodega == null)
                 {
-                    throw new Exception("Esa proveedor , bodega no existe en la base de datos.");
+                    throw new Exception("El proveedor o la bodega no existen en la base de datos.");
                 }
 
+                // Validar si ya existe una factura con el mismo número y proveedor
+                bool facturaExistente = context.FacturasCompras
+                    .Any(f => f.NumeroFactura == dto.NumeroFactura && f.IdProveedor == dto.IdProveedor);
+
+                if (facturaExistente)
+                {
+                    throw new Exception($"Ya existe una factura registrada con el número '{dto.NumeroFactura}' para este proveedor.");
+                }
+
+                // Crear nueva factura
                 var nueva = new FacturasCompra
                 {
-
                     NumeroFactura = dto.NumeroFactura,
                     NumeroAutorizacion = dto.NumeroAutorizacion,
                     ClaveAcceso = "0",
@@ -108,18 +164,16 @@ namespace Identity.Api.DataRepository
                     FormaPago = dto.FormaPago,
                     Estado = dto.Estado,
                     Observaciones = dto.Observaciones?.ToUpper()
-
                 };
 
                 context.FacturasCompras.Add(nueva);
                 context.SaveChanges();
 
-                //devuelve el valor IdFactura nuevo
                 return nueva.IdFactura;
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al insertar el Producto: " + ex.InnerException?.Message ?? ex.Message);
+                throw new Exception("Error al insertar la factura: " + (ex.InnerException?.Message ?? ex.Message));
             }
         }
 
