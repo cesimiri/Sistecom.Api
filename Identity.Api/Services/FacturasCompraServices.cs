@@ -14,8 +14,6 @@ namespace Identity.Api.Services
         //{
         //    _detalleFacturaCompraRepository = detalleFacturaCompraRepository ?? throw new ArgumentNullException(nameof(detalleFacturaCompraRepository));
         //}
-
-
         public IEnumerable<FacturasCompraDTO> FacturasCompraInfoAll
         {
             get { return _dataRepository.GetAllFacturasCompra(); }
@@ -60,16 +58,11 @@ namespace Identity.Api.Services
         }
 
 
-
-
         //generarFactura atomaticamente
         public async Task<(FacturasCompraDTO factura, List<DetalleFacturaCompraDTO> detalles)> ObtenerFacturaConDetallesAsync(int idFactura)
         {
             return await _dataRepository.ObtenerFacturaConDetallesAsync(idFactura);
         }
-
-
-
 
     }
 }

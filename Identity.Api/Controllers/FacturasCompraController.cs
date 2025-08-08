@@ -161,8 +161,6 @@ namespace Identity.Api.Controllers
             return File(pdfBytes, "application/pdf", "EmpresasListado.pdf");
         }
 
-
-
         //aqui 
         [HttpGet("ExportarFacturaCompraPdfById/{idFactura}")]
         public async Task<IActionResult> DescargarFacturaPdf(int idFactura)
@@ -192,14 +190,84 @@ namespace Identity.Api.Controllers
             return File(pdfBytes, "application/pdf", fileName);
         }
 
+        //subir factura
+        [HttpPost("UploadFacturaImage")]
+        public async Task<IActionResult> UploadFacturaImage([FromForm]
+        IFormFile file, [FromForm] string numeroFactura, [FromForm] string rucProveedor)
+        {
+            try
+            {
+                if (file == null || file.Length == 0)
+                    return BadRequest("Archivo no válido.");
 
+                var extension = Path.GetExtension(file.FileName);
+                var nombreBase = $"Factura-{rucProveedor}-{numeroFactura}";
 
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", "Facturas");
 
+                if (!Directory.Exists(uploadsFolder))
+                    Directory.CreateDirectory(uploadsFolder);
 
+                // Buscar si ya existen otras imágenes con ese nombre base
+                var existentes = Directory.GetFiles(uploadsFolder, $"{nombreBase}-*.jpg").Length;
+                var nombreFinal = $"{nombreBase}-{existentes + 1}{extension}";
 
+                var rutaCompleta = Path.Combine(uploadsFolder, nombreFinal);
 
+                using (var stream = new FileStream(rutaCompleta, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
 
+                return Ok(new { mensaje = "Imagen guardada exitosamente.", nombreArchivo = nombreFinal });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno: {ex.Message}");
+            }
+        }
 
+        //traer la imagenes tb por el numero de factura
+        [HttpGet("BuscarImagenesFactura")]
+        public IActionResult BuscarImagenesFactura([FromQuery] string numeroFactura, [FromQuery] string rucProveedor)
+        {
+            try
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", "Facturas");
+                var nombreBase = $"Factura-{rucProveedor}-{numeroFactura}";
 
+                var archivos = Directory.GetFiles(uploadsFolder, $"{nombreBase}-*.*")
+                                        .Select(path => Path.GetFileName(path))
+                                        .ToList();
+
+                return Ok(archivos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error al buscar imágenes: " + ex.Message);
+            }
+        }
+
+        //eliminar una imagen 
+        [HttpDelete("EliminarFacturaImagen")]
+        public IActionResult EliminarFacturaImagen([FromQuery] string nombreArchivo)
+        {
+            try
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", "Facturas");
+                var rutaCompleta = Path.Combine(uploadsFolder, nombreArchivo);
+
+                if (!System.IO.File.Exists(rutaCompleta))
+                    return NotFound("La imagen no existe.");
+
+                System.IO.File.Delete(rutaCompleta);
+
+                return Ok(new { mensaje = "Imagen eliminada correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error al eliminar la imagen: " + ex.Message);
+            }
+        }
     }
 }

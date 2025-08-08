@@ -225,7 +225,7 @@ namespace Identity.Api.DataRepository
 
             // Obtener página solicitada con paginado
             var usuarios = query
-                .OrderBy(u => u.IdSuscripcion) // importante ordenar antes de Skip/Take
+                .OrderBy(u => u.FechaRenovacion) // importante ordenar antes de Skip/Take
                 .Skip((pagina - 1) * pageSize)
                 .Take(pageSize)
                 .Select(s => new SuscripcionDto
