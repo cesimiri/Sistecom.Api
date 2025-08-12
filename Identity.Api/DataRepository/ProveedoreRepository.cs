@@ -1,7 +1,4 @@
-﻿using Identity.Api.DTO;
-using Identity.Api.Interfaces;
-using Identity.Api.Paginado;
-using Microsoft.EntityFrameworkCore;
+﻿using Identity.Api.Paginado;
 using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.DataRepository
@@ -19,7 +16,10 @@ namespace Identity.Api.DataRepository
         // Obtener todos los proveedores
         public List<Proveedore> GetAllProveedores()
         {
-            return _context.Proveedores.ToList();
+            return _context.Proveedores
+                .Where(p => p.Estado == "ACTIVO")        // Filtra solo los activos
+                .OrderBy(p => p.RazonSocial)             // Ordena por RazonSocial
+                .ToList();
         }
 
         // Obtener un proveedor por su ID
@@ -33,7 +33,7 @@ namespace Identity.Api.DataRepository
         {
             var nuevo = new Proveedore
             {
-                
+
                 Ruc = newProveedor.Ruc,
                 RazonSocial = newProveedor.RazonSocial?.ToUpper(),
                 NombreComercial = newProveedor.NombreComercial?.ToUpper(),
@@ -44,7 +44,7 @@ namespace Identity.Api.DataRepository
                 ContribuyenteEspecial = newProveedor.ContribuyenteEspecial,
                 AgenteRetencion = newProveedor.AgenteRetencion,
                 Estado = newProveedor.Estado,
-                
+
 
             };
             _context.Proveedores.Add(nuevo);
@@ -102,7 +102,7 @@ namespace Identity.Api.DataRepository
             using var context = new InvensisContext();
 
             var query = context.Proveedores
-                
+
                 .AsQueryable();
 
             // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)

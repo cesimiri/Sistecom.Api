@@ -40,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Uploads\Facturas\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
 
 </Project>

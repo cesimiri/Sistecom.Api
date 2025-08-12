@@ -41,10 +41,17 @@ namespace Identity.Api.Services
 
 
         //paginado
-        public PagedResult<SuscripcionDto> GetSuscripcionPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        public PagedResult<SuscripcionDto> GetSuscripcionPaginados(
+        int pagina,
+        int pageSize,
+        string? filtro = null,
+        string? estado = null,
+        int? mes = null,
+        int? anio = null)
         {
-            return _dataRepository.GetSuscripcionPaginados(pagina, pageSize, filtro, estado);
+            return _dataRepository.GetSuscripcionPaginados(pagina, pageSize, filtro, estado, mes, anio);
         }
+
 
         //usario de cargo 1 it 
         public IEnumerable<UsuarioDetalleDTO> GetUsuarioCargo1()

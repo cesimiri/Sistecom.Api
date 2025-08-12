@@ -87,26 +87,6 @@ namespace Identity.Api.Controllers
         }
 
 
-        //[HttpDelete("DeleteFacturasCompra")]
-        //public IActionResult Delete([FromBody] FacturasCompra DelItem)
-        //{
-        //    try
-        //    {
-        //        if (DelItem == null || !ModelState.IsValid)
-        //        {
-        //            return BadRequest("Error: Envio de datos");
-        //        }
-
-        //        _facturasCompra.DeleteFacturasCompra(DelItem);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest("Error:" + ex.Message);
-        //    }
-
-        //    return NoContent();
-        //}
-
         [HttpDelete("DeleteFacturasCompraById/{IdFacturasCompra}")]
         public IActionResult DeleteById(int IdFacturasCompra)
         {
@@ -203,7 +183,7 @@ namespace Identity.Api.Controllers
                 var extension = Path.GetExtension(file.FileName);
                 var nombreBase = $"Factura-{rucProveedor}-{numeroFactura}";
 
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", "Facturas");
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "facturas");
 
                 if (!Directory.Exists(uploadsFolder))
                     Directory.CreateDirectory(uploadsFolder);
@@ -227,18 +207,25 @@ namespace Identity.Api.Controllers
             }
         }
 
-        //traer la imagenes tb por el numero de factura
+        // 📌 Buscar imágenes por número de factura
         [HttpGet("BuscarImagenesFactura")]
         public IActionResult BuscarImagenesFactura([FromQuery] string numeroFactura, [FromQuery] string rucProveedor)
         {
             try
             {
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", "Facturas");
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "facturas");
                 var nombreBase = $"Factura-{rucProveedor}-{numeroFactura}";
 
-                var archivos = Directory.GetFiles(uploadsFolder, $"{nombreBase}-*.*")
-                                        .Select(path => Path.GetFileName(path))
-                                        .ToList();
+                if (!Directory.Exists(uploadsFolder))
+                    return Ok(new List<string>());
+
+                var baseUrl = $"{Request.Scheme}://{Request.Host}";
+
+                var archivos = Directory
+                    .GetFiles(uploadsFolder, $"{nombreBase}-*.*")
+                    .Select(path => Path.GetFileName(path))
+                    .Select(nombre => $"{baseUrl}/uploads/facturas/{nombre}")
+                    .ToList();
 
                 return Ok(archivos);
             }
@@ -248,13 +235,14 @@ namespace Identity.Api.Controllers
             }
         }
 
-        //eliminar una imagen 
+
+        // 📌 Eliminar imagen por nombre
         [HttpDelete("EliminarFacturaImagen")]
         public IActionResult EliminarFacturaImagen([FromQuery] string nombreArchivo)
         {
             try
             {
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", "Facturas");
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "facturas");
                 var rutaCompleta = Path.Combine(uploadsFolder, nombreArchivo);
 
                 if (!System.IO.File.Exists(rutaCompleta))
@@ -268,6 +256,13 @@ namespace Identity.Api.Controllers
             {
                 return StatusCode(500, "Error al eliminar la imagen: " + ex.Message);
             }
+        }
+
+        [HttpGet("debug/ruta-imagen")]
+        public IActionResult DebugRutaImagen()
+        {
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "facturas", "Factura-0992734124001-123-1.png");
+            return Ok(new { path, existe = System.IO.File.Exists(path) });
         }
     }
 }

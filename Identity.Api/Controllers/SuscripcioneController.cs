@@ -110,19 +110,18 @@ namespace Identity.Api.Controllers
             }
         }
 
-
         [HttpGet("GetSuscripcionPaginados")]
         public IActionResult GetSuscripcionPaginados(
-        int pagina = 1,
-        int pageSize = PaginadorHelper.NumeroDeDatosPorPagina,
-        string? filtro = null,
-        string? estado = null)
+            int pagina = 1,
+            int pageSize = PaginadorHelper.NumeroDeDatosPorPagina,
+            string? filtro = null,
+            string? estado = null,
+            int? mes = null,
+            int? anio = null)
         {
             try
             {
-                // Llamamos al método que devuelve el paginado (en el servicio)
-                var resultado = _suscripcioneService.GetSuscripcionPaginados(pagina, pageSize, filtro, estado);
-
+                var resultado = _suscripcioneService.GetSuscripcionPaginados(pagina, pageSize, filtro, estado, mes, anio);
                 return Ok(resultado);
             }
             catch (Exception ex)
@@ -130,6 +129,7 @@ namespace Identity.Api.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
+
 
 
         //UsuarioDetalle con cargo1

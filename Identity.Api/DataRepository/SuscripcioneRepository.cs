@@ -123,8 +123,6 @@ namespace Identity.Api.DataRepository
             }
         }
 
-
-
         public void UpdateSuscripcion(SuscripcionDto dto)
         {
             using var context = new InvensisContext();
@@ -193,7 +191,13 @@ namespace Identity.Api.DataRepository
 
 
         //PAGINADA 
-        public PagedResult<SuscripcionDto> GetSuscripcionPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
+        public PagedResult<SuscripcionDto> GetSuscripcionPaginados(
+            int pagina,
+            int pageSize,
+            string? filtro = null,
+            string? estado = null,
+            int? mes = null,
+            int? anio = null)
         {
             using var context = new InvensisContext();
 
@@ -202,30 +206,42 @@ namespace Identity.Api.DataRepository
                 .Include(s => s.IdProveedorNavigation)
                 .AsQueryable();
 
-            // Aplicar filtro por texto (en clave, nombres, apellidos o lo que necesites)
+            // Filtro por texto
             if (!string.IsNullOrEmpty(filtro))
             {
                 filtro = filtro.ToLower();
                 query = query.Where(u =>
-                    u.NombreServicio.ToLower().Contains(filtro));
+                    u.NombreServicio.ToLower().Contains(filtro) ||
+                    u.TipoSuscripcion.ToLower().Contains(filtro));
             }
 
-            // Si estado no viene, forzar "ACTIVO"
+            // Filtro por estado
             if (string.IsNullOrWhiteSpace(estado))
             {
                 estado = "ACTIVA";
             }
-
-            // Filtro por estado (siempre aplica, ya está garantizado que tiene valor)
             query = query.Where(u => u.Estado == estado);
 
+            // Filtro por mes y año (FechaRenovacion)
+            if (mes.HasValue && anio.HasValue)
+            {
+                query = query.Where(u =>
+                    u.FechaRenovacion.Month == mes.Value &&
+                    u.FechaRenovacion.Year == anio.Value);
+            }
+            else if (anio.HasValue)  // Si solo año, filtra por todo el año
+            {
+                query = query.Where(u => u.FechaRenovacion.Year == anio.Value);
+            }
+            else if (mes.HasValue) // Si solo mes (sin año), no tiene sentido filtrar solo por mes sin año (puedes manejarlo como error o ignorar)
+            {
+                // Puedes ignorar o no filtrar nada
+            }
 
-            // Total de registros filtrados
             var totalItems = query.Count();
 
-            // Obtener página solicitada con paginado
             var usuarios = query
-                .OrderBy(u => u.FechaRenovacion) // importante ordenar antes de Skip/Take
+                .OrderBy(u => u.FechaRenovacion)
                 .Skip((pagina - 1) * pageSize)
                 .Take(pageSize)
                 .Select(s => new SuscripcionDto
@@ -246,7 +262,6 @@ namespace Identity.Api.DataRepository
                     Estado = s.Estado,
                     NotificarDiasAntes = s.NotificarDiasAntes,
                     Observaciones = s.Observaciones,
-                    // Campos relacionados:
                     RazonSocialEmpresa = s.RucEmpresaNavigation.RazonSocial,
                     RazonSocialProveedor = s.IdProveedorNavigation.RazonSocial
                 })
@@ -260,6 +275,7 @@ namespace Identity.Api.DataRepository
                 PageSize = pageSize
             };
         }
+
 
 
         //trae con cargo 1

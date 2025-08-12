@@ -13,7 +13,15 @@ namespace Identity.Api.Interfaces
         void DeleteSuscripcionById(int idSuscripcion);
 
         // Nuevo método para paginado:
-        PagedResult<SuscripcionDto> GetSuscripcionPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
+        PagedResult<SuscripcionDto> GetSuscripcionPaginados(
+         int pagina,
+         int pageSize,
+         string? filtro = null,
+         string? estado = null,
+         int? mes = null,
+         int? anio = null);
+
+
 
         //traer solo los usuarios de cargo IT 
         IEnumerable<UsuarioDetalleDTO> GetUsuarioCargo1();
