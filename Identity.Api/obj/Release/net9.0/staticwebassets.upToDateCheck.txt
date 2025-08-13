@@ -1,2 +1,3 @@
 wwwroot\uploads\facturas\Factura-0925827560001-789-1.png
 wwwroot\uploads\facturas\Factura-0992734124001-123-1.png
+wwwroot\uploads\facturas\Factura-0925827560001-0206-1.png

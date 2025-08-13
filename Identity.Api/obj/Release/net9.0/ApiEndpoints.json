@@ -1557,8 +1557,8 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.FacturasCompraController",
-    "Method": "DebugRutaImagen",
-    "RelativePath": "api/FacturasCompra/debug/ruta-imagen",
+    "Method": "DebugRutaBase",
+    "RelativePath": "api/FacturasCompra/debug/ruta-base",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

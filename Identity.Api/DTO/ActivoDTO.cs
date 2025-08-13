@@ -36,6 +36,13 @@
 
         public string? Observaciones { get; set; }
 
+        public DateTime? FechaRegistro { get; set; }
+
+        //relaciones 
+        public string? NombreProducto { get; set; }
+        public string? NumeroFactura { get; set; }
+        public string? NumeroOrden { get; set; }
+
 
     }
 }

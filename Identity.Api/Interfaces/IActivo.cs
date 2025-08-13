@@ -8,9 +8,8 @@ namespace Identity.Api.Interfaces
     {
         IEnumerable<Activo> ActivoInfoAll { get; }
         Activo GetActivoById(int IdActivo);
-        void InsertActivo(Activo New);
+        void InsertActivo(ActivoDTO New);
         void UpdateActivo(Activo UpdItem);
-        void DeleteActivo(Activo DelItem);
         void DeleteActivoById(int IdActivo);
 
         //PAGINADO

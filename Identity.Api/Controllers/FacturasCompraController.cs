@@ -170,40 +170,73 @@ namespace Identity.Api.Controllers
             return File(pdfBytes, "application/pdf", fileName);
         }
 
-        //subir factura
+        // 📌 Subir imagen de factura
         [HttpPost("UploadFacturaImage")]
-        public async Task<IActionResult> UploadFacturaImage([FromForm]
-        IFormFile file, [FromForm] string numeroFactura, [FromForm] string rucProveedor)
+        public async Task<IActionResult> UploadFacturaImage(
+            [FromForm] IFormFile file,
+            [FromForm] string numeroFactura,
+            [FromForm] string rucProveedor)
         {
             try
             {
+                // 1. Validaciones de datos
                 if (file == null || file.Length == 0)
-                    return BadRequest("Archivo no válido.");
+                    return BadRequest("No se recibió ningún archivo o está vacío.");
 
-                var extension = Path.GetExtension(file.FileName);
+                if (string.IsNullOrWhiteSpace(numeroFactura))
+                    return BadRequest("El número de factura es obligatorio.");
+
+                if (string.IsNullOrWhiteSpace(rucProveedor))
+                    return BadRequest("El RUC del proveedor es obligatorio.");
+
+                // 2. Validación de extensiones permitidas
+                var extension = Path.GetExtension(file.FileName)?.ToLower();
+                var extensionesPermitidas = new[] { ".jpg", ".jpeg", ".png", ".pdf" };
+                if (!extensionesPermitidas.Contains(extension))
+                    return BadRequest($"Formato de archivo no permitido. Solo: {string.Join(", ", extensionesPermitidas)}");
+
+                // 3. Construcción del nombre base
                 var nombreBase = $"Factura-{rucProveedor}-{numeroFactura}";
 
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "facturas");
+                // 4. Ruta física de destino
+                var uploadsFolder = @"C:\inetpub\wwwroot\facturas";
 
                 if (!Directory.Exists(uploadsFolder))
                     Directory.CreateDirectory(uploadsFolder);
 
-                // Buscar si ya existen otras imágenes con ese nombre base
-                var existentes = Directory.GetFiles(uploadsFolder, $"{nombreBase}-*.jpg").Length;
+                // 5. Contar imágenes existentes y asignar nombre único
+                var existentes = Directory.GetFiles(uploadsFolder, $"{nombreBase}-*.*").Length;
                 var nombreFinal = $"{nombreBase}-{existentes + 1}{extension}";
-
                 var rutaCompleta = Path.Combine(uploadsFolder, nombreFinal);
 
+                // 6. Guardar archivo en disco
                 using (var stream = new FileStream(rutaCompleta, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
                 }
 
-                return Ok(new { mensaje = "Imagen guardada exitosamente.", nombreArchivo = nombreFinal });
+                // 7. URL pública
+                var urlImagen = $"http://192.168.120.241/facturas/{nombreFinal}";
+
+                // 8. Respuesta
+                return Ok(new
+                {
+                    mensaje = "Imagen guardada exitosamente.",
+                    nombreArchivo = nombreFinal,
+                    url = urlImagen
+                });
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return StatusCode(500, $"Error de permisos al guardar la imagen: {ex.Message}");
+            }
+            catch (IOException ex)
+            {
+                return StatusCode(500, $"Error de entrada/salida al guardar la imagen: {ex.Message}");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error interno: {ex.Message}");
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
 
@@ -213,28 +246,34 @@ namespace Identity.Api.Controllers
         {
             try
             {
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "facturas");
+                // Carpeta física
+                var uploadsFolder = @"C:\inetpub\wwwroot\facturas";
                 var nombreBase = $"Factura-{rucProveedor}-{numeroFactura}";
 
                 if (!Directory.Exists(uploadsFolder))
                     return Ok(new List<string>());
 
-                var baseUrl = $"{Request.Scheme}://{Request.Host}";
-
                 var archivos = Directory
                     .GetFiles(uploadsFolder, $"{nombreBase}-*.*")
                     .Select(path => Path.GetFileName(path))
-                    .Select(nombre => $"{baseUrl}/uploads/facturas/{nombre}")
+                    .Select(nombre => $"http://192.168.120.241/facturas/{nombre}") // URL pública
                     .ToList();
 
                 return Ok(archivos);
             }
+            catch (UnauthorizedAccessException ex)
+            {
+                return StatusCode(500, $"Error de permisos al leer las imágenes: {ex.Message}");
+            }
+            catch (IOException ex)
+            {
+                return StatusCode(500, $"Error de entrada/salida al leer las imágenes: {ex.Message}");
+            }
             catch (Exception ex)
             {
-                return StatusCode(500, "Error al buscar imágenes: " + ex.Message);
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
-
 
         // 📌 Eliminar imagen por nombre
         [HttpDelete("EliminarFacturaImagen")]
@@ -242,7 +281,7 @@ namespace Identity.Api.Controllers
         {
             try
             {
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "facturas");
+                var uploadsFolder = @"C:\inetpub\wwwroot\facturas";
                 var rutaCompleta = Path.Combine(uploadsFolder, nombreArchivo);
 
                 if (!System.IO.File.Exists(rutaCompleta))
@@ -252,17 +291,29 @@ namespace Identity.Api.Controllers
 
                 return Ok(new { mensaje = "Imagen eliminada correctamente." });
             }
+            catch (UnauthorizedAccessException ex)
+            {
+                return StatusCode(500, $"Error de permisos al eliminar la imagen: {ex.Message}");
+            }
+            catch (IOException ex)
+            {
+                return StatusCode(500, $"Error de entrada/salida al eliminar la imagen: {ex.Message}");
+            }
             catch (Exception ex)
             {
-                return StatusCode(500, "Error al eliminar la imagen: " + ex.Message);
+                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
             }
         }
 
-        [HttpGet("debug/ruta-imagen")]
-        public IActionResult DebugRutaImagen()
+
+        // 📌 Debug: verificar si existe la imagen
+        [HttpGet("debug/ruta-base")]
+        public IActionResult DebugRutaBase()
         {
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "facturas", "Factura-0992734124001-123-1.png");
-            return Ok(new { path, existe = System.IO.File.Exists(path) });
+            var basePath = Directory.GetCurrentDirectory();
+            return Ok(new { basePath });
         }
+
+
     }
 }

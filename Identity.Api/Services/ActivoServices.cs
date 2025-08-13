@@ -19,7 +19,7 @@ namespace Identity.Api.Services
             return _dataRepository.GetActivoById(IdActivo);
         }
 
-        public void InsertActivo(Activo New)
+        public void InsertActivo(ActivoDTO New)
         {
             _dataRepository.InsertActivo(New);
         }
@@ -29,10 +29,6 @@ namespace Identity.Api.Services
             _dataRepository.UpdateActivo(UpdItem);
         }
 
-        public void DeleteActivo(Activo DelItem)
-        {
-            _dataRepository.DeleteActivo(DelItem);
-        }
 
         public void DeleteActivoById(int IdActivo)
         {

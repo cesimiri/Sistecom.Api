@@ -25,14 +25,71 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        public void InsertActivo(Activo newActivo)
+        public void InsertActivo(ActivoDTO newActivoDto)
         {
-            using (var context = new InvensisContext())
+            try
             {
-                context.Activos.Add(newActivo);
+                using var context = new InvensisContext();
+                //validación para el ingreso de los id relacionados.
+                var idProducto = context.TiposLicencia.Find(newActivoDto.IdProducto);
+                var idFacturaCompra = context.Productos.Find(newActivoDto.IdFacturaCompra);
+
+
+                if (idProducto == null || idFacturaCompra == null)
+                {
+                    throw new Exception("Esa idTiposLicencia, idProducto, idFactura no existe en la base de datos.");
+                }
+
+                // Generar el Código Licenica automático
+                var lastCodigo = context.Productos
+                    .Where(s => s.CodigoPrincipal.StartsWith("LIC-"))
+                    .OrderByDescending(s => s.CodigoPrincipal)
+                    .Select(s => s.CodigoPrincipal)
+                    .FirstOrDefault();
+
+                int nextNumber = 1;
+                if (lastCodigo != null)
+                {
+                    var lastNumberStr = lastCodigo.Split('-').Last();
+                    if (int.TryParse(lastNumberStr, out var parsedNumber))
+                    {
+                        nextNumber = parsedNumber + 1;
+                    }
+                }
+
+                var NuevoCodigoPrincipal = $"LIC-{nextNumber:D4}";
+
+                var nueva = new Activo
+                {
+                    CodigoActivo = newActivoDto.CodigoActivo,
+                    IdProducto = newActivoDto.IdProducto,
+                    NumeroSerie = newActivoDto.NumeroSerie,
+                    NumeroParte = newActivoDto.NumeroParte,
+                    FechaAdquisicion = newActivoDto.FechaAdquisicion,
+                    FechaGarantiaFin = newActivoDto.FechaGarantiaFin,
+                    IdFacturaCompra = newActivoDto.IdFacturaCompra,
+                    IdOrdenEnsamblaje = newActivoDto.IdOrdenEnsamblaje,
+                    ValorCompra = newActivoDto.ValorCompra,
+                    ValorResidual = newActivoDto.ValorResidual,
+                    VidaUtilMeses = newActivoDto.VidaUtilMeses,
+                    UbicacionActual = newActivoDto.UbicacionActual?.ToUpper(),
+                    EstadoActivo = newActivoDto.EstadoActivo,
+                    CondicionFisica = newActivoDto.CondicionFisica,
+                    EsServidor = newActivoDto.EsServidor,
+                    Observaciones = newActivoDto.Observaciones?.ToUpper(),
+
+                };
+                context.Activos.Add(nueva);
                 context.SaveChanges();
+
             }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al insertar el Activo: " + ex.InnerException?.Message ?? ex.Message);
+            }
+
         }
+
 
 
         public void UpdateActivo(Activo updActivo)
@@ -59,19 +116,10 @@ namespace Identity.Api.DataRepository
                     existente.CondicionFisica = updActivo.CondicionFisica;
                     existente.EsServidor = updActivo.EsServidor;
                     existente.Observaciones = updActivo.Observaciones;
-                    existente.FechaRegistro = updActivo.FechaRegistro;
+                    //existente.FechaRegistro = updActivo.FechaRegistro;
 
                     context.SaveChanges();
                 }
-            }
-        }
-
-        public void DeleteActivo(Activo activoToDelete)
-        {
-            using (var context = new InvensisContext())
-            {
-                context.Activos.Remove(activoToDelete);
-                context.SaveChanges();
             }
         }
 

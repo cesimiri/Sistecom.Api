@@ -1,4 +1,5 @@
-﻿using Identity.Api.Interfaces;
+﻿using Identity.Api.DTO;
+using Identity.Api.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +44,7 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPost("InsertActivo")]
-        public IActionResult Create([FromBody] Activo NewItem)
+        public IActionResult Create([FromBody] ActivoDTO NewItem)
         {
             try
             {
@@ -73,26 +74,6 @@ namespace Identity.Api.Controllers
                 }
 
                 _empresaCliente.UpdateActivo(UpdItem);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Error:" + ex.Message);
-            }
-
-            return NoContent();
-        }
-
-        [HttpDelete("DeleteActivo")]
-        public IActionResult Delete([FromBody] Activo DelItem)
-        {
-            try
-            {
-                if (DelItem == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Error: Envio de datos");
-                }
-
-                _empresaCliente.DeleteActivo(DelItem);
             }
             catch (Exception ex)
             {
