@@ -25,70 +25,205 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        public void InsertActivo(ActivoDTO newActivoDto)
+        //inserción masiva 
+        //public void InsertActivos(List<ActivoDTO> activosDto)
+        //{
+        //    using var context = new InvensisContext();
+        //    using var transaction = context.Database.BeginTransaction();
+
+        //    try
+        //    {
+        //        foreach (var dto in activosDto)
+        //        {
+        //            // Validar producto
+        //            var producto = context.Productos.Find(dto.IdProducto)
+        //                ?? throw new Exception($"El IdProducto {dto.IdProducto} no existe.");
+
+        //            // Prefijo de 3 letras
+        //            string prefijo = new string(
+        //                producto.Nombre.Trim().Replace(" ", "").ToUpper().Take(3).ToArray()
+        //            );
+
+        //            // Último código para este prefijo
+        //            var lastCodigo = context.Activos
+        //                .Where(a => a.CodigoActivo.StartsWith(prefijo + "-"))
+        //                .OrderByDescending(a => a.CodigoActivo)
+        //                .Select(a => a.CodigoActivo)
+        //                .FirstOrDefault();
+
+        //            int nextNumber = 1;
+        //            if (!string.IsNullOrEmpty(lastCodigo))
+        //            {
+        //                var lastNumberStr = lastCodigo.Split('-').Last();
+        //                if (int.TryParse(lastNumberStr, out var parsedNumber))
+        //                    nextNumber = parsedNumber + 1;
+        //            }
+
+        //            string nuevoCodigo = $"{prefijo}-{nextNumber:D4}";
+
+        //            // Crear activo
+        //            var nuevoActivo = new Activo
+        //            {
+        //                CodigoActivo = nuevoCodigo,
+        //                IdProducto = dto.IdProducto,
+        //                NumeroSerie = dto.NumeroSerie,
+        //                NumeroParte = dto.NumeroParte,
+        //                FechaAdquisicion = dto.FechaAdquisicion,         // <-- DateOnly directo
+        //                FechaGarantiaFin = dto.FechaGarantiaFin,
+        //                IdFacturaCompra = dto.IdFacturaCompra,
+        //                IdOrdenEnsamblaje = dto.IdOrdenEnsamblaje,
+        //                ValorCompra = dto.ValorCompra,
+        //                ValorResidual = dto.ValorResidual,
+        //                VidaUtilMeses = dto.VidaUtilMeses,
+        //                UbicacionActual = dto.UbicacionActual?.ToUpper(),
+        //                EstadoActivo = dto.EstadoActivo,
+        //                CondicionFisica = dto.CondicionFisica,
+        //                EsServidor = dto.EsServidor,
+        //                Observaciones = dto.Observaciones?.ToUpper(),
+        //                FechaRegistro = DateTime.Now
+        //            };
+
+        //            context.Activos.Add(nuevoActivo);
+        //        }
+
+        //        context.SaveChanges();
+        //        transaction.Commit();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        transaction.Rollback();
+        //        Console.WriteLine(ex.ToString()); // log completo
+        //        throw new Exception("Error al insertar activos: " + ex.Message);
+
+        //    }
+        //}
+        public (int Insertados, int Fallidos, List<string> DetalleErrores) InsertActivos(IEnumerable<ActivoDTO> activosDto)
         {
+            var errores = new List<string>();
+            int exitos = 0;
+
+            using var context = new InvensisContext();
+            using var transaction = context.Database.BeginTransaction();
+
             try
             {
-                using var context = new InvensisContext();
-                //validación para el ingreso de los id relacionados.
-                var idProducto = context.TiposLicencia.Find(newActivoDto.IdProducto);
-                var idFacturaCompra = context.Productos.Find(newActivoDto.IdFacturaCompra);
+                // Traer todos los productos y facturas de una sola vez
+                var idsProductos = activosDto.Select(a => a.IdProducto).Distinct().ToList();
+                var productos = context.Productos
+                    .Where(p => idsProductos.Contains(p.IdProducto))
+                    .ToDictionary(p => p.IdProducto, p => p);
 
+                var idsFacturas = activosDto
+                    .Where(a => a.IdFacturaCompra.HasValue)
+                    .Select(a => a.IdFacturaCompra!.Value)
+                    .Distinct()
+                    .ToList();
 
-                if (idProducto == null || idFacturaCompra == null)
+                var facturas = context.FacturasCompras
+                    .Where(f => idsFacturas.Contains(f.IdFactura))
+                    .Select(f => f.IdFactura)
+                    .ToHashSet();
+
+                // Prefijos para código activo
+                var prefijos = productos.Values
+                    .Select(p => new string(p.Nombre.Trim().Replace(" ", "").ToUpper().Take(3).ToArray()))
+                    .Distinct()
+                    .ToList();
+
+                var lastCodigosDict = context.Activos
+                    .Where(a => prefijos.Any(pre => a.CodigoActivo.StartsWith(pre + "-")))
+                    .AsEnumerable()
+                    .GroupBy(a => a.CodigoActivo.Substring(0, 3))
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.Max(a => a.CodigoActivo)
+                    );
+
+                var estadosValidos = new List<string> { "DISPONIBLE", "NUEVO", "USADO", "EN_REPARACION" };
+
+                foreach (var dto in activosDto)
                 {
-                    throw new Exception("Esa idTiposLicencia, idProducto, idFactura no existe en la base de datos.");
-                }
-
-                // Generar el Código Licenica automático
-                var lastCodigo = context.Productos
-                    .Where(s => s.CodigoPrincipal.StartsWith("LIC-"))
-                    .OrderByDescending(s => s.CodigoPrincipal)
-                    .Select(s => s.CodigoPrincipal)
-                    .FirstOrDefault();
-
-                int nextNumber = 1;
-                if (lastCodigo != null)
-                {
-                    var lastNumberStr = lastCodigo.Split('-').Last();
-                    if (int.TryParse(lastNumberStr, out var parsedNumber))
+                    try
                     {
-                        nextNumber = parsedNumber + 1;
+                        // Validaciones
+                        if (!productos.ContainsKey(dto.IdProducto))
+                        {
+                            errores.Add($"IdProducto {dto.IdProducto} no existe.");
+                            continue;
+                        }
+
+                        if (dto.IdFacturaCompra.HasValue && !facturas.Contains(dto.IdFacturaCompra.Value))
+                        {
+                            errores.Add($"IdFacturaCompra {dto.IdFacturaCompra} no existe.");
+                            continue;
+                        }
+
+                        if (!estadosValidos.Contains(dto.EstadoActivo?.ToUpper()))
+                        {
+                            errores.Add($"IdProducto {dto.IdProducto}: EstadoActivo '{dto.EstadoActivo}' no es válido.");
+                            continue;
+                        }
+
+                        var producto = productos[dto.IdProducto];
+                        string prefijo = new string(producto.Nombre.Trim().Replace(" ", "").ToUpper().Take(3).ToArray());
+
+                        int nextNumber = 1;
+                        if (lastCodigosDict.TryGetValue(prefijo, out var lastCodigo))
+                        {
+                            var lastNumberStr = lastCodigo.Split('-').Last();
+                            if (int.TryParse(lastNumberStr, out var parsedNumber))
+                                nextNumber = parsedNumber + 1;
+                        }
+
+                        string nuevoCodigo = $"{prefijo}-{nextNumber:D4}";
+                        lastCodigosDict[prefijo] = nuevoCodigo;
+
+                        var nuevoActivo = new Activo
+                        {
+                            CodigoActivo = nuevoCodigo,
+                            IdProducto = dto.IdProducto,
+                            NumeroSerie = dto.NumeroSerie,
+                            NumeroParte = dto.NumeroParte,
+                            FechaAdquisicion = DateOnly.FromDateTime(dto.FechaAdquisicion),
+                            FechaGarantiaFin = dto.FechaGarantiaFin.HasValue ? DateOnly.FromDateTime(dto.FechaGarantiaFin.Value) : null,
+                            IdFacturaCompra = dto.IdFacturaCompra,
+                            IdOrdenEnsamblaje = dto.IdOrdenEnsamblaje,
+                            ValorCompra = dto.ValorCompra,
+                            ValorResidual = dto.ValorResidual,
+                            VidaUtilMeses = dto.VidaUtilMeses,
+                            UbicacionActual = dto.UbicacionActual?.ToUpper(),
+                            EstadoActivo = dto.EstadoActivo.ToUpper(),
+                            CondicionFisica = dto.CondicionFisica?.ToUpper(),
+                            EsServidor = dto.EsServidor,
+                            Observaciones = dto.Observaciones?.ToUpper(),
+                            FechaRegistro = DateTime.Now
+                        };
+
+                        context.Activos.Add(nuevoActivo);
+                        context.SaveChanges();
+                        exitos++;
+                    }
+                    catch (Exception exFila)
+                    {
+                        errores.Add($"Error en IdProducto {dto.IdProducto}: {exFila.Message} | Detalle: {exFila.InnerException?.Message}");
                     }
                 }
 
-                var NuevoCodigoPrincipal = $"LIC-{nextNumber:D4}";
-
-                var nueva = new Activo
-                {
-                    CodigoActivo = newActivoDto.CodigoActivo,
-                    IdProducto = newActivoDto.IdProducto,
-                    NumeroSerie = newActivoDto.NumeroSerie,
-                    NumeroParte = newActivoDto.NumeroParte,
-                    FechaAdquisicion = newActivoDto.FechaAdquisicion,
-                    FechaGarantiaFin = newActivoDto.FechaGarantiaFin,
-                    IdFacturaCompra = newActivoDto.IdFacturaCompra,
-                    IdOrdenEnsamblaje = newActivoDto.IdOrdenEnsamblaje,
-                    ValorCompra = newActivoDto.ValorCompra,
-                    ValorResidual = newActivoDto.ValorResidual,
-                    VidaUtilMeses = newActivoDto.VidaUtilMeses,
-                    UbicacionActual = newActivoDto.UbicacionActual?.ToUpper(),
-                    EstadoActivo = newActivoDto.EstadoActivo,
-                    CondicionFisica = newActivoDto.CondicionFisica,
-                    EsServidor = newActivoDto.EsServidor,
-                    Observaciones = newActivoDto.Observaciones?.ToUpper(),
-
-                };
-                context.Activos.Add(nueva);
-                context.SaveChanges();
-
+                transaction.Commit();
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al insertar el Activo: " + ex.InnerException?.Message ?? ex.Message);
+                transaction.Rollback();
+                errores.Add("Error general: " + ex.Message + " | Detalle: " + ex.InnerException?.Message);
             }
 
+            return (Insertados: exitos, Fallidos: errores.Count, DetalleErrores: errores);
         }
+
+
+
+
+
 
 
 
@@ -138,66 +273,44 @@ namespace Identity.Api.DataRepository
 
 
         //paginado
-        public PagedResult<ActivoDTO> GetPaginados(
+        public PagedResult<ActivoDTO> GetActivoPaginados(
             int pagina,
             int pageSize,
-            string? codigoActivo,
-            int? idProducto,
-            DateTime? desde,
-            DateTime? hasta,
-            int? idFacturaCompra,
-            string? estadoActivo,
-            string? ordenColumna = null,
-            bool ordenAscendente = true)
+            string? filtro = null,
+            string? estadoActivo = null)
         {
             using var context = new InvensisContext();
 
             var query = context.Activos
-                .Include(a => a.IdProductoNavigation)
+                .Include(a => a.IdProductoNavigation)   // Producto
+                .Include(a => a.IdFacturaCompraNavigation) // Factura
                 .AsQueryable();
 
-            // Validar rango de fechas
-            if (desde.HasValue && hasta.HasValue && desde > hasta)
+            // Filtro de texto en CodigoActivo, Producto.Nombre o Factura.NumeroFactura
+            if (!string.IsNullOrWhiteSpace(filtro))
             {
-                return new PagedResult<ActivoDTO>
-                {
-                    Items = new List<ActivoDTO>(),
-                    TotalItems = 0,
-                    Page = pagina,
-                    PageSize = pageSize
-                };
+                var f = filtro.Trim().ToUpper();
+                query = query.Where(a =>
+                    (a.CodigoActivo != null && a.CodigoActivo.ToUpper().Contains(f)) ||
+                    (a.IdProductoNavigation != null && a.IdProductoNavigation.Nombre.ToUpper().Contains(f)) ||
+                    (a.IdFacturaCompraNavigation != null && a.IdFacturaCompraNavigation.NumeroFactura.ToUpper().Contains(f))
+                );
             }
 
-            // Filtros
-            if (!string.IsNullOrWhiteSpace(codigoActivo))
-                query = query.Where(a => a.CodigoActivo.ToUpper().Contains(codigoActivo.Trim().ToUpper()));
-
-            if (idProducto.HasValue)
-                query = query.Where(a => a.IdProducto == idProducto.Value);
-
-            if (desde.HasValue)
-                query = query.Where(a => a.FechaAdquisicion >= DateOnly.FromDateTime(desde.Value));
-
-            if (hasta.HasValue)
-                query = query.Where(a => a.FechaAdquisicion <= DateOnly.FromDateTime(hasta.Value));
-
-            if (idFacturaCompra.HasValue)
-                query = query.Where(a => a.IdFacturaCompra == idFacturaCompra.Value);
-
+            // Filtro por estado
             if (!string.IsNullOrWhiteSpace(estadoActivo))
                 query = query.Where(a => a.EstadoActivo != null &&
                     a.EstadoActivo.ToUpper().Contains(estadoActivo.Trim().ToUpper()));
 
             var totalItems = query.Count();
 
-            // Ordenamiento
-            query = ApplyOrdering(query, ordenColumna, ordenAscendente);
+            // Ordenamiento fijo por CodigoActivo
+            query = query.OrderBy(a => a.CodigoActivo);
 
             // Proyección a DTO
             var items = query
                 .Skip((pagina - 1) * pageSize)
                 .Take(pageSize)
-                //.OrderBy()
                 .Select(a => new ActivoDTO
                 {
                     IdActivo = a.IdActivo,
@@ -205,8 +318,8 @@ namespace Identity.Api.DataRepository
                     IdProducto = a.IdProducto,
                     NumeroSerie = a.NumeroSerie,
                     NumeroParte = a.NumeroParte,
-                    FechaAdquisicion = a.FechaAdquisicion,
-                    FechaGarantiaFin = a.FechaGarantiaFin,
+                    //FechaAdquisicion = a.FechaAdquisicion,
+                    //FechaGarantiaFin = a.FechaGarantiaFin,
                     IdFacturaCompra = a.IdFacturaCompra,
                     IdOrdenEnsamblaje = a.IdOrdenEnsamblaje,
                     ValorCompra = a.ValorCompra,
@@ -217,7 +330,12 @@ namespace Identity.Api.DataRepository
                     CondicionFisica = a.CondicionFisica,
                     EsServidor = a.EsServidor,
                     Observaciones = a.Observaciones,
+                    FechaRegistro = a.FechaRegistro,
 
+                    // relaciones
+                    NombreProducto = a.IdProductoNavigation != null ? a.IdProductoNavigation.Nombre : null,
+                    NumeroFactura = a.IdFacturaCompraNavigation != null ? a.IdFacturaCompraNavigation.NumeroFactura : null,
+                    NumeroOrden = a.IdOrdenEnsamblajeNavigation != null ? a.IdOrdenEnsamblajeNavigation.NumeroOrden : null
                 })
                 .ToList();
 
@@ -230,21 +348,7 @@ namespace Identity.Api.DataRepository
             };
         }
 
-        // 🧠 Ordenamiento dinámico
-        private IQueryable<Activo> ApplyOrdering(
-            IQueryable<Activo> query,
-            string? columna,
-            bool ascendente)
-        {
-            return columna switch
-            {
-                "CodigoActivo" => ascendente ? query.OrderBy(a => a.CodigoActivo) : query.OrderByDescending(a => a.CodigoActivo),
-                "FechaAdquisicion" => ascendente ? query.OrderBy(a => a.FechaAdquisicion) : query.OrderByDescending(a => a.FechaAdquisicion),
-                "ValorCompra" => ascendente ? query.OrderBy(a => a.ValorCompra) : query.OrderByDescending(a => a.ValorCompra),
-                "EstadoActivo" => ascendente ? query.OrderBy(a => a.EstadoActivo) : query.OrderByDescending(a => a.EstadoActivo),
-                _ => query.OrderByDescending(a => a.FechaAdquisicion)
-            };
-        }
+
 
 
     }

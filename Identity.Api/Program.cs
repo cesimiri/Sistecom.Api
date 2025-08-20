@@ -221,6 +221,8 @@ builder.Services.AddScoped<IModelo, ModeloServices>();
 
 //UnidadesMedidum
 builder.Services.AddScoped<IUnidadesMedidum, UnidadesMedidumServices>();
+//Activos
+builder.Services.AddScoped<IActivo, ActivoServices>();
 
 
 

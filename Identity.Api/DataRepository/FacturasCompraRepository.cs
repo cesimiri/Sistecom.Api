@@ -357,5 +357,40 @@ namespace Identity.Api.DataRepository
 
             return (factura, detalles);
         }
+
+        //busqueda facturas por número factura
+
+        public FacturasCompraDTO GetFacturasCompraByNumeroFactura(string numeroFactura)
+        {
+            using var context = new InvensisContext();
+
+            var s = context.FacturasCompras
+                .Include(f => f.IdProveedorNavigation)
+                .Include(f => f.IdBodegaNavigation)
+                .FirstOrDefault(f => f.NumeroFactura == numeroFactura);
+
+            if (s == null) return null;
+
+            return new FacturasCompraDTO
+            {
+                IdFactura = s.IdFactura,
+                NumeroFactura = s.NumeroFactura,
+                NumeroAutorizacion = s.NumeroAutorizacion,
+                ClaveAcceso = s.ClaveAcceso,
+                IdProveedor = s.IdProveedor,
+                IdBodega = s.IdBodega,
+                FechaEmision = s.FechaEmision,
+                SubtotalSinImpuestos = s.SubtotalSinImpuestos,
+                DescuentoTotal = s.DescuentoTotal,
+                Ice = s.Ice,
+                Iva = s.Iva,
+                ValorTotal = s.ValorTotal,
+                FormaPago = s.FormaPago,
+                Estado = s.Estado,
+                Observaciones = s.Observaciones,
+                RazonSocial = s.IdProveedorNavigation?.RazonSocial,
+                NombreBodega = s.IdBodegaNavigation?.Nombre
+            };
+        }
     }
 }

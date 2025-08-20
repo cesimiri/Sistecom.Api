@@ -8,22 +8,18 @@ namespace Identity.Api.Interfaces
     {
         IEnumerable<Activo> ActivoInfoAll { get; }
         Activo GetActivoById(int IdActivo);
-        void InsertActivo(ActivoDTO New);
+
+        void InsertActivos(IEnumerable<ActivoDTO> nuevosActivos);
+
         void UpdateActivo(Activo UpdItem);
         void DeleteActivoById(int IdActivo);
 
         //PAGINADO
-        PagedResult<ActivoDTO> GetPaginados(
-        int pagina,
-        int pageSize,
-        string? codigoActivo,
-        int? idProducto,
-        DateTime? desde,
-        DateTime? hasta,
-        int? idFacturaCompra,
-        string? estadoActivo,
-        string? ordenColumna = null,
-        bool ordenAscendente = true
+        PagedResult<ActivoDTO> GetActivoPaginados(
+       int pagina,
+            int pageSize,
+            string? filtro = null,
+            string? estadoActivo = null
         );
 
     }

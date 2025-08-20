@@ -19,9 +19,10 @@ namespace Identity.Api.Services
             return _dataRepository.GetActivoById(IdActivo);
         }
 
-        public void InsertActivo(ActivoDTO New)
+
+        public void InsertActivos(IEnumerable<ActivoDTO> nuevosActivos)
         {
-            _dataRepository.InsertActivo(New);
+            _dataRepository.InsertActivos(nuevosActivos);
         }
 
         public void UpdateActivo(Activo UpdItem)
@@ -37,24 +38,15 @@ namespace Identity.Api.Services
 
 
         //paginado
-        public PagedResult<ActivoDTO> GetPaginados(
+        public PagedResult<ActivoDTO> GetActivoPaginados(
         int pagina,
-        int pageSize,
-        string? codigoActivo,
-        int? idProducto,
-        DateTime? desde,
-        DateTime? hasta,
-        int? idFacturaCompra,
-        string? estadoActivo,
-        string? ordenColumna = null,
-        bool ordenAscendente = true)
+            int pageSize,
+            string? filtro = null,
+            string? estadoActivo = null)
         {
-            return _dataRepository.GetPaginados(
+            return _dataRepository.GetActivoPaginados(
                 pagina, pageSize,
-                codigoActivo, idProducto,
-                desde, hasta,
-                idFacturaCompra, estadoActivo,
-                ordenColumna, ordenAscendente
+                filtro, estadoActivo
             );
         }
 

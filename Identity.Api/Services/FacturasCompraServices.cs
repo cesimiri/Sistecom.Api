@@ -64,5 +64,11 @@ namespace Identity.Api.Services
             return await _dataRepository.ObtenerFacturaConDetallesAsync(idFactura);
         }
 
+        //busqueda facturas por número factura
+        public FacturasCompraDTO GetFacturasCompraByNumeroFactura(string numeroFactura)
+        {
+            return _dataRepository.GetFacturasCompraByNumeroFactura(numeroFactura);
+        }
+
     }
 }

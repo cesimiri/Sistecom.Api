@@ -4,7 +4,7 @@
     {
         public int IdActivo { get; set; }
 
-        public string CodigoActivo { get; set; } = null!;
+        public string? CodigoActivo { get; set; } // ahora es opcional
 
         public int IdProducto { get; set; }
 
@@ -12,9 +12,9 @@
 
         public string? NumeroParte { get; set; }
 
-        public DateOnly FechaAdquisicion { get; set; }
+        public DateTime FechaAdquisicion { get; set; }
 
-        public DateOnly? FechaGarantiaFin { get; set; }
+        public DateTime? FechaGarantiaFin { get; set; }
 
         public int? IdFacturaCompra { get; set; }
 

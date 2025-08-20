@@ -43,25 +43,43 @@ namespace Identity.Api.Controllers
             return Ok(empresaCliente);
         }
 
-        [HttpPost("InsertActivo")]
-        public IActionResult Create([FromBody] ActivoDTO NewItem)
+        [HttpPost("InsertActivos")]
+        public IActionResult InsertActivos([FromBody] IEnumerable<ActivoDTO> activosDto)
         {
+            if (activosDto == null || !activosDto.Any())
+                return BadRequest("No se recibieron activos para insertar.");
+
+            var errores = new List<string>();
+            var exitos = 0;
+
             try
             {
-                if (NewItem == null || !ModelState.IsValid)
+                foreach (var dto in activosDto)
                 {
-                    return BadRequest("Error: Envio de datos");
+                    try
+                    {
+                        _empresaCliente.InsertActivos(new List<ActivoDTO> { dto });
+                        exitos++;
+                    }
+                    catch (Exception exActivo)
+                    {
+                        errores.Add($"Error en IdProducto {dto.IdProducto}: {exActivo.Message}");
+                    }
                 }
 
-                _empresaCliente.InsertActivo(NewItem);
+                return Ok(new
+                {
+                    Insertados = exitos,
+                    Fallidos = errores.Count,
+                    DetalleErrores = errores
+                });
             }
             catch (Exception ex)
             {
-                return BadRequest("Error:" + ex.Message);
+                return BadRequest("Error inesperado al insertar activos: " + ex.Message);
             }
-
-            return Ok(NewItem);
         }
+
 
         [HttpPut("UpdateActivo")]
         public IActionResult Update([FromBody] Activo UpdItem)
@@ -100,25 +118,16 @@ namespace Identity.Api.Controllers
 
 
         //PAGINADO
-        [HttpGet("GetPaginados")]
-        public IActionResult GetPaginados(
+        [HttpGet("GetActivoPaginados")]
+        public IActionResult GetActivoPaginados(
             int pagina = 1,
             int pageSize = 8,
             string? codigoActivo = null,
-            int? idProducto = null,
-            DateTime? desde = null,
-            DateTime? hasta = null,
-            int? idFacturaCompra = null,
-            string? estadoActivo = null,
-            string? ordenColumna = null,
-            bool ordenAscendente = true)
+            string? estadoActivo = null)
         {
-            var resultado = _empresaCliente.GetPaginados(
+            var resultado = _empresaCliente.GetActivoPaginados(
                 pagina, pageSize,
-                codigoActivo, idProducto,
-                desde, hasta,
-                idFacturaCompra, estadoActivo,
-                ordenColumna, ordenAscendente);
+                codigoActivo, estadoActivo);
 
             return Ok(resultado);
         }

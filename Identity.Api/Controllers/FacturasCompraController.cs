@@ -305,13 +305,19 @@ namespace Identity.Api.Controllers
             }
         }
 
-
-        // 📌 Debug: verificar si existe la imagen
-        [HttpGet("debug/ruta-base")]
-        public IActionResult DebugRutaBase()
+        [HttpGet("GetFacturasCompraByNumeroFactura/{numeroFactura}")]
+        public IActionResult GetFacturasCompraByNumeroFactura(string numeroFactura)
         {
-            var basePath = Directory.GetCurrentDirectory();
-            return Ok(new { basePath });
+            ;
+
+            var facturasCompra = _facturasCompra.GetFacturasCompraByNumeroFactura(numeroFactura);
+
+            if (facturasCompra == null)
+            {
+                return NotFound($"La factura con ID {numeroFactura} no se encuentra registrada.");
+            }
+
+            return Ok(facturasCompra);
         }
 
 

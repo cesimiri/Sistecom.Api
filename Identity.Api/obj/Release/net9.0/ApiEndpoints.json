@@ -83,22 +83,6 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.ActivoController",
-    "Method": "Delete",
-    "RelativePath": "api/Activo/DeleteActivo",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "DelItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.Activo",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.ActivoController",
     "Method": "DeleteById",
     "RelativePath": "api/Activo/DeleteActivoById/{IdActivo}",
     "HttpMethod": "DELETE",
@@ -131,8 +115,8 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.ActivoController",
-    "Method": "GetPaginados",
-    "RelativePath": "api/Activo/GetPaginados",
+    "Method": "GetActivoPaginados",
+    "RelativePath": "api/Activo/GetActivoPaginados",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -153,38 +137,8 @@
         "IsRequired": false
       },
       {
-        "Name": "idProducto",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "desde",
-        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "hasta",
-        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "idFacturaCompra",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
         "Name": "estadoActivo",
         "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "ordenColumna",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "ordenAscendente",
-        "Type": "System.Boolean",
         "IsRequired": false
       }
     ],
@@ -192,15 +146,15 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.ActivoController",
-    "Method": "Create",
-    "RelativePath": "api/Activo/InsertActivo",
+    "Method": "InsertActivos",
+    "RelativePath": "api/Activo/InsertActivos",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "NewItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.Activo",
+        "Name": "activosDto",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Identity.Api.DTO.ActivoDTO, Identity.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
       }
     ],
@@ -1557,16 +1511,6 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.FacturasCompraController",
-    "Method": "DebugRutaBase",
-    "RelativePath": "api/FacturasCompra/debug/ruta-base",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.FacturasCompraController",
     "Method": "DeleteById",
     "RelativePath": "api/FacturasCompra/DeleteFacturasCompraById/{IdFacturasCompra}",
     "HttpMethod": "DELETE",
@@ -1660,6 +1604,22 @@
       {
         "Name": "idFacturasCompra",
         "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.FacturasCompraController",
+    "Method": "GetFacturasCompraByNumeroFactura",
+    "RelativePath": "api/FacturasCompra/GetFacturasCompraByNumeroFactura/{numeroFactura}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "numeroFactura",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
