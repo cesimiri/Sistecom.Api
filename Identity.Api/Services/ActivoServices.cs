@@ -20,9 +20,9 @@ namespace Identity.Api.Services
         }
 
 
-        public void InsertActivos(IEnumerable<ActivoDTO> nuevosActivos)
+        public (int Insertados, int Fallidos, List<string> DetalleErrores) InsertActivos(IEnumerable<ActivoDTO> nuevosActivos)
         {
-            _dataRepository.InsertActivos(nuevosActivos);
+            return _dataRepository.InsertActivos(nuevosActivos);
         }
 
         public void UpdateActivo(Activo UpdItem)

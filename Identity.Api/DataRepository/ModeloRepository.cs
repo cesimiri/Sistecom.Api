@@ -246,5 +246,35 @@ namespace Identity.Api.DataRepository
                 PageSize = pageSize
             };
         }
+
+        //modelos segun una categoria
+        public List<MarcaDTO> GetModeloByCategoria(int idCategoria)
+        {
+            using (var context = new InvensisContext())
+            {
+                var marcas = context.Marcas
+                    .Include(p => p.IdCategoriaNavigation)
+                    .Where(p => p.IdCategoria == idCategoria) // 🔹 filtra por categoría
+                    .OrderBy(p => p.Nombre)
+                    .ToList();
+
+                return marcas.Select(marca => new MarcaDTO
+                {
+                    IdMarca = marca.IdMarca,
+                    Codigo = marca.Codigo,
+                    Nombre = marca.Nombre,
+                    Descripcion = marca.Descripcion,
+                    PaisOrigen = marca.PaisOrigen,
+                    SitioWeb = marca.SitioWeb,
+                    LogoUrl = marca.LogoUrl,
+                    EsMarcaPropia = marca.EsMarcaPropia,
+                    Estado = marca.Estado,
+                    IdCategoria = marca.IdCategoria,
+                    CategoriaNombre = marca.IdCategoriaNavigation?.Nombre
+                }).ToList();
+            }
+        }
+
+
     }
 }

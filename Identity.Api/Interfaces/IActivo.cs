@@ -9,7 +9,8 @@ namespace Identity.Api.Interfaces
         IEnumerable<Activo> ActivoInfoAll { get; }
         Activo GetActivoById(int IdActivo);
 
-        void InsertActivos(IEnumerable<ActivoDTO> nuevosActivos);
+        (int Insertados, int Fallidos, List<string> DetalleErrores) InsertActivos(IEnumerable<ActivoDTO> nuevosActivos);
+
 
         void UpdateActivo(Activo UpdItem);
         void DeleteActivoById(int IdActivo);

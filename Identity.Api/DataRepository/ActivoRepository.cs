@@ -25,89 +25,20 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        //inserción masiva 
-        //public void InsertActivos(List<ActivoDTO> activosDto)
-        //{
-        //    using var context = new InvensisContext();
-        //    using var transaction = context.Database.BeginTransaction();
-
-        //    try
-        //    {
-        //        foreach (var dto in activosDto)
-        //        {
-        //            // Validar producto
-        //            var producto = context.Productos.Find(dto.IdProducto)
-        //                ?? throw new Exception($"El IdProducto {dto.IdProducto} no existe.");
-
-        //            // Prefijo de 3 letras
-        //            string prefijo = new string(
-        //                producto.Nombre.Trim().Replace(" ", "").ToUpper().Take(3).ToArray()
-        //            );
-
-        //            // Último código para este prefijo
-        //            var lastCodigo = context.Activos
-        //                .Where(a => a.CodigoActivo.StartsWith(prefijo + "-"))
-        //                .OrderByDescending(a => a.CodigoActivo)
-        //                .Select(a => a.CodigoActivo)
-        //                .FirstOrDefault();
-
-        //            int nextNumber = 1;
-        //            if (!string.IsNullOrEmpty(lastCodigo))
-        //            {
-        //                var lastNumberStr = lastCodigo.Split('-').Last();
-        //                if (int.TryParse(lastNumberStr, out var parsedNumber))
-        //                    nextNumber = parsedNumber + 1;
-        //            }
-
-        //            string nuevoCodigo = $"{prefijo}-{nextNumber:D4}";
-
-        //            // Crear activo
-        //            var nuevoActivo = new Activo
-        //            {
-        //                CodigoActivo = nuevoCodigo,
-        //                IdProducto = dto.IdProducto,
-        //                NumeroSerie = dto.NumeroSerie,
-        //                NumeroParte = dto.NumeroParte,
-        //                FechaAdquisicion = dto.FechaAdquisicion,         // <-- DateOnly directo
-        //                FechaGarantiaFin = dto.FechaGarantiaFin,
-        //                IdFacturaCompra = dto.IdFacturaCompra,
-        //                IdOrdenEnsamblaje = dto.IdOrdenEnsamblaje,
-        //                ValorCompra = dto.ValorCompra,
-        //                ValorResidual = dto.ValorResidual,
-        //                VidaUtilMeses = dto.VidaUtilMeses,
-        //                UbicacionActual = dto.UbicacionActual?.ToUpper(),
-        //                EstadoActivo = dto.EstadoActivo,
-        //                CondicionFisica = dto.CondicionFisica,
-        //                EsServidor = dto.EsServidor,
-        //                Observaciones = dto.Observaciones?.ToUpper(),
-        //                FechaRegistro = DateTime.Now
-        //            };
-
-        //            context.Activos.Add(nuevoActivo);
-        //        }
-
-        //        context.SaveChanges();
-        //        transaction.Commit();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        transaction.Rollback();
-        //        Console.WriteLine(ex.ToString()); // log completo
-        //        throw new Exception("Error al insertar activos: " + ex.Message);
-
-        //    }
-        //}
+        //inserción masiva
         public (int Insertados, int Fallidos, List<string> DetalleErrores) InsertActivos(IEnumerable<ActivoDTO> activosDto)
         {
             var errores = new List<string>();
             int exitos = 0;
 
             using var context = new InvensisContext();
-            using var transaction = context.Database.BeginTransaction();
+
+            if (activosDto == null || !activosDto.Any())
+                return (0, 0, new List<string> { "No se recibieron activos para insertar." });
 
             try
             {
-                // Traer todos los productos y facturas de una sola vez
+                // Traer productos y facturas existentes de una sola vez
                 var idsProductos = activosDto.Select(a => a.IdProducto).Distinct().ToList();
                 var productos = context.Productos
                     .Where(p => idsProductos.Contains(p.IdProducto))
@@ -118,13 +49,12 @@ namespace Identity.Api.DataRepository
                     .Select(a => a.IdFacturaCompra!.Value)
                     .Distinct()
                     .ToList();
-
                 var facturas = context.FacturasCompras
                     .Where(f => idsFacturas.Contains(f.IdFactura))
                     .Select(f => f.IdFactura)
                     .ToHashSet();
 
-                // Prefijos para código activo
+                // Últimos códigos por prefijo
                 var prefijos = productos.Values
                     .Select(p => new string(p.Nombre.Trim().Replace(" ", "").ToUpper().Take(3).ToArray()))
                     .Distinct()
@@ -139,7 +69,8 @@ namespace Identity.Api.DataRepository
                         g => g.Max(a => a.CodigoActivo)
                     );
 
-                var estadosValidos = new List<string> { "DISPONIBLE", "NUEVO", "USADO", "EN_REPARACION" };
+                var estadosValidos = new List<string> { "DISPONIBLE", "ASIGNADO", "EN_MANTENIMIENTO", "BAJA", "EXTRAVIADO" };
+                var condicionesValidas = new List<string> { "INSERVIBLE", "MALO", "REGULAR", "BUENO", "NUEVO" };
 
                 foreach (var dto in activosDto)
                 {
@@ -164,9 +95,16 @@ namespace Identity.Api.DataRepository
                             continue;
                         }
 
+                        if (!condicionesValidas.Contains(dto.CondicionFisica?.ToUpper() ?? "NUEVO"))
+                        {
+                            errores.Add($"IdProducto {dto.IdProducto}: CondicionFisica '{dto.CondicionFisica}' no es válida.");
+                            continue;
+                        }
+
                         var producto = productos[dto.IdProducto];
                         string prefijo = new string(producto.Nombre.Trim().Replace(" ", "").ToUpper().Take(3).ToArray());
 
+                        // Generar nuevo código único
                         int nextNumber = 1;
                         if (lastCodigosDict.TryGetValue(prefijo, out var lastCodigo))
                         {
@@ -189,37 +127,35 @@ namespace Identity.Api.DataRepository
                             IdFacturaCompra = dto.IdFacturaCompra,
                             IdOrdenEnsamblaje = dto.IdOrdenEnsamblaje,
                             ValorCompra = dto.ValorCompra,
-                            ValorResidual = dto.ValorResidual,
-                            VidaUtilMeses = dto.VidaUtilMeses,
+                            ValorResidual = dto.ValorResidual ?? 0,
+                            VidaUtilMeses = dto.VidaUtilMeses ?? 36,
                             UbicacionActual = dto.UbicacionActual?.ToUpper(),
                             EstadoActivo = dto.EstadoActivo.ToUpper(),
-                            CondicionFisica = dto.CondicionFisica?.ToUpper(),
-                            EsServidor = dto.EsServidor,
+                            CondicionFisica = dto.CondicionFisica?.ToUpper() ?? "NUEVO",
+                            EsServidor = dto.EsServidor ?? false,
                             Observaciones = dto.Observaciones?.ToUpper(),
                             FechaRegistro = DateTime.Now
                         };
 
                         context.Activos.Add(nuevoActivo);
-                        context.SaveChanges();
                         exitos++;
                     }
                     catch (Exception exFila)
                     {
-                        errores.Add($"Error en IdProducto {dto.IdProducto}: {exFila.Message} | Detalle: {exFila.InnerException?.Message}");
+                        errores.Add($"Error en IdProducto {dto.IdProducto}: {exFila.Message}");
                     }
                 }
 
-                transaction.Commit();
+                // Guardar todo de golpe
+                context.SaveChanges();
             }
             catch (Exception ex)
             {
-                transaction.Rollback();
-                errores.Add("Error general: " + ex.Message + " | Detalle: " + ex.InnerException?.Message);
+                errores.Add("Error general: " + ex.Message);
             }
 
             return (Insertados: exitos, Fallidos: errores.Count, DetalleErrores: errores);
         }
-
 
 
 

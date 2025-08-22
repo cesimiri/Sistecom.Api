@@ -43,6 +43,7 @@ namespace Identity.Api.Controllers
             return Ok(empresaCliente);
         }
 
+
         [HttpPost("InsertActivos")]
         public IActionResult InsertActivos([FromBody] IEnumerable<ActivoDTO> activosDto)
         {
@@ -66,7 +67,6 @@ namespace Identity.Api.Controllers
                         errores.Add($"Error en IdProducto {dto.IdProducto}: {exActivo.Message}");
                     }
                 }
-
                 return Ok(new
                 {
                     Insertados = exitos,
@@ -79,6 +79,10 @@ namespace Identity.Api.Controllers
                 return BadRequest("Error inesperado al insertar activos: " + ex.Message);
             }
         }
+
+
+
+
 
 
         [HttpPut("UpdateActivo")]

@@ -7,12 +7,18 @@ namespace Identity.Api.Interfaces
     {
         IEnumerable<ModeloDTO> GetAllModelo { get; }
         ModeloDTO GetModeloById(int idModelo);
-        void InsertModelo (ModeloDTO dto);
+        void InsertModelo(ModeloDTO dto);
         void UpdateModelo(ModeloDTO dto);
         //void DeleteUsuario(UsuarioDTO dto);
         void DeleteModeloById(int idModelo);
 
         // Nuevo método para paginado:
         PagedResult<ModeloDTO> GetModeloPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
+
+        //traer todos los modelos por la marca 
+
+        List<MarcaDTO> GetModeloByCategoria(int idCategoria);
+
     }
+
 }

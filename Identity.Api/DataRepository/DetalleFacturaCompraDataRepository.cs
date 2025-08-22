@@ -108,7 +108,7 @@ namespace Identity.Api.DataRepository
                     Cantidad = item.Cantidad,
                     PrecioUnitario = item.PrecioUnitario,
                     Descuento = item.Descuento,
-                    Subtotal = (item.Cantidad * item.PrecioUnitario) , // ✅ Calculado aquí
+                    Subtotal = (item.Cantidad * item.PrecioUnitario), // ✅ Calculado aquí
                     NumerosSerie = item.NumerosSerie,
                     DetallesAdicionales = item.DetallesAdicionales,
                 };

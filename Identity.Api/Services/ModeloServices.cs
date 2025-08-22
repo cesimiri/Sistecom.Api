@@ -45,5 +45,12 @@ namespace Identity.Api.Services
         {
             return _dataRepository.GetModeloPaginados(pagina, pageSize, filtro, estado);
         }
+
+        public List<MarcaDTO> GetModeloByCategoria(int idCategoria)
+        {
+            return _dataRepository.GetModeloByCategoria(idCategoria);
+        }
+
+
     }
 }

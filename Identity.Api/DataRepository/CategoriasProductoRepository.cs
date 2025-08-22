@@ -9,9 +9,13 @@ namespace Identity.Api.DataRepository
         {
             using (var context = new InvensisContext())
             {
-                return context.CategoriasProductos.ToList();
+                return context.CategoriasProductos
+                    .Where(c => c.Estado == "ACTIVO")                // filtro por estado
+                    .OrderBy(c => c.Nombre)                          // orden por nombre ascendente
+                    .ToList();
             }
         }
+
 
         public CategoriasProducto GetCategoriasProductoById(int IdCategoriasProducto)
         {

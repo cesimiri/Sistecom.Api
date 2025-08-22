@@ -2219,6 +2219,22 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.ModeloController",
+    "Method": "GetModeloByCategoria",
+    "RelativePath": "api/Modelo/GetModeloByCategoria/{idCategoria}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idCategoria",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ModeloController",
     "Method": "GetModeloById",
     "RelativePath": "api/Modelo/GetModeloById/{idModelo}",
     "HttpMethod": "GET",

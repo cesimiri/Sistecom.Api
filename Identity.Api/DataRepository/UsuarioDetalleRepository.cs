@@ -229,7 +229,8 @@ namespace Identity.Api.DataRepository
 
             // Aplicar paginación y proyectar al DTO
             var usuarios = query
-                .OrderBy(u => u.Cedula)
+                .OrderBy(u => u.IdDepartamentoNavigation.IdSucursalNavigation.NombreSucursal)
+                .ThenBy(u => u.CedulaNavigation.Apellidos)
                 .Skip((pagina - 1) * pageSize)
                 .Take(pageSize)
                 .Select(s => new UsuarioDetalleDTO

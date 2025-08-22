@@ -4,7 +4,6 @@ using Identity.Api.Paginado;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Controllers
 {
@@ -138,5 +137,20 @@ namespace Identity.Api.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
+
+        //modelos por categoria
+        [HttpGet("GetModeloByCategoria/{idCategoria}")]
+        public IActionResult GetModeloByCategoria(int idCategoria)
+        {
+            var marcas = _empresaCliente.GetModeloByCategoria(idCategoria);
+
+            if (marcas == null || !marcas.Any())
+            {
+                return NotFound($"No se encontraron marcas para la categoría con ID: {idCategoria}.");
+            }
+
+            return Ok(marcas);
+        }
+
     }
 }
