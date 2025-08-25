@@ -1,5 +1,6 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Paginado;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Modelo.Sistecom.Modelo.Database;
 
@@ -26,140 +27,63 @@ namespace Identity.Api.DataRepository
         }
 
         //inserción masiva
-        public (int Insertados, int Fallidos, List<string> DetalleErrores) InsertActivos(IEnumerable<ActivoDTO> activosDto)
+        public async Task<List<SpResponseDTO>> InsertarActivos(List<ActivoDTO> activos)
         {
-            var errores = new List<string>();
-            int exitos = 0;
+            var responses = new List<SpResponseDTO>();
 
             using var context = new InvensisContext();
 
-            if (activosDto == null || !activosDto.Any())
-                return (0, 0, new List<string> { "No se recibieron activos para insertar." });
-
-            try
+            foreach (var activo in activos)
             {
-                // Traer productos y facturas existentes de una sola vez
-                var idsProductos = activosDto.Select(a => a.IdProducto).Distinct().ToList();
-                var productos = context.Productos
-                    .Where(p => idsProductos.Contains(p.IdProducto))
-                    .ToDictionary(p => p.IdProducto, p => p);
+                try
+                {
+                    var parameters = new[]
+                    {
+                        new SqlParameter("@IdProducto", activo.IdProducto),
+                        new SqlParameter("@NumeroSerie", activo.NumeroSerie ?? (object)DBNull.Value),
+                        new SqlParameter("@NumeroParte", activo.NumeroParte ?? (object)DBNull.Value),
+                        new SqlParameter("@FechaAdquisicion", activo.FechaAdquisicion.Date), // toma solo la fecha
+                        new SqlParameter("@FechaGarantiaFin", activo.FechaGarantiaFin?.Date ?? (object)DBNull.Value),
+                        new SqlParameter("@IdFacturaCompra", activo.IdFacturaCompra ?? (object)DBNull.Value),
+                        new SqlParameter("@ValorCompra", activo.ValorCompra),
+                        new SqlParameter("@ValorResidual", activo.ValorResidual ?? 0m),
+                        new SqlParameter("@VidaUtilMeses", activo.VidaUtilMeses ?? 36),
+                        new SqlParameter("@UbicacionActual", activo.UbicacionActual ?? (object)DBNull.Value),
+                        new SqlParameter("@EstadoActivo", activo.EstadoActivo ?? "DISPONIBLE"),
+                        new SqlParameter("@CondicionFisica", activo.CondicionFisica ?? "NUEVO"),
+                        new SqlParameter("@EsServidor", activo.EsServidor ?? false),
+                        new SqlParameter("@Observaciones", activo.Observaciones ?? (object)DBNull.Value)
+                    };
 
-                var idsFacturas = activosDto
-                    .Where(a => a.IdFacturaCompra.HasValue)
-                    .Select(a => a.IdFacturaCompra!.Value)
-                    .Distinct()
-                    .ToList();
-                var facturas = context.FacturasCompras
-                    .Where(f => idsFacturas.Contains(f.IdFactura))
-                    .Select(f => f.IdFactura)
-                    .ToHashSet();
-
-                // Últimos códigos por prefijo
-                var prefijos = productos.Values
-                    .Select(p => new string(p.Nombre.Trim().Replace(" ", "").ToUpper().Take(3).ToArray()))
-                    .Distinct()
-                    .ToList();
-
-                var lastCodigosDict = context.Activos
-                    .Where(a => prefijos.Any(pre => a.CodigoActivo.StartsWith(pre + "-")))
-                    .AsEnumerable()
-                    .GroupBy(a => a.CodigoActivo.Substring(0, 3))
-                    .ToDictionary(
-                        g => g.Key,
-                        g => g.Max(a => a.CodigoActivo)
+                    await context.Database.ExecuteSqlRawAsync(
+                        "EXEC sp_InsertarActivo @IdProducto, @NumeroSerie, @NumeroParte, @FechaAdquisicion, @FechaGarantiaFin, @IdFacturaCompra, @ValorCompra, @ValorResidual, @VidaUtilMeses, @UbicacionActual, @EstadoActivo, @CondicionFisica, @EsServidor, @Observaciones",
+                        parameters
                     );
 
-                var estadosValidos = new List<string> { "DISPONIBLE", "ASIGNADO", "EN_MANTENIMIENTO", "BAJA", "EXTRAVIADO" };
-                var condicionesValidas = new List<string> { "INSERVIBLE", "MALO", "REGULAR", "BUENO", "NUEVO" };
 
-                foreach (var dto in activosDto)
-                {
-                    try
+                    responses.Add(new SpResponseDTO
                     {
-                        // Validaciones
-                        if (!productos.ContainsKey(dto.IdProducto))
-                        {
-                            errores.Add($"IdProducto {dto.IdProducto} no existe.");
-                            continue;
-                        }
-
-                        if (dto.IdFacturaCompra.HasValue && !facturas.Contains(dto.IdFacturaCompra.Value))
-                        {
-                            errores.Add($"IdFacturaCompra {dto.IdFacturaCompra} no existe.");
-                            continue;
-                        }
-
-                        if (!estadosValidos.Contains(dto.EstadoActivo?.ToUpper()))
-                        {
-                            errores.Add($"IdProducto {dto.IdProducto}: EstadoActivo '{dto.EstadoActivo}' no es válido.");
-                            continue;
-                        }
-
-                        if (!condicionesValidas.Contains(dto.CondicionFisica?.ToUpper() ?? "NUEVO"))
-                        {
-                            errores.Add($"IdProducto {dto.IdProducto}: CondicionFisica '{dto.CondicionFisica}' no es válida.");
-                            continue;
-                        }
-
-                        var producto = productos[dto.IdProducto];
-                        string prefijo = new string(producto.Nombre.Trim().Replace(" ", "").ToUpper().Take(3).ToArray());
-
-                        // Generar nuevo código único
-                        int nextNumber = 1;
-                        if (lastCodigosDict.TryGetValue(prefijo, out var lastCodigo))
-                        {
-                            var lastNumberStr = lastCodigo.Split('-').Last();
-                            if (int.TryParse(lastNumberStr, out var parsedNumber))
-                                nextNumber = parsedNumber + 1;
-                        }
-
-                        string nuevoCodigo = $"{prefijo}-{nextNumber:D4}";
-                        lastCodigosDict[prefijo] = nuevoCodigo;
-
-                        var nuevoActivo = new Activo
-                        {
-                            CodigoActivo = nuevoCodigo,
-                            IdProducto = dto.IdProducto,
-                            NumeroSerie = dto.NumeroSerie,
-                            NumeroParte = dto.NumeroParte,
-                            FechaAdquisicion = DateOnly.FromDateTime(dto.FechaAdquisicion),
-                            FechaGarantiaFin = dto.FechaGarantiaFin.HasValue ? DateOnly.FromDateTime(dto.FechaGarantiaFin.Value) : null,
-                            IdFacturaCompra = dto.IdFacturaCompra,
-                            IdOrdenEnsamblaje = dto.IdOrdenEnsamblaje,
-                            ValorCompra = dto.ValorCompra,
-                            ValorResidual = dto.ValorResidual ?? 0,
-                            VidaUtilMeses = dto.VidaUtilMeses ?? 36,
-                            UbicacionActual = dto.UbicacionActual?.ToUpper(),
-                            EstadoActivo = dto.EstadoActivo.ToUpper(),
-                            CondicionFisica = dto.CondicionFisica?.ToUpper() ?? "NUEVO",
-                            EsServidor = dto.EsServidor ?? false,
-                            Observaciones = dto.Observaciones?.ToUpper(),
-                            FechaRegistro = DateTime.Now
-                        };
-
-                        context.Activos.Add(nuevoActivo);
-                        exitos++;
-                    }
-                    catch (Exception exFila)
-                    {
-                        errores.Add($"Error en IdProducto {dto.IdProducto}: {exFila.Message}");
-                    }
+                        Success = 1,
+                        Message = $"Activo {activo.NumeroSerie ?? "(sin serie)"} insertado correctamente"
+                    });
                 }
-
-                // Guardar todo de golpe
-                context.SaveChanges();
+                catch (SqlException ex)
+                {
+                    responses.Add(new SpResponseDTO
+                    {
+                        Success = 0,
+                        Message = ex.Message,
+                        ErrorNumber = ex.Number,
+                        Severity = ex.Class,
+                        State = ex.State,
+                        ErrorLine = ex.LineNumber,
+                        ProcedureName = ex.Procedure
+                    });
+                }
             }
-            catch (Exception ex)
-            {
-                errores.Add("Error general: " + ex.Message);
-            }
 
-            return (Insertados: exitos, Fallidos: errores.Count, DetalleErrores: errores);
+            return responses;
         }
-
-
-
-
 
 
 

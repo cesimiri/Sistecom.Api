@@ -19,10 +19,9 @@ namespace Identity.Api.Services
             return _dataRepository.GetActivoById(IdActivo);
         }
 
-
-        public (int Insertados, int Fallidos, List<string> DetalleErrores) InsertActivos(IEnumerable<ActivoDTO> nuevosActivos)
+        public async Task<List<SpResponseDTO>> InsertActivos(List<ActivoDTO> activos)
         {
-            return _dataRepository.InsertActivos(nuevosActivos);
+            return await _dataRepository.InsertarActivos(activos);
         }
 
         public void UpdateActivo(Activo UpdItem)

@@ -7,7 +7,7 @@ using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -44,43 +44,12 @@ namespace Identity.Api.Controllers
         }
 
 
-        [HttpPost("InsertActivos")]
-        public IActionResult InsertActivos([FromBody] IEnumerable<ActivoDTO> activosDto)
+        [HttpPost("InsertarActivos")]
+        public async Task<IActionResult> InsertarActivos([FromBody] List<ActivoDTO> activos)
         {
-            if (activosDto == null || !activosDto.Any())
-                return BadRequest("No se recibieron activos para insertar.");
-
-            var errores = new List<string>();
-            var exitos = 0;
-
-            try
-            {
-                foreach (var dto in activosDto)
-                {
-                    try
-                    {
-                        _empresaCliente.InsertActivos(new List<ActivoDTO> { dto });
-                        exitos++;
-                    }
-                    catch (Exception exActivo)
-                    {
-                        errores.Add($"Error en IdProducto {dto.IdProducto}: {exActivo.Message}");
-                    }
-                }
-                return Ok(new
-                {
-                    Insertados = exitos,
-                    Fallidos = errores.Count,
-                    DetalleErrores = errores
-                });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Error inesperado al insertar activos: " + ex.Message);
-            }
+            var responses = await _empresaCliente.InsertActivos(activos);
+            return Ok(responses);
         }
-
-
 
 
 

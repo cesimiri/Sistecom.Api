@@ -1,5 +1,4 @@
 ﻿using Identity.Api.Model;
-using Modelo.Sistecom.Modelo.Database;
 using Identity.Api.Persistence.DataBase.configuration;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -40,6 +39,10 @@ namespace Identity.Api.Persistence.DataBase
 
             //Model constraints}
             ModelConfig(builder);
+
+            //borrar
+
+
         }
         private void ModelConfig(ModelBuilder modelBuilder)
         {

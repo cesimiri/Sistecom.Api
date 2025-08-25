@@ -2,7 +2,8 @@
 {
     public class ActivoDTO
     {
-        public int IdActivo { get; set; }
+
+        public int? IdActivo { get; set; }
 
         public string? CodigoActivo { get; set; } // ahora es opcional
 
