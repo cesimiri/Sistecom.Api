@@ -26,6 +26,7 @@ C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\Ide
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\Azure.Core.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\Azure.Identity.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\EPPlus.dll
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\FluentFTP.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll

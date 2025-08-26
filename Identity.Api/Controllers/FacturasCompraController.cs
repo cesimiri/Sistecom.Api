@@ -1,4 +1,5 @@
-﻿using Identity.Api.DTO;
+﻿using FluentFTP;
+using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Identity.Api.Paginado;
 using Identity.Api.Reporteria;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuestPDF.Infrastructure;
+using System.Net;
 
 namespace Identity.Api.Controllers
 {
@@ -170,16 +172,18 @@ namespace Identity.Api.Controllers
             return File(pdfBytes, "application/pdf", fileName);
         }
 
+
+
         // 📌 Subir imagen de factura
         [HttpPost("UploadFacturaImage")]
         public async Task<IActionResult> UploadFacturaImage(
-            [FromForm] IFormFile file,
-            [FromForm] string numeroFactura,
-            [FromForm] string rucProveedor)
+        [FromForm] IFormFile file,
+        [FromForm] string numeroFactura,
+        [FromForm] string rucProveedor)
         {
             try
             {
-                // 1. Validaciones de datos
+                // 1️⃣ Validaciones de datos
                 if (file == null || file.Length == 0)
                     return BadRequest("No se recibió ningún archivo o está vacío.");
 
@@ -189,119 +193,116 @@ namespace Identity.Api.Controllers
                 if (string.IsNullOrWhiteSpace(rucProveedor))
                     return BadRequest("El RUC del proveedor es obligatorio.");
 
-                // 2. Validación de extensiones permitidas
+                // 2️⃣ Validación de extensiones permitidas
                 var extension = Path.GetExtension(file.FileName)?.ToLower();
                 var extensionesPermitidas = new[] { ".jpg", ".jpeg", ".png", ".pdf" };
                 if (!extensionesPermitidas.Contains(extension))
                     return BadRequest($"Formato de archivo no permitido. Solo: {string.Join(", ", extensionesPermitidas)}");
 
-                // 3. Construcción del nombre base
-                var nombreBase = $"Factura-{rucProveedor}-{numeroFactura}";
+                // 3️⃣ Nombre del archivo final
+                string SanitizePath(string input) =>
+                    string.Concat(input.Where(c => !Path.GetInvalidFileNameChars().Contains(c)));
 
-                // 4. Ruta física de destino
-                var uploadsFolder = @"C:\inetpub\wwwroot\facturas";
+                var nombreArchivo = $"Factura-{SanitizePath(rucProveedor)}-{SanitizePath(numeroFactura)}{extension}";
 
-                if (!Directory.Exists(uploadsFolder))
-                    Directory.CreateDirectory(uploadsFolder);
+                // 4️⃣ Configuración FTP
+                string ftpUrl = "ftp://192.168.120.241/facturas/"; // FTP completo con carpeta
+                string ftpUser = "gmoraadmin";
+                string ftpPass = "Geo100100.";
 
-                // 5. Contar imágenes existentes y asignar nombre único
-                var existentes = Directory.GetFiles(uploadsFolder, $"{nombreBase}-*.*").Length;
-                var nombreFinal = $"{nombreBase}-{existentes + 1}{extension}";
-                var rutaCompleta = Path.Combine(uploadsFolder, nombreFinal);
+                // Crear carpeta si no existe
+                FtpWebRequest createDirRequest = (FtpWebRequest)WebRequest.Create(ftpUrl);
+                createDirRequest.Method = WebRequestMethods.Ftp.MakeDirectory;
+                createDirRequest.Credentials = new NetworkCredential(ftpUser, ftpPass);
+                try { using var resp = (FtpWebResponse)createDirRequest.GetResponse(); } catch { /* ignora error si ya existe */ }
 
-                // 6. Guardar archivo en disco
-                using (var stream = new FileStream(rutaCompleta, FileMode.Create))
+                // 5️⃣ Subir archivo (reemplaza si existe)
+                string uploadUrl = ftpUrl + nombreArchivo;
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(uploadUrl);
+                request.Method = WebRequestMethods.Ftp.UploadFile;
+                request.Credentials = new NetworkCredential(ftpUser, ftpPass);
+                request.UseBinary = true;
+                request.UsePassive = true;
+
+                using (var fileStream = file.OpenReadStream())
+                using (var ftpStream = request.GetRequestStream())
                 {
-                    await file.CopyToAsync(stream);
+                    await fileStream.CopyToAsync(ftpStream);
                 }
 
-                // 7. URL pública
-                var urlImagen = $"http://192.168.120.241/facturas/{nombreFinal}";
+                // 6️⃣ URL pública (HTTP)
+                var urlPublica = $"http://192.168.120.241/facturas/{nombreArchivo}";
 
-                // 8. Respuesta
                 return Ok(new
                 {
-                    mensaje = "Imagen guardada exitosamente.",
-                    nombreArchivo = nombreFinal,
-                    url = urlImagen
+                    mensaje = "Imagen subida exitosamente (reemplazada si ya existía).",
+                    nombreArchivo,
+                    url = urlPublica
                 });
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return StatusCode(500, $"Error de permisos al guardar la imagen: {ex.Message}");
-            }
-            catch (IOException ex)
-            {
-                return StatusCode(500, $"Error de entrada/salida al guardar la imagen: {ex.Message}");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+                return StatusCode(500, $"Error al subir imagen por FTP: {ex.Message}");
             }
         }
+
 
         // 📌 Buscar imágenes por número de factura
         [HttpGet("BuscarImagenesFactura")]
         public IActionResult BuscarImagenesFactura([FromQuery] string numeroFactura, [FromQuery] string rucProveedor)
         {
+            string host = "192.168.120.241";
+            string user = "gmoraadmin";
+            string pass = "Geo100100.";
+            string basePath = "/facturas";
+
             try
             {
-                // Carpeta física
-                var uploadsFolder = @"C:\inetpub\wwwroot\facturas";
-                var nombreBase = $"Factura-{rucProveedor}-{numeroFactura}";
+                using var client = new FtpClient(host, new NetworkCredential(user, pass));
+                client.Connect();
 
-                if (!Directory.Exists(uploadsFolder))
-                    return Ok(new List<string>());
+                string nombreBase = $"Factura-{rucProveedor}-{numeroFactura}";
 
-                var archivos = Directory
-                    .GetFiles(uploadsFolder, $"{nombreBase}-*.*")
-                    .Select(path => Path.GetFileName(path))
-                    .Select(nombre => $"http://192.168.120.241/facturas/{nombre}") // URL pública
-                    .ToList();
+                // Listar archivos en la carpeta FTP
+                var archivos = client.GetListing(basePath)
+                .Where(f => f.Type == FtpObjectType.File && f.Name.StartsWith(nombreBase))
+                .Select(f => $"http://192.168.120.241/facturas/{f.Name}") // URL pública
+                .ToList();
 
                 return Ok(archivos);
             }
-            catch (UnauthorizedAccessException ex)
-            {
-                return StatusCode(500, $"Error de permisos al leer las imágenes: {ex.Message}");
-            }
-            catch (IOException ex)
-            {
-                return StatusCode(500, $"Error de entrada/salida al leer las imágenes: {ex.Message}");
-            }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+                return StatusCode(500, $"Error al buscar imágenes por FTP: {ex.Message}");
             }
         }
 
-        // 📌 Eliminar imagen por nombre
+        // 📌 Buscar imágenes por número de factura
         [HttpDelete("EliminarFacturaImagen")]
         public IActionResult EliminarFacturaImagen([FromQuery] string nombreArchivo)
         {
+            string host = "192.168.120.241";
+            string user = "gmoraadmin";
+            string pass = "Geo100100.";
+            string basePath = "/facturas";
+
             try
             {
-                var uploadsFolder = @"C:\inetpub\wwwroot\facturas";
-                var rutaCompleta = Path.Combine(uploadsFolder, nombreArchivo);
+                using var client = new FtpClient(host, new NetworkCredential(user, pass));
+                client.Connect();
 
-                if (!System.IO.File.Exists(rutaCompleta))
-                    return NotFound("La imagen no existe.");
+                string rutaArchivo = $"{basePath}/{nombreArchivo}";
 
-                System.IO.File.Delete(rutaCompleta);
+                if (!client.FileExists(rutaArchivo))
+                    return NotFound("La imagen no existe en el FTP.");
+
+                client.DeleteFile(rutaArchivo);
 
                 return Ok(new { mensaje = "Imagen eliminada correctamente." });
             }
-            catch (UnauthorizedAccessException ex)
-            {
-                return StatusCode(500, $"Error de permisos al eliminar la imagen: {ex.Message}");
-            }
-            catch (IOException ex)
-            {
-                return StatusCode(500, $"Error de entrada/salida al eliminar la imagen: {ex.Message}");
-            }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Error interno del servidor: {ex.Message}");
+                return StatusCode(500, $"Error al eliminar imagen por FTP: {ex.Message}");
             }
         }
 
@@ -320,6 +321,74 @@ namespace Identity.Api.Controllers
             return Ok(facturasCompra);
         }
 
+        // probar TP Facturas si lelga y si carpeta esta creada
+        [HttpGet("ProbarFtpFacturas")]
+        public IActionResult ProbarFtpFacturas()
+        {
+            string host = "192.168.120.241";        // Host del FTP
+            string user = "gmoraadmin";             // Usuario FTP
+            string pass = "Geo100100.";              // Contraseña FTP
+            string basePath = "/facturas";          // Carpeta que quieres verificar
 
+            var log = new List<string>();
+            FtpClient client = null;
+
+            try
+            {
+                // 🔹 Inicializar cliente FTP
+                client = new FtpClient(host, new NetworkCredential(user, pass));
+                log.Add("Cliente FTP creado.");
+
+                // 🔹 Conectar al servidor FTP
+                client.Connect();
+                log.Add("Conexión al servidor FTP establecida.");
+
+                if (!client.IsConnected)
+                {
+                    log.Add("Autenticación fallida.");
+                    return StatusCode(403, new { mensaje = "Error de autenticación FTP", log });
+                }
+                log.Add("Autenticación exitosa.");
+
+                // 🔹 Verificar existencia de la carpeta y crear si no existe
+                if (!client.DirectoryExists(basePath))
+                {
+                    log.Add($"Carpeta '{basePath}' no existe. Creándola...");
+                    client.CreateDirectory(basePath);
+                    log.Add($"Carpeta '{basePath}' creada correctamente.");
+                }
+                else
+                {
+                    log.Add($"Carpeta '{basePath}' encontrada.");
+                }
+
+                // 🔹 Listar archivos dentro de la carpeta
+                var archivos = client.GetListing(basePath);
+                log.Add($"Se encontraron {archivos.Length} archivos en '{basePath}'.");
+
+                // 🔹 Retornar información
+                return Ok(new
+                {
+                    mensaje = "Conexión FTP exitosa ✅",
+                    cantidadArchivos = archivos.Length,
+                    ejemplos = archivos.Take(5).Select(a => a.FullName),
+                    log
+                });
+            }
+            catch (FluentFTP.Exceptions.FtpCommandException ftpEx)
+            {
+                log.Add($"Error FTP: Código {ftpEx.CompletionCode}, Mensaje: {ftpEx.Message}");
+                return StatusCode(403, new { mensaje = "Error de autenticación FTP", log });
+            }
+            catch (Exception ex)
+            {
+                log.Add($"Error inesperado: {ex.Message}");
+                return StatusCode(500, new { mensaje = "Error inesperado", log });
+            }
+            finally
+            {
+                client?.Dispose();
+            }
+        }
     }
 }

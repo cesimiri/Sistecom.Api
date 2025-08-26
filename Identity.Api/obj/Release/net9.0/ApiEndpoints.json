@@ -1674,6 +1674,16 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.FacturasCompraController",
+    "Method": "ProbarFtpFacturas",
+    "RelativePath": "api/FacturasCompra/ProbarFtpFacturas",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.FacturasCompraController",
     "Method": "Update",
     "RelativePath": "api/FacturasCompra/UpdateFacturasCompra",
     "HttpMethod": "PUT",

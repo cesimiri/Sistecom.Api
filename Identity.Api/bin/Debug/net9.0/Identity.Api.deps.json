@@ -9,6 +9,7 @@
       "Identity.Api/1.0.0": {
         "dependencies": {
           "EPPlus": "4.5.3.3",
+          "FluentFTP": "53.0.1",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "9.0.5",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "9.0.5",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "9.0.5",
@@ -78,6 +79,14 @@
           "lib/netstandard2.1/EPPlus.dll": {
             "assemblyVersion": "4.5.3.3",
             "fileVersion": "4.5.3.3"
+          }
+        }
+      },
+      "FluentFTP/53.0.1": {
+        "runtime": {
+          "lib/net8.0/FluentFTP.dll": {
+            "assemblyVersion": "53.0.1.0",
+            "fileVersion": "53.0.1.0"
           }
         }
       },
@@ -1909,6 +1918,13 @@
       "sha512": "sha512-aZnWmrQNRQuV/2Kwu+pTv1HVX1ZBvoGKw2GuzUOmBRpOD09sYJFGHww8NVQd3IIeb1vqosPDFZgND/1nxTzFKQ==",
       "path": "epplus/4.5.3.3",
       "hashPath": "epplus.4.5.3.3.nupkg.sha512"
+    },
+    "FluentFTP/53.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GzT+G6CsMQx+UeLiYmWsXUDDQpKIzo6NML21vgbZv7zyRFNx386eabGiuv3xkdCqxiTFYY4mGla9WdOLR1HAMA==",
+      "path": "fluentftp/53.0.1",
+      "hashPath": "fluentftp.53.0.1.nupkg.sha512"
     },
     "Humanizer.Core/2.14.1": {
       "type": "package",

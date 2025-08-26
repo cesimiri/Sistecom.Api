@@ -202,6 +202,7 @@ C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Release\net9.0\Identity.Api.p
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Release\net9.0\Azure.Core.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Release\net9.0\Azure.Identity.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Release\net9.0\EPPlus.dll
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Release\net9.0\FluentFTP.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Release\net9.0\Humanizer.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Release\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\bin\Release\net9.0\Microsoft.AspNetCore.Cryptography.Internal.dll
