@@ -178,8 +178,13 @@ namespace Identity.Api.DataRepository
                     IdProducto = a.IdProducto,
                     NumeroSerie = a.NumeroSerie,
                     NumeroParte = a.NumeroParte,
-                    //FechaAdquisicion = a.FechaAdquisicion,
-                    //FechaGarantiaFin = a.FechaGarantiaFin,
+                    // Si es DateOnly (no nullable)
+                    FechaAdquisicion = a.FechaAdquisicion.ToDateTime(TimeOnly.MinValue),
+
+                    // Si es DateOnly? (nullable)
+                    FechaGarantiaFin = a.FechaGarantiaFin.HasValue
+                    ? a.FechaGarantiaFin.Value.ToDateTime(TimeOnly.MinValue)
+                    : (DateTime?)null,
                     IdFacturaCompra = a.IdFacturaCompra,
                     IdOrdenEnsamblaje = a.IdOrdenEnsamblaje,
                     ValorCompra = a.ValorCompra,

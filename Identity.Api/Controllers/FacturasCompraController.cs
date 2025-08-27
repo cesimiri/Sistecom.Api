@@ -306,20 +306,7 @@ namespace Identity.Api.Controllers
             }
         }
 
-        [HttpGet("GetFacturasCompraByNumeroFactura/{numeroFactura}")]
-        public IActionResult GetFacturasCompraByNumeroFactura(string numeroFactura)
-        {
-            ;
 
-            var facturasCompra = _facturasCompra.GetFacturasCompraByNumeroFactura(numeroFactura);
-
-            if (facturasCompra == null)
-            {
-                return NotFound($"La factura con ID {numeroFactura} no se encuentra registrada.");
-            }
-
-            return Ok(facturasCompra);
-        }
 
         // probar TP Facturas si lelga y si carpeta esta creada
         [HttpGet("ProbarFtpFacturas")]
@@ -390,5 +377,44 @@ namespace Identity.Api.Controllers
                 client?.Dispose();
             }
         }
+
+        //busqueda facturas por número factura para activo que devuelve solo las facturas no ingresadas en factura
+        [HttpGet("GetFacturasCompraByNumeroFactura/{numeroFactura}")]
+        public IActionResult GetFacturasCompraByNumeroFactura(string numeroFactura)
+        {
+            ;
+
+            var facturasCompra = _facturasCompra.GetFacturasCompraByNumeroFactura(numeroFactura);
+
+            if (facturasCompra == null)
+            {
+                return NotFound($"La factura con ID {numeroFactura} no existe o ya fue registrada. B");
+            }
+
+            return Ok(facturasCompra);
+        }
+
+
+        //para compradirecta secuencial
+        [HttpGet("GenerarSecuencialFactura")]
+        public IActionResult GenerarSecuencialFactura()
+        {
+            try
+            {
+                // Llama al repository
+                var secuencial = _facturasCompra.GenerarSecuencialFactura();
+
+                // Devuelve directamente el string
+                return Ok(secuencial);
+            }
+            catch (Exception ex)
+            {
+                // En caso de error devuelve el fallback seguro
+                return Ok("CP-0001");
+            }
+        }
+
+
+
     }
 }

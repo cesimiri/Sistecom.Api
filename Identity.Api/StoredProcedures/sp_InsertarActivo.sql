@@ -1,4 +1,4 @@
-CREATE OR ALTER PROCEDURE dbo.sp_InsertarActivo
+﻿CREATE OR ALTER PROCEDURE dbo.sp_InsertarActivo
     @IdProducto INT,
     @NumeroSerie VARCHAR(100),
     @NumeroParte VARCHAR(100) = NULL,
@@ -17,24 +17,27 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    DECLARE @Prefijo VARCHAR(10);
+    DECLARE @Prefijo VARCHAR(50);
     DECLARE @NextNumber INT = 1;
     DECLARE @NuevoCodigo VARCHAR(50);
     DECLARE @UltimoCodigo VARCHAR(50);
     DECLARE @LastNumberStr VARCHAR(10);
 
-    -- Obtener prefijo (primeras 3 letras del producto)
-    SELECT TOP 1 @Prefijo = UPPER(LEFT(REPLACE(LTRIM(RTRIM(Nombre)), ' ', ''), 3))
-    FROM productos
-    WHERE id_producto = @IdProducto;
+    -- 🔹 Obtener prefijo desde la categoría del producto
+    SELECT TOP 1 
+           @Prefijo = UPPER(REPLACE(LTRIM(RTRIM(cp.nombre)), ' ', '-'))
+    FROM productos p
+    INNER JOIN marcas m ON p.id_marca = m.id_marca
+    INNER JOIN categorias_productos cp ON m.id_categoria = cp.id_categoria
+    WHERE p.id_producto = @IdProducto;
 
-    -- Buscar �ltimo c�digo con ese prefijo
+    -- 🔹 Buscar último código con ese prefijo
     SELECT TOP 1 @UltimoCodigo = codigo_activo
     FROM activos
     WHERE codigo_activo LIKE @Prefijo + '-%'
     ORDER BY id_activo DESC;
 
-    -- Si existe, incrementar el n�mero
+    -- 🔹 Si existe, incrementar el número
     IF @UltimoCodigo IS NOT NULL
     BEGIN
         SET @LastNumberStr = RIGHT(@UltimoCodigo, 4);
@@ -42,10 +45,10 @@ BEGIN
             SET @NextNumber = CAST(@LastNumberStr AS INT) + 1;
     END
 
-    -- Generar el nuevo c�digo
+    -- 🔹 Generar el nuevo código
     SET @NuevoCodigo = @Prefijo + '-' + RIGHT('0000' + CAST(@NextNumber AS VARCHAR(4)), 4);
 
-    -- Insertar registro
+    -- 🔹 Insertar registro
     INSERT INTO activos (
         codigo_activo, id_producto, numero_serie, numero_parte, 
         fecha_adquisicion, fecha_garantia_fin, id_factura_compra, 
@@ -59,7 +62,7 @@ BEGIN
         @EstadoActivo, @CondicionFisica, @EsServidor, @Observaciones, GETDATE()
     );
 
-    -- Retornar el ID y el nuevo c�digo
+    -- 🔹 Retornar el ID y el nuevo código
     SELECT SCOPE_IDENTITY() AS IdActivo, @NuevoCodigo AS CodigoActivo;
 END
 GO

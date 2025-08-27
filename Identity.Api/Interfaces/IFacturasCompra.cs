@@ -22,7 +22,11 @@ namespace Identity.Api.Interfaces
         //PARA FACTURA AUTOMATICA
         Task<(FacturasCompraDTO factura, List<DetalleFacturaCompraDTO> detalles)> ObtenerFacturaConDetallesAsync(int idFactura);
 
-        //busqueda facturas por número factura
+        //busqueda facturas por número factura para activo que devuelve solo las facturas no ingresadas en factura
         FacturasCompraDTO GetFacturasCompraByNumeroFactura(string numeroFactura);
+
+        //para compradirecta secuencial
+        string GenerarSecuencialFactura();
+
     }
 }

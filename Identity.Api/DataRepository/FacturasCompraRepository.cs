@@ -358,8 +358,7 @@ namespace Identity.Api.DataRepository
             return (factura, detalles);
         }
 
-        //busqueda facturas por número factura
-
+        //busqueda facturas por número factura para activo que devuelve solo las facturas no ingresadas en factura
         public FacturasCompraDTO GetFacturasCompraByNumeroFactura(string numeroFactura)
         {
             using var context = new InvensisContext();
@@ -370,6 +369,13 @@ namespace Identity.Api.DataRepository
                 .FirstOrDefault(f => f.NumeroFactura == numeroFactura);
 
             if (s == null) return null;
+
+            // Nueva regla: verificar si la factura ya está en activos
+            bool yaEstaEnActivos = context.Activos
+                .Any(a => a.IdFacturaCompra == s.IdFactura);
+
+            if (yaEstaEnActivos)
+                return null;
 
             return new FacturasCompraDTO
             {
@@ -392,5 +398,40 @@ namespace Identity.Api.DataRepository
                 NombreBodega = s.IdBodegaNavigation?.Nombre
             };
         }
+
+
+        //para compradirecta secuencial
+        public string GenerarSecuencialFactura()
+        {
+            try
+            {
+                using var context = new InvensisContext();
+
+                var ultima = context.FacturasCompras
+                    .Where(f => f.NumeroFactura.StartsWith("CP-"))
+                    .OrderByDescending(f => f.IdFactura)
+                    .Select(f => f.NumeroFactura)
+                    .FirstOrDefault();
+
+                if (string.IsNullOrEmpty(ultima))
+                    return "CD-0001";
+
+                var numero = ultima.Replace("CD-", "");
+                if (int.TryParse(numero, out int secuencia))
+                    return $"CD-{(secuencia + 1).ToString("D4")}";
+
+                // fallback si el formato es incorrecto
+                return "CD-0001";
+            }
+            catch
+            {
+                // fallback seguro ante cualquier error
+                return "CD-0001";
+            }
+        }
+
+
+
+
     }
 }

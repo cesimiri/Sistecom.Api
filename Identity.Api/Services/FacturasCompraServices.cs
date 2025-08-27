@@ -8,12 +8,7 @@ namespace Identity.Api.Services
     public class FacturasCompraServices : IFacturasCompra
     {
         private FacturasCompraRepository _dataRepository = new FacturasCompraRepository();
-        //private readonly IDetalleFacturaCompra _detalleFacturaCompraRepository;
 
-        //public FacturasCompraServices(IDetalleFacturaCompra detalleFacturaCompraRepository)
-        //{
-        //    _detalleFacturaCompraRepository = detalleFacturaCompraRepository ?? throw new ArgumentNullException(nameof(detalleFacturaCompraRepository));
-        //}
         public IEnumerable<FacturasCompraDTO> FacturasCompraInfoAll
         {
             get { return _dataRepository.GetAllFacturasCompra(); }
@@ -34,11 +29,6 @@ namespace Identity.Api.Services
         {
             await _dataRepository.UpdateFacturasCompra(UpdItem);
         }
-
-        //public void DeleteFacturasCompra(FacturasCompra DelItem)
-        //{
-        //    _dataRepository.DeleteFacturasCompra(DelItem);
-        //}
 
         public void DeleteFacturasCompraById(int idFacturasCompra)
         {
@@ -64,11 +54,16 @@ namespace Identity.Api.Services
             return await _dataRepository.ObtenerFacturaConDetallesAsync(idFactura);
         }
 
-        //busqueda facturas por número factura
+        //busqueda facturas por número factura para activo que devuelve solo las facturas no ingresadas en factura
         public FacturasCompraDTO GetFacturasCompraByNumeroFactura(string numeroFactura)
         {
             return _dataRepository.GetFacturasCompraByNumeroFactura(numeroFactura);
         }
 
+        //para compradirecta secuencial
+        public string GenerarSecuencialFactura()
+        {
+            return _dataRepository.GenerarSecuencialFactura();
+        }
     }
 }

@@ -1595,6 +1595,16 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.FacturasCompraController",
+    "Method": "GenerarSecuencialFactura",
+    "RelativePath": "api/FacturasCompra/GenerarSecuencialFactura",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.FacturasCompraController",
     "Method": "GetFacturasCompraById",
     "RelativePath": "api/FacturasCompra/GetFacturasCompraById/{idFacturasCompra}",
     "HttpMethod": "GET",
