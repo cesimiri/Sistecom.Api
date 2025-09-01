@@ -407,21 +407,28 @@ namespace Identity.Api.DataRepository
             {
                 using var context = new InvensisContext();
 
+                // Prefijo de la factura
+                string prefijo = "CD-";
+
+                // Trae la última factura que empiece con el prefijo
                 var ultima = context.FacturasCompras
-                    .Where(f => f.NumeroFactura.StartsWith("CP-"))
+                    .Where(f => f.NumeroFactura.StartsWith(prefijo))
                     .OrderByDescending(f => f.IdFactura)
                     .Select(f => f.NumeroFactura)
                     .FirstOrDefault();
 
                 if (string.IsNullOrEmpty(ultima))
-                    return "CD-0001";
+                    return $"{prefijo}0001"; // primera factura
 
-                var numero = ultima.Replace("CD-", "");
+                // Extraer la parte numérica
+                var numero = ultima.Replace(prefijo, "");
                 if (int.TryParse(numero, out int secuencia))
-                    return $"CD-{(secuencia + 1).ToString("D4")}";
+                {
+                    return $"{prefijo}{(secuencia + 1).ToString("D4")}";
+                }
 
                 // fallback si el formato es incorrecto
-                return "CD-0001";
+                return $"{prefijo}0001";
             }
             catch
             {
@@ -429,6 +436,7 @@ namespace Identity.Api.DataRepository
                 return "CD-0001";
             }
         }
+
 
 
 

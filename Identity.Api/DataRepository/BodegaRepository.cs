@@ -199,7 +199,7 @@ namespace Identity.Api.DataRepository
                     NombreSucursal = u.IdDepartamentoNavigation.IdSucursalNavigation.NombreSucursal,
                     NombreCargo = u.IdCargoNavigation.Descripcion,
                     NombreDepartamento = u.IdDepartamentoNavigation.Descripcion,
-                    NombreCedula = (u.CedulaNavigation.Apellidos + " " + u.CedulaNavigation.Apellidos).ToUpper()
+                    NombreCedula = (u.CedulaNavigation.Nombres + " " + u.CedulaNavigation.Apellidos).ToUpper()
                 })
                 .ToList();
 
