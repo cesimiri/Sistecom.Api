@@ -26,7 +26,7 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        //inserción masiva
+        //inserción masiva con store procedure
         public async Task<List<SpResponseDTO>> InsertarActivos(List<ActivoDTO> activos)
         {
             var responses = new List<SpResponseDTO>();
@@ -52,7 +52,11 @@ namespace Identity.Api.DataRepository
                         new SqlParameter("@EstadoActivo", activo.EstadoActivo ?? "DISPONIBLE"),
                         new SqlParameter("@CondicionFisica", activo.CondicionFisica ?? "NUEVO"),
                         new SqlParameter("@EsServidor", activo.EsServidor ?? false),
-                        new SqlParameter("@Observaciones", activo.Observaciones ?? (object)DBNull.Value)
+                        new SqlParameter("@Observaciones", activo.Observaciones ?? (object)DBNull.Value),
+                        // 👇 nuevos parámetros
+                        new SqlParameter("@IdActivoPadre", activo.IdActivoPadre ?? (object)DBNull.Value),
+                        new SqlParameter("@EsComponente", activo.EsComponente ?? (object)DBNull.Value),
+                        new SqlParameter("@TipoRelacion", activo.TipoRelacion) // SIEMPRE se envía
                     };
 
                     await context.Database.ExecuteSqlRawAsync(

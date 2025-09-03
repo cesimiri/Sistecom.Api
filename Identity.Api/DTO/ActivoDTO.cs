@@ -39,6 +39,13 @@
 
         public DateTime? FechaRegistro { get; set; }
 
+        //nuevos campos
+        public int? IdActivoPadre { get; set; }
+
+        public bool? EsComponente { get; set; }
+
+        public string? TipoRelacion { get; set; }
+
         //relaciones 
         public string? NombreProducto { get; set; }
         public string? NumeroFactura { get; set; }
