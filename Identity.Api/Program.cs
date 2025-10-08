@@ -223,9 +223,9 @@ builder.Services.AddScoped<IModelo, ModeloServices>();
 builder.Services.AddScoped<IUnidadesMedidum, UnidadesMedidumServices>();
 //Activos
 builder.Services.AddScoped<IActivo, ActivoServices>();
+//configuracion Activos
 
-
-
+builder.Services.AddScoped<IConfiguracionesActivo, ConfiguracionesActivoServices>();
 
 
 //Fin de servicios

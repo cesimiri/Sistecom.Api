@@ -804,6 +804,105 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "identity.api.controllers.ConfiguracionesActivoController",
+    "Method": "DeleteConfiguracionesActivoById",
+    "RelativePath": "api/ConfiguracionesActivo/DeleteConfiguracionesActivoByPrincipal/{idActivoPrincipal}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idActivoPrincipal",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "identity.api.controllers.ConfiguracionesActivoController",
+    "Method": "GetActivosComponenetes",
+    "RelativePath": "api/ConfiguracionesActivo/GetActivosComponenetes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "identity.api.controllers.ConfiguracionesActivoController",
+    "Method": "GetActivosPrincipal",
+    "RelativePath": "api/ConfiguracionesActivo/GetActivosPrincipal",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "identity.api.controllers.ConfiguracionesActivoController",
+    "Method": "GetConfiguracionesActivoPaginados",
+    "RelativePath": "api/ConfiguracionesActivo/GetConfiguracionesActivoPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estado",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "identity.api.controllers.ConfiguracionesActivoController",
+    "Method": "GetByActivo",
+    "RelativePath": "api/ConfiguracionesActivo/GetConfiguracionesByActivo/{idActivoPrincipal}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idActivoPrincipal",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "identity.api.controllers.ConfiguracionesActivoController",
+    "Method": "Insertar",
+    "RelativePath": "api/ConfiguracionesActivo/InsertarConfiguracion",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Identity.Api.DTO.ConfiguracionActivoInsertDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Identity.Api.Controllers.DepartamentoController",
     "Method": "DeleteById",
     "RelativePath": "api/Departamento/DeleteDepartamentoById/{idDepartamento}",

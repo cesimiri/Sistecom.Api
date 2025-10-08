@@ -54,13 +54,13 @@ namespace Identity.Api.DataRepository
                         new SqlParameter("@EsServidor", activo.EsServidor ?? false),
                         new SqlParameter("@Observaciones", activo.Observaciones ?? (object)DBNull.Value),
                         // 👇 nuevos parámetros
-                        new SqlParameter("@IdActivoPadre", activo.IdActivoPadre ?? (object)DBNull.Value),
-                        new SqlParameter("@EsComponente", activo.EsComponente ?? (object)DBNull.Value),
+                        //new SqlParameter("@IdActivoPadre", activo.IdActivoPadre ?? (object)DBNull.Value),
+                        //new SqlParameter("@EsComponente", activo.EsComponente ?? (object)DBNull.Value),
                         new SqlParameter("@TipoRelacion", activo.TipoRelacion) // SIEMPRE se envía
                     };
 
                     await context.Database.ExecuteSqlRawAsync(
-                        "EXEC sp_InsertarActivo @IdProducto, @NumeroSerie, @NumeroParte, @FechaAdquisicion, @FechaGarantiaFin, @IdFacturaCompra, @ValorCompra, @ValorResidual, @VidaUtilMeses, @UbicacionActual, @EstadoActivo, @CondicionFisica, @EsServidor, @Observaciones",
+                        "EXEC sp_InsertarActivo @IdProducto, @NumeroSerie, @NumeroParte, @FechaAdquisicion, @FechaGarantiaFin, @IdFacturaCompra, @ValorCompra, @ValorResidual, @VidaUtilMeses, @UbicacionActual, @EstadoActivo, @CondicionFisica, @EsServidor, @Observaciones, @TipoRelacion",
                         parameters
                     );
 
@@ -200,7 +200,7 @@ namespace Identity.Api.DataRepository
                     EsServidor = a.EsServidor,
                     Observaciones = a.Observaciones,
                     FechaRegistro = a.FechaRegistro,
-
+                    TipoRelacion = a.TipoRelacion,
                     // relaciones
                     NombreProducto = a.IdProductoNavigation != null ? a.IdProductoNavigation.Nombre : null,
                     NumeroFactura = a.IdFacturaCompraNavigation != null ? a.IdFacturaCompraNavigation.NumeroFactura : null,
