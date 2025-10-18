@@ -34,10 +34,10 @@
 
         //relacion 
 
-        public string? nombreLicencia { get; set; }
+        public string? nombreTipoLicencia { get; set; }
 
         public string? nombreProducto { get; set; }
 
-        public string? numeroFactura {  get; set; }
+        public string? numeroFactura { get; set; }
     }
 }

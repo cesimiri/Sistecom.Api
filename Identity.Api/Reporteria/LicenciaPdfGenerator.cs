@@ -90,7 +90,7 @@ namespace Identity.Api.Reporteria
 
                         foreach (var emp in empresas)
                         {
-                            table.Cell().Text(emp.nombreLicencia);
+                            table.Cell().Text(emp.nombreTipoLicencia);
                             table.Cell().Text(emp.nombreProducto);
                             table.Cell().AlignCenter().AlignMiddle().Text(emp.TipoSuscripcion);
                             table.Cell().Text(emp.numeroFactura);

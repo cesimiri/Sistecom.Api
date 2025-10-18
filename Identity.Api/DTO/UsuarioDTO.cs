@@ -21,6 +21,7 @@ namespace Identity.Api.DTO
         public string? Estado { get; set; }
 
         public string? NombreSucursal { get; set; }
+        public string? ApellidosNombre { get; set; }
 
     }
 }

@@ -189,7 +189,7 @@ namespace Identity.Api.DataRepository
                     // Códigos desde las navegaciones
                     CodigoActivo = c.IdActivoPrincipalNavigation.CodigoActivo,      // principal
                     CodigoActivoComponente = c.IdComponenteNavigation.CodigoActivo, // componente
-
+                    NumeroSerie = c.IdComponenteNavigation.NumeroSerie,
                     // ✅ Nombre del producto del componente
                     NombreProducto = c.IdComponenteNavigation.IdProductoNavigation.Nombre
                 })
@@ -249,10 +249,12 @@ namespace Identity.Api.DataRepository
                 {
                     IdActivoPrincipal = g.Key,
                     CodigoActivo = g.First().IdActivoPrincipalNavigation.CodigoActivo,
+                    NumeroSerie = g.First().IdActivoPrincipalNavigation.NumeroSerie,
                     EstadoConfiguracion = g.First().EstadoConfiguracion,
                     FechaInstalacion = g.Max(x => x.FechaInstalacion),
                     // 🔹 Nuevo: nombre del producto del activo principal
-                    NombreProducto = g.First().IdActivoPrincipalNavigation.IdProductoNavigation.Nombre
+                    NombreProducto = g.First().IdActivoPrincipalNavigation.IdProductoNavigation.Nombre,
+
                 });
 
             // 👉 Total registros

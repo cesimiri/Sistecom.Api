@@ -1,5 +1,4 @@
 ﻿using Identity.Api.Interfaces;
-using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,12 +21,44 @@ namespace Identity.Api.Controllers
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("AsignacionesLicenciaInfoAll")]
+
+        [HttpGet("LicenciaInfoAll")]
         public IActionResult GetAll()
         {
-            return Ok(_bodega.AsignacionesLicenciaInfoAll);
+            return Ok(_bodega.GetLicencias);
         }
 
+        // 🔹 Obtener usuario por cédula (nombres y apellidos)
+        [HttpGet("ObtenerUsuarioPorCedula/{cedula}")]
+        public IActionResult GetUsuarioPorCedula(string cedula)
+        {
+            var usuario = _bodega.ObtenerUsuarioPorCedula(cedula);
+            return usuario == null ? NotFound($"No se encontró usuario con cédula {cedula}") : Ok(usuario);
+        }
+
+        // 🔹 Obtener departamentos de usuario por cédula
+        [HttpGet("ObtenerDepartamentosPorCedula/{cedula}")]
+        public IActionResult GetDepartamentosPorCedula(string cedula)
+        {
+            var departamentos = _bodega.ObtenerDepartamentosPorCedula(cedula);
+            return departamentos == null || departamentos.Count == 0
+                ? NotFound($"No se encontraron departamentos para cédula {cedula}")
+                : Ok(departamentos);
+        }
+        //trae todos los servidores
+        [HttpGet("GetServidoresActivos")]
+        public IActionResult GetServidoresActivos()
+        {
+
+            var bodega = _bodega.GetServidoresActivos();
+
+            if (bodega == null)
+            {
+                return NotFound($"No existe servidores no encontrado.");
+            }
+
+            return Ok(bodega);
+        }
 
         [HttpGet("GetAsignacionesLicenciaById/{idAsignacionesLicencia}")]
         public IActionResult GetAsignacionesLicenciaById(int idAsignacionesLicencia)
@@ -83,26 +114,6 @@ namespace Identity.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("DeleteAsignacionesLicencia")]
-        public IActionResult Delete([FromBody] AsignacionesLicencia DelItem)
-        {
-            try
-            {
-                if (DelItem == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Error: Envio de datos");
-                }
-
-                _bodega.DeleteAsignacionesLicencia(DelItem);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Error:" + ex.Message);
-            }
-
-            return NoContent();
-        }
-
         [HttpDelete("DeleteAsignacionesLicenciaById/{IdAsignacionesLicencia}")]
         public IActionResult DeleteAsignacionesLicenciaById(int IdAsignacionesLicencia)
         {
@@ -117,5 +128,21 @@ namespace Identity.Api.Controllers
 
             return NoContent();
         }
+
+        //PAGINADO
+        [HttpGet("GetAsignacionesLicenciaPaginados")]
+        public IActionResult GetAsignacionesLicenciaPaginados(
+            int pagina = 1,
+            int pageSize = 8,
+            string? codigoActivo = null,
+            string? estadoActivo = null)
+        {
+            var resultado = _bodega.GetAsignacioneslicenciaPaginados(
+                pagina, pageSize,
+                codigoActivo, estadoActivo);
+
+            return Ok(resultado);
+        }
+
     }
 }

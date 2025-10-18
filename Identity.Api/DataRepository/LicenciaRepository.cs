@@ -38,7 +38,7 @@ namespace Identity.Api.DataRepository
 
 
                     // campos relacionados:
-                    nombreLicencia = s.IdTipoLicenciaNavigation.Nombre,
+                    nombreTipoLicencia = s.IdTipoLicenciaNavigation.Nombre,
                     nombreProducto = s.IdProductoNavigation.Nombre,
                     numeroFactura = s.IdFacturaCompraNavigation.NumeroFactura
 
@@ -149,14 +149,6 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        //public void DeleteLicencia(Licencia activoToDelete)
-        //{
-        //    using (var context = new InvensisContext())
-        //    {
-        //        context.Licencias.Remove(activoToDelete);
-        //        context.SaveChanges();
-        //    }
-        //}
 
         public void DeleteLicenciaById(int idLicencia)
         {
@@ -352,7 +344,7 @@ namespace Identity.Api.DataRepository
 
 
                     // campos relacionados:
-                    nombreLicencia = s.IdTipoLicenciaNavigation.Nombre,
+                    nombreTipoLicencia = s.IdTipoLicenciaNavigation.Nombre,
                     nombreProducto = s.IdProductoNavigation.Nombre,
                     numeroFactura = s.IdFacturaCompraNavigation.NumeroFactura
                 })
@@ -411,7 +403,7 @@ namespace Identity.Api.DataRepository
 
 
                     // campos relacionados:
-                    nombreLicencia = s.IdTipoLicenciaNavigation.Nombre,
+                    nombreTipoLicencia = s.IdTipoLicenciaNavigation.Nombre,
                     nombreProducto = s.IdProductoNavigation.Nombre,
                     numeroFactura = s.IdFacturaCompraNavigation.NumeroFactura
                 })

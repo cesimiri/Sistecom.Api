@@ -25,6 +25,7 @@
         public string? CodigoActivo { get; set; } // Código del principal
         public string? CodigoActivoComponente { get; set; } // Código del componente
         public string? NombreProducto { get; set; }
+        public string? NumeroSerie { get; set; }
     }
 
     // DTO para insertar varios componentes

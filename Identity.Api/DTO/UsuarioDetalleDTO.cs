@@ -28,6 +28,7 @@ namespace Identity.Api.DTO
         public string? NombreDepartamento { get; set; }
         public string? NombreCedula { get; set; }
 
+        public string? ApellidosNombre { get; set; }
 
     }
 }

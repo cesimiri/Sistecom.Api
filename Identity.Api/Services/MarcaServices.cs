@@ -30,10 +30,7 @@ namespace Identity.Api.Services
             _dataRepository.UpdateMarca(UpdItem);
         }
 
-        //public void DeleteEmpresaCliente(EmpresasCliente DelItem)
-        //{
-        //    _dataRepository.DeleteEmpresaCliente(DelItem);
-        //}
+
 
         public void DeleteMarcaById(int idMarca)
         {
