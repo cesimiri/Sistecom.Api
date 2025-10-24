@@ -63,5 +63,7 @@ namespace Identity.Api.DTO
         public string? NombreUnidadesMedidas { get; set; }
         public string? NombreCategoria { get; set; }
 
+        public int IdCategoria { get; set; }
+
     }
 }

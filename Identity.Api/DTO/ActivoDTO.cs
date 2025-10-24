@@ -50,5 +50,6 @@
         public string? NombreProducto { get; set; }
         public string? NumeroFactura { get; set; }
         public string? NumeroOrden { get; set; }
+        public int IdCategoriaProducto { get; set; }
     }
 }

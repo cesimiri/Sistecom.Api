@@ -15,21 +15,23 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        //Para trawer todos los activos donde sea el nombre del producto servidores o servidor en mayuscula 
+        //Para trawer todos los activos donde el producto sea de idCategoria 8 que es servidores 
         public List<ActivoDTO> GetActivosServidores()
         {
             using var context = new InvensisContext();
 
             var query = context.Activos
-                .Include(a => a.IdProductoNavigation)        // 🔹 relación con Producto
-                .Include(a => a.IdFacturaCompraNavigation)   // 🔹 relación con Factura
-                .Include(a => a.IdOrdenEnsamblajeNavigation) // 🔹 relación con Orden
+                .Include(a => a.IdProductoNavigation)
+                    .ThenInclude(p => p.IdMarcaNavigation)        // 🔹 Relación con Marca
+                .Include(a => a.IdFacturaCompraNavigation)        // 🔹 Relación con Factura
+                .Include(a => a.IdOrdenEnsamblajeNavigation)      // 🔹 Relación con Orden
                 .AsQueryable();
 
-            // 🔍 Filtrar productos cuyo nombre contenga la palabra "SERVIDOR"
+            // 🔍 Filtrar por IdCategoria = 8 (desde la marca del producto)
             query = query.Where(a =>
                 a.IdProductoNavigation != null &&
-                a.IdProductoNavigation.Nombre.ToUpper().Contains("SERVIDOR"));
+                a.IdProductoNavigation.IdMarcaNavigation != null &&
+                a.IdProductoNavigation.IdMarcaNavigation.IdCategoria == 8);
 
             // 🔹 Proyección a DTO
             var lista = query
@@ -65,6 +67,9 @@ namespace Identity.Api.DataRepository
 
                     // 🔹 Relaciones
                     NombreProducto = a.IdProductoNavigation != null ? a.IdProductoNavigation.Nombre : null,
+                    //NombreMarca = a.IdProductoNavigation != null && a.IdProductoNavigation.IdMarcaNavigation != null
+                    //    ? a.IdProductoNavigation.IdMarcaNavigation.Nombre
+                    //    : null,
                     NumeroFactura = a.IdFacturaCompraNavigation != null ? a.IdFacturaCompraNavigation.NumeroFactura : null,
                     NumeroOrden = a.IdOrdenEnsamblajeNavigation != null ? a.IdOrdenEnsamblajeNavigation.NumeroOrden : null
                 })

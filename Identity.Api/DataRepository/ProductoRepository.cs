@@ -97,7 +97,7 @@ namespace Identity.Api.DataRepository
                     CodigoAuxiliar = p.CodigoAuxiliar,
                     Nombre = p.Nombre,
                     Descripcion = p.Descripcion,
-                    //IdCategoria = p.IdModeloNavigation.IdMarcaNavigation.IdCategoria,
+                    IdCategoria = p.IdModeloNavigation.IdMarcaNavigation.IdCategoria,
                     TipoProducto = p.TipoProducto,
                     EsComponente = p.EsComponente,
                     EsEnsamblable = p.EsEnsamblable,
