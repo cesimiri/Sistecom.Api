@@ -3148,22 +3148,6 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.ServiciosServidorController",
-    "Method": "Delete",
-    "RelativePath": "api/ServiciosServidor/DeleteServiciosServidor",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "DelItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.ServiciosServidor",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.ServiciosServidorController",
     "Method": "DeleteServiciosServidorById",
     "RelativePath": "api/ServiciosServidor/DeleteServiciosServidorById/{IdServiciosServidor}",
     "HttpMethod": "DELETE",
@@ -3196,6 +3180,47 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.ServiciosServidorController",
+    "Method": "GetServiciosServidorPaginados",
+    "RelativePath": "api/ServiciosServidor/GetServiciosServidorPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "codigoActivo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estadoActivo",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ServiciosServidorController",
+    "Method": "GetSetvidores",
+    "RelativePath": "api/ServiciosServidor/GetSetvidores",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ServiciosServidorController",
     "Method": "Create",
     "RelativePath": "api/ServiciosServidor/InsertServiciosServidor",
     "HttpMethod": "POST",
@@ -3204,7 +3229,7 @@
     "Parameters": [
       {
         "Name": "NewItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.ServiciosServidor",
+        "Type": "Identity.Api.DTO.ServiciosServidorDTO",
         "IsRequired": true
       }
     ],

@@ -1,5 +1,7 @@
 ﻿using Identity.Api.DataRepository;
+using Identity.Api.DTO;
 using Identity.Api.Interfaces;
+using Identity.Api.Paginado;
 using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Services
@@ -13,12 +15,18 @@ namespace Identity.Api.Services
             get { return _dataRepository.ServiciosServidorInfoAll(); }
         }
 
+        //trae todos los serviodores    
+        public IEnumerable<ServidoreDTO> GetSetvidores
+        {
+            get { return _dataRepository.GetSetvidores(); }
+        }
+
         public ServiciosServidor GetServiciosServidorById(int IdServiciosServidor)
         {
             return _dataRepository.GetServiciosServidorById(IdServiciosServidor);
         }
 
-        public void InsertServiciosServidor(ServiciosServidor New)
+        public void InsertServiciosServidor(ServiciosServidorDTO New)
         {
             _dataRepository.InsertServiciosServidor(New);
         }
@@ -28,14 +36,22 @@ namespace Identity.Api.Services
             _dataRepository.UpdateServiciosServidor(UpdItem);
         }
 
-        public void DeleteServiciosServidor(ServiciosServidor DelItem)
-        {
-            _dataRepository.DeleteServiciosServidor(DelItem);
-        }
-
         public void DeleteServiciosServidorById(int IdServiciosServidor)
         {
             _dataRepository.DeleteServiciosServidorById(IdServiciosServidor);
+        }
+
+        //paginado
+        public PagedResult<ServiciosServidorDTO> GetServiciosServidorPaginados(
+        int pagina,
+            int pageSize,
+            string? filtro = null,
+            string? estadoActivo = null)
+        {
+            return _dataRepository.GetServiciosServidorPaginados(
+                pagina, pageSize,
+                filtro, estadoActivo
+            );
         }
     }
 }

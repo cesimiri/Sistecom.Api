@@ -1,5 +1,5 @@
-﻿using Identity.Api.Interfaces;
-using Identity.Api.Services;
+﻿using Identity.Api.DTO;
+using Identity.Api.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +29,12 @@ namespace Identity.Api.Controllers
             return Ok(_bodega.ServiciosServidorInfoAll);
         }
 
+        //trae todo los servidores por Activo
+        [HttpGet("GetSetvidores")]
+        public IActionResult GetSetvidores()
+        {
+            return Ok(_bodega.GetSetvidores);
+        }
 
         [HttpGet("GetServiciosServidorById/{idServiciosServidor}")]
         public IActionResult GetServiciosServidorById(int idServiciosServidor)
@@ -45,7 +51,7 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPost("InsertServiciosServidor")]
-        public IActionResult Create([FromBody] ServiciosServidor NewItem)
+        public IActionResult Create([FromBody] ServiciosServidorDTO NewItem)
         {
             try
             {
@@ -84,25 +90,7 @@ namespace Identity.Api.Controllers
             return NoContent();
         }
 
-        [HttpDelete("DeleteServiciosServidor")]
-        public IActionResult Delete([FromBody] ServiciosServidor DelItem)
-        {
-            try
-            {
-                if (DelItem == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Error: Envio de datos");
-                }
 
-                _bodega.DeleteServiciosServidor(DelItem);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Error:" + ex.Message);
-            }
-
-            return NoContent();
-        }
 
         [HttpDelete("DeleteServiciosServidorById/{IdServiciosServidor}")]
         public IActionResult DeleteServiciosServidorById(int IdServiciosServidor)
@@ -118,5 +106,27 @@ namespace Identity.Api.Controllers
 
             return NoContent();
         }
+
+        //paginado
+        [HttpGet("GetServiciosServidorPaginados")]
+        public IActionResult GetServiciosServidorPaginados(
+        int pagina = 1,
+        int pageSize = 8,
+        string? codigoActivo = null,
+        string? estadoActivo = null)
+        {
+            try
+            {
+                var resultado = _bodega.GetServiciosServidorPaginados(
+                    pagina, pageSize, codigoActivo, estadoActivo);
+
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Error interno: {ex.Message}" });
+            }
+        }
+
     }
 }
