@@ -69,24 +69,23 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPut("UpdateFacturasCompra")]
-        public IActionResult Update([FromBody] FacturasCompraDTO UpdItem)
+        public async Task<IActionResult> Update([FromBody] FacturasCompraDTO UpdItem)
         {
             try
             {
                 if (UpdItem == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Error: Envio de datos");
-                }
+                    return BadRequest(new { mensaje = "Error: Datos enviados inválidos" });
 
-                _facturasCompra.UpdateFacturasCompra(UpdItem);
+                await _facturasCompra.UpdateFacturasCompra(UpdItem);
+
+                return Ok(new { mensaje = "Factura actualizada correctamente" });
             }
             catch (Exception ex)
             {
-                return BadRequest("Error:" + ex.Message);
+                return BadRequest(new { mensaje = "Error al actualizar factura: " + ex.Message });
             }
-
-            return NoContent();
         }
+
 
 
         [HttpDelete("DeleteFacturasCompraById/{IdFacturasCompra}")]

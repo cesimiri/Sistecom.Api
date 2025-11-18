@@ -93,9 +93,6 @@ namespace Identity.Api.DataRepository
                     Observaciones = s.Observaciones,
 
                     // campos relacionados:
-
-
-
                 })
                 .ToList();
         }
@@ -116,9 +113,6 @@ namespace Identity.Api.DataRepository
                 {
                     throw new Exception("Esa categoria no existe en la base de datos.");
                 }
-
-
-
                 var nueva = new DetalleSolicitud
                 {
 
@@ -142,38 +136,6 @@ namespace Identity.Api.DataRepository
                 throw new Exception("Error al insertar el detalle de solicitud: " + mensajeError, ex);
             }
         }
-
-        //INSERCION MASIVA
-        //public void InsertarDetallesMasivos(List<DetalleSolicitudDTO> lista)
-        //{
-        //    using var context = new InvensisContext();
-
-        //    foreach (var item in lista)
-        //    {
-        //        var idSolicitud = context.SolicitudesCompras.Find(item.IdSolicitud);
-        //        var idproducto = context.Productos.Find(item.IdProducto);
-
-        //        if (idSolicitud == null || idproducto == null)
-        //        {
-        //            throw new Exception("Error: Solicitud o Producto no válido.");
-        //        }
-
-        //        var nuevo = new DetalleSolicitud
-        //        {
-        //            IdSolicitud = item.IdSolicitud,
-        //            IdProducto = item.IdProducto,
-        //            Cantidad = item.Cantidad,
-        //            PrecioUnitario = item.PrecioUnitario,
-        //            Descuento = item.Descuento,
-        //            Subtotal = item.Subtotal,
-        //            Observaciones = item.Observaciones
-        //        };
-
-        //        context.DetalleSolicituds.Add(nuevo);
-        //    }
-
-        //    context.SaveChanges();
-        //}
 
         public void InsertarDetallesMasivos(List<DetalleSolicitudDTO> lista)
         {

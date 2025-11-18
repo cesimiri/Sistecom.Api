@@ -1,10 +1,9 @@
-﻿using Identity.Api.Interfaces;
-using Identity.Api.Services;
+﻿using Identity.Api.DTO;
+using Identity.Api.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Modelo.Sistecom.Modelo.Database;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Identity.Api.Controllers
 {
@@ -13,20 +12,44 @@ namespace Identity.Api.Controllers
     [ApiController]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 
-    public class OrdenesEntegaController : Controller
+    public class OrdenesEntregaController : Controller
     {
         private readonly IOrdenesEntrega _empresaCliente;
 
-        public OrdenesEntegaController(IOrdenesEntrega iOrdenesEntrega)
+        public OrdenesEntregaController(IOrdenesEntrega iOrdenesEntrega)
         {
             _empresaCliente = iOrdenesEntrega;
         }
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("OrdenesEntregaInfoAll")]
-        public IActionResult GetAll()
+
+        //traer todas las solicitudes de compra APROBADAS que no esten registradas aqui en ordenes de Entrega
+        [HttpGet("GetSolicitudesAprobadasSinOrden")]
+        public IActionResult GetById()
         {
-            return Ok(_empresaCliente.OrdenesEntregaInfoAll);
+            var detalles = _empresaCliente.GetSolicitudesAprobadasSinOrden();
+
+            if (detalles == null || !detalles.Any())
+            {
+                return NotFound($"No se encontraron Solicitudes");
+            }
+
+            return Ok(detalles);
+        }
+
+
+        //obtener un usuario por su id que traiga depoaprtamentos y nombre de departamento
+        [HttpGet("GetUsuarioDetalleById/{cedula}")]
+        public IActionResult GetById(string cedula)
+        {
+            var detalles = _empresaCliente.GetUsuarioDetalleById(cedula);
+
+            if (detalles == null || !detalles.Any())
+            {
+                return NotFound($"No se encontraron asignaciones para la cédula {cedula}");
+            }
+
+            return Ok(detalles);
         }
 
 
@@ -45,24 +68,40 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPost("InsertOrdenesEntrega")]
-        public IActionResult Create([FromBody] OrdenesEntrega NewItem)
+        public IActionResult Create([FromBody] OrdenesEntregaDTO newItem)
         {
             try
             {
-                if (NewItem == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Error: Envio de datos");
-                }
+                // 🔹 Validar que el objeto venga en el cuerpo de la petición
+                if (newItem == null)
+                    return BadRequest("Error: No se recibieron datos en la solicitud.");
 
-                _empresaCliente.InsertOrdenesEntrega(NewItem);
+                // 🔹 Validar el modelo (por si usas data annotations)
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                // 🔹 Llamar al servicio o repositorio
+                _empresaCliente.InsertOrdenesEntrega(newItem);
+
+                // 🔹 Retornar 201 Created con el objeto creado
+                return CreatedAtAction(nameof(Create), new { id = newItem.IdOrden }, newItem);
+            }
+            catch (ArgumentException ex)
+            {
+                // 🔹 Errores de validación de negocio (como los del método InsertOrdenesEntrega)
+                return BadRequest(new { message = ex.Message });
             }
             catch (Exception ex)
             {
-                return BadRequest("Error:" + ex.Message);
+                return StatusCode(500, new
+                {
+                    message = "Error interno del servidor",
+                    detalle = ex.InnerException?.Message ?? ex.Message
+                });
             }
 
-            return Ok(NewItem);
         }
+
 
         [HttpPut("UpdateOrdenesEntrega")]
         public IActionResult Update([FromBody] OrdenesEntrega UpdItem)
@@ -75,26 +114,6 @@ namespace Identity.Api.Controllers
                 }
 
                 _empresaCliente.UpdateOrdenesEntrega(UpdItem);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("Error:" + ex.Message);
-            }
-
-            return NoContent();
-        }
-
-        [HttpDelete("DeleteOrdenesEntrega")]
-        public IActionResult Delete([FromBody] OrdenesEntrega DelItem)
-        {
-            try
-            {
-                if (DelItem == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Error: Envio de datos");
-                }
-
-                _empresaCliente.DeleteOrdenesEntrega(DelItem);
             }
             catch (Exception ex)
             {
@@ -117,6 +136,23 @@ namespace Identity.Api.Controllers
             }
 
             return NoContent();
+        }
+
+
+
+        //PAGINADO
+        [HttpGet("GetOrdenesEntregaPaginadas")]
+        public IActionResult GetOrdenesEntregaPaginadas(
+            int pagina = 1,
+            int pageSize = 8,
+            string? codigoActivo = null,
+            string? estadoActivo = null)
+        {
+            var resultado = _empresaCliente.GetOrdenesEntregaPaginadas(
+                pagina, pageSize,
+                codigoActivo, estadoActivo);
+
+            return Ok(resultado);
         }
     }
 }

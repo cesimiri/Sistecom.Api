@@ -1,14 +1,29 @@
-﻿using Modelo.Sistecom.Modelo.Database;
+﻿using Identity.Api.DTO;
+using Identity.Api.Paginado;
+using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Interfaces
 {
     public interface IOrdenesEntrega
     {
-        IEnumerable<OrdenesEntrega> OrdenesEntregaInfoAll { get; }
+        //traer todas las solicitudes de compra que no esten registradas aqui en ordenes de Entrega
+        List<SolicitudesCompraDTO> GetSolicitudesAprobadasSinOrden();
+
+        // traer los usuarios que tengan por su departamentos
+        List<UsuarioDetalleDTO> GetUsuarioDetalleById(string cedula);
+
         OrdenesEntrega GetOrdenesEntregaById(int IdOrdenesEntrega);
-        void InsertOrdenesEntrega(OrdenesEntrega New);
+        void InsertOrdenesEntrega(OrdenesEntregaDTO New);
         void UpdateOrdenesEntrega(OrdenesEntrega UpdItem);
-        void DeleteOrdenesEntrega(OrdenesEntrega DelItem);
+
         void DeleteOrdenesEntregaById(int IdOrdenesEntrega);
+
+        //paginado
+        PagedResult<OrdenesEntregaDTO> GetOrdenesEntregaPaginadas(
+       int pagina,
+            int pageSize,
+            string? filtro = null,
+            string? estadoActivo = null
+        );
     }
 }

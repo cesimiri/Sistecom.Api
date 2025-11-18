@@ -1,6 +1,4 @@
 ﻿using Identity.Api.DTO;
-using Modelo.Sistecom.Modelo.Database;
-using System.Collections.Generic;
 
 namespace Identity.Api.Interfaces
 {

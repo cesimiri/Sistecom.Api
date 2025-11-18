@@ -5,6 +5,7 @@ using Identity.Api.Reporteria;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using QuestPDF.Infrastructure;
 
 namespace Identity.Api.Controllers
@@ -79,44 +80,36 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPut("UpdateProducto")]
-        public IActionResult Update([FromBody] ProductoDTO UpdItem)
+        public IActionResult Update([FromBody] ProductoDTO updItem)
         {
+            if (updItem == null)
+                return BadRequest("El cuerpo de la solicitud está vacío.");
+
+            if (!ModelState.IsValid)
+                return BadRequest("El modelo de datos no es válido.");
+
             try
             {
-                if (UpdItem == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Error: Envio de datos");
-                }
-
-                _empresaCliente.UpdateProducto(UpdItem);
+                _empresaCliente.UpdateProducto(updItem);
+                return Ok(new { message = "Producto actualizado correctamente." });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (DbUpdateException ex)
+            {
+                // Capturamos el mensaje del inner exception para más detalle
+                var detalleError = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return StatusCode(500, $"Error al actualizar el producto en la base de datos: {detalleError}");
             }
             catch (Exception ex)
             {
-                return BadRequest("Error:" + ex.Message);
+                return StatusCode(500, $"Error inesperado: {ex.Message}");
             }
-
-            return NoContent();
         }
 
-        //[HttpDelete("DeleteProducto")]
-        //public IActionResult Delete([FromBody] Producto DelItem)
-        //{
-        //    try
-        //    {
-        //        if (DelItem == null || !ModelState.IsValid)
-        //        {
-        //            return BadRequest("Error: Envio de datos");
-        //        }
 
-        //        _empresaCliente.DeleteProducto(DelItem);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest("Error:" + ex.Message);
-        //    }
-
-        //    return NoContent();
-        //}
 
         [HttpDelete("DeleteProductoById/{IdProducto}")]
         public IActionResult DeleteById(int IdProducto)

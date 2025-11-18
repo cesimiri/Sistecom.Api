@@ -1,4 +1,5 @@
-﻿using Modelo.Sistecom.Modelo.Database;
+﻿using Identity.Api.DTO;
+using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.DataRepository
 {
@@ -70,6 +71,27 @@ namespace Identity.Api.DataRepository
                     context.SaveChanges();
                 }
             }
+        }
+
+        //nos trae toda las lineas por el número de solicitud 
+        public IEnumerable<DetalleSolicitudDTO> GetDetallesBySolicitudId(int idSolicitud)
+        {
+            using var context = new InvensisContext();
+
+            return context.DetalleSolicituds
+                .Where(s => s.IdSolicitud == idSolicitud)
+                .Select(s => new DetalleSolicitudDTO
+                {
+                    IdDetalle = s.IdDetalle,
+                    IdSolicitud = s.IdSolicitud,
+                    IdProducto = s.IdProducto,
+                    Cantidad = s.Cantidad,
+                    PrecioUnitario = s.PrecioUnitario,
+                    Descuento = s.Descuento,
+                    Subtotal = s.Subtotal,
+                    Observaciones = s.Observaciones
+                })
+                .ToList();
         }
     }
 }

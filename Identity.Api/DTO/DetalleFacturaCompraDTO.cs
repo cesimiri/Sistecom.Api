@@ -23,5 +23,8 @@
         //relacion 
         public string? NombreProducto { get; set; }
 
+        //para el iva 
+        public decimal PorcentajeIva { get; set; }
+
     }
 }

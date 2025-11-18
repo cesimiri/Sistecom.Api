@@ -217,7 +217,7 @@ namespace Identity.Api.DataRepository
                     existente.Nombre = updItem.Nombre?.ToUpper();
                     existente.Descripcion = updItem.Descripcion?.ToUpper();
                     //existente.IdCategoria = updItem.IdCategoria;
-                    existente.TipoProducto = updItem.TipoProducto;
+                    //existente.TipoProducto = updItem.TipoProducto;
                     existente.EsComponente = updItem.EsComponente;
                     existente.EsEnsamblable = updItem.EsEnsamblable;
                     existente.RequiereSerial = updItem.RequiereSerial;

@@ -1294,16 +1294,6 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.DetalleOrdenEntregaController",
-    "Method": "GetAll",
-    "RelativePath": "api/DetalleOrdenEntrega/DetalleOrdenEntregaInfoAll",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.DetalleOrdenEntregaController",
     "Method": "GetDetalleOrdenEntregaById",
     "RelativePath": "api/DetalleOrdenEntrega/GetDetalleOrdenEntregaById/{idDetalleOrdenEntrega}",
     "HttpMethod": "GET",
@@ -1317,6 +1307,32 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.DetalleOrdenEntregaController",
+    "Method": "GetDetallesBySolicitudId",
+    "RelativePath": "api/DetalleOrdenEntrega/GetDetallesBySolicitudId/{idSolicitud}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idSolicitud",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Identity.Api.DTO.DetalleSolicitudDTO, Identity.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "Identity.Api.Controllers.DetalleOrdenEntregaController",
@@ -2789,25 +2805,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Identity.Api.Controllers.OrdenesEntegaController",
-    "Method": "Delete",
-    "RelativePath": "api/OrdenesEntega/DeleteOrdenesEntrega",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "DelItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.OrdenesEntrega",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.OrdenesEntegaController",
+    "ContainingType": "Identity.Api.Controllers.OrdenesEntregaController",
     "Method": "DeleteById",
-    "RelativePath": "api/OrdenesEntega/DeleteOrdenesEntregaById/{IdOrdenesEntega}",
+    "RelativePath": "api/OrdenesEntrega/DeleteOrdenesEntregaById/{IdOrdenesEntega}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
@@ -2821,9 +2821,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Identity.Api.Controllers.OrdenesEntegaController",
+    "ContainingType": "Identity.Api.Controllers.OrdenesEntregaController",
     "Method": "GetOrdenesEntregaById",
-    "RelativePath": "api/OrdenesEntega/GetOrdenesEntregaById/{IdOrdenesEntrega}",
+    "RelativePath": "api/OrdenesEntrega/GetOrdenesEntregaById/{IdOrdenesEntrega}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -2837,25 +2837,40 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Identity.Api.Controllers.OrdenesEntegaController",
-    "Method": "Create",
-    "RelativePath": "api/OrdenesEntega/InsertOrdenesEntrega",
-    "HttpMethod": "POST",
+    "ContainingType": "Identity.Api.Controllers.OrdenesEntregaController",
+    "Method": "GetOrdenesEntregaPaginadas",
+    "RelativePath": "api/OrdenesEntrega/GetOrdenesEntregaPaginadas",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "NewItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.OrdenesEntrega",
-        "IsRequired": true
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "codigoActivo",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estadoActivo",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Identity.Api.Controllers.OrdenesEntegaController",
-    "Method": "GetAll",
-    "RelativePath": "api/OrdenesEntega/OrdenesEntregaInfoAll",
+    "ContainingType": "Identity.Api.Controllers.OrdenesEntregaController",
+    "Method": "GetById",
+    "RelativePath": "api/OrdenesEntrega/GetSolicitudesAprobadasSinOrden",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -2863,9 +2878,41 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Identity.Api.Controllers.OrdenesEntegaController",
+    "ContainingType": "Identity.Api.Controllers.OrdenesEntregaController",
+    "Method": "GetById",
+    "RelativePath": "api/OrdenesEntrega/GetUsuarioDetalleById/{cedula}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "cedula",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.OrdenesEntregaController",
+    "Method": "Create",
+    "RelativePath": "api/OrdenesEntrega/InsertOrdenesEntrega",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newItem",
+        "Type": "Identity.Api.DTO.OrdenesEntregaDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.OrdenesEntregaController",
     "Method": "Update",
-    "RelativePath": "api/OrdenesEntega/UpdateOrdenesEntrega",
+    "RelativePath": "api/OrdenesEntrega/UpdateOrdenesEntrega",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -3018,7 +3065,7 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "UpdItem",
+        "Name": "updItem",
         "Type": "Identity.Api.DTO.ProductoDTO",
         "IsRequired": true
       }

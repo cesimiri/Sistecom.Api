@@ -1,10 +1,8 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
-using Identity.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Controllers
 {
@@ -112,25 +110,6 @@ namespace Identity.Api.Controllers
             return NoContent();
         }
 
-        //[HttpDelete("DeleteDetalleSolicitud")]
-        //public IActionResult Delete([FromBody] DetalleSolicitud delItem)
-        //{
-        //    try
-        //    {
-        //        if (delItem == null || !ModelState.IsValid)
-        //        {
-        //            return BadRequest("Error: Envío de datos inválido");
-        //        }
-
-        //        _detalleSolicitud.DeleteDetalleSolicitud(delItem);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest("Error:" + ex.Message);
-        //    }
-
-        //    return NoContent();
-        //}
 
         [HttpDelete("DeleteDetalleSolicitudById/{idDetalle}")]
         public IActionResult DeleteById(int idDetalle)

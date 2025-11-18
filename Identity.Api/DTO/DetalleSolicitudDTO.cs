@@ -27,11 +27,12 @@ namespace Identity.Api.DTO
 
         //relaciones
 
-
-
         public string? NumeroSolicitud { get; set; }
 
         public string? CodigoPrincipalsolicitud { get; set; }
+
+        public string? NombreProducto { get; set; }
+
 
     }
 }

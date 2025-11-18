@@ -1,5 +1,5 @@
-﻿using Identity.Api.Interfaces;
-using Identity.Api.Services;
+﻿using Identity.Api.DTO;
+using Identity.Api.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,12 +21,7 @@ namespace Identity.Api.Controllers
             _bodega = iDetalleOrdenEntrega;
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [HttpGet("DetalleOrdenEntregaInfoAll")]
-        public IActionResult GetAll()
-        {
-            return Ok(_bodega.DetalleOrdenEntregaInfoAll);
-        }
+
 
 
         [HttpGet("GetDetalleOrdenEntregaById/{idDetalleOrdenEntrega}")]
@@ -116,6 +111,26 @@ namespace Identity.Api.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpGet("GetDetallesBySolicitudId/{idSolicitud}")]
+        public ActionResult<IEnumerable<DetalleSolicitudDTO>> GetDetallesBySolicitudId(int idSolicitud)
+        {
+            try
+            {
+                var detalles = _bodega.GetDetallesBySolicitudId(idSolicitud);
+
+                if (detalles == null || !detalles.Any())
+                {
+                    return NotFound("No se encontraron detalles para la solicitud.");
+                }
+
+                return Ok(detalles);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Error al obtener los detalles: " + ex.Message);
+            }
         }
     }
 }
