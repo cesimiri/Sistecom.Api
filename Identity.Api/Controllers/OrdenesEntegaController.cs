@@ -3,7 +3,6 @@ using Identity.Api.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Controllers
 {
@@ -72,23 +71,23 @@ namespace Identity.Api.Controllers
         {
             try
             {
-                // 🔹 Validar que el objeto venga en el cuerpo de la petición
                 if (newItem == null)
                     return BadRequest("Error: No se recibieron datos en la solicitud.");
 
-                // 🔹 Validar el modelo (por si usas data annotations)
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                // 🔹 Llamar al servicio o repositorio
                 _empresaCliente.InsertOrdenesEntrega(newItem);
 
-                // 🔹 Retornar 201 Created con el objeto creado
-                return CreatedAtAction(nameof(Create), new { id = newItem.IdOrden }, newItem);
+                // 👇 Aquí devolvemos SOLO el IdOrden
+                return Ok(new
+                {
+                    message = "Orden creada correctamente",
+                    idOrden = newItem.IdOrden
+                });
             }
             catch (ArgumentException ex)
             {
-                // 🔹 Errores de validación de negocio (como los del método InsertOrdenesEntrega)
                 return BadRequest(new { message = ex.Message });
             }
             catch (Exception ex)
@@ -99,12 +98,12 @@ namespace Identity.Api.Controllers
                     detalle = ex.InnerException?.Message ?? ex.Message
                 });
             }
-
         }
 
 
+
         [HttpPut("UpdateOrdenesEntrega")]
-        public IActionResult Update([FromBody] OrdenesEntrega UpdItem)
+        public IActionResult Update([FromBody] OrdenesEntregaDTO UpdItem)
         {
             try
             {

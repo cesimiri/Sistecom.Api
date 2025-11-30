@@ -17,5 +17,10 @@
         public int? IdLicencia { get; set; }
 
         public string? Observaciones { get; set; }
+
+        //relacion
+        public string? NombreProducto { get; set; }
+
+
     }
 }

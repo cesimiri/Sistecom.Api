@@ -3,40 +3,44 @@
   "WorkspaceRootPath": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\dto\\facturascompradto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\dto\\facturascompradto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\datarepository\\ordenesentregarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\datarepository\\ordenesentregarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\datarepository\\detallefacturacompradatarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\datarepository\\detallefacturacompradatarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\controllers\\ordenesentegacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\controllers\\ordenesentegacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\controllers\\detalleordenentregacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\controllers\\detalleordenentregacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\services\\ordenesentregaservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\services\\ordenesentregaservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\controllers\\detallesolicitudcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\controllers\\detallesolicitudcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\datarepository\\detalleordenentregarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\datarepository\\detalleordenentregarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\datarepository\\detallesolicituddatarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\datarepository\\detallesolicituddatarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\services\\detalleordenentregaservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\services\\detalleordenentregaservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\interfaces\\iordenesentrega.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\interfaces\\iordenesentrega.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\interfaces\\idetalleordenentrega.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\interfaces\\idetalleordenentrega.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\services\\detallesolicitudservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\services\\detallesolicitudservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\datarepository\\detallesolicituddatarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\datarepository\\detallesolicituddatarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\datarepository\\detalleordenentregarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\datarepository\\detalleordenentregarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\controllers\\detalleordenentregacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\controllers\\detalleordenentregacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\dto\\detalleordenentregadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\dto\\detalleordenentregadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\services\\detalleordenentregaservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|solutionrelative:identity.api\\services\\detalleordenentregaservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F34BEABE-445E-4822-9FF4-C3D034E3D603}|Identity.Api\\Identity.Api.csproj|c:\\cmiranda\\sistecom\\sistecom.api\\identity.api\\interfaces\\idetallesolicitud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -54,17 +58,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Program.cs",
               "RelativeDocumentMoniker": "Identity.Api\\Program.cs",
               "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Program.cs",
               "RelativeToolTip": "Identity.Api\\Program.cs",
-              "ViewState": "AgIAAM8AAAAAAAAAAAAIwN8AAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAJ0AAAAAAAAAAAAswLcAAABQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-27T14:47:21.994Z",
               "IsPinned": true,
@@ -72,54 +76,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "FacturasCompraDTO.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DTO\\FacturasCompraDTO.cs",
-              "RelativeDocumentMoniker": "Identity.Api\\DTO\\FacturasCompraDTO.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DTO\\FacturasCompraDTO.cs",
-              "RelativeToolTip": "Identity.Api\\DTO\\FacturasCompraDTO.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAywB8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-18T11:42:38.626Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "DetalleFacturaCompraDataRepository.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\DetalleFacturaCompraDataRepository.cs",
-              "RelativeDocumentMoniker": "Identity.Api\\DataRepository\\DetalleFacturaCompraDataRepository.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\DetalleFacturaCompraDataRepository.cs",
-              "RelativeToolTip": "Identity.Api\\DataRepository\\DetalleFacturaCompraDataRepository.cs",
-              "ViewState": "AgIAAHsAAAAAAAAAAAAAAIkAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-18T10:07:38.328Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "DetalleSolicitudService.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\DetalleSolicitudService.cs",
-              "RelativeDocumentMoniker": "Identity.Api\\Services\\DetalleSolicitudService.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\DetalleSolicitudService.cs",
-              "RelativeToolTip": "Identity.Api\\Services\\DetalleSolicitudService.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAcwDcAAAAJAAAAAAAAAA==",
+              "Title": "DetalleOrdenEntregaDTO.cs",
+              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DTO\\DetalleOrdenEntregaDTO.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\DTO\\DetalleOrdenEntregaDTO.cs",
+              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DTO\\DetalleOrdenEntregaDTO.cs",
+              "RelativeToolTip": "Identity.Api\\DTO\\DetalleOrdenEntregaDTO.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAA1wBIAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-14T17:51:29.584Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DetalleSolicitudController.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\DetalleSolicitudController.cs",
-              "RelativeDocumentMoniker": "Identity.Api\\Controllers\\DetalleSolicitudController.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\DetalleSolicitudController.cs",
-              "RelativeToolTip": "Identity.Api\\Controllers\\DetalleSolicitudController.cs",
-              "ViewState": "AgIAAIMAAAAAAAAAAAAYwJIAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-14T13:14:00.908Z",
+              "WhenOpened": "2025-11-28T10:26:20.1Z",
               "EditorCaption": ""
             },
             {
@@ -130,72 +95,124 @@
               "RelativeDocumentMoniker": "Identity.Api\\DataRepository\\DetalleSolicitudDataRepository.cs",
               "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\DetalleSolicitudDataRepository.cs",
               "RelativeToolTip": "Identity.Api\\DataRepository\\DetalleSolicitudDataRepository.cs",
-              "ViewState": "AgIAAPgAAAAAAAAAAAAuwAoBAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAACQAAAAAAAAAAAA5wDgAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-14T13:07:40.992Z",
+              "WhenOpened": "2025-11-26T15:56:39.711Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "DetalleOrdenEntregaServices.cs",
-              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\DetalleOrdenEntregaServices.cs",
-              "RelativeDocumentMoniker": "Identity.Api\\Services\\DetalleOrdenEntregaServices.cs",
-              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\DetalleOrdenEntregaServices.cs",
-              "RelativeToolTip": "Identity.Api\\Services\\DetalleOrdenEntregaServices.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAIwCoAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "OrdenesEntregaServices.cs",
+              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\OrdenesEntregaServices.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Services\\OrdenesEntregaServices.cs",
+              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\OrdenesEntregaServices.cs",
+              "RelativeToolTip": "Identity.Api\\Services\\OrdenesEntregaServices.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAwwCMAAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-14T13:21:22.091Z",
+              "WhenOpened": "2025-11-24T12:35:12.486Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 3,
+              "Title": "IOrdenesEntrega.cs",
+              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\IOrdenesEntrega.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Interfaces\\IOrdenesEntrega.cs",
+              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\IOrdenesEntrega.cs",
+              "RelativeToolTip": "Identity.Api\\Interfaces\\IOrdenesEntrega.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABAAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T12:34:42.894Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "OrdenesEntegaController.cs",
+              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\OrdenesEntegaController.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Controllers\\OrdenesEntegaController.cs",
+              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\OrdenesEntegaController.cs",
+              "RelativeToolTip": "Identity.Api\\Controllers\\OrdenesEntegaController.cs",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAcwGkAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T12:33:03.406Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "OrdenesEntregaRepository.cs",
+              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\OrdenesEntregaRepository.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\DataRepository\\OrdenesEntregaRepository.cs",
+              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\OrdenesEntregaRepository.cs",
+              "RelativeToolTip": "Identity.Api\\DataRepository\\OrdenesEntregaRepository.cs",
+              "ViewState": "AgIAALAAAAAAAAAAAAAIwLsAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T12:15:52.808Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "IDetalleSolicitud.cs",
               "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\IDetalleSolicitud.cs",
               "RelativeDocumentMoniker": "Identity.Api\\Interfaces\\IDetalleSolicitud.cs",
               "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\IDetalleSolicitud.cs",
               "RelativeToolTip": "Identity.Api\\Interfaces\\IDetalleSolicitud.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAgwBIAAABTAAAAAAAAAA==",
+              "ViewState": "AgIAAAcAAAAAAAAAAAA1wBIAAABTAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-14T13:18:16.083Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
+              "Title": "DetalleOrdenEntregaServices.cs",
+              "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\DetalleOrdenEntregaServices.cs",
+              "RelativeDocumentMoniker": "Identity.Api\\Services\\DetalleOrdenEntregaServices.cs",
+              "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Services\\DetalleOrdenEntregaServices.cs",
+              "RelativeToolTip": "Identity.Api\\Services\\DetalleOrdenEntregaServices.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAowCEAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-14T13:21:22.091Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "DetalleOrdenEntregaRepository.cs",
               "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\DetalleOrdenEntregaRepository.cs",
               "RelativeDocumentMoniker": "Identity.Api\\DataRepository\\DetalleOrdenEntregaRepository.cs",
               "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\DataRepository\\DetalleOrdenEntregaRepository.cs",
               "RelativeToolTip": "Identity.Api\\DataRepository\\DetalleOrdenEntregaRepository.cs",
-              "ViewState": "AgIAAEcAAAAAAAAAAAAqwFYAAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAADgAAAAAAAAAAAAowD0AAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-14T12:49:51.434Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "DetalleOrdenEntregaController.cs",
               "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\DetalleOrdenEntregaController.cs",
               "RelativeDocumentMoniker": "Identity.Api\\Controllers\\DetalleOrdenEntregaController.cs",
               "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Controllers\\DetalleOrdenEntregaController.cs",
               "RelativeToolTip": "Identity.Api\\Controllers\\DetalleOrdenEntregaController.cs",
-              "ViewState": "AgIAAHAAAAAAAAAAAAAAAH8AAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAADgAAAAAAAAAAAAwwDMAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-14T13:58:37.753Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 4,
               "Title": "IDetalleOrdenEntrega.cs",
               "DocumentMoniker": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\IDetalleOrdenEntrega.cs",
               "RelativeDocumentMoniker": "Identity.Api\\Interfaces\\IDetalleOrdenEntrega.cs",
               "ToolTip": "C:\\CMIRANDA\\Sistecom\\Sistecom.Api\\Identity.Api\\Interfaces\\IDetalleOrdenEntrega.cs",
               "RelativeToolTip": "Identity.Api\\Interfaces\\IDetalleOrdenEntrega.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABSAAAAAAAAAA==",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAAABAAAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-14T13:58:11.828Z",
               "EditorCaption": ""

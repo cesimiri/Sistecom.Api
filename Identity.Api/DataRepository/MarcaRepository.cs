@@ -91,7 +91,7 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        public void UpdateMarca(Marca UpdItem)
+        public void UpdateMarca(MarcaDTO UpdItem)
         {
             using (var context = new InvensisContext())
             {

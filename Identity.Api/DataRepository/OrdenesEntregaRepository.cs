@@ -98,15 +98,17 @@ namespace Identity.Api.DataRepository
         }
 
 
-        public void InsertOrdenesEntrega(OrdenesEntregaDTO newItem)
+        public int InsertOrdenesEntrega(OrdenesEntregaDTO newItem)
         {
             using var context = new InvensisContext();
 
             try
             {
+                // VALIDACIÓN DE ID SOLICITUD
                 if (newItem.IdSolicitud <= 0)
                     throw new ArgumentException("El campo IdSolicitud es obligatorio y debe ser mayor que cero.");
 
+                // VALIDAR ESTADO
                 var estadosPermitidos = new[] { "PENDIENTE", "EN_RUTA", "ENTREGADA", "RECHAZADA", "REPROGRAMADA" };
                 if (string.IsNullOrWhiteSpace(newItem.Estado) ||
                     !estadosPermitidos.Contains(newItem.Estado.ToUpper()))
@@ -114,22 +116,31 @@ namespace Identity.Api.DataRepository
                     throw new ArgumentException("El estado debe ser uno de los siguientes: PENDIENTE, EN_RUTA, ENTREGADA, RECHAZADA o REPROGRAMADA.");
                 }
 
+                // 🔥 GENERACIÓN DEL NUMERO DE ORDEN (LÓGICA DEL TRIGGER)
+                var añoActual = DateTime.Now.Year.ToString();
+
+                // Buscar última orden con formato ENT-YYYY-nnnnnn
                 var ultimaOrden = context.OrdenesEntregas
-                    .OrderByDescending(o => o.IdOrden)
+                    .Where(o => o.NumeroOrden.StartsWith($"ENT-{añoActual}-"))
+                    .OrderByDescending(o => o.NumeroOrden)
                     .Select(o => o.NumeroOrden)
                     .FirstOrDefault();
 
-                int nuevoNumero = 1;
-                if (!string.IsNullOrEmpty(ultimaOrden) && ultimaOrden.StartsWith("NO#"))
+                int secuencia = 1;
+
+                if (!string.IsNullOrEmpty(ultimaOrden))
                 {
-                    var numeroStr = ultimaOrden.Replace("NO#", "");
-                    if (int.TryParse(numeroStr, out int numeroActual))
-                        nuevoNumero = numeroActual + 1;
+                    var partes = ultimaOrden.Split('-'); // ENT / 2025 / 000001
+                    if (partes.Length == 3 && int.TryParse(partes[2], out int num))
+                    {
+                        secuencia = num + 1;
+                    }
                 }
 
-                var nuevoNumeroOrden = $"NO#{nuevoNumero:D4}";
+                string nuevoNumeroOrden = $"ENT-{añoActual}-{secuencia:D6}";
                 newItem.NumeroOrden = nuevoNumeroOrden;
 
+                // MAPEAR ENTIDAD
                 var entity = new OrdenesEntrega
                 {
                     NumeroOrden = newItem.NumeroOrden,
@@ -152,18 +163,18 @@ namespace Identity.Api.DataRepository
                 context.OrdenesEntregas.Add(entity);
                 context.SaveChanges();
 
+                // Asignar Id generado al DTO y devolverlo
                 newItem.IdOrden = entity.IdOrden;
+                return entity.IdOrden; // ✅ ahora devuelve el Id
             }
             catch (Exception ex)
             {
-                // 🔥 Esto mostrará el error real del SQL o EF
                 throw new Exception($"Error al insertar la orden de entrega: {ex.InnerException?.Message ?? ex.Message}");
             }
         }
 
 
-
-        public void UpdateOrdenesEntrega(OrdenesEntrega UpdItem)
+        public void UpdateOrdenesEntrega(OrdenesEntregaDTO UpdItem)
         {
             using (var context = new InvensisContext())
             {
@@ -174,7 +185,7 @@ namespace Identity.Api.DataRepository
                 if (registrado != null)
                 {
                     registrado.NumeroOrden = UpdItem.NumeroOrden;
-                    registrado.IdSolicitud = UpdItem.IdSolicitud;
+                    //registrado.IdSolicitud = UpdItem.IdSolicitud;
                     registrado.FechaProgramada = UpdItem.FechaProgramada;
                     //registrado.HoraProgramada = UpdItem.HoraProgramada;
                     registrado.FechaEntrega = UpdItem.FechaEntrega;

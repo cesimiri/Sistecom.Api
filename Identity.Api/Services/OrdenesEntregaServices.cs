@@ -27,12 +27,13 @@ namespace Identity.Api.Services
             return _dataRepository.GetOrdenesEntregaById(IdOrdenesEntrega);
         }
 
-        public void InsertOrdenesEntrega(OrdenesEntregaDTO New)
+        public int InsertOrdenesEntrega(OrdenesEntregaDTO New)
         {
-            _dataRepository.InsertOrdenesEntrega(New);
+            return _dataRepository.InsertOrdenesEntrega(New); // ✅ devolver Id
         }
 
-        public void UpdateOrdenesEntrega(OrdenesEntrega UpdItem)
+
+        public void UpdateOrdenesEntrega(OrdenesEntregaDTO UpdItem)
         {
             _dataRepository.UpdateOrdenesEntrega(UpdItem);
         }

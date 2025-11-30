@@ -25,7 +25,7 @@ namespace Identity.Api.Services
             _dataRepository.InsertMarca(New);
         }
 
-        public void UpdateMarca(Marca UpdItem)
+        public void UpdateMarca(MarcaDTO UpdItem)
         {
             _dataRepository.UpdateMarca(UpdItem);
         }

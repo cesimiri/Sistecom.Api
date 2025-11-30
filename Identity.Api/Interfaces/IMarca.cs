@@ -9,7 +9,7 @@ namespace Identity.Api.Interfaces
         IEnumerable<Marca> GetAllMarca { get; }
         MarcaDTO GetMarcaById(int idMarca);
         void InsertMarca(MarcaDTO item);
-        void UpdateMarca(Marca item);
+        void UpdateMarca(MarcaDTO item);
         //void DeleteStockBodega(StockBodega item);
         void DeleteMarcaById(int idMarca);
 

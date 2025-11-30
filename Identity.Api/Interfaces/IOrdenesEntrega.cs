@@ -13,8 +13,8 @@ namespace Identity.Api.Interfaces
         List<UsuarioDetalleDTO> GetUsuarioDetalleById(string cedula);
 
         OrdenesEntrega GetOrdenesEntregaById(int IdOrdenesEntrega);
-        void InsertOrdenesEntrega(OrdenesEntregaDTO New);
-        void UpdateOrdenesEntrega(OrdenesEntrega UpdItem);
+        int InsertOrdenesEntrega(OrdenesEntregaDTO New);
+        void UpdateOrdenesEntrega(OrdenesEntregaDTO UpdItem);
 
         void DeleteOrdenesEntregaById(int IdOrdenesEntrega);
 

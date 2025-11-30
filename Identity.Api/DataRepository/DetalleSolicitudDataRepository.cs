@@ -37,7 +37,6 @@ namespace Identity.Api.DataRepository
         public DetalleSolicitudDTO GetDetalleSolicitudById(int idDetalle)
         {
             using var context = new InvensisContext();
-
             return context.DetalleSolicituds
                 //.Include(s => s.IdUsuarioDestinoNavigation)
                 .Include(s => s.IdSolicitudNavigation)
@@ -46,7 +45,6 @@ namespace Identity.Api.DataRepository
                 .Where(s => s.IdSolicitud == idDetalle)
                 .Select(s => new DetalleSolicitudDTO
                 {
-
                     IdDetalle = s.IdDetalle,
                     IdSolicitud = s.IdSolicitud,
                     IdProducto = s.IdProducto,
@@ -57,9 +55,7 @@ namespace Identity.Api.DataRepository
 
                     Observaciones = s.Observaciones,
                     // campos relacionados:
-
                     NumeroSolicitud = s.IdSolicitudNavigation.NumeroSolicitud,
-
 
                 })
                 .FirstOrDefault();

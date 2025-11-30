@@ -4,7 +4,6 @@ using Identity.Api.Paginado;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Controllers
 {
@@ -64,24 +63,27 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPut("UpdateMarca")]
-        public IActionResult Update([FromBody] Marca UpdItem)
+        public IActionResult Update([FromBody] MarcaDTO UpdItem)
         {
+            if (UpdItem == null || !ModelState.IsValid)
+            {
+                return BadRequest(new { success = false, message = "Error: Envío de datos inválido." });
+            }
+
             try
             {
-                if (UpdItem == null || !ModelState.IsValid)
-                {
-                    return BadRequest("Error: Envio de datos");
-                }
-
                 _marca.UpdateMarca(UpdItem);
+
+                // Retornamos mensaje de éxito
+                return Ok(new { success = true, message = "Marca actualizada correctamente." });
             }
             catch (Exception ex)
             {
-                return BadRequest("Error:" + ex.Message);
+                // Retornamos mensaje de error
+                return BadRequest(new { success = false, message = "Error al actualizar la marca: " + ex.Message });
             }
-
-            return NoContent();
         }
+
 
         [HttpDelete("DeleteMarcaById/{idMarca}")]
         public IActionResult DeleteMarcaById(int idMarca)
