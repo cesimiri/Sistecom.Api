@@ -45,6 +45,8 @@
         //Relacion
         public string? NombreDepartamento { get; set; }
         public string? NumeroSolicitud { get; set; }
+        public int? CantidadSolicitada { get; set; }
+
 
     }
 }

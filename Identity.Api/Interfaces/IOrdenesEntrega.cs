@@ -18,6 +18,9 @@ namespace Identity.Api.Interfaces
 
         void DeleteOrdenesEntregaById(int IdOrdenesEntrega);
 
+        //generar PDF Ordenes automaticamente
+        Task<(OrdenesEntregaDTO ordenes, List<DetalleOrdenEntregaDTO> detalles)> ObtenerOrdenesConDetallesAsync(int idOrdenes);
+
         //paginado
         PagedResult<OrdenesEntregaDTO> GetOrdenesEntregaPaginadas(
        int pagina,

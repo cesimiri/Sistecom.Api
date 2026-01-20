@@ -1,8 +1,10 @@
 ﻿using Identity.Api.DTO;
 using Identity.Api.Interfaces;
+using Identity.Api.Reporteria;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using QuestPDF.Infrastructure;
 
 namespace Identity.Api.Controllers
 {
@@ -135,6 +137,36 @@ namespace Identity.Api.Controllers
             }
 
             return NoContent();
+        }
+
+        //generar PDF Ordenes automaticamente
+        [HttpGet("ObtenerOrdenesConDetallesAsync/{idOrdenes}")]
+        public async Task<IActionResult> DescargarOrdenesPdf(int idOrdenes)
+        {
+            QuestPDF.Settings.License = LicenseType.Community;
+
+            // 1. Obtener orden y detalles
+            var (ordenes, detalles) = await _empresaCliente.ObtenerOrdenesConDetallesAsync(idOrdenes);
+
+            // 2. Validar que exista
+            if (ordenes == null)
+                return NotFound("Orden no encontrada.");
+
+            // 3. Generar PDF
+            var pdfBytes = OrdenesEntregaPdfGenerator.GenerarPdf(ordenes, detalles);
+
+            if (pdfBytes == null || pdfBytes.Length == 0)
+                return StatusCode(500, "Error al generar el PDF.");
+
+            // 4. Crear nombre del archivo con el número de orden
+            var numeroOrdenNormalizado = !string.IsNullOrWhiteSpace(ordenes.NumeroOrden)
+                ? ordenes.NumeroOrden.Replace(" ", "_")
+                : ordenes.IdOrden.ToString();
+
+            var fileName = $"Orden_{numeroOrdenNormalizado}_{DateTime.Now:yyyyMMdd}.pdf";
+
+            // 5. Retornar el PDF
+            return File(pdfBytes, "application/pdf", fileName);
         }
 
 

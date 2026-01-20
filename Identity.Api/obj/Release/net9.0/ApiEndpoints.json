@@ -162,6 +162,22 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.ActivoController",
+    "Method": "Update1a1",
+    "RelativePath": "api/Activo/Update1a1",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UpdItem",
+        "Type": "Identity.Api.DTO.ActivoDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.ActivoController",
     "Method": "Update",
     "RelativePath": "api/Activo/UpdateActivo",
     "HttpMethod": "PUT",
@@ -1985,6 +2001,43 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.HistorialActivoController",
+    "Method": "ObtenerInfoPorEvento",
+    "RelativePath": "api/HistorialActivo/ObtenerInfoPorEvento",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tipoEvento",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "idActivo",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.HistorialActivoController",
+    "Method": "GetByCodigo",
+    "RelativePath": "api/HistorialActivo/ObtnerActivoByCodigo/{codigoActivo}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codigoActivo",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.HistorialActivoController",
     "Method": "Update",
     "RelativePath": "api/HistorialActivo/UpdateHistorialActivo",
     "HttpMethod": "PUT",
@@ -2152,22 +2205,6 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.MantenimientoController",
-    "Method": "Delete",
-    "RelativePath": "api/Mantenimiento/DeleteMantenimiento",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "DelItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.Mantenimiento",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Identity.Api.Controllers.MantenimientoController",
     "Method": "DeleteById",
     "RelativePath": "api/Mantenimiento/DeleteMantenimientoById/{IdMantenimiento}",
     "HttpMethod": "DELETE",
@@ -2200,6 +2237,37 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.MantenimientoController",
+    "Method": "GetMantenimientoPaginados",
+    "RelativePath": "api/Mantenimiento/GetMantenimientoPaginados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pagina",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "filtro",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "estadoActivo",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.MantenimientoController",
     "Method": "Create",
     "RelativePath": "api/Mantenimiento/InsertMantenimiento",
     "HttpMethod": "POST",
@@ -2208,7 +2276,7 @@
     "Parameters": [
       {
         "Name": "NewItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.Mantenimiento",
+        "Type": "Identity.Api.DTO.MantenimientoDTO",
         "IsRequired": true
       }
     ],
@@ -2216,12 +2284,34 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.MantenimientoController",
-    "Method": "GetAll",
-    "RelativePath": "api/Mantenimiento/MantenimientoInfoAll",
+    "Method": "GetById",
+    "RelativePath": "api/Mantenimiento/ObtenerApellidosNombreByCedula/{cedula}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "cedula",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.MantenimientoController",
+    "Method": "GetByCodigo",
+    "RelativePath": "api/Mantenimiento/ObtnerActivoByCodigo/{codigoActivo}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "codigoActivo",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -2234,7 +2324,7 @@
     "Parameters": [
       {
         "Name": "UpdItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.Mantenimiento",
+        "Type": "Identity.Api.DTO.MantenimientoDTO",
         "IsRequired": true
       }
     ],
@@ -2889,6 +2979,22 @@
   },
   {
     "ContainingType": "Identity.Api.Controllers.OrdenesEntregaController",
+    "Method": "DescargarOrdenesPdf",
+    "RelativePath": "api/OrdenesEntrega/ObtenerOrdenesConDetallesAsync/{idOrdenes}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idOrdenes",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Identity.Api.Controllers.OrdenesEntregaController",
     "Method": "Update",
     "RelativePath": "api/OrdenesEntrega/UpdateOrdenesEntrega",
     "HttpMethod": "PUT",
@@ -3405,7 +3511,7 @@
     "Parameters": [
       {
         "Name": "UpdItem",
-        "Type": "Modelo.Sistecom.Modelo.Database.Servidore",
+        "Type": "Identity.Api.DTO.ServidoreDTO",
         "IsRequired": true
       }
     ],

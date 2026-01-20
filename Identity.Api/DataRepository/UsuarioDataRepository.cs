@@ -159,63 +159,6 @@ namespace identity.api.datarepository
 
         }
 
-        //public PagedResult<UsuarioDTO> GetUsuariosPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
-        //{
-        //    using var context = new InvensisContext();
-
-        //    var query = context.Usuarios
-
-        //        .AsQueryable();
-
-        //    // Aplicar filtro por texto
-        //    if (!string.IsNullOrEmpty(filtro))
-        //    {
-        //        filtro = filtro.ToLower();
-        //        query = query.Where(u =>
-        //            u.Cedula.ToLower().Contains(filtro) ||
-        //            u.Nombres.ToLower().Contains(filtro) ||
-        //            u.Apellidos.ToLower().Contains(filtro) ||
-        //            u.Email.ToLower().Contains(filtro)
-
-        //            );
-        //    }
-
-        //    // Si estado no viene, forzar "ACTIVO"
-        //    if (string.IsNullOrWhiteSpace(estado))
-        //    {
-        //        estado = "ACTIVO";
-        //    }
-
-        //    // Filtro por estado (siempre aplica, ya está garantizado que tiene valor)
-
-        //    query = query.Where(u => u.Estado == estado);
-
-        //    var totalItems = query.Count();
-
-        //    var usuarios = query
-        //        .OrderBy(u => u.Apellidos)
-        //        .Skip((pagina - 1) * pageSize)
-        //        .Take(pageSize)
-        //        .Select(s => new UsuarioDTO
-        //        {
-        //            Cedula = s.Cedula,
-        //            Nombres = s.Nombres,
-        //            Apellidos = s.Apellidos,
-        //            Telefono = s.Telefono,
-        //            Email = s.Email,
-        //            Extension = s.Extension,
-        //            Estado = s.Estado
-        //        })
-        //        .ToList();
-
-        //    return new PagedResult<UsuarioDTO>
-        //    {
-        //        Items = usuarios,
-        //        TotalItems = totalItems,
-        //        Page = pagina,
-        //        PageSize = pageSize
-        //    };
-        //}
 
         public PagedResult<UsuarioDTO> GetUsuariosPaginados(int pagina, int pageSize, string? filtro = null, string? estado = null)
         {

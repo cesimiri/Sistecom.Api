@@ -1,4 +1,5 @@
 ﻿using Identity.Api.DataRepository;
+using Identity.Api.DTO;
 using Identity.Api.Interfaces;
 using Modelo.Sistecom.Modelo.Database;
 
@@ -36,6 +37,18 @@ namespace Identity.Api.Services
         public void DeleteHistorialActivoById(int IdHistorialActivo)
         {
             _dataRepository.DeleteHistorialActivoById(IdHistorialActivo);
+        }
+
+        //busqueda por codigo activo 
+        public ActivoDTO? ObtnerActivoByCodigo(string codigoActivo)
+        {
+            return _dataRepository.ObtnerActivoByCodigo(codigoActivo);
+        }
+
+        ////obtener por evento
+        public object? ObtenerInfoPorEvento(string tipoEvento, int idActivo)
+        {
+            return _dataRepository.ObtenerInfoPorEvento(tipoEvento, idActivo);
         }
     }
 }

@@ -4,7 +4,6 @@ using Identity.Api.Paginado;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Modelo.Sistecom.Modelo.Database;
 
 namespace Identity.Api.Controllers
 {
@@ -82,7 +81,7 @@ namespace Identity.Api.Controllers
         }
 
         [HttpPut("UpdateServidore")]
-        public IActionResult Update([FromBody] Servidore UpdItem)
+        public IActionResult Update([FromBody] ServidoreDTO UpdItem)
         {
             try
             {

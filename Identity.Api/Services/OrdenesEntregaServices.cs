@@ -43,6 +43,13 @@ namespace Identity.Api.Services
             _dataRepository.DeleteOrdenesEntregaById(IdOrdenesEntega);
         }
 
+        //generar PDF Ordenes automaticamente
+
+        public async Task<(OrdenesEntregaDTO ordenes, List<DetalleOrdenEntregaDTO> detalles)> ObtenerOrdenesConDetallesAsync(int idOrdenes)
+        {
+            return await _dataRepository.ObtenerOrdenesConDetallesAsync(idOrdenes);
+        }
+
         //paginado
         public PagedResult<OrdenesEntregaDTO> GetOrdenesEntregaPaginadas(
         int pagina,

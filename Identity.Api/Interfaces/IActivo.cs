@@ -13,6 +13,10 @@ namespace Identity.Api.Interfaces
         Task<List<SpResponseDTO>> InsertActivos(List<ActivoDTO> activos);
 
         void UpdateActivo(Activo UpdItem);
+
+        //update 1 a 1 
+        void Update1a1(ActivoDTO updActivo);
+
         void DeleteActivoById(int IdActivo);
 
         //PAGINADO

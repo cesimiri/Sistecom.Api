@@ -74,6 +74,27 @@ namespace Identity.Api.Controllers
             return NoContent();
         }
 
+        // Update 1 a 1 
+        [HttpPut("Update1a1")]
+        public IActionResult Update1a1([FromBody] ActivoDTO UpdItem)
+        {
+            try
+            {
+                if (UpdItem == null || !ModelState.IsValid)
+                {
+                    return BadRequest("Error: Envio de datos");
+                }
+
+                _empresaCliente.Update1a1(UpdItem);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Error:" + ex.Message);
+            }
+
+            return NoContent();
+        }
+
         [HttpDelete("DeleteActivoById/{IdActivo}")]
         public IActionResult DeleteById(int IdActivo)
         {
@@ -99,8 +120,7 @@ namespace Identity.Api.Controllers
             string? estadoActivo = null)
         {
             var resultado = _empresaCliente.GetActivoPaginados(
-                pagina, pageSize,
-                codigoActivo, estadoActivo);
+                pagina, pageSize, codigoActivo, estadoActivo);
 
             return Ok(resultado);
         }

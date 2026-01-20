@@ -29,6 +29,11 @@ namespace Identity.Api.Services
             _dataRepository.UpdateActivo(UpdItem);
         }
 
+        //update 1 a 1 
+        public void Update1a1(ActivoDTO updActivo)
+        {
+            _dataRepository.Update1a1(updActivo);
+        }
 
         public void DeleteActivoById(int IdActivo)
         {

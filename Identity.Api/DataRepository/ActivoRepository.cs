@@ -122,6 +122,41 @@ namespace Identity.Api.DataRepository
             }
         }
 
+        //update 1 a 1 
+        public void Update1a1(ActivoDTO updActivo)
+        {
+            using (var context = new InvensisContext())
+            {
+                var existente = context.Activos.FirstOrDefault(a => a.IdActivo == updActivo.IdActivo);
+                if (existente != null)
+                {
+                    //existente.CodigoActivo = updActivo.CodigoActivo;
+                    //existente.IdProducto = updActivo.IdProducto;
+                    existente.NumeroSerie = updActivo.NumeroSerie;
+                    existente.NumeroParte = updActivo.NumeroParte;
+                    //existente.FechaAdquisicion = updActivo.FechaAdquisicion;
+                    //existente.FechaGarantiaFin = updActivo.FechaGarantiaFin;
+                    //existente.IdFacturaCompra = updActivo.IdFacturaCompra;
+                    //existente.IdOrdenEnsamblaje = updActivo.IdOrdenEnsamblaje;
+                    //existente.ValorCompra = updActivo.ValorCompra;
+                    //existente.ValorResidual = updActivo.ValorResidual;
+                    existente.VidaUtilMeses = updActivo.VidaUtilMeses;
+                    existente.UbicacionActual = updActivo.UbicacionActual;
+                    existente.EstadoActivo = updActivo.EstadoActivo;
+                    existente.CondicionFisica = updActivo.CondicionFisica;
+                    existente.EsServidor = updActivo.EsServidor;
+                    existente.Observaciones = updActivo.Observaciones;
+                    //existente.FechaRegistro = updActivo.FechaRegistro;
+
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Activo no encontrado");
+                }
+            }
+        }
+
         public void DeleteActivoById(int idActivo)
         {
             using (var context = new InvensisContext())

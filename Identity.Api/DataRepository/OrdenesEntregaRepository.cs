@@ -222,6 +222,73 @@ namespace Identity.Api.DataRepository
             }
         }
 
+        //generar PDF Ordenes automaticamente
+
+        public async Task<(OrdenesEntregaDTO ordenes, List<DetalleOrdenEntregaDTO> detalles)>
+        ObtenerOrdenesConDetallesAsync(int idOrdenes)
+        {
+            using var context = new InvensisContext();
+
+            // Traer la factura con sus relaciones (proveedor y bodega)
+            var ordenes = await context.OrdenesEntregas
+                .Include(o => o.IdDepartamentoEntregaNavigation)
+                .Include(o => o.IdSolicitudNavigation)
+                .Where(f => f.IdOrden == idOrdenes)
+                .AsQueryable()
+                .Select(o => new OrdenesEntregaDTO
+                {
+                    IdOrden = o.IdOrden,
+                    NumeroOrden = o.NumeroOrden,
+                    IdSolicitud = o.IdSolicitud,
+                    FechaProgramada = o.FechaProgramada,
+                    FechaEntrega = o.FechaEntrega,
+                    DireccionEntrega = o.DireccionEntrega,
+                    ContactoRecepcion = o.ContactoRecepcion,
+                    TelefonoContacto = o.TelefonoContacto,
+                    Estado = o.Estado,
+                    GuiaRemision = o.GuiaRemision,
+                    Transportista = o.Transportista,
+                    FirmaRecepcion = o.FirmaRecepcion,
+                    IncluyeLicencias = o.IncluyeLicencias,
+                    ObservacionesEntrega = o.ObservacionesEntrega,
+                    FechaRegistro = o.FechaRegistro,
+                    CedulaRecibe = o.CedulaRecibe,
+                    IdDepartamentoEntrega = o.IdDepartamentoEntrega,
+
+                    NombreDepartamento = o.IdDepartamentoEntregaNavigation != null
+                        ? o.IdDepartamentoEntregaNavigation.NombreDepartamento
+                        : null,
+
+                    NumeroSolicitud = o.IdSolicitudNavigation != null
+                        ? o.IdSolicitudNavigation.NumeroSolicitud
+                        : null
+                })
+                .FirstOrDefaultAsync();
+
+            if (ordenes == null)
+                return (null, null);
+
+            var detalles = await context.DetalleOrdenEntregas
+                .Include(f => f.IdProductoNavigation)
+                .Where(d => d.IdOrden == idOrdenes)
+                .Select(s => new DetalleOrdenEntregaDTO
+                {
+                    IdDetalle = s.IdDetalle,
+                    IdOrden = s.IdOrden,
+                    IdProducto = s.IdProducto,
+                    CantidadProgramada = s.CantidadProgramada,
+                    CantidadEntregada = s.CantidadEntregada,
+                    IdActivo = s.IdActivo,
+                    IdLicencia = s.IdLicencia,
+                    Observaciones = s.Observaciones,
+                    NombreProducto = s.IdProductoNavigation.Nombre
+                })
+                .ToListAsync();
+
+            return (ordenes, detalles);
+        }
+
+
         //paginado por Número de orden
         public PagedResult<OrdenesEntregaDTO> GetOrdenesEntregaPaginadas(
          int pagina,
@@ -287,7 +354,8 @@ namespace Identity.Api.DataRepository
                         : null,
                     NumeroSolicitud = o.IdSolicitudNavigation != null
                         ? o.IdSolicitudNavigation.NumeroSolicitud
-                        : null
+                        : null,
+
                 })
                 .ToList();
 

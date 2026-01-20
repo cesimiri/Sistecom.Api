@@ -31,7 +31,7 @@ namespace Identity.Api.Services
             _dataRepository.InsertServidore(New);
         }
 
-        public void UpdateServidore(Servidore UpdItem)
+        public void UpdateServidore(ServidoreDTO UpdItem)
         {
             _dataRepository.UpdateServidore(UpdItem);
         }

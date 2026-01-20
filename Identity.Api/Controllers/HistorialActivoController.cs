@@ -117,5 +117,44 @@ namespace Identity.Api.Controllers
 
             return NoContent();
         }
+
+        //obtener activo por oodigo activo 
+        [HttpGet("ObtnerActivoByCodigo/{codigoActivo}")]
+        public IActionResult GetByCodigo(string codigoActivo)
+        {
+
+            var usuario = _empresaCliente.ObtnerActivoByCodigo(codigoActivo);
+            if (usuario == null)
+            {
+                return NotFound($"Activo con {codigoActivo} no encontrada.");
+            }
+            return Ok(usuario);
+        }
+
+        //obtener por evento
+        [HttpGet("ObtenerInfoPorEvento")]
+        public IActionResult ObtenerInfoPorEvento(string tipoEvento, int idActivo)
+        {
+            if (string.IsNullOrWhiteSpace(tipoEvento))
+            {
+                return BadRequest(new
+                {
+                    mensaje = "El tipo de evento es obligatorio."
+                });
+            }
+
+            var result = _empresaCliente.ObtenerInfoPorEvento(tipoEvento.ToUpper(), idActivo);
+
+            if (result == null)
+            {
+                return NotFound(new
+                {
+                    mensaje = $"No se encontró información para el evento '{tipoEvento}' y el activo {idActivo}."
+                });
+            }
+
+            return Ok(result);
+        }
+
     }
 }

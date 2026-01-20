@@ -88,15 +88,6 @@ namespace Identity.Api.DataRepository
             }
         }
 
-        //public void InsertServidore(Servidore newActivo)
-        //{
-        //    using (var context = new InvensisContext())
-        //    {
-        //        context.Servidores.Add(newActivo);
-        //        context.SaveChanges();
-        //    }
-        //}
-
         public void InsertServidore(ServidoreDTO dto)
         {
             using var context = new InvensisContext();
@@ -139,7 +130,7 @@ namespace Identity.Api.DataRepository
 
 
 
-        public void UpdateServidore(Servidore servidorActualizado)
+        public void UpdateServidore(ServidoreDTO servidorActualizado)
         {
             using (var context = new InvensisContext())
             {
@@ -162,7 +153,7 @@ namespace Identity.Api.DataRepository
                     existente.UbicacionRack = servidorActualizado.UbicacionRack;
                     existente.Proposito = servidorActualizado.Proposito;
                     existente.Estado = servidorActualizado.Estado;
-                    existente.FechaInstalacion = servidorActualizado.FechaInstalacion;
+
 
                     context.SaveChanges();
                 }

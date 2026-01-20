@@ -134,13 +134,6 @@ namespace Identity.Api.DataRepository
         {
             using (var context = new InvensisContext())
             {
-                //Console.WriteLine("=== Datos recibidos en backend ===");
-                //Console.WriteLine($"IdFactura: {UpdItem.IdFactura}");
-                //Console.WriteLine($"NumeroFactura: {UpdItem.NumeroFactura}");
-                //Console.WriteLine($"IVA: {UpdItem.Iva}");
-                //Console.WriteLine($"SubtotalSinImpuestos: {UpdItem.SubtotalSinImpuestos}");
-                //Console.WriteLine($"ValorTotal: {UpdItem.ValorTotal}");
-                //Console.WriteLine($"Estado: {UpdItem.Estado}");
                 var registrado = context.FacturasCompras
                                          .Where(a => a.IdFactura == UpdItem.IdFactura)
                                          .FirstOrDefault();

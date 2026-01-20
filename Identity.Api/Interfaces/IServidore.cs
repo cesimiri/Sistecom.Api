@@ -11,7 +11,7 @@ namespace Identity.Api.Interfaces
         IEnumerable<ActivoDTO> GetActivosServidores { get; }
         Servidore GetServidoreById(int IdServidore);
         void InsertServidore(ServidoreDTO New);
-        void UpdateServidore(Servidore UpdItem);
+        void UpdateServidore(ServidoreDTO UpdItem);
         void DeleteServidoreById(int IdServidore);
         PagedResult<ServidoreDTO> GetServidorePaginados(int pagina, int pageSize, string? filtro = null, string? estado = null);
 
