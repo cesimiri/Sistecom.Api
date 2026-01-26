@@ -17,6 +17,77 @@ namespace Identity.Api.DataRepository
             }
         }
 
+        //public void InsertMantenimiento(MantenimientoDTO dto)
+        //{
+        //    using var context = new InvensisContext();
+
+        //    // 1️⃣ Validaciones backend
+        //    if (dto.IdActivo <= 0)
+        //        throw new Exception("El activo es obligatorio.");
+
+        //    if (dto.FechaProgramada == default)
+        //        throw new Exception("La fecha programada es obligatoria.");
+
+        //    if (string.IsNullOrWhiteSpace(dto.TipoMantenimiento))
+        //        throw new Exception("El tipo de mantenimiento es obligatorio.");
+
+        //    if (string.IsNullOrWhiteSpace(dto.Descripcion))
+        //        throw new Exception("La descripción es obligatoria.");
+
+        //    if (!dto.IdDepartamentoSolicita.HasValue)
+        //        throw new Exception("El departamento solicitante es obligatorio.");
+
+        //    // 2️⃣ Generar NúmeroOrdenServicio basado solo en el año actual
+        //    int year = DateTime.Now.Year;
+
+        //    // Obtener la última secuencia del año actual
+        //    int ultimaSecuencia = context.Mantenimientos
+        //        .Where(m => m.NumeroOrdenServicio.StartsWith($"OrdenServicio#{year}-"))
+        //        .Select(m => m.NumeroOrdenServicio)
+        //        .AsEnumerable() // pasar a memoria para usar Substring
+        //        .Select(nos =>
+        //        {
+        //            int index = nos.LastIndexOf('-');
+        //            return int.TryParse(nos.Substring(index + 1), out int seq) ? seq : 0;
+        //        })
+        //        .DefaultIfEmpty(0)
+        //        .Max();
+
+        //    int nuevaSecuencia = ultimaSecuencia + 1;
+
+        //    string numeroOrdenServicio = $"OrdenServicio#{year}-{nuevaSecuencia:D4}";
+
+        //    // 3️⃣ Crear entidad
+        //    var mantenimiento = new Mantenimiento
+        //    {
+        //        IdActivo = dto.IdActivo,
+        //        FechaProgramada = dto.FechaProgramada,
+        //        FechaRealizada = dto.FechaRealizada,
+        //        TipoMantenimiento = dto.TipoMantenimiento,
+        //        Descripcion = dto.Descripcion,
+        //        Diagnostico = dto.Diagnostico,
+        //        AccionesRealizadas = dto.AccionesRealizadas,
+        //        RepuestosUsados = dto.RepuestosUsados,
+        //        CostoManoObra = dto.CostoManoObra,
+        //        CostoRepuestos = dto.CostoRepuestos,
+        //        CostoTotal = dto.CostoTotal,
+        //        TiempoFueraServicioHoras = dto.TiempoFueraServicioHoras,
+        //        TecnicoResponsable = dto.TecnicoResponsable,
+        //        ProveedorServicio = dto.ProveedorServicio,
+        //        NumeroOrdenServicio = numeroOrdenServicio,
+        //        GarantiaTrabajosDias = dto.GarantiaTrabajosDias,
+        //        ProximoMantenimiento = dto.ProximoMantenimiento,
+        //        Estado = dto.Estado ?? "PROGRAMADO",
+        //        InformeTecnico = dto.InformeTecnico,
+        //        IdDepartamentoSolicita = dto.IdDepartamentoSolicita,
+        //        CedulaTecnico = dto.CedulaTecnico
+        //    };
+
+        //    // 4️⃣ Guardar
+        //    context.Mantenimientos.Add(mantenimiento);
+        //    context.SaveChanges();
+        //}
+
         public void InsertMantenimiento(MantenimientoDTO dto)
         {
             using var context = new InvensisContext();
@@ -37,14 +108,25 @@ namespace Identity.Api.DataRepository
             if (!dto.IdDepartamentoSolicita.HasValue)
                 throw new Exception("El departamento solicitante es obligatorio.");
 
-            // 2️⃣ Generar NúmeroOrdenServicio basado solo en el año actual
+            if (string.IsNullOrWhiteSpace(dto.CedulaTecnico))
+                throw new Exception("La cédula del técnico es obligatoria.");
+
+            // 2️⃣ OBTENER NOMBRE DEL TÉCNICO (🔥 AQUÍ ESTABA EL PROBLEMA)
+            var tecnicoResponsable = context.Usuarios
+                .Where(u => u.Cedula == dto.CedulaTecnico)
+                .Select(u => u.Apellidos + " " + u.Nombres)
+                .FirstOrDefault();
+
+            if (string.IsNullOrWhiteSpace(tecnicoResponsable))
+                throw new Exception("No existe un técnico con la cédula ingresada.");
+
+            // 3️⃣ Generar NúmeroOrdenServicio (por año)
             int year = DateTime.Now.Year;
 
-            // Obtener la última secuencia del año actual
             int ultimaSecuencia = context.Mantenimientos
                 .Where(m => m.NumeroOrdenServicio.StartsWith($"OrdenServicio#{year}-"))
                 .Select(m => m.NumeroOrdenServicio)
-                .AsEnumerable() // pasar a memoria para usar Substring
+                .AsEnumerable()
                 .Select(nos =>
                 {
                     int index = nos.LastIndexOf('-');
@@ -57,7 +139,7 @@ namespace Identity.Api.DataRepository
 
             string numeroOrdenServicio = $"OrdenServicio#{year}-{nuevaSecuencia:D4}";
 
-            // 3️⃣ Crear entidad
+            // 4️⃣ Crear entidad
             var mantenimiento = new Mantenimiento
             {
                 IdActivo = dto.IdActivo,
@@ -72,53 +154,27 @@ namespace Identity.Api.DataRepository
                 CostoRepuestos = dto.CostoRepuestos,
                 CostoTotal = dto.CostoTotal,
                 TiempoFueraServicioHoras = dto.TiempoFueraServicioHoras,
-                TecnicoResponsable = dto.TecnicoResponsable,
+
+                // 🔥 CAMPOS CLAVE
+                CedulaTecnico = dto.CedulaTecnico,
+                TecnicoResponsable = tecnicoResponsable,
+
                 ProveedorServicio = dto.ProveedorServicio,
                 NumeroOrdenServicio = numeroOrdenServicio,
                 GarantiaTrabajosDias = dto.GarantiaTrabajosDias,
                 ProximoMantenimiento = dto.ProximoMantenimiento,
                 Estado = dto.Estado ?? "PROGRAMADO",
                 InformeTecnico = dto.InformeTecnico,
-                IdDepartamentoSolicita = dto.IdDepartamentoSolicita,
-                CedulaTecnico = dto.CedulaTecnico
+                IdDepartamentoSolicita = dto.IdDepartamentoSolicita
             };
 
-            // 4️⃣ Guardar
+            // 5️⃣ Guardar
             context.Mantenimientos.Add(mantenimiento);
             context.SaveChanges();
         }
 
-        //public void UpdateMantenimiento(MantenimientoDTO updItem)
-        //{
-        //    using (var context = new InvensisContext())
-        //    {
-        //        var existente = context.Mantenimientos.FirstOrDefault(a => a.IdMantenimiento == updItem.IdMantenimiento);
-        //        if (existente != null)
-        //        {
-        //            //existente.IdActivo = updItem.IdActivo;
-        //            existente.FechaProgramada = updItem.FechaProgramada;
-        //            existente.FechaRealizada = updItem.FechaRealizada;
-        //            existente.TipoMantenimiento = updItem.TipoMantenimiento;
-        //            existente.Descripcion = updItem.Descripcion;
-        //            existente.Diagnostico = updItem.Diagnostico;
-        //            existente.AccionesRealizadas = updItem.AccionesRealizadas;
-        //            existente.RepuestosUsados = updItem.RepuestosUsados;
-        //            existente.CostoManoObra = updItem.CostoManoObra;
-        //            existente.CostoRepuestos = updItem.CostoRepuestos;
-        //            existente.CostoTotal = updItem.CostoTotal;
-        //            existente.TiempoFueraServicioHoras = updItem.TiempoFueraServicioHoras;
-        //            existente.TecnicoResponsable = updItem.TecnicoResponsable;
-        //            existente.ProveedorServicio = updItem.ProveedorServicio;
-        //            existente.NumeroOrdenServicio = updItem.NumeroOrdenServicio;
-        //            existente.GarantiaTrabajosDias = updItem.GarantiaTrabajosDias;
-        //            existente.ProximoMantenimiento = updItem.ProximoMantenimiento;
-        //            existente.Estado = updItem.Estado;
-        //            existente.InformeTecnico = updItem.InformeTecnico;
 
-        //            context.SaveChanges();
-        //        }
-        //    }
-        //}
+
 
         public void UpdateMantenimiento(MantenimientoDTO updItem)
         {
@@ -171,10 +227,6 @@ namespace Identity.Api.DataRepository
             context.Mantenimientos.Add(nuevo);
             context.SaveChanges();
         }
-
-
-
-
 
 
         public void DeleteMantenimientoById(int IdMantenimiento)

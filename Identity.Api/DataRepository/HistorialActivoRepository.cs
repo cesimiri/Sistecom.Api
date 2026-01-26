@@ -137,9 +137,41 @@ namespace Identity.Api.DataRepository
                         {
                             IdActivo = a.IdActivo,
                             CodigoActivo = a.CodigoActivo,
-                            EstadoActivo = a.EstadoActivo
+                            IdProducto = a.IdProducto,
+                            NumeroSerie = a.NumeroSerie,
+                            NumeroParte = a.NumeroParte,
+                            FechaAdquisicion = a.FechaAdquisicion.ToDateTime(TimeOnly.MinValue),
+                            //FechaGarantiaFin = a.FechaGarantiaFin,
+                            IdFacturaCompra = a.IdFacturaCompra,
+                            IdOrdenEnsamblaje = a.IdOrdenEnsamblaje,
+                            ValorCompra = a.ValorCompra,
+                            ValorResidual = a.ValorResidual,
+                            VidaUtilMeses = a.VidaUtilMeses,
+                            UbicacionActual = a.UbicacionActual,
+                            EstadoActivo = a.EstadoActivo,
+                            CondicionFisica = a.CondicionFisica,
+                            EsServidor = a.EsServidor,
+                            Observaciones = a.Observaciones,
+                            FechaRegistro = a.FechaRegistro,
+
+                            // Relaciones
+                            NombreProducto = a.IdProductoNavigation != null
+                        ? a.IdProductoNavigation.Nombre
+                        : null,
+
+                            NumeroFactura = a.IdFacturaCompraNavigation != null
+                        ? a.IdFacturaCompraNavigation.NumeroFactura
+                        : null,
+
+                            NumeroOrden = a.IdOrdenEnsamblajeNavigation != null
+                        ? a.IdOrdenEnsamblajeNavigation.NumeroOrden
+                        : null,
+
+
+                            TipoRelacion = a.TipoRelacion,
+                            EsComponente = a.EsComponente
                         })
-                        .FirstOrDefault(),
+                .FirstOrDefault(),
 
                 "BAJA" =>
                     context.Activos
@@ -153,15 +185,40 @@ namespace Identity.Api.DataRepository
                         .FirstOrDefault(),
 
                 "MANTENIMIENTO" =>
-                    context.Mantenimientos
-                        .Where(m => m.IdActivo == idActivo)
-                        .Select(m => new MantenimientoDTO
-                        {
-                            IdMantenimiento = m.IdMantenimiento,
-                            IdActivo = m.IdActivo,
-                            FechaRealizada = m.FechaRealizada
-                        })
-                        .FirstOrDefault(),
+            context.Mantenimientos
+                .Where(m =>
+                    m.IdActivo == idActivo &&
+                    m.Estado == "COMPLETADO"
+                )
+                .OrderByDescending(m => m.FechaRealizada)
+                .Select(m => new MantenimientoDTO
+                {
+                    IdMantenimiento = m.IdMantenimiento,
+                    IdActivo = m.IdActivo,
+                    Descripcion = m.Descripcion,
+                    TipoMantenimiento = m.TipoMantenimiento,
+                    FechaRealizada = m.FechaRealizada,
+
+                    NumeroOrdenServicio = m.NumeroOrdenServicio, // 🔥 misma orden
+                    FechaProgramada = m.FechaProgramada,
+                    Diagnostico = m.Diagnostico,
+                    AccionesRealizadas = m.AccionesRealizadas,
+                    RepuestosUsados = m.RepuestosUsados,
+                    CostoManoObra = m.CostoManoObra,
+                    CostoRepuestos = m.CostoRepuestos,
+                    CostoTotal = m.CostoTotal,
+                    TiempoFueraServicioHoras = m.TiempoFueraServicioHoras,
+                    TecnicoResponsable = m.TecnicoResponsable,
+                    ProveedorServicio = m.ProveedorServicio,
+
+                    GarantiaTrabajosDias = m.GarantiaTrabajosDias,
+                    ProximoMantenimiento = m.ProximoMantenimiento,
+                    Estado = m.Estado,
+                    InformeTecnico = m.InformeTecnico,
+                    IdDepartamentoSolicita = m.IdDepartamentoSolicita,
+                    CedulaTecnico = m.CedulaTecnico
+                })
+                .ToList(),   // 👈 AQUÍ ESTÁ LA CLAVE
 
                 _ => null
             };
