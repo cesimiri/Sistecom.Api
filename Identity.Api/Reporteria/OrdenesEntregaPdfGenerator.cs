@@ -71,11 +71,11 @@ namespace Identity.Api.Reporteria
                         // Información adicional
                         col.Item().Column(info =>
                         {
-                            info.Item().Text($"Dirección entrega: {orden.DireccionEntrega}");
-                            info.Item().Text($"Persona recepción: {orden.ContactoRecepcion}");
-                            info.Item().Text($"Teléfono: {orden.TelefonoContacto}");
-                            info.Item().Text($"Guía remisión: {orden.GuiaRemision ?? "No aplica"}");
-                            info.Item().Text($"Transportista: {orden.Transportista ?? "No registrado"}");
+                            //info.Item().Text($"Dirección entrega: {orden.DireccionEntrega}");
+                            //info.Item().Text($"Persona recepción: {orden.ContactoRecepcion}");
+                            //info.Item().Text($"Teléfono: {orden.TelefonoContacto}");
+                            //info.Item().Text($"Guía remisión: {orden.GuiaRemision ?? "No aplica"}");
+                            //info.Item().Text($"Transportista: {orden.Transportista ?? "No registrado"}");
                             info.Item().Text($"Observaciones: {orden.ObservacionesEntrega ?? "Sin observaciones"}");
                         });
 

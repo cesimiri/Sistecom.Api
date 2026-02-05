@@ -124,14 +124,147 @@ namespace Identity.Api.DataRepository
         }
 
         //obtener por evento
+        //public object? ObtenerInfoPorEvento(string tipoEvento, int idActivo)
+        //{
+        //    using var context = new InvensisContext();
+
+        //    return tipoEvento switch
+        //    {
+        //        "COMPRA" =>
+        //            context.Activos
+        //                .Where(a => a.IdActivo == idActivo)
+        //                .Select(a => new ActivoDTO
+        //                {
+        //                    IdActivo = a.IdActivo,
+        //                    CodigoActivo = a.CodigoActivo,
+        //                    IdProducto = a.IdProducto,
+        //                    NumeroSerie = a.NumeroSerie,
+        //                    NumeroParte = a.NumeroParte,
+        //                    FechaAdquisicion = a.FechaAdquisicion.ToDateTime(TimeOnly.MinValue),
+        //                    //FechaGarantiaFin = a.FechaGarantiaFin,
+        //                    IdFacturaCompra = a.IdFacturaCompra,
+        //                    IdOrdenEnsamblaje = a.IdOrdenEnsamblaje,
+        //                    ValorCompra = a.ValorCompra,
+        //                    ValorResidual = a.ValorResidual,
+        //                    VidaUtilMeses = a.VidaUtilMeses,
+        //                    UbicacionActual = a.UbicacionActual,
+        //                    EstadoActivo = a.EstadoActivo,
+        //                    CondicionFisica = a.CondicionFisica,
+        //                    EsServidor = a.EsServidor,
+        //                    Observaciones = a.Observaciones,
+        //                    FechaRegistro = a.FechaRegistro,
+
+        //                    // Relaciones
+        //                    NombreProducto = a.IdProductoNavigation != null
+        //                ? a.IdProductoNavigation.Nombre
+        //                : null,
+
+        //                    NumeroFactura = a.IdFacturaCompraNavigation != null
+        //                ? a.IdFacturaCompraNavigation.NumeroFactura
+        //                : null,
+
+        //                    NumeroOrden = a.IdOrdenEnsamblajeNavigation != null
+        //                ? a.IdOrdenEnsamblajeNavigation.NumeroOrden
+        //                : null,
+
+
+        //                    TipoRelacion = a.TipoRelacion,
+        //                    EsComponente = a.EsComponente
+        //                })
+        //        .FirstOrDefault(),
+
+        //        "BAJA" =>
+        //            context.Activos
+        //                .Where(a => a.IdActivo == idActivo && a.EstadoActivo == "BAJA")
+        //                .Select(a => new ActivoDTO
+        //                {
+        //                    IdActivo = a.IdActivo,
+        //                    CodigoActivo = a.CodigoActivo,
+        //                    IdProducto = a.IdProducto,
+        //                    NumeroSerie = a.NumeroSerie,
+        //                    NumeroParte = a.NumeroParte,
+        //                    FechaAdquisicion = a.FechaAdquisicion.ToDateTime(TimeOnly.MinValue),
+        //                    //FechaGarantiaFin = a.FechaGarantiaFin,
+        //                    IdFacturaCompra = a.IdFacturaCompra,
+        //                    IdOrdenEnsamblaje = a.IdOrdenEnsamblaje,
+        //                    ValorCompra = a.ValorCompra,
+        //                    ValorResidual = a.ValorResidual,
+        //                    VidaUtilMeses = a.VidaUtilMeses,
+        //                    UbicacionActual = a.UbicacionActual,
+        //                    EstadoActivo = a.EstadoActivo,
+        //                    CondicionFisica = a.CondicionFisica,
+        //                    EsServidor = a.EsServidor,
+        //                    Observaciones = a.Observaciones,
+        //                    FechaRegistro = a.FechaRegistro,
+
+        //                    // Relaciones
+        //                    NombreProducto = a.IdProductoNavigation != null
+        //                ? a.IdProductoNavigation.Nombre
+        //                : null,
+
+        //                    NumeroFactura = a.IdFacturaCompraNavigation != null
+        //                ? a.IdFacturaCompraNavigation.NumeroFactura
+        //                : null,
+
+        //                    NumeroOrden = a.IdOrdenEnsamblajeNavigation != null
+        //                ? a.IdOrdenEnsamblajeNavigation.NumeroOrden
+        //                : null,
+
+
+        //                    TipoRelacion = a.TipoRelacion,
+        //                    EsComponente = a.EsComponente
+        //                })
+        //        .FirstOrDefault(),
+
+        //        "MANTENIMIENTO" =>
+        //    context.Mantenimientos
+        //        .Where(m =>
+        //            m.IdActivo == idActivo &&
+        //            m.Estado == "COMPLETADO"
+        //        )
+        //        .OrderByDescending(m => m.FechaRealizada)
+        //        .Select(m => new MantenimientoDTO
+        //        {
+        //            IdMantenimiento = m.IdMantenimiento,
+        //            IdActivo = m.IdActivo,
+        //            Descripcion = m.Descripcion,
+        //            TipoMantenimiento = m.TipoMantenimiento,
+        //            FechaRealizada = m.FechaRealizada,
+
+        //            NumeroOrdenServicio = m.NumeroOrdenServicio, // 🔥 misma orden
+        //            FechaProgramada = m.FechaProgramada,
+        //            Diagnostico = m.Diagnostico,
+        //            AccionesRealizadas = m.AccionesRealizadas,
+        //            RepuestosUsados = m.RepuestosUsados,
+        //            CostoManoObra = m.CostoManoObra,
+        //            CostoRepuestos = m.CostoRepuestos,
+        //            CostoTotal = m.CostoTotal,
+        //            TiempoFueraServicioHoras = m.TiempoFueraServicioHoras,
+        //            TecnicoResponsable = m.TecnicoResponsable,
+        //            ProveedorServicio = m.ProveedorServicio,
+
+        //            GarantiaTrabajosDias = m.GarantiaTrabajosDias,
+        //            ProximoMantenimiento = m.ProximoMantenimiento,
+        //            Estado = m.Estado,
+        //            InformeTecnico = m.InformeTecnico,
+        //            IdDepartamentoSolicita = m.IdDepartamentoSolicita,
+        //            CedulaTecnico = m.CedulaTecnico
+        //        })
+        //        .ToList(),   // 👈 AQUÍ ESTÁ LA CLAVE
+
+        //        _ => null
+        //    };
+        //}
+
+
         public object? ObtenerInfoPorEvento(string tipoEvento, int idActivo)
         {
             using var context = new InvensisContext();
 
-            return tipoEvento switch
+            switch (tipoEvento)
             {
-                "COMPRA" =>
-                    context.Activos
+                case "COMPRA":
+                    return context.Activos
                         .Where(a => a.IdActivo == idActivo)
                         .Select(a => new ActivoDTO
                         {
@@ -141,7 +274,6 @@ namespace Identity.Api.DataRepository
                             NumeroSerie = a.NumeroSerie,
                             NumeroParte = a.NumeroParte,
                             FechaAdquisicion = a.FechaAdquisicion.ToDateTime(TimeOnly.MinValue),
-                            //FechaGarantiaFin = a.FechaGarantiaFin,
                             IdFacturaCompra = a.IdFacturaCompra,
                             IdOrdenEnsamblaje = a.IdOrdenEnsamblaje,
                             ValorCompra = a.ValorCompra,
@@ -154,74 +286,77 @@ namespace Identity.Api.DataRepository
                             Observaciones = a.Observaciones,
                             FechaRegistro = a.FechaRegistro,
 
-                            // Relaciones
-                            NombreProducto = a.IdProductoNavigation != null
-                        ? a.IdProductoNavigation.Nombre
-                        : null,
-
-                            NumeroFactura = a.IdFacturaCompraNavigation != null
-                        ? a.IdFacturaCompraNavigation.NumeroFactura
-                        : null,
-
-                            NumeroOrden = a.IdOrdenEnsamblajeNavigation != null
-                        ? a.IdOrdenEnsamblajeNavigation.NumeroOrden
-                        : null,
-
+                            NombreProducto = a.IdProductoNavigation != null ? a.IdProductoNavigation.Nombre : null,
+                            NumeroFactura = a.IdFacturaCompraNavigation != null ? a.IdFacturaCompraNavigation.NumeroFactura : null,
+                            NumeroOrden = a.IdOrdenEnsamblajeNavigation != null ? a.IdOrdenEnsamblajeNavigation.NumeroOrden : null,
 
                             TipoRelacion = a.TipoRelacion,
                             EsComponente = a.EsComponente
                         })
-                .FirstOrDefault(),
+                        .FirstOrDefault();
 
-                "BAJA" =>
-                    context.Activos
-                        .Where(a => a.IdActivo == idActivo && a.EstadoActivo == "BAJA")
-                        .Select(a => new ActivoDTO
+                case "BAJA":
+                    var activo = context.Activos
+                        .Where(a => a.IdActivo == idActivo)
+                        .Select(a => new
                         {
-                            IdActivo = a.IdActivo,
-                            CodigoActivo = a.CodigoActivo,
-                            EstadoActivo = a.EstadoActivo
+                            a.EstadoActivo,
+                            Activo = new ActivoDTO
+                            {
+                                IdActivo = a.IdActivo,
+                                CodigoActivo = a.CodigoActivo,
+                                IdProducto = a.IdProducto,
+                                NumeroSerie = a.NumeroSerie,
+                                NumeroParte = a.NumeroParte,
+                                FechaAdquisicion = a.FechaAdquisicion.ToDateTime(TimeOnly.MinValue),
+                                IdFacturaCompra = a.IdFacturaCompra,
+                                IdOrdenEnsamblaje = a.IdOrdenEnsamblaje,
+                                ValorCompra = a.ValorCompra,
+                                ValorResidual = a.ValorResidual,
+                                VidaUtilMeses = a.VidaUtilMeses,
+                                UbicacionActual = a.UbicacionActual,
+                                EstadoActivo = a.EstadoActivo,
+                                CondicionFisica = a.CondicionFisica,
+                                EsServidor = a.EsServidor,
+                                Observaciones = a.Observaciones,
+                                FechaRegistro = a.FechaRegistro,
+
+                                NombreProducto = a.IdProductoNavigation != null ? a.IdProductoNavigation.Nombre : null,
+                                NumeroFactura = a.IdFacturaCompraNavigation != null ? a.IdFacturaCompraNavigation.NumeroFactura : null,
+                                NumeroOrden = a.IdOrdenEnsamblajeNavigation != null ? a.IdOrdenEnsamblajeNavigation.NumeroOrden : null,
+
+                                TipoRelacion = a.TipoRelacion,
+                                EsComponente = a.EsComponente
+                            }
                         })
-                        .FirstOrDefault(),
+                        .FirstOrDefault();
 
-                "MANTENIMIENTO" =>
-            context.Mantenimientos
-                .Where(m =>
-                    m.IdActivo == idActivo &&
-                    m.Estado == "COMPLETADO"
-                )
-                .OrderByDescending(m => m.FechaRealizada)
-                .Select(m => new MantenimientoDTO
-                {
-                    IdMantenimiento = m.IdMantenimiento,
-                    IdActivo = m.IdActivo,
-                    Descripcion = m.Descripcion,
-                    TipoMantenimiento = m.TipoMantenimiento,
-                    FechaRealizada = m.FechaRealizada,
+                    if (activo == null)
+                        return new { Mensaje = "El activo no existe." };
 
-                    NumeroOrdenServicio = m.NumeroOrdenServicio, // 🔥 misma orden
-                    FechaProgramada = m.FechaProgramada,
-                    Diagnostico = m.Diagnostico,
-                    AccionesRealizadas = m.AccionesRealizadas,
-                    RepuestosUsados = m.RepuestosUsados,
-                    CostoManoObra = m.CostoManoObra,
-                    CostoRepuestos = m.CostoRepuestos,
-                    CostoTotal = m.CostoTotal,
-                    TiempoFueraServicioHoras = m.TiempoFueraServicioHoras,
-                    TecnicoResponsable = m.TecnicoResponsable,
-                    ProveedorServicio = m.ProveedorServicio,
+                    if (activo.EstadoActivo != "BAJA")
+                        return new { Mensaje = "El activo sigue en estado ACTIVO." };
 
-                    GarantiaTrabajosDias = m.GarantiaTrabajosDias,
-                    ProximoMantenimiento = m.ProximoMantenimiento,
-                    Estado = m.Estado,
-                    InformeTecnico = m.InformeTecnico,
-                    IdDepartamentoSolicita = m.IdDepartamentoSolicita,
-                    CedulaTecnico = m.CedulaTecnico
-                })
-                .ToList(),   // 👈 AQUÍ ESTÁ LA CLAVE
+                    return activo.Activo;
 
-                _ => null
-            };
+                case "MANTENIMIENTO":
+                    return context.Mantenimientos
+                        .Where(m => m.IdActivo == idActivo && m.Estado == "COMPLETADO")
+                        .OrderByDescending(m => m.FechaRealizada)
+                        .Select(m => new MantenimientoDTO
+                        {
+                            IdMantenimiento = m.IdMantenimiento,
+                            IdActivo = m.IdActivo,
+                            Descripcion = m.Descripcion,
+                            TipoMantenimiento = m.TipoMantenimiento,
+                            FechaRealizada = m.FechaRealizada,
+                            NumeroOrdenServicio = m.NumeroOrdenServicio
+                        })
+                        .ToList();
+
+                default:
+                    return null;
+            }
         }
 
     }
