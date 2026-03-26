@@ -20,7 +20,8 @@
           "Microsoft.EntityFrameworkCore.Tools": "9.0.5",
           "QuestPDF": "2025.7.0",
           "System.Linq.Dynamic.Core": "1.6.6",
-          "Modelo.Sistecom": "1.0.0.0"
+          "Modelo.Sistecom": "1.0.0.0",
+          "SistecomPerfil": "1.0.0.0"
         },
         "runtime": {
           "Identity.Api.dll": {}
@@ -1889,6 +1890,14 @@
             "fileVersion": "1.0.0.0"
           }
         }
+      },
+      "SistecomPerfil/1.0.0.0": {
+        "runtime": {
+          "SistecomPerfil.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
@@ -3026,6 +3035,11 @@
       "hashPath": "system.xml.xpath.xmldocument.4.3.0.nupkg.sha512"
     },
     "Modelo.Sistecom/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SistecomPerfil/1.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

@@ -16,6 +16,11 @@ namespace Identity.Api.Services
             return _dataRepository.RegistrarMovimientos(movimientos, out error);
         }
 
+        //endpoint para verificar que el producto en esa bodega tenga el stock necesario 
+        public Task<decimal> ObtenerStockProductoEnBodegaAsync(int idProducto, int idBodega)
+        {
+            return _dataRepository.ObtenerStockProductoEnBodegaAsync(idProducto, idBodega);
+        }
 
 
         //paginado

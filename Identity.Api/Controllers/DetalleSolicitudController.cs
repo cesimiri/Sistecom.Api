@@ -42,6 +42,20 @@ namespace Identity.Api.Controllers
             return Ok(detalle);
         }
 
+        //para traer todos lso registro por la solicitud de compra 
+        [HttpGet("GetDetalleSolicitudByIdSolicitud/{idSolicitud}")]
+        public IActionResult GetDetalleSolicitudByIdSolicitud(int idSolicitud)
+        {
+            var detalle = _detalleSolicitud.GetDetalleSolicitudByIdSolicitud(idSolicitud);
+
+            if (detalle == null || !detalle.Any())
+            {
+                return NotFound($"No se encontraron detalles para la solicitud {idSolicitud}.");
+            }
+
+            return Ok(detalle);
+        }
+
         [HttpPost("InsertDetalleSolicitud")]
         public IActionResult Create([FromBody] DetalleSolicitudDTO newItem)
         {

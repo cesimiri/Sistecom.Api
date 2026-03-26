@@ -46,6 +46,8 @@
 
         public string? TipoRelacion { get; set; }
 
+        public string? OldInv { get; set; }
+
         //relaciones 
         public string? NombreProducto { get; set; }
         public string? NumeroFactura { get; set; }

@@ -22,7 +22,8 @@ namespace Identity.Api.Interfaces
             bool ordenAscendente = true,
             int? idProducto = null); // <- NUEVO
 
-
+        //endpoint para verificar que el producto en esa bodega tenga el stock necesario 
+        Task<decimal> ObtenerStockProductoEnBodegaAsync(int idProducto, int idBodega);
 
         //obtener las solicitudes de compras que aun no esten ingresadas
         Task<List<SolicitudesCompraDTO>> ObtenerSolicitudesNoUsadasAsync();

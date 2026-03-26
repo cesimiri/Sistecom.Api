@@ -122,4 +122,5 @@ C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\run
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\Modelo.Sistecom.dll
+C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\SistecomPerfil.dll
 C:\CMIRANDA\Sistecom\Sistecom.Api\Identity.Api\obj\Release\net9.0\PubTmp\Out\Identity.Api.deps.json

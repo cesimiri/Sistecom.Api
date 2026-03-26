@@ -16,21 +16,20 @@ namespace Identity.Api.Controllers
     [Route("api/[controller]")]
     public class AccountsController : Controller
     {
-        //  private readonly UserManager<IdentityUser> _userManager;
-        //private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly IConfiguration _configuration;
 
         public AccountsController(
-            //UserManager<IdentityUser> userManager,
-            //SignInManager<IdentityUser> signInManager,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+            RoleManager<ApplicationRole> roleManager,
             IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _configuration = configuration;
         }
 
@@ -90,19 +89,61 @@ namespace Identity.Api.Controllers
             return await BuildToken(userInfo);
         }
 
+        // Método para asignar rol Admin a un usuario
+        [HttpPost("AssignAdminRole")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult> AssignAdminRole([FromBody] string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                return BadRequest("User not found");
+            }
+
+            // Verificar si el rol Admin existe, si no, crearlo
+            if (!await _roleManager.RoleExistsAsync("Admin"))
+            {
+                await _roleManager.CreateAsync(new ApplicationRole { Name = "Admin" });
+            }
+
+            var result = await _userManager.AddToRoleAsync(user, "Admin");
+            if (result.Succeeded)
+            {
+                return Ok("Admin role assigned successfully");
+            }
+            else
+            {
+                return BadRequest("Failed to assign Admin role");
+            }
+        }
+
         private async Task<UserToken> BuildToken(UserInfo userinfo)
         {
-            var claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.Name, userinfo.Email),
-                new Claim(ClaimTypes.Email, userinfo.Email),
-                new Claim("myvalue", "whatever I want")
-            };
-
+            // 🔥 IMPORTANTE: Obtener el usuario de la base de datos para tener el ID
             var identityUser = await _userManager.FindByEmailAsync(userinfo.Email);
-            var claimsDB = await _userManager.GetClaimsAsync(identityUser);
+            if (identityUser == null)
+            {
+                throw new Exception("Usuario no encontrado");
+            }
 
+            var claims = new List<Claim>()
+    {
+        // 🚨 CRÍTICO: Agregar el NameIdentifier claim con el ID del usuario
+        new Claim(ClaimTypes.NameIdentifier, identityUser.Id),
+        new Claim(ClaimTypes.Name, userinfo.Email),
+        new Claim(ClaimTypes.Email, userinfo.Email),
+        new Claim("myvalue", "whatever I want")
+    };
+
+            var claimsDB = await _userManager.GetClaimsAsync(identityUser);
             claims.AddRange(claimsDB);
+
+            // IMPORTANTE: Agregar los roles del usuario como claims
+            var roles = await _userManager.GetRolesAsync(identityUser);
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["jwt:key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -119,7 +160,8 @@ namespace Identity.Api.Controllers
             return new UserToken()
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
-                Expiration = expiration
+                Expiration = expiration,
+                Rol = roles.FirstOrDefault() ?? "User" // Asignar el primer rol o "User" si no hay roles
             };
         }
     }

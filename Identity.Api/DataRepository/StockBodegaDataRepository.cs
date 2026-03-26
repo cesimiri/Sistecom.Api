@@ -54,8 +54,6 @@ namespace Identity.Api.DataRepository
             }
         }
 
-
-
         public void DeleteStockBodegaById(int idStock)
         {
             using (var context = new InvensisContext())
@@ -70,15 +68,13 @@ namespace Identity.Api.DataRepository
         }
 
 
-
-
         //paginado por bodegga
         public PagedResult<stockBodegaDTO> GetPaginadosPorBodega(int idBodega, int pagina, int pageSize, string? filtro = null)
         {
             using var context = new InvensisContext();
 
             var query = context.StockBodegas
-                .Where(sb => sb.IdBodega == idBodega)
+                .Where(sb => sb.IdBodega == idBodega && sb.CantidadDisponible >= 1)
                 .Include(sb => sb.IdBodegaNavigation)
                 .Include(sb => sb.IdProductoNavigation)
                 .AsQueryable();
@@ -163,10 +159,6 @@ namespace Identity.Api.DataRepository
                 })
                 .ToList();
         }
-
-
-
-
 
     }
 }

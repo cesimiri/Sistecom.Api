@@ -25,19 +25,25 @@ namespace Identity.Api.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 
         //traer todas las solicitudes de compra APROBADAS que no esten registradas aqui en ordenes de Entrega
+        //[HttpGet("GetSolicitudesAprobadasSinOrden")]
+        //public IActionResult GetById()
+        //{
+        //    var detalles = _empresaCliente.GetSolicitudesAprobadasSinOrden();
+
+        //    if (detalles == null || !detalles.Any())
+        //    {
+        //        return NotFound($"No se encontraron Solicitudes");
+        //    }
+
+        //    return Ok(detalles);
+        //}
         [HttpGet("GetSolicitudesAprobadasSinOrden")]
-        public IActionResult GetById()
+        public IActionResult GetSolicitudesAprobadasSinOrden()
         {
             var detalles = _empresaCliente.GetSolicitudesAprobadasSinOrden();
 
-            if (detalles == null || !detalles.Any())
-            {
-                return NotFound($"No se encontraron Solicitudes");
-            }
-
-            return Ok(detalles);
+            return Ok(detalles); // siempre 200
         }
-
 
         //obtener un usuario por su id que traiga depoaprtamentos y nombre de departamento
         [HttpGet("GetUsuarioDetalleById/{cedula}")]

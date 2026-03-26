@@ -26,6 +26,8 @@
         public string? CodigoActivoComponente { get; set; } // Código del componente
         public string? NombreProducto { get; set; }
         public string? NumeroSerie { get; set; }
+        public string? OldInv { get; set; } // código inventario anterior
+
     }
 
     // DTO para insertar varios componentes

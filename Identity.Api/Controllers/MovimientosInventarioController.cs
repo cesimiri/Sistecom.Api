@@ -46,6 +46,14 @@ namespace Identity.Api.Controllers
             }
         }
 
+        //endpoint para verificar que el producto en esa bodega tenga el stock necesario 
+        [HttpGet("stock/{idProducto}/{idBodega}")]
+        public async Task<ActionResult<decimal>> ObtenerStockProductoEnBodega(int idProducto, int idBodega)
+        {
+            var stock = await _bodega.ObtenerStockProductoEnBodegaAsync(idProducto, idBodega);
+            return Ok(stock);
+        }
+
 
 
         [HttpGet("GetPaginados")]
@@ -64,8 +72,6 @@ namespace Identity.Api.Controllers
             var resultado = _bodega.GetPaginados(pagina, pageSize, tipoMovimiento, idBodega, nombreProducto, desde, hasta, ordenColumna, ordenAscendente, idProducto);
             return Ok(resultado);
         }
-
-
 
 
         // Endpoint para traer las solicitudes para dar de baja en salidas, NO usadas en movimientos

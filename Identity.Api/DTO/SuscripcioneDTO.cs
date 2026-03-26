@@ -35,6 +35,7 @@ namespace Identity.Api.DTO
 
         public string? RazonSocialProveedor { get; set; }
         public string? RazonSocialEmpresa { get; set; }
+        public string? Comentarios { get; set; }
 
     }
 

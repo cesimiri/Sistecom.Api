@@ -221,7 +221,18 @@ namespace Identity.Api.DataRepository
         }
 
 
+        //endpoint para verificar que el producto en esa bodega tenga el stock necesario 
+        public async Task<decimal> ObtenerStockProductoEnBodegaAsync(int idProducto, int idBodega)
+        {
+            using var context = new InvensisContext();
 
+            var stock = await context.StockBodegas
+                .Where(s => s.IdProducto == idProducto && s.IdBodega == idBodega)
+                .Select(s => s.CantidadDisponible)
+                .FirstOrDefaultAsync();
+
+            return (int)stock;
+        }
 
 
         //paginado

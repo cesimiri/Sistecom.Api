@@ -295,49 +295,87 @@ namespace Identity.Api.DataRepository
                         })
                         .FirstOrDefault();
 
+                //case "BAJA":
+                //    var activo = context.Activos
+                //        .Where(a => a.IdActivo == idActivo)
+                //        .Select(a => new
+                //        {
+                //            a.EstadoActivo,
+                //            Activo = new ActivoDTO
+                //            {
+                //IdActivo = a.IdActivo,
+                //            CodigoActivo = a.CodigoActivo,
+                //            IdProducto = a.IdProducto,
+                //            NumeroSerie = a.NumeroSerie,
+                //            NumeroParte = a.NumeroParte,
+                //            FechaAdquisicion = a.FechaAdquisicion.ToDateTime(TimeOnly.MinValue),
+                //            IdFacturaCompra = a.IdFacturaCompra,
+                //            IdOrdenEnsamblaje = a.IdOrdenEnsamblaje,
+                //            ValorCompra = a.ValorCompra,
+                //            ValorResidual = a.ValorResidual,
+                //            VidaUtilMeses = a.VidaUtilMeses,
+                //            UbicacionActual = a.UbicacionActual,
+                //            EstadoActivo = a.EstadoActivo,
+                //            CondicionFisica = a.CondicionFisica,
+                //            EsServidor = a.EsServidor,
+                //            Observaciones = a.Observaciones,
+                //            FechaRegistro = a.FechaRegistro,
+
+                //            NombreProducto = a.IdProductoNavigation != null ? a.IdProductoNavigation.Nombre : null,
+                //            NumeroFactura = a.IdFacturaCompraNavigation != null ? a.IdFacturaCompraNavigation.NumeroFactura : null,
+                //            NumeroOrden = a.IdOrdenEnsamblajeNavigation != null ? a.IdOrdenEnsamblajeNavigation.NumeroOrden : null,
+
+                //            TipoRelacion = a.TipoRelacion,
+                //            EsComponente = a.EsComponente
+                //            }
+                //        })
+                //        .FirstOrDefault();
+
+                //    if (activo == null)
+                //        return new { Mensaje = "El activo no existe." };
+
+                //    if (activo.EstadoActivo != "BAJA")
+                //        return new { Mensaje = "El activo sigue en estado ACTIVO." };
+
+                //    return activo.Activo;
+
                 case "BAJA":
                     var activo = context.Activos
                         .Where(a => a.IdActivo == idActivo)
-                        .Select(a => new
+                        .Select(a => new ActivoDTO
                         {
-                            a.EstadoActivo,
-                            Activo = new ActivoDTO
-                            {
-                                IdActivo = a.IdActivo,
-                                CodigoActivo = a.CodigoActivo,
-                                IdProducto = a.IdProducto,
-                                NumeroSerie = a.NumeroSerie,
-                                NumeroParte = a.NumeroParte,
-                                FechaAdquisicion = a.FechaAdquisicion.ToDateTime(TimeOnly.MinValue),
-                                IdFacturaCompra = a.IdFacturaCompra,
-                                IdOrdenEnsamblaje = a.IdOrdenEnsamblaje,
-                                ValorCompra = a.ValorCompra,
-                                ValorResidual = a.ValorResidual,
-                                VidaUtilMeses = a.VidaUtilMeses,
-                                UbicacionActual = a.UbicacionActual,
-                                EstadoActivo = a.EstadoActivo,
-                                CondicionFisica = a.CondicionFisica,
-                                EsServidor = a.EsServidor,
-                                Observaciones = a.Observaciones,
-                                FechaRegistro = a.FechaRegistro,
+                            IdActivo = a.IdActivo,
+                            CodigoActivo = a.CodigoActivo,
+                            IdProducto = a.IdProducto,
+                            NumeroSerie = a.NumeroSerie,
+                            NumeroParte = a.NumeroParte,
+                            FechaAdquisicion = a.FechaAdquisicion.ToDateTime(TimeOnly.MinValue),
+                            IdFacturaCompra = a.IdFacturaCompra,
+                            IdOrdenEnsamblaje = a.IdOrdenEnsamblaje,
+                            ValorCompra = a.ValorCompra,
+                            ValorResidual = a.ValorResidual,
+                            VidaUtilMeses = a.VidaUtilMeses,
+                            UbicacionActual = a.UbicacionActual,
+                            EstadoActivo = a.EstadoActivo,
+                            CondicionFisica = a.CondicionFisica,
+                            EsServidor = a.EsServidor,
+                            Observaciones = a.Observaciones,
+                            FechaRegistro = a.FechaRegistro,
 
-                                NombreProducto = a.IdProductoNavigation != null ? a.IdProductoNavigation.Nombre : null,
-                                NumeroFactura = a.IdFacturaCompraNavigation != null ? a.IdFacturaCompraNavigation.NumeroFactura : null,
-                                NumeroOrden = a.IdOrdenEnsamblajeNavigation != null ? a.IdOrdenEnsamblajeNavigation.NumeroOrden : null,
+                            NombreProducto = a.IdProductoNavigation != null ? a.IdProductoNavigation.Nombre : null,
+                            NumeroFactura = a.IdFacturaCompraNavigation != null ? a.IdFacturaCompraNavigation.NumeroFactura : null,
+                            NumeroOrden = a.IdOrdenEnsamblajeNavigation != null ? a.IdOrdenEnsamblajeNavigation.NumeroOrden : null,
 
-                                TipoRelacion = a.TipoRelacion,
-                                EsComponente = a.EsComponente
-                            }
+                            TipoRelacion = a.TipoRelacion,
+                            EsComponente = a.EsComponente
                         })
                         .FirstOrDefault();
 
-                    if (activo == null)
-                        return new { Mensaje = "El activo no existe." };
 
                     if (activo.EstadoActivo != "BAJA")
-                        return new { Mensaje = "El activo sigue en estado ACTIVO." };
+                        return null;
 
-                    return activo.Activo;
+                    return activo;
 
                 case "MANTENIMIENTO":
                     return context.Mantenimientos

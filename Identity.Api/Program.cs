@@ -227,6 +227,11 @@ builder.Services.AddScoped<IActivo, ActivoServices>();
 
 builder.Services.AddScoped<IConfiguracionesActivo, ConfiguracionesActivoServices>();
 
+builder.Services.AddScoped<INavigation, NavigationServices>();
+
+builder.Services.AddScoped<IPermissionService, PermissionService>();
+
+builder.Services.AddScoped<IAdvancedPermissionService, AdvancedPermissionService>();
 
 //Fin de servicios
 

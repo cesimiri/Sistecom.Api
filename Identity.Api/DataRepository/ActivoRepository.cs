@@ -53,6 +53,8 @@ namespace Identity.Api.DataRepository
                         new SqlParameter("@CondicionFisica", activo.CondicionFisica ?? "NUEVO"),
                         new SqlParameter("@EsServidor", activo.EsServidor ?? false),
                         new SqlParameter("@Observaciones", activo.Observaciones ?? (object)DBNull.Value),
+                        new SqlParameter("@OldInv", (object?)activo.OldInv ?? DBNull.Value),
+
                         // 👇 nuevos parámetros
                         //new SqlParameter("@IdActivoPadre", activo.IdActivoPadre ?? (object)DBNull.Value),
                         //new SqlParameter("@EsComponente", activo.EsComponente ?? (object)DBNull.Value),
@@ -60,7 +62,7 @@ namespace Identity.Api.DataRepository
                     };
 
                     await context.Database.ExecuteSqlRawAsync(
-                        "EXEC sp_InsertarActivo @IdProducto, @NumeroSerie, @NumeroParte, @FechaAdquisicion, @FechaGarantiaFin, @IdFacturaCompra, @ValorCompra, @ValorResidual, @VidaUtilMeses, @UbicacionActual, @EstadoActivo, @CondicionFisica, @EsServidor, @Observaciones, @TipoRelacion",
+                        "EXEC sp_InsertarActivo @IdProducto, @NumeroSerie, @NumeroParte, @FechaAdquisicion, @FechaGarantiaFin, @IdFacturaCompra, @ValorCompra, @ValorResidual, @VidaUtilMeses, @UbicacionActual, @EstadoActivo, @CondicionFisica, @EsServidor, @Observaciones, @OldInv, @TipoRelacion",
                         parameters
                     );
 
@@ -115,7 +117,7 @@ namespace Identity.Api.DataRepository
                     existente.CondicionFisica = updActivo.CondicionFisica;
                     existente.EsServidor = updActivo.EsServidor;
                     existente.Observaciones = updActivo.Observaciones;
-                    //existente.FechaRegistro = updActivo.FechaRegistro;
+                    existente.OldInv = updActivo.OldInv;
 
                     context.SaveChanges();
                 }
@@ -147,6 +149,7 @@ namespace Identity.Api.DataRepository
                     existente.EsServidor = updActivo.EsServidor;
                     existente.Observaciones = updActivo.Observaciones;
                     //existente.FechaRegistro = updActivo.FechaRegistro;
+                    existente.OldInv = updActivo.OldInv;
 
                     context.SaveChanges();
                 }
@@ -191,6 +194,7 @@ namespace Identity.Api.DataRepository
                 var f = filtro.Trim().ToUpper();
                 query = query.Where(a =>
                     (a.CodigoActivo != null && a.CodigoActivo.ToUpper().Contains(f)) ||
+                    (a.OldInv != null && a.OldInv.ToUpper().Contains(f)) ||
                     (a.IdProductoNavigation != null && a.IdProductoNavigation.Nombre.ToUpper().Contains(f)) ||
                     (a.IdFacturaCompraNavigation != null && a.IdFacturaCompraNavigation.NumeroFactura.ToUpper().Contains(f))
                 );
@@ -236,6 +240,7 @@ namespace Identity.Api.DataRepository
                     Observaciones = a.Observaciones,
                     FechaRegistro = a.FechaRegistro,
                     TipoRelacion = a.TipoRelacion,
+                    OldInv = a.OldInv,
                     // relaciones
                     NombreProducto = a.IdProductoNavigation != null ? a.IdProductoNavigation.Nombre : null,
                     NumeroFactura = a.IdFacturaCompraNavigation != null ? a.IdFacturaCompraNavigation.NumeroFactura : null,

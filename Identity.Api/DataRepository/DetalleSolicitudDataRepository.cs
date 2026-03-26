@@ -61,6 +61,29 @@ namespace Identity.Api.DataRepository
                 .FirstOrDefault();
         }
 
+        //para traer todos lso registro por la solicitud de compra 
+        public List<DetalleSolicitudDTO> GetDetalleSolicitudByIdSolicitud(int idSolicitud)
+        {
+            using var context = new InvensisContext();
+            return context.DetalleSolicituds
+                .Include(s => s.IdSolicitudNavigation)
+                .Include(s => s.IdProductoNavigation)
+                .Where(s => s.IdSolicitud == idSolicitud)
+                .Select(s => new DetalleSolicitudDTO
+                {
+                    IdDetalle = s.IdDetalle,
+                    IdSolicitud = s.IdSolicitud,
+                    IdProducto = s.IdProducto,
+                    Cantidad = s.Cantidad,
+                    PrecioUnitario = s.PrecioUnitario,
+                    Descuento = s.Descuento,
+                    Subtotal = s.Subtotal,
+                    Observaciones = s.Observaciones,
+                    NumeroSolicitud = s.IdSolicitudNavigation.NumeroSolicitud,
+                })
+                .ToList();
+        }
+
         //Busca las Solicitudes Compra por estado diferente al RECHAZADA , COMPLETADA, CANCELADA
         public List<SolicitudesCompraDTO> SolicitudesDeCompraPorEstadoAsync()
         {

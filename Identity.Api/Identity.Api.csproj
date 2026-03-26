@@ -43,6 +43,9 @@
     <Reference Include="Modelo.Sistecom">
       <HintPath>Model\DLL\Modelo.Sistecom.dll</HintPath>
     </Reference>
+    <Reference Include="SistecomPerfil">
+      <HintPath>Model\DLL\SistecomPerfil.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

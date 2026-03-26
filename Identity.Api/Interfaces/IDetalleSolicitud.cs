@@ -6,6 +6,10 @@ namespace Identity.Api.Interfaces
     {
         IEnumerable<DetalleSolicitudDTO> DetalleSolicitudesAll { get; }
         DetalleSolicitudDTO GetDetalleSolicitudById(int idDetalle);
+
+        //para traer todos lso registro por la solicitud de compra 
+        List<DetalleSolicitudDTO> GetDetalleSolicitudByIdSolicitud(int idSolicitud);
+
         void InsertDetalleSolicitud(DetalleSolicitudDTO newItem);
         void UpdateDetalleSolicitud(DetalleSolicitudDTO updItem);
         //void DeleteDetalleSolicitud(DetalleSolicitudDTO delItem);

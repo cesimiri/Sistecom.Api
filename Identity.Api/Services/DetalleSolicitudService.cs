@@ -1,8 +1,6 @@
-﻿using Identity.Api.Interfaces;
-using Identity.Api.DataRepository;
-using Modelo.Sistecom.Modelo.Database;
-using System.Collections.Generic;
+﻿using Identity.Api.DataRepository;
 using Identity.Api.DTO;
+using Identity.Api.Interfaces;
 
 namespace Identity.Api.Services
 {
@@ -15,11 +13,16 @@ namespace Identity.Api.Services
             get { return _dataRepository.DetalleSolicitudesAll(); }
         }
 
+        //para traer todos lso registro por la solicitud de compra 
+        public List<DetalleSolicitudDTO> GetDetalleSolicitudByIdSolicitud(int idSolicitud)
+        {
+            return _dataRepository.GetDetalleSolicitudByIdSolicitud(idSolicitud);
+        }
+
         public DetalleSolicitudDTO GetDetalleSolicitudById(int idDetalle)
         {
             return _dataRepository.GetDetalleSolicitudById(idDetalle);
         }
-
         public void InsertDetalleSolicitud(DetalleSolicitudDTO newItem)
         {
             _dataRepository.InsertDetalleSolicitud(newItem);

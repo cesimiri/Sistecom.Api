@@ -216,10 +216,10 @@ namespace Identity.Api.DataRepository
 
         //PAGINADA 
         public PagedResult<ConfiguracionesActivoDTO> GetConfiguracionesActivoPaginados(
-    int pagina,
-    int pageSize,
-    string? filtro = null,
-    string? estado = null)
+        int pagina,
+        int pageSize,
+        string? filtro = null,
+        string? estado = null)
         {
             using var context = new InvensisContext();
 
@@ -235,11 +235,21 @@ namespace Identity.Api.DataRepository
             query = query.Where(c => c.EstadoConfiguracion == estado);
 
             // 👉 Filtro por CódigoActivo del principal
+            //if (!string.IsNullOrEmpty(filtro))
+            //{
+            //    filtro = filtro.ToLower();
+            //    query = query.Where(c =>
+            //        c.IdActivoPrincipalNavigation.CodigoActivo.ToLower().Contains(filtro));
+            //}
             if (!string.IsNullOrEmpty(filtro))
             {
                 filtro = filtro.ToLower();
+
                 query = query.Where(c =>
-                    c.IdActivoPrincipalNavigation.CodigoActivo.ToLower().Contains(filtro));
+                    c.IdActivoPrincipalNavigation.CodigoActivo.ToLower().Contains(filtro)
+                    || (c.IdActivoPrincipalNavigation.OldInv != null &&
+                        c.IdActivoPrincipalNavigation.OldInv.ToLower().Contains(filtro))
+                );
             }
 
             // 👉 Agrupamos por activo principal (para no repetirlo por cada componente)
@@ -249,6 +259,7 @@ namespace Identity.Api.DataRepository
                 {
                     IdActivoPrincipal = g.Key,
                     CodigoActivo = g.First().IdActivoPrincipalNavigation.CodigoActivo,
+                    OldInv = g.First().IdActivoPrincipalNavigation.OldInv,
                     NumeroSerie = g.First().IdActivoPrincipalNavigation.NumeroSerie,
                     EstadoConfiguracion = g.First().EstadoConfiguracion,
                     FechaInstalacion = g.Max(x => x.FechaInstalacion),

@@ -29,41 +29,48 @@ namespace Identity.Api.DataRepository
 
             // 🔹 2. Traer todas las solicitudes aprobadas que no tengan orden de entrega
             var solicitudes = context.SolicitudesCompras
-                .Include(s => s.RucEmpresaNavigation)
-                .Include(s => s.IdDepartamentoNavigation)
-                .Include(s => s.CedulaDestinoNavigation)
-                .Include(s => s.CedulaAutorizaNavigation)
-                .Include(s => s.CedulaSolicitaNavigation)
-                .Where(s => s.Estado == "APROBADA" && !numerosOrdenExistentes.Contains(s.NumeroSolicitud))
-                .Select(s => new SolicitudesCompraDTO
-                {
-                    IdSolicitud = s.IdSolicitud,
-                    NumeroSolicitud = s.NumeroSolicitud,
-                    RucEmpresa = s.RucEmpresa,
-                    IdDepartamento = s.IdDepartamento,
-                    CedulaSolicita = s.CedulaSolicita,
-                    CedulaAutoriza = s.CedulaAutoriza,
-                    CedulaDestino = s.CedulaDestino,
-                    FechaSolicitud = s.FechaSolicitud,
-                    FechaAprobacion = s.FechaAprobacion,
-                    FechaRequerida = s.FechaRequerida,
-                    SubtotalSinImpuestos = s.SubtotalSinImpuestos,
-                    DescuentoTotal = s.DescuentoTotal,
-                    Iva = s.Iva,
-                    ValorTotal = s.ValorTotal,
-                    Justificacion = s.Justificacion,
-                    Prioridad = s.Prioridad,
-                    MotivoRechazo = s.MotivoRechazo,
-                    Observaciones = s.Observaciones,
-                    ArchivoOc = s.ArchivoOc,
-                    Estado = s.Estado,
-                    ///relacion
-                    RazonSocial = s.RucEmpresaNavigation.RazonSocial,
-                    NombreSolicitanteCompleto = s.CedulaSolicitaNavigation.Apellidos + " " + s.CedulaSolicitaNavigation.Nombres,
-                    NombreAutorizadorCompleto = s.CedulaAutorizaNavigation.Apellidos + " " + s.CedulaAutorizaNavigation.Nombres,
-                    NombreDepartamento = s.IdDepartamentoNavigation.NombreDepartamento
-                })
-                .ToList();
+        .Include(s => s.RucEmpresaNavigation)
+        .Include(s => s.IdDepartamentoNavigation)
+        .Include(s => s.CedulaDestinoNavigation)
+        .Include(s => s.CedulaAutorizaNavigation)
+        .Include(s => s.CedulaSolicitaNavigation)
+        .Where(s => s.Estado == "APROBADA"
+            && !context.OrdenesEntregas
+                .Any(o => o.IdSolicitud == s.IdSolicitud))
+        .Select(s => new SolicitudesCompraDTO
+        {
+            IdSolicitud = s.IdSolicitud,
+            NumeroSolicitud = s.NumeroSolicitud,
+            RucEmpresa = s.RucEmpresa,
+            IdDepartamento = s.IdDepartamento,
+            CedulaSolicita = s.CedulaSolicita,
+            CedulaAutoriza = s.CedulaAutoriza,
+            CedulaDestino = s.CedulaDestino,
+            FechaSolicitud = s.FechaSolicitud,
+            FechaAprobacion = s.FechaAprobacion,
+            FechaRequerida = s.FechaRequerida,
+            SubtotalSinImpuestos = s.SubtotalSinImpuestos,
+            DescuentoTotal = s.DescuentoTotal,
+            Iva = s.Iva,
+            ValorTotal = s.ValorTotal,
+            Justificacion = s.Justificacion,
+            Prioridad = s.Prioridad,
+            MotivoRechazo = s.MotivoRechazo,
+            Observaciones = s.Observaciones,
+            ArchivoOc = s.ArchivoOc,
+            Estado = s.Estado,
+            RazonSocial = s.RucEmpresaNavigation.RazonSocial,
+            NombreSolicitanteCompleto =
+                s.CedulaSolicitaNavigation.Apellidos + " " +
+                s.CedulaSolicitaNavigation.Nombres,
+            NombreAutorizadorCompleto =
+                s.CedulaAutorizaNavigation.Apellidos + " " +
+                s.CedulaAutorizaNavigation.Nombres,
+            NombreDepartamento =
+                s.IdDepartamentoNavigation.NombreDepartamento
+        })
+        .ToList();
+
 
             return solicitudes;
         }

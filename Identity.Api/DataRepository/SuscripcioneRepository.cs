@@ -33,6 +33,7 @@ namespace Identity.Api.DataRepository
                     Estado = s.Estado,
                     NotificarDiasAntes = s.NotificarDiasAntes,
                     Observaciones = s.Observaciones,
+                    Comentarios = s.Comentarios,
                     // Campos relacionados:
                     RazonSocialEmpresa = s.RucEmpresaNavigation.RazonSocial,
                     RazonSocialProveedor = s.IdProveedorNavigation.RazonSocial
@@ -73,6 +74,7 @@ namespace Identity.Api.DataRepository
                     Estado = s.Estado,
                     NotificarDiasAntes = s.NotificarDiasAntes,
                     Observaciones = s.Observaciones,
+                    Comentarios = s.Comentarios,
                     // Campos relacionados:
                     RazonSocialEmpresa = s.RucEmpresaNavigation.RazonSocial,
                     RazonSocialProveedor = s.IdProveedorNavigation.RazonSocial
@@ -111,6 +113,7 @@ namespace Identity.Api.DataRepository
                     Administrador = dto.Administrador,
                     Estado = dto.Estado,
                     NotificarDiasAntes = dto.NotificarDiasAntes,
+                    Comentarios = dto.Comentarios,
                     Observaciones = dto.Observaciones
                 };
 
@@ -148,7 +151,7 @@ namespace Identity.Api.DataRepository
                 suscripcion.Estado = dto.Estado;
                 suscripcion.NotificarDiasAntes = dto.NotificarDiasAntes;
                 suscripcion.Observaciones = dto.Observaciones;
-
+                suscripcion.Comentarios = dto.Comentarios;
 
                 // Actualizar navegación (opcional)
                 suscripcion.RucEmpresaNavigation = context.EmpresasClientes
@@ -262,6 +265,7 @@ namespace Identity.Api.DataRepository
                     Estado = s.Estado,
                     NotificarDiasAntes = s.NotificarDiasAntes,
                     Observaciones = s.Observaciones,
+                    Comentarios = s.Comentarios,
                     RazonSocialEmpresa = s.RucEmpresaNavigation.RazonSocial,
                     RazonSocialProveedor = s.IdProveedorNavigation.RazonSocial
                 })
